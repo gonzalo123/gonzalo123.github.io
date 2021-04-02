@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Pivot tables in PHP</title>
+  <meta name="description" content="In my work as developer I normally need to transform data from one format to another. Typically our input data is a database and we need to show the database data into a report, datagrid or something similar. It’s very typical to use pivot tables. It’s not very dificult to handle pivot tables by hand but the work is always the same: groups by, totals, subtotals, totals per row …. Now I want to write a class to pivot tables in PHP with the most common requirements (at least for me). I know we can create pivot tables with SQL. Group by and some other database specific commands like oracle’s GROUP BY ROLLUP/CUBE can do the work, but I like clean SQL querys. The business logic must be in PHP and SQL must be as clean as we can.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pivot tables in PHP">
+  <meta name="twitter:description" content="In my work as developer I normally need to transform data from one format to another. Typically our input data is a database and we need to show the database data into a report, datagrid or something similar. It’s very typical to use pivot tables. It’s not very dificult to handle pivot tables by hand but the work is always the same: groups by, totals, subtotals, totals per row …. Now I want to write a class to pivot tables in PHP with the most common requirements (at least for me). I know we can create pivot tables with SQL. Group by and some other database specific commands like oracle’s GROUP BY ROLLUP/CUBE can do the work, but I like clean SQL querys. The business logic must be in PHP and SQL must be as clean as we can.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Pivot tables in PHP">
+  <meta property="og:description" content="In my work as developer I normally need to transform data from one format to another. Typically our input data is a database and we need to show the database data into a report, datagrid or something similar. It’s very typical to use pivot tables. It’s not very dificult to handle pivot tables by hand but the work is always the same: groups by, totals, subtotals, totals per row …. Now I want to write a class to pivot tables in PHP with the most common requirements (at least for me). I know we can create pivot tables with SQL. Group by and some other database specific commands like oracle’s GROUP BY ROLLUP/CUBE can do the work, but I like clean SQL querys. The business logic must be in PHP and SQL must be as clean as we can.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617358755669312000">
+  <link rel="canonical" href="http://localhost:4000/2010/01/24/pivot-tables-in-php/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+  style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <a href="/" title="link to home of Gonzalo Ayuso">
+          <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <!-- Twitter -->
+              <li class="navigation__item">
+                <a href="http://twitter.com/gonzalo123"
+                  title="@gonzalo123 on Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/gonzaloayuso"
+                  title="gonzaloayuso on LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/gonzalo123"
+                  title="gonzalo123 on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+              
+
+              <!-- RSS -->
+              <li class="navigation__item">
+                <a href="/feed.xml" title="Subscribe" target="_blank">
+                  <i class="icon icon-rss"></i>
+                  <span class="label">RSS</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2010-01-24 00:00" class="post-meta__date date">24 Jan 2010</time>
+      
+    </div>
+    <h1 class="post-title">Pivot tables in PHP</h1>
+  </header>
+
+  <section class="post">
+    <p>In my work as developer I normally need to transform data from one format to another. Typically our input data is a database and we need to show the database data into a report, datagrid or something similar. It’s very typical to use <a href="http://en.wikipedia.org/wiki/Pivot_table">pivot tables</a>. It’s not very dificult to handle pivot tables by hand but the work is always the same: groups by, totals, subtotals, totals per row …. Now I want to write a class to pivot tables in PHP with the most common requirements (at least for me). I know we can create pivot tables with SQL. Group by and some other database specific commands like oracle’s GROUP BY ROLLUP/CUBE can do the work, but I like clean SQL querys. The business logic must be in PHP and SQL must be as clean as we can.</p>
+
+<p>Let’s show you an example. We have the following recordset from a SQL:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$recordset</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'host'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'fr'</span><span class="p">,</span> <span class="s1">'year'</span> <span class="o">=&gt;</span> <span class="mi">2010</span><span class="p">,</span>
+        <span class="s1">'month'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'clicks'</span> <span class="o">=&gt;</span> <span class="mi">123</span><span class="p">,</span> <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'host'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'fr'</span><span class="p">,</span> <span class="s1">'year'</span> <span class="o">=&gt;</span> <span class="mi">2010</span><span class="p">,</span>
+        <span class="s1">'month'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'clicks'</span> <span class="o">=&gt;</span> <span class="mi">134</span><span class="p">,</span> <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'host'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'fr'</span><span class="p">,</span> <span class="s1">'year'</span> <span class="o">=&gt;</span> <span class="mi">2010</span><span class="p">,</span>
+        <span class="s1">'month'</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'clicks'</span> <span class="o">=&gt;</span> <span class="mi">341</span><span class="p">,</span> <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'host'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'es'</span><span class="p">,</span> <span class="s1">'year'</span> <span class="o">=&gt;</span> <span class="mi">2010</span><span class="p">,</span>
+        <span class="s1">'month'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'clicks'</span> <span class="o">=&gt;</span> <span class="mi">113</span><span class="p">,</span> <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'host'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'es'</span><span class="p">,</span> <span class="s1">'year'</span> <span class="o">=&gt;</span> <span class="mi">2010</span><span class="p">,</span>
+        <span class="s1">'month'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'clicks'</span> <span class="o">=&gt;</span> <span class="mi">234</span><span class="p">,</span> <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'host'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'es'</span><span class="p">,</span> <span class="s1">'year'</span> <span class="o">=&gt;</span> <span class="mi">2010</span><span class="p">,</span>
+        <span class="s1">'month'</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'clicks'</span> <span class="o">=&gt;</span> <span class="mi">421</span><span class="p">,</span> <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'host'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'es'</span><span class="p">,</span> <span class="s1">'year'</span> <span class="o">=&gt;</span> <span class="mi">2010</span><span class="p">,</span>
+        <span class="s1">'month'</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'clicks'</span> <span class="o">=&gt;</span> <span class="mi">22</span><span class="p">,</span>  <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'host'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'es'</span><span class="p">,</span> <span class="s1">'year'</span> <span class="o">=&gt;</span> <span class="mi">2010</span><span class="p">,</span>
+        <span class="s1">'month'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'clicks'</span> <span class="o">=&gt;</span> <span class="mi">111</span><span class="p">,</span> <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'host'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'es'</span><span class="p">,</span> <span class="s1">'year'</span> <span class="o">=&gt;</span> <span class="mi">2010</span><span class="p">,</span>
+        <span class="s1">'month'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'clicks'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>   <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'host'</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'es'</span><span class="p">,</span> <span class="s1">'year'</span> <span class="o">=&gt;</span> <span class="mi">2010</span><span class="p">,</span>
+        <span class="s1">'month'</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'clicks'</span> <span class="o">=&gt;</span> <span class="mi">34</span><span class="p">,</span>  <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'host'</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'country'</span> <span class="o">=&gt;</span> <span class="s1">'es'</span><span class="p">,</span> <span class="s1">'year'</span> <span class="o">=&gt;</span> <span class="mi">2010</span><span class="p">,</span>
+        <span class="s1">'month'</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'clicks'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>   <span class="s1">'users'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">),</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>host</strong></th>
+      <th><strong>country</strong></th>
+      <th><strong>year</strong></th>
+      <th><strong>month</strong></th>
+      <th><strong>clicks</strong></th>
+      <th><strong>users</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>fr</td>
+      <td>2010</td>
+      <td>1</td>
+      <td>123</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>fr</td>
+      <td>2010</td>
+      <td>2</td>
+      <td>134</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>fr</td>
+      <td>2010</td>
+      <td>3</td>
+      <td>341</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>es</td>
+      <td>2010</td>
+      <td>1</td>
+      <td>113</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>es</td>
+      <td>2010</td>
+      <td>2</td>
+      <td>234</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>es</td>
+      <td>2010</td>
+      <td>3</td>
+      <td>421</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>es</td>
+      <td>2010</td>
+      <td>4</td>
+      <td>22</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>es</td>
+      <td>2010</td>
+      <td>1</td>
+      <td>111</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>es</td>
+      <td>2010</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>es</td>
+      <td>2010</td>
+      <td>3</td>
+      <td>34</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>es</td>
+      <td>2010</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>And I need the information grouped by host and show it in a table with: each row one host and each column the sum of clicks and users per month</p>
+
+<p>The interface I have created is the following one:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$data</span> <span class="o">=</span> <span class="nc">Pivot</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nv">$recordset</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">pivotOn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'host'</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="nf">addColumn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'year'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">),</span> <span class="k">array</span><span class="p">(</span><span class="s1">'users'</span><span class="p">,</span> <span class="s1">'clicks'</span><span class="p">,))</span>
+    <span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Let’s explain the interface:</p>
+
+<p>Loads the original recorset into the class:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Pivot</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nv">$recordset</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>I want to pivot the recordset on the field ‘host’</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">-&gt;</span><span class="nf">pivotOn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'host'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>The columns are grouped by year and month and each group will show the sum of users and clicks</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">-&gt;</span><span class="nf">addColumn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'year'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">),</span> <span class="k">array</span><span class="p">(</span><span class="s1">'users'</span><span class="p">,</span> <span class="s1">'clicks'</span><span class="p">,))</span>
+</code></pre></div></div>
+
+<p>And finally I make the transformation:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Basically that’s it. I also has made some other helpers to: Add totals per line Add total per pivoted colum Add total for all table</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">-&gt;</span><span class="nf">fullTotal</span><span class="p">()</span>
+<span class="o">-&gt;</span><span class="nf">pivotTotal</span><span class="p">()</span>
+<span class="o">-&gt;</span><span class="nf">lineTotal</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>In this class I allow to pivot tables with one, two or three fields. And also I allow to use calculated columns. For example imagine you need to show users, clicks and the average of clicks per user. It’s easy clicks/users but you must take care in the calculated column because you can’t sum it. You must calculate the calculated column over the sum of clicks and user. Because of that I define calculated functions. This feature only works with PHP5.3 because it uses closures.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$averageCbk</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="nv">$reg</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="nv">$reg</span><span class="p">[</span><span class="s1">'clicks'</span><span class="p">]</span><span class="o">/</span><span class="nv">$reg</span><span class="p">[</span><span class="s1">'users'</span><span class="p">],</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">};</span>
+ 
+<span class="nv">$data</span> <span class="o">=</span> <span class="nc">Pivot</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nv">$recordset</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">pivotOn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'host'</span><span class="p">,</span> <span class="s1">'country'</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="nf">addColumn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'year'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">),</span> <span class="k">array</span><span class="p">(</span><span class="s1">'users'</span><span class="p">,</span> <span class="s1">'clicks'</span><span class="p">,</span> <span class="nc">Pivot</span><span class="o">::</span><span class="nf">callback</span><span class="p">(</span><span class="s1">'average'</span><span class="p">,</span> <span class="nv">$averageCbk</span><span class="p">)))</span>
+    <span class="o">-&gt;</span><span class="nf">lineTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">pivotTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">fullTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">typeMark</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>And now different usage examples:</p>
+
+<p>pivot on ‘host’</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$data</span> <span class="o">=</span> <span class="nc">Pivot</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nv">$recordset</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">pivotOn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'host'</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="nf">addColumn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'year'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">),</span> <span class="k">array</span><span class="p">(</span><span class="s1">'users'</span><span class="p">,</span> <span class="s1">'clicks'</span><span class="p">,))</span>
+    <span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">();</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>_id</strong></th>
+      <th><strong>host</strong></th>
+      <th><strong>2010_1_users</strong></th>
+      <th><strong>2010_1_clicks</strong></th>
+      <th><strong>2010_2_users</strong></th>
+      <th><strong>2010_2_clicks</strong></th>
+      <th><strong>2010_3_users</strong></th>
+      <th><strong>2010_3_clicks</strong></th>
+      <th><strong>2010_4_users</strong></th>
+      <th><strong>2010_4_clicks</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>8</td>
+      <td>236</td>
+      <td>10</td>
+      <td>368</td>
+      <td>4</td>
+      <td>762</td>
+      <td>3</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>111</td>
+      <td>4</td>
+      <td>2</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>3</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>2</td>
+      <td>34</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>pivot on ‘host’ with totals</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$data</span> <span class="o">=</span> <span class="nc">Pivot</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nv">$recordset</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">pivotOn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'host'</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="nf">addColumn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'year'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">),</span> <span class="k">array</span><span class="p">(</span><span class="s1">'users'</span><span class="p">,</span> <span class="s1">'clicks'</span><span class="p">,))</span>
+    <span class="o">-&gt;</span><span class="nf">fullTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">lineTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">();</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>_id</strong></th>
+      <th><strong>host</strong></th>
+      <th><strong>2010_1_users</strong></th>
+      <th><strong>2010_1_clicks</strong></th>
+      <th><strong>2010_2_users</strong></th>
+      <th><strong>2010_2_clicks</strong></th>
+      <th><strong>2010_3_users</strong></th>
+      <th><strong>2010_3_clicks</strong></th>
+      <th><strong>2010_4_users</strong></th>
+      <th><strong>2010_4_clicks</strong></th>
+      <th><strong>TOT_users</strong></th>
+      <th><strong>TOT_clicks</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>8</td>
+      <td>236</td>
+      <td>10</td>
+      <td>368</td>
+      <td>4</td>
+      <td>762</td>
+      <td>3</td>
+      <td>22</td>
+      <td>25</td>
+      <td>1388</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>111</td>
+      <td>4</td>
+      <td>2</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>6</td>
+      <td>113</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>3</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>2</td>
+      <td>34</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>TOT</td>
+      <td>10</td>
+      <td>347</td>
+      <td>14</td>
+      <td>370</td>
+      <td>6</td>
+      <td>796</td>
+      <td>4</td>
+      <td>23</td>
+      <td>34</td>
+      <td>1536</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>pivot on ‘host’ and ‘country’</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$data</span> <span class="o">=</span> <span class="nc">Pivot</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nv">$recordset</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">pivotOn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'host'</span><span class="p">,</span> <span class="s1">'country'</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="nf">addColumn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'year'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">),</span> <span class="k">array</span><span class="p">(</span><span class="s1">'users'</span><span class="p">,</span> <span class="s1">'clicks'</span><span class="p">,))</span>
+    <span class="o">-&gt;</span><span class="nf">fullTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">pivotTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">lineTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">();</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>_id</strong></th>
+      <th><strong>host</strong></th>
+      <th><strong>country</strong></th>
+      <th><strong>2010_1_users</strong></th>
+      <th><strong>2010_1_clicks</strong></th>
+      <th><strong>2010_2_users</strong></th>
+      <th><strong>2010_2_clicks</strong></th>
+      <th><strong>2010_3_users</strong></th>
+      <th><strong>2010_3_clicks</strong></th>
+      <th><strong>2010_4_users</strong></th>
+      <th><strong>2010_4_clicks</strong></th>
+      <th><strong>TOT_users</strong></th>
+      <th><strong>TOT_clicks</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>fr</td>
+      <td>4</td>
+      <td>123</td>
+      <td>5</td>
+      <td>134</td>
+      <td>2</td>
+      <td>341</td>
+      <td> </td>
+      <td> </td>
+      <td>11</td>
+      <td>598</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>es</td>
+      <td>4</td>
+      <td>113</td>
+      <td>5</td>
+      <td>234</td>
+      <td>2</td>
+      <td>421</td>
+      <td>3</td>
+      <td>22</td>
+      <td>14</td>
+      <td>790</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>TOT(host)</td>
+      <td> </td>
+      <td>8</td>
+      <td>236</td>
+      <td>10</td>
+      <td>368</td>
+      <td>4</td>
+      <td>762</td>
+      <td>3</td>
+      <td>22</td>
+      <td>25</td>
+      <td>1388</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>2</td>
+      <td>es</td>
+      <td>2</td>
+      <td>111</td>
+      <td>4</td>
+      <td>2</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>6</td>
+      <td>113</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>TOT(host)</td>
+      <td> </td>
+      <td>2</td>
+      <td>111</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>113</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>3</td>
+      <td>es</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>2</td>
+      <td>34</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>TOT(host)</td>
+      <td> </td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>34</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>TOT</td>
+      <td> </td>
+      <td>10</td>
+      <td>347</td>
+      <td>14</td>
+      <td>370</td>
+      <td>6</td>
+      <td>796</td>
+      <td>4</td>
+      <td>23</td>
+      <td>34</td>
+      <td>1536</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>pivot on ‘host’ and ‘country’ with calculated columms</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$averageCbk</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="nv">$reg</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="nv">$reg</span><span class="p">[</span><span class="s1">'clicks'</span><span class="p">]</span><span class="o">/</span><span class="nv">$reg</span><span class="p">[</span><span class="s1">'users'</span><span class="p">],</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">};</span>
+ 
+<span class="nv">$data</span> <span class="o">=</span> <span class="nc">Pivot</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nv">$recordset</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">pivotOn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'host'</span><span class="p">,</span> <span class="s1">'country'</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="nf">addColumn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'year'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">),</span> <span class="k">array</span><span class="p">(</span><span class="s1">'users'</span><span class="p">,</span> <span class="s1">'clicks'</span><span class="p">,</span> <span class="nc">Pivot</span><span class="o">::</span><span class="nf">callback</span><span class="p">(</span><span class="s1">'average'</span><span class="p">,</span> <span class="nv">$averageCbk</span><span class="p">)))</span>
+    <span class="o">-&gt;</span><span class="nf">lineTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">pivotTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">fullTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">typeMark</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">();</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>_id</strong></th>
+      <th><strong>type</strong></th>
+      <th><strong>host</strong></th>
+      <th><strong>country</strong></th>
+      <th><strong>2010_1_users</strong></th>
+      <th><strong>2010_1_clicks</strong></th>
+      <th><strong>2010_1_average</strong></th>
+      <th><strong>2010_2_users</strong></th>
+      <th><strong>2010_2_clicks</strong></th>
+      <th><strong>2010_2_average</strong></th>
+      <th><strong>2010_3_users</strong></th>
+      <th><strong>2010_3_clicks</strong></th>
+      <th><strong>2010_3_average</strong></th>
+      <th><strong>2010_4_users</strong></th>
+      <th><strong>2010_4_clicks</strong></th>
+      <th><strong>2010_4_average</strong></th>
+      <th><strong>TOT_users</strong></th>
+      <th><strong>TOT_clicks</strong></th>
+      <th><strong>TOT_average</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>fr</td>
+      <td>4</td>
+      <td>123</td>
+      <td>30.75</td>
+      <td>5</td>
+      <td>134</td>
+      <td>26.8</td>
+      <td>2</td>
+      <td>341</td>
+      <td>170.5</td>
+      <td> </td>
+      <td> </td>
+      <td>0</td>
+      <td>11</td>
+      <td>598</td>
+      <td>54.36</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0</td>
+      <td>1</td>
+      <td>es</td>
+      <td>4</td>
+      <td>113</td>
+      <td>28.25</td>
+      <td>5</td>
+      <td>234</td>
+      <td>46.8</td>
+      <td>2</td>
+      <td>421</td>
+      <td>210.5</td>
+      <td>3</td>
+      <td>22</td>
+      <td>7.33</td>
+      <td>14</td>
+      <td>790</td>
+      <td>56.43</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>TOT(host)</td>
+      <td> </td>
+      <td>8</td>
+      <td>236</td>
+      <td>29.5</td>
+      <td>10</td>
+      <td>368</td>
+      <td>36.8</td>
+      <td>4</td>
+      <td>762</td>
+      <td>190.5</td>
+      <td>3</td>
+      <td>22</td>
+      <td>7.33</td>
+      <td>25</td>
+      <td>1388</td>
+      <td>264.13</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0</td>
+      <td>2</td>
+      <td>es</td>
+      <td>2</td>
+      <td>111</td>
+      <td>55.5</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td> </td>
+      <td> </td>
+      <td>0</td>
+      <td> </td>
+      <td> </td>
+      <td>0</td>
+      <td>6</td>
+      <td>113</td>
+      <td>18.83</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>1</td>
+      <td>TOT(host)</td>
+      <td> </td>
+      <td>2</td>
+      <td>111</td>
+      <td>55.5</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0.5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>113</td>
+      <td>56</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0</td>
+      <td>3</td>
+      <td>es</td>
+      <td> </td>
+      <td> </td>
+      <td>0</td>
+      <td> </td>
+      <td> </td>
+      <td>0</td>
+      <td>2</td>
+      <td>34</td>
+      <td>17</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>35</td>
+      <td>11.67</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>1</td>
+      <td>TOT(host)</td>
+      <td> </td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>34</td>
+      <td>17</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>35</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>3</td>
+      <td>TOT</td>
+      <td> </td>
+      <td>10</td>
+      <td>347</td>
+      <td>34.7</td>
+      <td>14</td>
+      <td>370</td>
+      <td>26.43</td>
+      <td>6</td>
+      <td>796</td>
+      <td>132.67</td>
+      <td>4</td>
+      <td>23</td>
+      <td>5.75</td>
+      <td>34</td>
+      <td>1536</td>
+      <td>45.18</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>UPDATED</strong></p>
+
+<p>As Marcin said in a <a href="http://gonzalo123.wordpress.com/2010/01/24/pivot-tables-in-php/#comment-163">comment</a> we can add the count of grouped columns. This functionality was not available on the first release of Pivot class. I think it can be useful so I’ve developed it Some examples:</p>
+
+<p>pivot on ‘host’ and ‘country’ with group count</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$data</span> <span class="o">=</span> <span class="nc">Pivot</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nv">$recordset</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">pivotOn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'host'</span><span class="p">,</span> <span class="s1">'country'</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="nf">addColumn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'year'</span><span class="p">,</span> <span class="s1">'month'</span><span class="p">),</span> <span class="k">array</span><span class="p">(</span><span class="s1">'users'</span><span class="p">,</span> <span class="s1">'clicks'</span><span class="p">,</span> <span class="nc">Pivot</span><span class="o">::</span><span class="nb">count</span><span class="p">(</span><span class="s1">'count'</span><span class="p">)))</span>
+    <span class="o">-&gt;</span><span class="nf">fullTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">pivotTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">lineTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">();</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>_id</strong></th>
+      <th><strong>host</strong></th>
+      <th><strong>country</strong></th>
+      <th><strong>2010_1_users</strong></th>
+      <th><strong>2010_1_clicks</strong></th>
+      <th><strong>2010_1_count</strong></th>
+      <th><strong>2010_2_users</strong></th>
+      <th><strong>2010_2_clicks</strong></th>
+      <th><strong>2010_2_count</strong></th>
+      <th><strong>2010_3_users</strong></th>
+      <th><strong>2010_3_clicks</strong></th>
+      <th><strong>2010_3_count</strong></th>
+      <th><strong>2010_4_users</strong></th>
+      <th><strong>2010_4_clicks</strong></th>
+      <th><strong>2010_4_count</strong></th>
+      <th><strong>TOT_users</strong></th>
+      <th><strong>TOT_clicks</strong></th>
+      <th><strong>TOT_count</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>fr</td>
+      <td>4</td>
+      <td>123</td>
+      <td>1</td>
+      <td>5</td>
+      <td>134</td>
+      <td>1</td>
+      <td>2</td>
+      <td>341</td>
+      <td>1</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>11</td>
+      <td>598</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>es</td>
+      <td>4</td>
+      <td>113</td>
+      <td>1</td>
+      <td>5</td>
+      <td>234</td>
+      <td>1</td>
+      <td>2</td>
+      <td>421</td>
+      <td>1</td>
+      <td>3</td>
+      <td>22</td>
+      <td>1</td>
+      <td>14</td>
+      <td>790</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>TOT(host)</td>
+      <td> </td>
+      <td>8</td>
+      <td>236</td>
+      <td>2</td>
+      <td>10</td>
+      <td>368</td>
+      <td>2</td>
+      <td>4</td>
+      <td>762</td>
+      <td>2</td>
+      <td>3</td>
+      <td>22</td>
+      <td>1</td>
+      <td>25</td>
+      <td>1388</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>2</td>
+      <td>es</td>
+      <td>2</td>
+      <td>111</td>
+      <td>1</td>
+      <td>4</td>
+      <td>2</td>
+      <td>1</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>6</td>
+      <td>113</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>TOT(host)</td>
+      <td> </td>
+      <td>2</td>
+      <td>111</td>
+      <td>1</td>
+      <td>4</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>113</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>3</td>
+      <td>es</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>2</td>
+      <td>34</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>35</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>TOT(host)</td>
+      <td> </td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>34</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>35</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>TOT</td>
+      <td> </td>
+      <td>10</td>
+      <td>347</td>
+      <td>3</td>
+      <td>14</td>
+      <td>370</td>
+      <td>3</td>
+      <td>6</td>
+      <td>796</td>
+      <td>3</td>
+      <td>4</td>
+      <td>23</td>
+      <td>2</td>
+      <td>34</td>
+      <td>1536</td>
+      <td>11</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>pivot on ‘country’ with group count</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$data</span> <span class="o">=</span> <span class="nc">Pivot</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nv">$recordset</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">pivotOn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'host'</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="nf">addColumn</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'country'</span><span class="p">),</span> <span class="k">array</span><span class="p">(</span><span class="s1">'year'</span><span class="p">,</span> <span class="nc">Pivot</span><span class="o">::</span><span class="nb">count</span><span class="p">(</span><span class="s1">'count'</span><span class="p">)))</span>
+    <span class="o">-&gt;</span><span class="nf">lineTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">fullTotal</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">();</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>_id</strong></th>
+      <th><strong>host</strong></th>
+      <th><strong>fr__year</strong></th>
+      <th><strong>fr__count</strong></th>
+      <th><strong>es__year</strong></th>
+      <th><strong>es__count</strong></th>
+      <th><strong>TOT_year</strong></th>
+      <th><strong>TOT_count</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>6030</td>
+      <td>3</td>
+      <td>8040</td>
+      <td>4</td>
+      <td>14070</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>2</td>
+      <td> </td>
+      <td> </td>
+      <td>4020</td>
+      <td>2</td>
+      <td>4020</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>3</td>
+      <td> </td>
+      <td> </td>
+      <td>4020</td>
+      <td>2</td>
+      <td>4020</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>TOT</td>
+      <td>6030</td>
+      <td>3</td>
+      <td>16080</td>
+      <td>8</td>
+      <td>22110</td>
+      <td>11</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The source code of the class is available in <a href="https://github.com/gonzalo123/gam-pivot">github</a></p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Pivot+tables+in+PHP%20http%3A%2F%2Flocalhost%3A4000%2F2010%2F01%2F24%2Fpivot-tables-in-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2010%2F01%2F24%2Fpivot-tables-in-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Pivot+tables+in+PHP&url=http%3A%2F%2Flocalhost%3A4000%2F2010%2F01%2F24%2Fpivot-tables-in-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/2010/01/24/pivot-tables-in-php/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2010/01/24/pivot-tables-in-php'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617358755669312000"></script>
+
+
+    </div>
+  </body>
+</html>
