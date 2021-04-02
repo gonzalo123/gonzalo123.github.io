@@ -1,6 +1,5 @@
 ---
 layout: post
-permalink: /:year/:month/:day/:title/
 title: "Playing with Python threads. Part 2"
 date: "2020-11-16"
 categories: 

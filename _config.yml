@@ -28,7 +28,7 @@ defaults:
 # Build settings
 destination: _site
 paginate: 20
-permalink: /:year/:title/
+permalink: /:year/:month/:day/:title/
 markdown: kramdown
 highlighter: rouge
 
@@ -53,3 +53,6 @@ exclude: [
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
+
+liquid:
+  error_mode: lax
