@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Don't repeat password validator in Django</title>
+  <meta name="description" content="Django has a set of default password validators by default in django.contrib.auth.password_validator
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Don't repeat password validator in Django">
+  <meta name="twitter:description" content="Django has a set of default password validators by default in django.contrib.auth.password_validator
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Don't repeat password validator in Django">
+  <meta property="og:description" content="Django has a set of default password validators by default in django.contrib.auth.password_validator
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617367282087848000">
+  <link rel="canonical" href="/2020/09/21/dont-repeat-password-validator-in-django/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+  style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <a href="/" title="link to home of Gonzalo Ayuso">
+          <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">Web Architect. Personal technical blog since 2008</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <!-- Twitter -->
+              <li class="navigation__item">
+                <a href="http://twitter.com/gonzalo123"
+                  title="@gonzalo123 on Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/gonzaloayuso"
+                  title="gonzaloayuso on LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/gonzalo123"
+                  title="gonzalo123 on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+              
+
+              <!-- RSS -->
+              <li class="navigation__item">
+                <a href="/feed.xml" title="Subscribe" target="_blank">
+                  <i class="icon icon-rss"></i>
+                  <span class="label">RSS</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2020-09-21 00:00" class="post-meta__date date">21 Sep 2020</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#django">django</a>, <a href="/tags/#python">python</a></span>
+      
+    </div>
+    <h1 class="post-title">Don't repeat password validator in Django</h1>
+  </header>
+
+  <section class="post">
+    <p>Django has a set of default password validators by default in django.contrib.auth.password_validator</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">AUTH_PASSWORD_VALIDATORS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s">'NAME'</span><span class="p">:</span> <span class="s">'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s">'NAME'</span><span class="p">:</span> <span class="s">'django.contrib.auth.password_validation.MinimumLengthValidator'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s">'NAME'</span><span class="p">:</span> <span class="s">'django.contrib.auth.password_validation.CommonPasswordValidator'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s">'NAME'</span><span class="p">:</span> <span class="s">'django.contrib.auth.password_validation.NumericPasswordValidator'</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p>Normally those validators aren’t enough (at least for me) but it’s very easy to create customs validators. There’re also several validators that we can use, for example those <a href="https://sixfeetup.com/blog/custom-password-validators-in-django">ones</a>.</p>
+
+<p>I normally need to avoid users to repeat passwords (for example the last ten ones). To do that we need to create a custom validator. Whit this validator we also need to create a model to store the last passwords (the hash). The idea is to persits the hash of the password each time the user changes the password. As well as is always a good practice not to use the default User model, we’re going to create a CustomUser model</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CustomUser</span><span class="p">(</span><span class="n">AbstractUser</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CustomUser</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">original_password</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">password</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CustomUser</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">_password_has_been_changed</span><span class="p">():</span>
+            <span class="n">CustomUserPasswordHistory</span><span class="p">.</span><span class="n">remember_password</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_password_has_been_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">original_password</span> <span class="o">!=</span> <span class="bp">self</span><span class="p">.</span><span class="n">password</span>
+</code></pre></div></div>
+
+<p>And now we can create our CustomUserPasswordHistory implementing the remember_password method.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">CustomUserPasswordHistory</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">CustomUser</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="p">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">old_pass</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+    <span class="n">pass_date</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">DateTimeField</span><span class="p">()</span>
+
+    <span class="o">@</span><span class="nb">classmethod</span>
+    <span class="k">def</span> <span class="nf">remember_password</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="n">cls</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">old_pass</span><span class="o">=</span><span class="n">user</span><span class="p">.</span><span class="n">password</span><span class="p">,</span> <span class="n">pass_date</span><span class="o">=</span><span class="n">localtime</span><span class="p">()).</span><span class="n">save</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Now the validator:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DontRepeatValidator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">history</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">history</span> <span class="o">=</span> <span class="n">history</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">last_pass</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">_get_last_passwords</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">check_password</span><span class="p">(</span><span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span> <span class="n">encoded</span><span class="o">=</span><span class="n">last_pass</span><span class="p">):</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">_raise_validation_error</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_help_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_</span><span class="p">(</span><span class="s">"You cannot repeat passwords"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_raise_validation_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+            <span class="n">_</span><span class="p">(</span><span class="s">"This password has been used before."</span><span class="p">),</span>
+            <span class="n">code</span><span class="o">=</span><span class="s">'password_has_been_used'</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">'history'</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">history</span><span class="p">},</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_last_passwords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="n">all_history_user_passwords</span> <span class="o">=</span> <span class="n">CustomUserPasswordHistory</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">username_id</span><span class="o">=</span><span class="n">user</span><span class="p">).</span><span class="n">order_by</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span>
+
+        <span class="n">to_index</span> <span class="o">=</span> <span class="n">all_history_user_passwords</span><span class="p">.</span><span class="n">count</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">history</span>
+        <span class="n">to_index</span> <span class="o">=</span> <span class="n">to_index</span> <span class="k">if</span> <span class="n">to_index</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">to_index</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">u</span><span class="p">.</span><span class="n">delete</span><span class="p">()</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">all_history_user_passwords</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">to_index</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">p</span><span class="p">.</span><span class="n">old_pass</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">all_history_user_passwords</span><span class="p">[</span><span class="n">to_index</span><span class="p">:]]</span>
+</code></pre></div></div>
+
+<p>We can see how it works with the unit tests:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">UserCreationTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'gonzalo'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_persist_password_to_history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="n">set_password</span><span class="p">(</span><span class="s">'pass1'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">all_history_user_passwords</span> <span class="o">=</span> <span class="n">CustomUserPasswordHistory</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">username_id</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">all_history_user_passwords</span><span class="p">.</span><span class="n">count</span><span class="p">())</span>
+
+
+<span class="k">class</span> <span class="nc">DontRepeatValidatorTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'gonzalo'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">validator</span> <span class="o">=</span> <span class="n">DontRepeatValidator</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">test_validator_with_new_pass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">validator</span><span class="p">.</span><span class="n">validate</span><span class="p">(</span><span class="s">'pass33'</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_validator_with_repeated_pass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="n">set_password</span><span class="p">(</span><span class="sa">f</span><span class="s">'pass</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="p">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">validator</span><span class="p">.</span><span class="n">validate</span><span class="p">(</span><span class="s">'pass3'</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">user</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_keep_only_10_passwords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+
+            <span class="bp">self</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="n">set_password</span><span class="p">(</span><span class="sa">f</span><span class="s">'pass</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">validator</span><span class="p">.</span><span class="n">validate</span><span class="p">(</span><span class="s">'xxxx'</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">user</span><span class="p">)</span>
+
+        <span class="n">all_history_user_passwords</span> <span class="o">=</span> <span class="n">CustomUserPasswordHistory</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">username_id</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">all_history_user_passwords</span><span class="p">.</span><span class="n">count</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>Full source code in my <a href="https://github.com/gonzalo123/dont-repeat-password-validator-Django">github</a></p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Don%27t+repeat+password+validator+in+Django%20%2F2020%2F09%2F21%2Fdont-repeat-password-validator-in-django%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2020%2F09%2F21%2Fdont-repeat-password-validator-in-django%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Don%27t+repeat+password+validator+in+Django&url=%2F2020%2F09%2F21%2Fdont-repeat-password-validator-in-django%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2020/09/21/dont-repeat-password-validator-in-django/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2020/09/21/dont-repeat-password-validator-in-django'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617367282087848000"></script>
+
+
+    </div>
+  </body>
+</html>

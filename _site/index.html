@@ -50,7 +50,7 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="theme-color" content="#ffffff">
   
-  <link rel="stylesheet" href="/css/main.css?1617364281989330000">
+  <link rel="stylesheet" href="/css/main.css?1617367282087848000">
   <link rel="canonical" href="/">
   <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
 </head>
@@ -150,6 +150,20 @@
   <ol class="post-list">
     
       <li>
+        <h2 class="post-list__post-title post-title"><a href="/2021/03/08/playing-with-go-and-file-system-watchers/" title="Playing with Go and file system watchers">Playing with Go and file system watchers</a></h2>
+        <p class="excerpt">Let me explain the idea. I want to emit one RabbitMQ message each time new file is generated in a folder. The problem is that I cannot modify the code of the software that generate the files. The idea is generate a filesystem watcher that emits the message. Let’s start.
+
+&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="2021-03-08 00:00" class="post-list__meta--date date">8 Mar 2021</time>
+            
+            &#8226; <span class="post-meta__tags">on <a href="/tags/#fswatcher">fswatcher</a>, <a href="/tags/#go">go</a>, <a href="/tags/#rabbitmq">rabbitmq</a></span>
+            
+        </div>
+        <hr class="post-list__divider">
+      </li>
+    
+      <li>
         <h2 class="post-list__post-title post-title"><a href="/2021/database-utils-for-psycopg2/" title="Database utils for psycopg2">Database utils for psycopg2</a></h2>
         <p class="excerpt">I normally need to perform raw queries when I’m working with Python. Even when I’m using Django and it’s ORM I need to execute sql against the database. As I use (almost always) PostgreSQL and I use (as we all do) psycopg2. Psycopg2 is very complete and easy to use but sometimes I need a few helpers to make my usual tasks easier. I don’t want to create a complex library on top of psycopg2, only a helper.
 
@@ -164,6 +178,48 @@
       </li>
     
       <li>
+        <h2 class="post-list__post-title post-title"><a href="/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/" title="Playing with RabbitMQ, Python and Docker. From Exchanges to Queues">Playing with RabbitMQ, Python and Docker. From Exchanges to Queues</a></h2>
+        <p class="excerpt">Lately in all my projects message queues appear in one way or another. Normally I work with AWS and I use SQS and SNS, but I also use quite often, RabbitMQ and MQTT. In AWS there’s something that I use a lot to isolate services. The process that emits messages emits message to SNS and I bind SNS to SQS. With this technique I can attach n SQS to the the same SNS. I’ve used it here. In AWS is pretty straightforward to do that. Today We’re going to do the same with RabbitMQ. In fact it’s very easy to do it in RabbitMQ. We only need to follow the tutorial in official RabbitMQ documentation.
+
+&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="2021-01-11 00:00" class="post-list__meta--date date">11 Jan 2021</time>
+            
+            &#8226; <span class="post-meta__tags">on <a href="/tags/#docker">docker</a>, <a href="/tags/#python">python</a>, <a href="/tags/#rabbitmq">rabbitmq</a></span>
+            
+        </div>
+        <hr class="post-list__divider">
+      </li>
+    
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="/2020/12/14/running-python-django-docker-containers-with-non-root-user/" title="Running Python/Django docker containers with non-root user">Running Python/Django docker containers with non-root user</a></h2>
+        <p class="excerpt">Running linux processes as root is not a good idea. One problem or exploit with the process can give to the attacker a root shell. When we run one docker container, especially if this container is in production it shouldn’t be run as root.
+
+&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="2020-12-14 00:00" class="post-list__meta--date date">14 Dec 2020</time>
+            
+            &#8226; <span class="post-meta__tags">on <a href="/tags/#django">django</a>, <a href="/tags/#docker">docker</a>, <a href="/tags/#python">python</a></span>
+            
+        </div>
+        <hr class="post-list__divider">
+      </li>
+    
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="/2020/11/16/playing-with-python-threads-part-2/" title="Playing with Python threads. Part 2">Playing with Python threads. Part 2</a></h2>
+        <p class="excerpt">Last year I’ve written one post about Python and threads. You can read it here. Today I want to keep on playing with Python and threads. The idea is create one simple script that prints one asterisk in the console each second. Simple, isn’t it?
+
+&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="2020-11-16 00:00" class="post-list__meta--date date">16 Nov 2020</time>
+            
+            &#8226; <span class="post-meta__tags">on <a href="/tags/#python">python</a>, <a href="/tags/#threads">threads</a></span>
+            
+        </div>
+        <hr class="post-list__divider">
+      </li>
+    
+      <li>
         <h2 class="post-list__post-title post-title"><a href="/2020/10/26/django-logs-to-elk-using-filebeat/" title="Django logs to ELK using Filebeat">Django logs to ELK using Filebeat</a></h2>
         <p class="excerpt">I’ve written a post about how to send Django logs to ELK stack. You can read it here. In that post I’ve used logstash client with a sidecar docker container. Logstash client works but it needs too much resources. Nowadays it’s better to use Filebeat as data shipper instead of Logstash client. Filebeat it’s also a part of ELK stack. It’s a golang binary much lightweight than logstash client.
 
@@ -172,6 +228,118 @@
             <time datetime="2020-10-26 00:00" class="post-list__meta--date date">26 Oct 2020</time>
             
             &#8226; <span class="post-meta__tags">on <a href="/tags/#django">django</a>, <a href="/tags/#elk">elk</a>, <a href="/tags/#python">python</a></span>
+            
+        </div>
+        <hr class="post-list__divider">
+      </li>
+    
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="/2020/09/21/dont-repeat-password-validator-in-django/" title="Don't repeat password validator in Django">Don't repeat password validator in Django</a></h2>
+        <p class="excerpt">Django has a set of default password validators by default in django.contrib.auth.password_validator
+
+&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="2020-09-21 00:00" class="post-list__meta--date date">21 Sep 2020</time>
+            
+            &#8226; <span class="post-meta__tags">on <a href="/tags/#django">django</a>, <a href="/tags/#python">python</a></span>
+            
+        </div>
+        <hr class="post-list__divider">
+      </li>
+    
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="/2020/08/10/monitoring-django-applications-with-grafana-and-kibana-using-prometheus-and-elasticsearch/" title="Monitoring Django applications with Grafana and Kibana using Prometheus and Elasticsearch">Monitoring Django applications with Grafana and Kibana using Prometheus and Elasticsearch</a></h2>
+        <p class="excerpt">When we’ve one application we need to monitor the logs in one way or another. Not only the server’s logs (500 errors, response times and things like that). Sometimes the user complains about the application. Without logs we cannot do anything. We can save logs within files and let grep and tail do the magic. This’s assumable with a single on-premise server, but nowadays with clouds and docker this’s a nightmare. We need a central log collector to collect all the logs of the application and use this collector to create alerts, and complex searches of our application logs.
+
+&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="2020-08-10 00:00" class="post-list__meta--date date">10 Aug 2020</time>
+            
+            &#8226; <span class="post-meta__tags">on <a href="/tags/#django">django</a>, <a href="/tags/#elasticsearch">elasticsearch</a>, <a href="/tags/#elk">elk</a>, <a href="/tags/#grafana">grafana</a>, <a href="/tags/#kibana">kibana</a>, <a href="/tags/#prometheus">prometheus</a>, <a href="/tags/#python">python</a></span>
+            
+        </div>
+        <hr class="post-list__divider">
+      </li>
+    
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="/2020/07/06/deploying-django-application-to-aws-ec2-instance-with-docker/" title="Deploying Django application to AWS EC2 instance with Docker">Deploying Django application to AWS EC2 instance with Docker</a></h2>
+        <p class="excerpt">In AWS we have several ways to deploy Django (and not Django applications) with Docker. We can use ECS or EKS clusters. If we don’t have one ECS or Kubernetes cluster up and running, maybe it can be complex. Today I want to show how deploy a Django application in production mode within a EC2 host. Let’s start.
+
+&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="2020-07-06 00:00" class="post-list__meta--date date">6 Jul 2020</time>
+            
+            &#8226; <span class="post-meta__tags">on <a href="/tags/#architecture">architecture</a>, <a href="/tags/#aws">aws</a>, <a href="/tags/#cloud">cloud</a>, <a href="/tags/#django">django</a>, <a href="/tags/#docker">docker</a>, <a href="/tags/#ec2">ec2</a>, <a href="/tags/#python">python</a></span>
+            
+        </div>
+        <hr class="post-list__divider">
+      </li>
+    
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="/2020/06/01/django-reactive-users-with-celery-and-channels/" title="Django reactive users with Celery and Channels">Django reactive users with Celery and Channels</a></h2>
+        <p class="excerpt">Today I want to build a prototype. The idea is to create two Django applications. One application will be the master and the other one will the client. Both applications will have their User model but each change within master User model will be propagated through the client (or clients). Let me show you what I’ve got in my mind:
+
+&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="2020-06-01 00:00" class="post-list__meta--date date">1 Jun 2020</time>
+            
+            &#8226; <span class="post-meta__tags">on <a href="/tags/#aws">aws</a>, <a href="/tags/#celery">celery</a>, <a href="/tags/#channels">channels</a>, <a href="/tags/#django">django</a>, <a href="/tags/#python">python</a>, <a href="/tags/#websockets">websockets</a></span>
+            
+        </div>
+        <hr class="post-list__divider">
+      </li>
+    
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="/2020/05/04/real-time-python-applications-with-django-channels-docker-and-kubernetes/" title="Building real time Python applications with Django Channels, Docker and Kubernetes">Building real time Python applications with Django Channels, Docker and Kubernetes</a></h2>
+        <p class="excerpt">Three years ago I wrote an article about webockets. In fact I’ve written several articles about Websockets (Websockets and real time communications is something that I’m really passionate about), but today I would like to pick up this article. Nowadays I’m involved with several Django projects so I want to create a similar working prototype with Django. Let’s start:
+
+&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="2020-05-04 00:00" class="post-list__meta--date date">4 May 2020</time>
+            
+            &#8226; <span class="post-meta__tags">on <a href="/tags/#channels">channels</a>, <a href="/tags/#django">django</a>, <a href="/tags/#docker">docker</a>, <a href="/tags/#k8s">k8s</a>, <a href="/tags/#python">python</a>, <a href="/tags/#websockets">websockets</a>, <a href="/tags/#ws">ws</a></span>
+            
+        </div>
+        <hr class="post-list__divider">
+      </li>
+    
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="/2020/04/20/deploying-python-application-using-docker-and-kubernetes/" title="Deploying Python Application using Docker and Kubernetes">Deploying Python Application using Docker and Kubernetes</a></h2>
+        <p class="excerpt">I’ve learning how to deploy one Python application to Kubernetes. Here you can see my notes:
+
+&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="2020-04-20 00:00" class="post-list__meta--date date">20 Apr 2020</time>
+            
+            &#8226; <span class="post-meta__tags">on <a href="/tags/#devops">devops</a>, <a href="/tags/#flask">flask</a>, <a href="/tags/#k8s">k8s</a>, <a href="/tags/#kubernetes">kubernetes</a></span>
+            
+        </div>
+        <hr class="post-list__divider">
+      </li>
+    
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="/2020/03/30/building-bluetooth-iot-devices-compatible-with-alexa/" title="Building Bluetooth iot devices compatible with Alexa">Building Bluetooth iot devices compatible with Alexa</a></h2>
+        <p class="excerpt">Alexa can speak with iot devices (bulbs, switches, …) directly without creating any skill. Recently I’ve discoverer the library fauxmoesp to use a ESP32 as a virtual device and use it with Alexa.
+
+&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="2020-03-30 00:00" class="post-list__meta--date date">30 Mar 2020</time>
+            
+            &#8226; <span class="post-meta__tags">on <a href="/tags/#alexa">alexa</a>, <a href="/tags/#arduino">arduino</a>, <a href="/tags/#bluetooth">bluetooth</a>, <a href="/tags/#iot">iot</a></span>
+            
+        </div>
+        <hr class="post-list__divider">
+      </li>
+    
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="/2020/01/13/alexa-and-raspberry-pi-demo-part-2-listening-to-external-events/" title="Alexa and Raspberry Pi demo (Part 2). Listening to external events">Alexa and Raspberry Pi demo (Part 2). Listening to external events</a></h2>
+        <p class="excerpt">Today I want to keep on with the previous example. This time I want to create one Alexa skill that listen to external events. The example that I’ve build is the following one:
+
+&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="2020-01-13 00:00" class="post-list__meta--date date">13 Jan 2020</time>
+            
+            &#8226; <span class="post-meta__tags">on <a href="/tags/#alexa">alexa</a>, <a href="/tags/#arduino">arduino</a>, <a href="/tags/#esp32">esp32</a>, <a href="/tags/#iot">iot</a>, <a href="/tags/#javascript">javascript</a>, <a href="/tags/#raspberry-pi">raspberry-pi</a></span>
             
         </div>
         <hr class="post-list__divider">
@@ -261,174 +429,6 @@
         <hr class="post-list__divider">
       </li>
     
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="/2009/12/07/moving-singleton-and-factory-patterns-to-abstract-with-php-5-3/" title="Moving singleton and factory patterns to Abstract with php 5.3">Moving singleton and factory patterns to Abstract with php 5.3</a></h2>
-        <p class="excerpt">I have built a backend library. I have a tree of classes and i want to use singleton and factory patterns to my class set. Easy isn’t it?
-
-&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="2009-12-07 00:00" class="post-list__meta--date date">7 Dec 2009</time>
-            
-            &#8226; <span class="post-meta__tags">on <a href="/tags/#php">php</a>, <a href="/tags/#web-development">web-development</a></span>
-            
-        </div>
-        <hr class="post-list__divider">
-      </li>
-    
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="/2009/09/09/soyrico/" title="Soy rico">Soy rico</a></h2>
-        <p class="excerpt">Lunes 7:00. Suena el despertador. Normalmente cuando suena el despertador es el peor momento del día. Hoy encima me ha sentado especialmente mal (lunes, vacaciones recientes, …). Llego a la oficina, miro el correo y me encuentro con esto:
-
-&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="2009-09-09 00:00" class="post-list__meta--date date">9 Sep 2009</time>
-            
-            &#8226; <span class="post-meta__tags">on <a href="/tags/#personal">personal</a></span>
-            
-        </div>
-        <hr class="post-list__divider">
-      </li>
-    
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="/2009/07/30/antivirus/" title="antivirus">antivirus</a></h2>
-        <p class="excerpt">Acabo de recibir un correo con propaganda de un antivirus. Es una lástima que no use antivirus porque el producto tiene una pinta buenísima. Literal copiado del correo:
-
-&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="2009-07-30 00:00" class="post-list__meta--date date">30 Jul 2009</time>
-            
-            &#8226; <span class="post-meta__tags">on <a href="/tags/#personal">personal</a></span>
-            
-        </div>
-        <hr class="post-list__divider">
-      </li>
-    
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="/2009/05/08/server-side-web-frameworks-are-dead/" title="Server side web frameworks are dead">Server side web frameworks are dead</a></h2>
-        <p class="excerpt">Server side web frameworks are dead. Long life to client side web frameworks. Struts, JSF, Spring, Ruby on Rails, Cake, Symfony … (even my framework in PHP ;) ) as full stack web framework are dead. Logic is moving to the client side. Javascript, the language used as deadly weapon in the browser wars nowadays is the key of the web. Server logic is getting thin. A thin server side framework serving JSON (Zend Framework is really cool for this) plus a good and strong client side framework such as Dojo or ExtJs with a good widget set with all the application logic can be the new parading of web develop.
-
-&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="2009-05-08 00:00" class="post-list__meta--date date">8 May 2009</time>
-            
-            &#8226; <span class="post-meta__tags">on <a href="/tags/#php">php</a>, <a href="/tags/#web-development">web-development</a></span>
-            
-        </div>
-        <hr class="post-list__divider">
-      </li>
-    
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="/2009/04/18/speed-up-page-load-with-asynchronous-javascript/" title="Speed up page load with asynchronous javascript">Speed up page load with asynchronous javascript</a></h2>
-        <p class="excerpt">JavaScript an important part of or web applications. Normally or web is not usable until js is full loaded. Almost all js framework implements an event to notice when the js is ready (dojo.addOnLoad(); $(function() {});) and the page is usable. The page is usable when js is loaded. Sometimes if you are working with dojo you need all js and maybe is better to create an splash screen until all is loaded. But sometimes your app don’t need all js to be usable. I give you a example: I’ve been working in a project with jQuery. I load jQuery library from google cdn
-
-&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="2009-04-18 00:00" class="post-list__meta--date date">18 Apr 2009</time>
-            
-            &#8226; <span class="post-meta__tags">on <a href="/tags/#technology">technology</a>, <a href="/tags/#web-development">web-development</a></span>
-            
-        </div>
-        <hr class="post-list__divider">
-      </li>
-    
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="/2009/04/18/mixin-dojo-and-google-api-libraries/" title="mixin dojo and google api libraries">mixin dojo and google api libraries</a></h2>
-        <p class="excerpt">I’m working in a dojo application and I also need to use some goolge api like feeds, maps and books. Dojo is very versatile adding new components using dojo.require. when all dojo components are loaded dojo.addOnLoad callback is fired.
-
-&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="2009-04-18 00:00" class="post-list__meta--date date">18 Apr 2009</time>
-            
-            &#8226; <span class="post-meta__tags">on <a href="/tags/#dojo">dojo</a>, <a href="/tags/#technology">technology</a>, <a href="/tags/#web-development">web-development</a></span>
-            
-        </div>
-        <hr class="post-list__divider">
-      </li>
-    
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="/2009/04/10/fetching-book-cover-with-google-api-and-dojo/" title="fetching book cover with google API and dojo">fetching book cover with google API and dojo</a></h2>
-        <p class="excerpt">I want to put the cover of one book into my dojo application. I can use amazon Web service but google API has a nice JSONP interface and also google API uses ISBN instead ASIN to fetch book info and for me is easier to know the ISBN (it is in the first page of every book). I have a previous post explaining how to use use JSONP with javascript, but now I want to do the same in a dojo-way using dojo.io.script.get
-
-&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="2009-04-10 00:00" class="post-list__meta--date date">10 Apr 2009</time>
-            
-            &#8226; <span class="post-meta__tags">on <a href="/tags/#dojo">dojo</a>, <a href="/tags/#technology">technology</a>, <a href="/tags/#web-development">web-development</a></span>
-            
-        </div>
-        <hr class="post-list__divider">
-      </li>
-    
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="/2009/04/10/consuming-external-javascript-services-with-dojo/" title="Consuming external javascript services with Dojo">Consuming external javascript services with Dojo</a></h2>
-        <p class="excerpt">I want to include goggle’s GSbookBar in one dokjo application. Unfortunately this API doesn’t have a JSONP interface. I need to include one external js file and use GSbookBar object. It’s really simple but I want to so something different. The book bar appears only in one pop up of one tab in my application. It isn’t a main part so I don’t want to load the external script every time the user loads the application.
-
-&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="2009-04-10 00:00" class="post-list__meta--date date">10 Apr 2009</time>
-            
-            &#8226; <span class="post-meta__tags">on <a href="/tags/#dojo">dojo</a>, <a href="/tags/#technology">technology</a>, <a href="/tags/#web-development">web-development</a></span>
-            
-        </div>
-        <hr class="post-list__divider">
-      </li>
-    
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="/2009/03/29/virus-letal/" title="virus letal">virus letal</a></h2>
-        <p class="excerpt">He recibido un aviso muy importante:
-
-&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="2009-03-29 00:00" class="post-list__meta--date date">29 Mar 2009</time>
-            
-            &#8226; <span class="post-meta__tags">on <a href="/tags/#personal">personal</a></span>
-            
-        </div>
-        <hr class="post-list__divider">
-      </li>
-    
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="/2009/03/23/killall-firefox-bin/" title="killall firefox-bin">killall firefox-bin</a></h2>
-        <p class="excerpt">As a web developer firefox is my only choice. I need other browser to test my applications but I can’t live without firebug. I now there are other firebug-clone for other browsers but firebug is the number one.
-
-&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="2009-03-23 00:00" class="post-list__meta--date date">23 Mar 2009</time>
-            
-            &#8226; <span class="post-meta__tags">on <a href="/tags/#technology">technology</a>, <a href="/tags/#web-development">web-development</a></span>
-            
-        </div>
-        <hr class="post-list__divider">
-      </li>
-    
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="/2009/03/15/dojohitch/" title="dojo.hitch">dojo.hitch</a></h2>
-        <p class="excerpt">The first time I read about dojo.hitch I didn’t understand anything. I read in a book dojo.hitch is a very important function and widely used into dojo library but I didn’t understand why. I am using my learning of dojo to improve my skill in javascript. I remember the time when I hate javascript. I thought it was a very poor program language and everything I need to do with js was a nightmare. If browser was Netscape one way to to do one thing, if browser was IE other (of a other and a couple of hacks). But the times have changed. XHR and Ajax has reinvented the web. Web pages had became into Web Applications. Asynchronous request had opened our minds to a new generation of web applications, and all of it is thanks to javascript. Each day I spent learning js I see how much I was wrong.
-
-&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="2009-03-15 00:00" class="post-list__meta--date date">15 Mar 2009</time>
-            
-            &#8226; <span class="post-meta__tags">on <a href="/tags/#dojo">dojo</a>, <a href="/tags/#technology">technology</a>, <a href="/tags/#web-development">web-development</a></span>
-            
-        </div>
-        <hr class="post-list__divider">
-      </li>
-    
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="/2009/03/07/nslu2-installation/" title="nslu2 installation">nslu2 installation</a></h2>
-        <p class="excerpt">I need to change the HDD of my Linksys NSLU2 so I will use the opportunity to write a small HowTo to show how to set up an unslung firmware into my nslu2. Let’s start
-
-&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="2009-03-07 00:00" class="post-list__meta--date date">7 Mar 2009</time>
-            
-            &#8226; <span class="post-meta__tags">on <a href="/tags/#linux">linux</a>, <a href="/tags/#technology">technology</a></span>
-            
-        </div>
-        <hr class="post-list__divider">
-      </li>
-    
   </ol>
 
   <hr class="post-list__divider ">
@@ -455,7 +455,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617364281989330000"></script>
+<script type="text/javascript" src="/js/main.js?1617367282087848000"></script>
 
 
     </div>

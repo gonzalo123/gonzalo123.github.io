@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Playing with RabbitMQ, Python and Docker. From Exchanges to Queues</title>
+  <meta name="description" content="Lately in all my projects message queues appear in one way or another. Normally I work with AWS and I use SQS and SNS, but I also use quite often, RabbitMQ and MQTT. In AWS there’s something that I use a lot to isolate services. The process that emits messages emits message to SNS and I bind SNS to SQS. With this technique I can attach n SQS to the the same SNS. I’ve used it here. In AWS is pretty straightforward to do that. Today We’re going to do the same with RabbitMQ. In fact it’s very easy to do it in RabbitMQ. We only need to follow the tutorial in official RabbitMQ documentation.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Playing with RabbitMQ, Python and Docker. From Exchanges to Queues">
+  <meta name="twitter:description" content="Lately in all my projects message queues appear in one way or another. Normally I work with AWS and I use SQS and SNS, but I also use quite often, RabbitMQ and MQTT. In AWS there’s something that I use a lot to isolate services. The process that emits messages emits message to SNS and I bind SNS to SQS. With this technique I can attach n SQS to the the same SNS. I’ve used it here. In AWS is pretty straightforward to do that. Today We’re going to do the same with RabbitMQ. In fact it’s very easy to do it in RabbitMQ. We only need to follow the tutorial in official RabbitMQ documentation.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Playing with RabbitMQ, Python and Docker. From Exchanges to Queues">
+  <meta property="og:description" content="Lately in all my projects message queues appear in one way or another. Normally I work with AWS and I use SQS and SNS, but I also use quite often, RabbitMQ and MQTT. In AWS there’s something that I use a lot to isolate services. The process that emits messages emits message to SNS and I bind SNS to SQS. With this technique I can attach n SQS to the the same SNS. I’ve used it here. In AWS is pretty straightforward to do that. Today We’re going to do the same with RabbitMQ. In fact it’s very easy to do it in RabbitMQ. We only need to follow the tutorial in official RabbitMQ documentation.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617367282087848000">
+  <link rel="canonical" href="/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+  style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <a href="/" title="link to home of Gonzalo Ayuso">
+          <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">Web Architect. Personal technical blog since 2008</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <!-- Twitter -->
+              <li class="navigation__item">
+                <a href="http://twitter.com/gonzalo123"
+                  title="@gonzalo123 on Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/gonzaloayuso"
+                  title="gonzaloayuso on LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/gonzalo123"
+                  title="gonzalo123 on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+              
+
+              <!-- RSS -->
+              <li class="navigation__item">
+                <a href="/feed.xml" title="Subscribe" target="_blank">
+                  <i class="icon icon-rss"></i>
+                  <span class="label">RSS</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2021-01-11 00:00" class="post-meta__date date">11 Jan 2021</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#docker">docker</a>, <a href="/tags/#python">python</a>, <a href="/tags/#rabbitmq">rabbitmq</a></span>
+      
+    </div>
+    <h1 class="post-title">Playing with RabbitMQ, Python and Docker. From Exchanges to Queues</h1>
+  </header>
+
+  <section class="post">
+    <p>Lately in all my projects message queues appear in one way or another. Normally I work with AWS and I use SQS and SNS, but I also use quite often, RabbitMQ and MQTT. In AWS there’s something that I use a lot to isolate services. The process that emits messages emits message to SNS and I bind SNS to SQS. With this technique I can attach n SQS to the the same SNS. I’ve used it <a href="https://github.com/gonzalo123/django_reactive_users">here</a>. In AWS is pretty straightforward to do that. Today We’re going to do the same with RabbitMQ. In fact it’s very easy to do it in RabbitMQ. We only need to follow the tutorial in official RabbitMQ <a href="https://www.rabbitmq.com/getstarted.html">documentation</a>.</p>
+
+<p>The script listen to a exchange and resend the message to a queue topic. Basically the same that we can see within RabbitMQ documentation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">settings</span>
+<span class="kn">from</span> <span class="nn">lib.logger</span> <span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">lib.rabbit</span> <span class="kn">import</span> <span class="n">get_channel</span>
+ 
+<span class="n">channel</span> <span class="o">=</span> <span class="n">get_channel</span><span class="p">()</span>
+<span class="n">channel</span><span class="p">.</span><span class="n">exchange_declare</span><span class="p">(</span>
+    <span class="n">exchange</span><span class="o">=</span><span class="n">settings</span><span class="p">.</span><span class="n">EXCHANGE</span><span class="p">,</span>
+    <span class="n">exchange_type</span><span class="o">=</span><span class="s">'fanout'</span><span class="p">)</span>
+ 
+<span class="n">result</span> <span class="o">=</span> <span class="n">channel</span><span class="p">.</span><span class="n">queue_declare</span><span class="p">(</span>
+    <span class="n">queue</span><span class="o">=</span><span class="s">''</span><span class="p">,</span>
+    <span class="n">exclusive</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+ 
+<span class="n">queue_name</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="n">method</span><span class="p">.</span><span class="n">queue</span>
+ 
+<span class="n">channel</span><span class="p">.</span><span class="n">queue_bind</span><span class="p">(</span>
+    <span class="n">exchange</span><span class="o">=</span><span class="n">settings</span><span class="p">.</span><span class="n">EXCHANGE</span><span class="p">,</span>
+    <span class="n">queue</span><span class="o">=</span><span class="n">queue_name</span><span class="p">)</span>
+ 
+<span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">' [*] Waiting for </span><span class="si">{</span><span class="n">settings</span><span class="p">.</span><span class="n">EXCHANGE</span><span class="si">}</span><span class="s">. To exit press CTRL+C'</span><span class="p">)</span>
+ 
+<span class="n">channel</span><span class="p">.</span><span class="n">queue_declare</span><span class="p">(</span>
+    <span class="n">durable</span><span class="o">=</span><span class="n">settings</span><span class="p">.</span><span class="n">QUEUE_DURABLE</span><span class="p">,</span>
+    <span class="n">auto_delete</span><span class="o">=</span><span class="n">settings</span><span class="p">.</span><span class="n">QUEUE_AUTO_DELETE</span><span class="p">,</span>
+    <span class="n">queue</span><span class="o">=</span><span class="n">settings</span><span class="p">.</span><span class="n">QUEUE_TOPIC</span>
+<span class="p">)</span>
+ 
+ 
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
+    <span class="n">channel</span><span class="p">.</span><span class="n">basic_publish</span><span class="p">(</span>
+        <span class="n">exchange</span><span class="o">=</span><span class="s">''</span><span class="p">,</span>
+        <span class="n">routing_key</span><span class="o">=</span><span class="n">settings</span><span class="p">.</span><span class="n">QUEUE_TOPIC</span><span class="p">,</span>
+        <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">)</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">'Message sent to topic </span><span class="si">{</span><span class="n">settings</span><span class="p">.</span><span class="n">QUEUE_TOPIC</span><span class="si">}</span><span class="s">. Message: </span><span class="si">{</span><span class="n">body</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+ 
+ 
+<span class="n">channel</span><span class="p">.</span><span class="n">basic_consume</span><span class="p">(</span>
+    <span class="n">queue</span><span class="o">=</span><span class="n">queue_name</span><span class="p">,</span>
+    <span class="n">on_message_callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
+    <span class="n">auto_ack</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+ 
+<span class="n">channel</span><span class="p">.</span><span class="n">start_consuming</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>We send one message to the exchange using rabbitmqadmin and see the message in the queue:</p>
+
+<pre><code class="language-commandline">rabbitmqadmin -u username -p password publish exchange=exchange routing_key= payload="hello, world"
+</code></pre>
+
+<p>My idea with this project is to deploy it into a docker swarm cluster and add/remove listener only adding new services to the stack:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">...</span>
+  <span class="na">exchange2topic1</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">${ECR}/exchange2queue:${VERSION}</span>
+      <span class="s">build</span><span class="pi">:</span>
+        <span class="na">context</span><span class="pi">:</span> <span class="s">.</span>
+        <span class="na">dockerfile</span><span class="pi">:</span> <span class="s">Dockerfile</span>
+      <span class="na">deploy</span><span class="pi">:</span>
+        <span class="na">restart_policy</span><span class="pi">:</span>
+          <span class="na">condition</span><span class="pi">:</span> <span class="s">on-failure</span>
+      <span class="na">depends_on</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">rabbit</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">/bin/sh wait-for-it.sh rabbit:5672 -- python exchange2queue.py</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">RABBIT_HOST</span><span class="pi">:</span> <span class="s">rabbit</span>
+      <span class="na">RABBIT_USER</span><span class="pi">:</span> <span class="s">${RABBITMQ_USER}</span>
+      <span class="na">RABBIT_PASS</span><span class="pi">:</span> <span class="s">${RABBITMQ_PASS}</span>
+      <span class="na">EXCHANGE</span><span class="pi">:</span> <span class="s">exchange</span>
+      <span class="na">QUEUE_TOPIC</span><span class="pi">:</span> <span class="s">topic1</span>
+      <span class="na">QUEUE_DURABLE</span><span class="pi">:</span> <span class="m">1</span>
+      <span class="na">QUEUE_AUTO_DELETE</span><span class="pi">:</span> <span class="m">0</span>
+  <span class="s">...</span>
+</code></pre></div></div>
+
+<p>With this approach it’s very simple form me add and remove new listeners without touching the emitter</p>
+
+<p>Also, as plus, I like to add a simple http api to allow me to send messages to the exchange with a post request, instead of using a RabbitMQ client. That’s because sometimes I work with legacy systems where using a AMQP client isn’t simple. That’s a simple Flask API</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">jsonify</span>
+ 
+<span class="kn">import</span> <span class="nn">settings</span>
+<span class="kn">from</span> <span class="nn">lib.auth</span> <span class="kn">import</span> <span class="n">authorize_bearer</span>
+<span class="kn">from</span> <span class="nn">lib.logger</span> <span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span> <span class="nn">lib.rabbit</span> <span class="kn">import</span> <span class="n">get_channel</span>
+<span class="kn">import</span> <span class="nn">json</span>
+ 
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+ 
+ 
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/health'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">health</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s">"status"</span><span class="p">:</span> <span class="s">"ok"</span><span class="p">})</span>
+ 
+ 
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/publish/&lt;path:exchange&gt;'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'POST'</span><span class="p">])</span>
+<span class="o">@</span><span class="n">authorize_bearer</span><span class="p">(</span><span class="n">bearer</span><span class="o">=</span><span class="n">settings</span><span class="p">.</span><span class="n">API_TOKEN</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">publish</span><span class="p">(</span><span class="n">exchange</span><span class="p">):</span>
+    <span class="n">channel</span> <span class="o">=</span> <span class="n">get_channel</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">get_json</span><span class="p">()</span>
+        <span class="n">channel</span><span class="p">.</span><span class="n">basic_publish</span><span class="p">(</span>
+            <span class="n">exchange</span><span class="o">=</span><span class="n">exchange</span><span class="p">,</span>
+            <span class="n">routing_key</span><span class="o">=</span><span class="s">''</span><span class="p">,</span>
+            <span class="n">body</span><span class="o">=</span><span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s">"message sent to exchange </span><span class="si">{</span><span class="n">exchange</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s">"status"</span><span class="p">:</span> <span class="s">"OK"</span><span class="p">,</span> <span class="s">"exchange"</span><span class="p">:</span> <span class="n">exchange</span><span class="p">})</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s">"status"</span><span class="p">:</span> <span class="s">"NOK"</span><span class="p">,</span> <span class="s">"exchange"</span><span class="p">:</span> <span class="n">exchange</span><span class="p">})</span>
+</code></pre></div></div>
+
+<p>Now we can emit messages to the exchange using curl, postman or any other http client.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST http://localhost:5000/publish/exchange
+Content-Type: application/json
+Authorization: Bearer super_secret_key
+ 
+{
+  "hello": "Gonzalo"
+}
+</code></pre></div></div>
+
+<p>Also, in the docker stack I want to use a reverse proxy to server my Flask application (served with gunicorn) and the RabbitMQ management console. I’m using nginx to do that:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>upstream api {
+    server api:5000;
+}
+ 
+server {
+    listen 8000 default_server;
+    listen [::]:8000;
+ 
+    client_max_body_size 20M;
+ 
+    location / {
+        try_files $uri @proxy_to_api;
+    }
+ 
+    location ~* /rabbitmq/api/(.*?)/(.*) {
+        proxy_pass http://rabbit:15672/api/$1/%2F/$2?$query_string;
+        proxy_buffering                    off;
+        proxy_set_header Host              $http_host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+ 
+    location ~* /rabbitmq/(.*) {
+        rewrite ^/rabbitmq/(.*)$ /$1 break;
+        proxy_pass http://rabbit:15672;
+        proxy_buffering                    off;
+        proxy_set_header Host              $http_host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+ 
+    location @proxy_to_api {
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Url-Scheme $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+ 
+        proxy_pass http://api;
+    }
+}
+</code></pre></div></div>
+
+<p>And that’s all. Here the docker-compose.yml</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.6'</span>
+ 
+<span class="na">x-base</span><span class="pi">:</span> <span class="nl">&amp;base</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s">${ECR}/exchange2queue:${VERSION}</span>
+  <span class="na">build</span><span class="pi">:</span>
+    <span class="na">context</span><span class="pi">:</span> <span class="s">.</span>
+    <span class="na">dockerfile</span><span class="pi">:</span> <span class="s">Dockerfile</span>
+  <span class="na">deploy</span><span class="pi">:</span>
+    <span class="na">restart_policy</span><span class="pi">:</span>
+      <span class="na">condition</span><span class="pi">:</span> <span class="s">on-failure</span>
+  <span class="na">depends_on</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">rabbit</span>
+ 
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">rabbit</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">rabbitmq:3-management</span>
+    <span class="na">deploy</span><span class="pi">:</span>
+      <span class="na">restart_policy</span><span class="pi">:</span>
+        <span class="na">condition</span><span class="pi">:</span> <span class="s">on-failure</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">5672:5672</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">RABBITMQ_ERLANG_COOKIE</span><span class="pi">:</span>
+      <span class="na">RABBITMQ_DEFAULT_VHOST</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="na">RABBITMQ_DEFAULT_USER</span><span class="pi">:</span> <span class="s">${RABBITMQ_USER}</span>
+      <span class="na">RABBITMQ_DEFAULT_PASS</span><span class="pi">:</span> <span class="s">${RABBITMQ_PASS}</span>
+ 
+  <span class="na">nginx</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">${ECR}/exchange2queue_nginx:${VERSION}</span>
+    <span class="na">deploy</span><span class="pi">:</span>
+      <span class="na">restart_policy</span><span class="pi">:</span>
+        <span class="na">condition</span><span class="pi">:</span> <span class="s">on-failure</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">.docker/nginx</span>
+      <span class="na">dockerfile</span><span class="pi">:</span> <span class="s">Dockerfile</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">8080:8000</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">rabbit</span>
+      <span class="pi">-</span> <span class="s">api</span>
+ 
+  <span class="na">api</span><span class="pi">:</span>
+    <span class="s">&lt;&lt;</span><span class="pi">:</span> <span class="nv">*base</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">front</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">/bin/sh wait-for-it.sh rabbit:5672 -- gunicorn -w 4 api:app -b 0.0.0.0:5000</span>
+    <span class="na">deploy</span><span class="pi">:</span>
+      <span class="na">restart_policy</span><span class="pi">:</span>
+        <span class="na">condition</span><span class="pi">:</span> <span class="s">on-failure</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">RABBIT_HOST</span><span class="pi">:</span> <span class="s">rabbit</span>
+      <span class="na">RABBIT_USER</span><span class="pi">:</span> <span class="s">${RABBITMQ_USER}</span>
+      <span class="na">RABBIT_PASS</span><span class="pi">:</span> <span class="s">${RABBITMQ_PASS}</span>
+      <span class="na">API_TOKEN</span><span class="pi">:</span> <span class="s">${API_TOKEN}</span>
+ 
+  <span class="na">exchange2topic1</span><span class="pi">:</span>
+    <span class="s">&lt;&lt;</span><span class="pi">:</span> <span class="nv">*base</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">/bin/sh wait-for-it.sh rabbit:5672 -- python exchange2queue.py</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">RABBIT_HOST</span><span class="pi">:</span> <span class="s">rabbit</span>
+      <span class="na">RABBIT_USER</span><span class="pi">:</span> <span class="s">${RABBITMQ_USER}</span>
+      <span class="na">RABBIT_PASS</span><span class="pi">:</span> <span class="s">${RABBITMQ_PASS}</span>
+      <span class="na">EXCHANGE</span><span class="pi">:</span> <span class="s">exchange</span>
+      <span class="na">QUEUE_TOPIC</span><span class="pi">:</span> <span class="s">topic1</span>
+      <span class="na">QUEUE_DURABLE</span><span class="pi">:</span> <span class="m">1</span>
+      <span class="na">QUEUE_AUTO_DELETE</span><span class="pi">:</span> <span class="m">0</span>
+ 
+  <span class="na">exchange2topic2</span><span class="pi">:</span>
+    <span class="s">&lt;&lt;</span><span class="pi">:</span> <span class="nv">*base</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">/bin/sh wait-for-it.sh rabbit:5672 -- python exchange2queue.py</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">RABBIT_HOST</span><span class="pi">:</span> <span class="s">rabbit</span>
+      <span class="na">RABBIT_USER</span><span class="pi">:</span> <span class="s">${RABBITMQ_USER}</span>
+      <span class="na">RABBIT_PASS</span><span class="pi">:</span> <span class="s">${RABBITMQ_PASS}</span>
+      <span class="na">EXCHANGE</span><span class="pi">:</span> <span class="s">exchange</span>
+      <span class="na">QUEUE_TOPIC</span><span class="pi">:</span> <span class="s">topic2</span>
+      <span class="na">QUEUE_DURABLE</span><span class="pi">:</span> <span class="m">1</span>
+      <span class="na">QUEUE_AUTO_DELETE</span><span class="pi">:</span> <span class="m">0</span>
+</code></pre></div></div>
+
+<p>Full code in my <a href="https://github.com/gonzalo123/exchange2queue">github</a></p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Playing+with+RabbitMQ%2C+Python+and+Docker.+From+Exchanges+to+Queues%20%2F2021%2F01%2F11%2Fplaying-with-rabbitmq-python-and-docker-from-exchanges-to-queues%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2021%2F01%2F11%2Fplaying-with-rabbitmq-python-and-docker-from-exchanges-to-queues%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Playing+with+RabbitMQ%2C+Python+and+Docker.+From+Exchanges+to+Queues&url=%2F2021%2F01%2F11%2Fplaying-with-rabbitmq-python-and-docker-from-exchanges-to-queues%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617367282087848000"></script>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Deploying Python Application using Docker and Kubernetes</title>
+  <meta name="description" content="I’ve learning how to deploy one Python application to Kubernetes. Here you can see my notes:
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Deploying Python Application using Docker and Kubernetes">
+  <meta name="twitter:description" content="I’ve learning how to deploy one Python application to Kubernetes. Here you can see my notes:
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Deploying Python Application using Docker and Kubernetes">
+  <meta property="og:description" content="I’ve learning how to deploy one Python application to Kubernetes. Here you can see my notes:
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617367282087848000">
+  <link rel="canonical" href="/2020/04/20/deploying-python-application-using-docker-and-kubernetes/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+  style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <a href="/" title="link to home of Gonzalo Ayuso">
+          <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">Web Architect. Personal technical blog since 2008</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <!-- Twitter -->
+              <li class="navigation__item">
+                <a href="http://twitter.com/gonzalo123"
+                  title="@gonzalo123 on Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/gonzaloayuso"
+                  title="gonzaloayuso on LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/gonzalo123"
+                  title="gonzalo123 on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+              
+
+              <!-- RSS -->
+              <li class="navigation__item">
+                <a href="/feed.xml" title="Subscribe" target="_blank">
+                  <i class="icon icon-rss"></i>
+                  <span class="label">RSS</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2020-04-20 00:00" class="post-meta__date date">20 Apr 2020</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#devops">devops</a>, <a href="/tags/#flask">flask</a>, <a href="/tags/#k8s">k8s</a>, <a href="/tags/#kubernetes">kubernetes</a></span>
+      
+    </div>
+    <h1 class="post-title">Deploying Python Application using Docker and Kubernetes</h1>
+  </header>
+
+  <section class="post">
+    <p>I’ve learning how to deploy one Python application to <a href="https://kubernetes.io/">Kubernetes</a>. Here you can see my notes:</p>
+
+<p>Let’s start from a dummy Python application. It’s a basic Flask web API. Each time we perform a GET request to “/” we increase one counter and see the number of hits. The persistence layer will be a Redis database. The script is very simple:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">redis</span> <span class="kn">import</span> <span class="n">Redis</span>
+ 
+<span class="n">redis</span> <span class="o">=</span> <span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'REDIS_HOST'</span><span class="p">,</span> <span class="s">'localhost'</span><span class="p">),</span>
+              <span class="n">port</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'REDIS_PORT'</span><span class="p">,</span> <span class="mi">6379</span><span class="p">))</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+ 
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="n">redis</span><span class="p">.</span><span class="n">incr</span><span class="p">(</span><span class="s">'hits'</span><span class="p">)</span>
+    <span class="n">hits</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">redis</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'hits'</span><span class="p">))</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s">"Hits: </span><span class="si">{</span><span class="n">hits</span><span class="si">}</span><span class="s">"</span>
+ 
+ 
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'0.0.0.0'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>First of all we create a virtual environment to ensure that we’re going to install your dependencies isolatedly:</p>
+
+<pre><code class="language-commandline">python -m venv venv
+</code></pre>
+
+<p>We enter in the virtualenv</p>
+
+<pre><code class="language-commandline">source venv/bin/activate
+</code></pre>
+
+<p>And we install our dependencies:</p>
+
+<pre><code class="language-commandline">pip install -r requirements.txt
+</code></pre>
+
+<p>To be able to run our application we must ensure that we’ve a Redis database ready. We can run one with Docker:</p>
+
+<pre><code class="language-commandline">docker run -p 6379:6379 redis
+</code></pre>
+
+<p>Now we can start our application:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">python</span> <span class="n">app</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div></div>
+
+<p>We open our browser with the url: http://localhost:5000 and it works.</p>
+
+<p>Now we’re going to run our application within a Docker container. First of of all we need to create one Docker image from a docker file:</p>
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> python:alpine3.8</span>
+<span class="k">ADD</span><span class="s"> . /code</span>
+<span class="k">WORKDIR</span><span class="s"> /code</span>
+<span class="k">RUN </span>pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+ 
+<span class="k">EXPOSE</span><span class="s"> 5000</span>
+</code></pre></div></div>
+
+<p>Now we can build or image:</p>
+
+<pre><code class="language-commandline">docker build -t front .
+</code></pre>
+
+<p>And now we can run our front image:</p>
+
+<pre><code class="language-commandline">docker run -p 5000:5000 front python app.py
+</code></pre>
+
+<p>If we open now our browser with the url http://localhost:5000 we’ll get a 500 error. That’s because our Docker container is trying to use one Redis host within localhost. It worked before, when our application and our Redis were within the same host. Now our API’s localhost isn’t the same than our host’s one. Our script the Redis host is localhost by default but it can be passed from an environment variable,</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">redis</span> <span class="o">=</span> <span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'REDIS_HOST'</span><span class="p">,</span> <span class="s">'localhost'</span><span class="p">),</span>
+              <span class="n">port</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'REDIS_PORT'</span><span class="p">,</span> <span class="mi">6379</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>we can pass to our our Docker container the real host where our Redis resides (suposing my IP address is 192.168.1.100):</p>
+
+<pre><code class="language-commandline">docker run -p 5000:5000 --env REDIS_HOST=192.168.1.100 front python app.py
+</code></pre>
+
+<p>If dont’ want the development server we also can start our API using gunicorn</p>
+
+<pre><code class="language-commandline">docker run -p 5000:5000 --env REDIS_HOST=192.168.1.100 front gunicorn -w 1 app:app -b 0.0.0.0:5000
+</code></pre>
+<p>And that works. We can start our app manually using Docker. But it’s a bit complicated. We need to run two containers (API and Redis), setting up the env variables. Docker helps us with docker-compose. We can create a docker-compose.yaml file configuring our all application:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">2'</span>
+ 
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">front</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">front</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">./front</span>
+      <span class="na">dockerfile</span><span class="pi">:</span> <span class="s">Dockerfile</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">front</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">gunicorn -w 1 app:app -b 0.0.0.0:5000</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">redis</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">5000:5000"</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">REDIS_HOST</span><span class="pi">:</span> <span class="s">redis</span>
+      <span class="na">REDIS_PORT</span><span class="pi">:</span> <span class="m">6379</span>
+  <span class="na">redis</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">6379:6379"</span>
+</code></pre></div></div>
+<p>I can execute it</p>
+
+<pre><code class="language-commandline">docker-compose up
+</code></pre>
+
+<p>Docker compose is pretty straightforward. But, what happens if our production environment is a cluster? docker-compose works fine in a single host. But it our production environment is a cluster, we´ll face problems (we need to esure manually things like hight avaiavility and things like that). Docker people tried to answer to this question with Docker Swarm. Basically Swarm is docker-compose within a cluster. It uses almost the same syntax than docker-compose in a single host. Looks good, ins’t it? OK. Nobody uses it. Since Google created their Docker conainer orchestator (Kubernetes, aka K8s) it becames into the de-facto standard. The good thing about K8s is that it’s much better than Swarm (more configurable and more powerfull), but the bad part is that it isn’t as simple and easy to understand as docker-compose.</p>
+
+<p>Let’s try to execute our proyect in K8s:</p>
+
+<p>First I start minikube</p>
+
+<pre><code class="language-commandline">minikube start
+</code></pre>
+
+<p>and I configure kubectl to connect to my minikube k8s cluster</p>
+
+<pre><code class="language-commandline">eval $(minikube docker-env)
+</code></pre>
+
+<p>The API:</p>
+
+<p>First we create one service:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">front-api</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="c1"># types:</span>
+  <span class="c1"># - ClusterIP: (default) only accessible from within the Kubernetes cluster</span>
+  <span class="c1"># - NodePort: accessible on a static port on each Node in the cluster</span>
+  <span class="c1"># - LoadBalancer: accessible externally through a cloud provider's load balancer</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">LoadBalancer</span>
+  <span class="c1"># When the node receives a request on the static port (30163)</span>
+  <span class="c1"># "select pods with the label 'app' set to 'front-api'"</span>
+  <span class="c1"># and forward the request to one of them</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">front-api</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="m">5000</span> <span class="c1"># port exposed internally in the cluster</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">5000</span> <span class="c1"># the container port to send requests to</span>
+      <span class="na">nodePort</span><span class="pi">:</span> <span class="m">30164</span> <span class="c1"># a static port assigned on each the n</span>
+</code></pre></div></div>
+
+<p>And one deployment:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">front-api</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="c1"># How many copies of each pod do we want?</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">1</span>
+ 
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="c1"># This must match the labels we set on the pod!</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">front-api</span>
+ 
+  <span class="c1"># This template field is a regular pod configuration</span>
+  <span class="c1"># nested inside the deployment spec</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="c1"># Set labels on the pod.</span>
+      <span class="c1"># This is used in the deployment selector.</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">front-api</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">front-api</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">front:v1</span>
+          <span class="na">args</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">gunicorn"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-w</span><span class="nv"> </span><span class="s">1"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">app:app"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">-b</span><span class="nv"> </span><span class="s">0.0.0.0:5000"</span><span class="pi">]</span>
+          <span class="na">ports</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">5000</span>
+          <span class="na">env</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">REDIS_HOST</span>
+              <span class="na">valueFrom</span><span class="pi">:</span>
+                <span class="na">configMapKeyRef</span><span class="pi">:</span>
+                  <span class="na">name</span><span class="pi">:</span> <span class="s">api-config</span>
+                  <span class="na">key</span><span class="pi">:</span> <span class="s">redis.host</span>
+</code></pre></div></div>
+
+<p>In order to learn a little bit of K8s I’m using a config map called ‘api-config’ where I put some information (such as the Redis host that I’m going to pass as a env variable)</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ConfigMap</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">api-config</span>
+<span class="na">data</span><span class="pi">:</span>
+  <span class="s">redis.host</span><span class="pi">:</span> <span class="s2">"</span><span class="s">back-api"</span>
+</code></pre></div></div>
+
+<p>The Backend: Our Redis database:</p>
+
+<p>First the service:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">back-api</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">ClusterIP</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">6379</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">6379</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">app</span><span class="pi">:</span> <span class="s">back-api</span>
+</code></pre></div></div>
+
+<p>And finally the deployment:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">apps/v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">back-api</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">matchLabels</span><span class="pi">:</span>
+      <span class="na">app</span><span class="pi">:</span> <span class="s">back-api</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">app</span><span class="pi">:</span> <span class="s">back-api</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">back-api</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+          <span class="na">ports</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">6379</span>
+              <span class="na">name</span><span class="pi">:</span> <span class="s">redis</span>
+</code></pre></div></div>
+
+<p>Before deploying my application to the cluster I need to build my docker image and tag it</p>
+
+<pre><code class="language-commandline">docker build -t front .
+</code></pre>
+
+<pre><code class="language-commandline">docker tag front front:v1
+</code></pre>
+
+<p>Now I can deploy my application to my K8s cluster:</p>
+
+<pre><code class="language-commandline">kubectl apply -f .k8s/
+</code></pre>
+
+<p>If want to know what’s the external url of my application in the cluster I can use this command</p>
+
+<pre><code class="language-commandline">minikube service front-api --url
+</code></pre>
+
+<p>Then I can see it running using the browser or with curl</p>
+
+<pre><code class="language-commandline">curl $(minikube service front-api --url)
+</code></pre>
+
+<p>And that’s all. I can delete all application alos</p>
+
+<pre><code class="language-commandline">kubectl delete -f .k8s/ 
+</code></pre>
+
+<p>Source code available in my <a href="https://github.com/gonzalo123/flask_k8s_tutorial">github</a></p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Deploying+Python+Application+using+Docker+and+Kubernetes%20%2F2020%2F04%2F20%2Fdeploying-python-application-using-docker-and-kubernetes%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2020%2F04%2F20%2Fdeploying-python-application-using-docker-and-kubernetes%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Deploying+Python+Application+using+Docker+and+Kubernetes&url=%2F2020%2F04%2F20%2Fdeploying-python-application-using-docker-and-kubernetes%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2020/04/20/deploying-python-application-using-docker-and-kubernetes/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2020/04/20/deploying-python-application-using-docker-and-kubernetes'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617367282087848000"></script>
+
+
+    </div>
+  </body>
+</html>

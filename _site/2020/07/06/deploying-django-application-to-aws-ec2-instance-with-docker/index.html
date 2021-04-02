@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Deploying Django application to AWS EC2 instance with Docker</title>
+  <meta name="description" content="In AWS we have several ways to deploy Django (and not Django applications) with Docker. We can use ECS or EKS clusters. If we don’t have one ECS or Kubernetes cluster up and running, maybe it can be complex. Today I want to show how deploy a Django application in production mode within a EC2 host. Let’s start.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Deploying Django application to AWS EC2 instance with Docker">
+  <meta name="twitter:description" content="In AWS we have several ways to deploy Django (and not Django applications) with Docker. We can use ECS or EKS clusters. If we don’t have one ECS or Kubernetes cluster up and running, maybe it can be complex. Today I want to show how deploy a Django application in production mode within a EC2 host. Let’s start.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Deploying Django application to AWS EC2 instance with Docker">
+  <meta property="og:description" content="In AWS we have several ways to deploy Django (and not Django applications) with Docker. We can use ECS or EKS clusters. If we don’t have one ECS or Kubernetes cluster up and running, maybe it can be complex. Today I want to show how deploy a Django application in production mode within a EC2 host. Let’s start.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617367282087848000">
+  <link rel="canonical" href="/2020/07/06/deploying-django-application-to-aws-ec2-instance-with-docker/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+  style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <a href="/" title="link to home of Gonzalo Ayuso">
+          <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">Web Architect. Personal technical blog since 2008</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <!-- Twitter -->
+              <li class="navigation__item">
+                <a href="http://twitter.com/gonzalo123"
+                  title="@gonzalo123 on Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/gonzaloayuso"
+                  title="gonzaloayuso on LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/gonzalo123"
+                  title="gonzalo123 on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+              
+
+              <!-- RSS -->
+              <li class="navigation__item">
+                <a href="/feed.xml" title="Subscribe" target="_blank">
+                  <i class="icon icon-rss"></i>
+                  <span class="label">RSS</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2020-07-06 00:00" class="post-meta__date date">6 Jul 2020</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#architecture">architecture</a>, <a href="/tags/#aws">aws</a>, <a href="/tags/#cloud">cloud</a>, <a href="/tags/#django">django</a>, <a href="/tags/#docker">docker</a>, <a href="/tags/#ec2">ec2</a>, <a href="/tags/#python">python</a></span>
+      
+    </div>
+    <h1 class="post-title">Deploying Django application to AWS EC2 instance with Docker</h1>
+  </header>
+
+  <section class="post">
+    <p>In AWS we have several ways to deploy Django (and not Django applications) with Docker. We can use ECS or EKS clusters. If we don’t have one ECS or Kubernetes cluster up and running, maybe it can be complex. Today I want to show how deploy a Django application in production mode within a EC2 host. Let’s start.</p>
+
+<p>I’m getting older to provision one host by hand I prefer to use docker. The idea is create one EC2 instance (one simple Amazon Linux AMI AWS-supported image). This host don’t have docker installed. We need to install it. When we launch one instance, when we’re configuring the instance, we can specify user data to configure an instance or run a configuration script during launch.</p>
+
+<p>We only need to put this shell script to set up docker</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum update <span class="nt">-y</span>
+yum <span class="nb">install</span> <span class="nt">-y</span> docker
+usermod <span class="nt">-a</span> <span class="nt">-G</span> docker ec2-user
+curl <span class="nt">-L</span> https://github.com/docker/compose/releases/download/1.25.5/docker-compose-<span class="se">\`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="se">\`</span>-<span class="se">\`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="se">\`</span> | <span class="nb">sudo tee</span> /usr/local/bin/docker-compose <span class="o">&gt;</span> /dev/null
+<span class="nb">chmod</span> +x /usr/local/bin/docker-compose
+service docker start
+chkconfig docker on
+
+<span class="nb">rm</span> /etc/localtime
+<span class="nb">ln</span> <span class="nt">-s</span> /usr/share/zoneinfo/Europe/Madrid /etc/localtime
+
+<span class="nb">ln</span> <span class="nt">-s</span> /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+docker swarm init
+</code></pre></div></div>
+
+<p>We also need to attach one IAM role to our instance. This IAM role only need to allow us the following policies:</p>
+
+<ul>
+  <li>AmazonEC2ContainerRegistryReadOnly (because we’re going to use AWS ECR as container registry)</li>
+  <li>CloudWatchAgentServerPolicy (because we’re going to emit our logs to Cloudwatch)</li>
+</ul>
+
+<p>Also we need to set up a security group to allow incoming SSH connections to port 22 and HTTP connections (in our example to port 8000)</p>
+
+<p>When we launch our instance we need to provide a keypair to connect via ssh. I like to put this keypair in my .ssh/config</p>
+
+<p>Host xxx.eu-central-1.compute.amazonaws.com
+    User ec2-user
+    Identityfile ~/.ssh/keypair-xxx.pem</p>
+
+<p>To deploy our application we need to follow those steps:</p>
+
+<ul>
+  <li>Build our docker images</li>
+  <li>Push our images to a container registry (in this case ECR)</li>
+  <li>Deploy the application.</li>
+</ul>
+
+<p>I’ve created a simple shell script called deploy.sh to perform all tasks:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="nb">set</span> <span class="nt">-a</span>
+<span class="se">\[</span> <span class="nt">-f</span> deploy.env <span class="se">\]</span> <span class="o">&amp;&amp;</span> <span class="nb">.</span> deploy.env
+<span class="nb">set</span> +a
+
+<span class="nb">echo</span> <span class="s2">"</span><span class="si">$(</span>tput setaf 1<span class="si">)</span><span class="s2">Building docker images ...</span><span class="si">$(</span>tput sgr0<span class="si">)</span><span class="s2">"</span>
+docker build <span class="nt">-t</span> ec2-web <span class="nt">-t</span> ec2-web:latest <span class="nt">-t</span> <span class="nv">$ECR</span>/ec2-web:latest <span class="nb">.</span>
+docker build <span class="nt">-t</span> ec2-nginx <span class="nt">-t</span> <span class="nv">$ECR</span>/ec2-nginx:latest .docker/nginx
+
+<span class="nb">echo</span> <span class="s2">"</span><span class="si">$(</span>tput setaf 1<span class="si">)</span><span class="s2">Pusing to ECR ...</span><span class="si">$(</span>tput sgr0<span class="si">)</span><span class="s2">"</span>
+aws ecr get-login-password <span class="nt">--region</span> <span class="nv">$REGION</span> <span class="nt">--profile</span> <span class="nv">$PROFILE</span> |
+  docker login <span class="nt">--username</span> AWS <span class="nt">--password-stdin</span> <span class="nv">$ECR</span>
+docker push <span class="nv">$ECR</span>/ec2-web:latest
+docker push <span class="nv">$ECR</span>/ec2-nginx:latest
+
+<span class="nv">CMD</span><span class="o">=</span><span class="s2">"docker stack deploy -c </span><span class="nv">$DOCKER</span><span class="se">\_</span><span class="s2">COMPOSE</span><span class="se">\_</span><span class="s2">YML ec2 --with-registry-auth"</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="si">$(</span>tput setaf 1<span class="si">)</span><span class="s2">Deploying to EC2 (</span><span class="nv">$CMD</span><span class="s2">)...</span><span class="si">$(</span>tput sgr0<span class="si">)</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$CMD</span><span class="s2">"</span>
+
+DOCKER<span class="se">\_</span><span class="nv">HOST</span><span class="o">=</span><span class="s2">"ssh://</span><span class="nv">$HOST</span><span class="s2">"</span> <span class="nv">$CMD</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="si">$(</span>tput setaf 1<span class="si">)</span><span class="s2">Building finished </span><span class="si">$(</span><span class="nb">date</span> +<span class="s1">'%Y%m%d.%H%M%S'</span><span class="si">)$(</span>tput sgr0<span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>This script assumes that there’s a deploy.env file with our personal configuration (AWS profile, the host of the EC2, instance, The ECR and things like that)</p>
+
+<pre><code class="language-dotenv">PROFILE=xxxxxxx
+
+DOKER\_COMPOSE\_YML=docker-compose.yml
+HOST=ec2-user@xxxx.eu-central-1.compute.amazonaws.com
+
+ECR=9999999999.dkr.ecr.eu-central-1.amazonaws.com
+REGION=eu-central-1
+</code></pre>
+
+<p>In this example I’m using docker swarm to deploy the application. I want to play also with secrets. This dummy application don’t have any sensitive information but I’ve created one “ec2.supersecret” variable</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"super secret text"</span> | docker secret create ec2.supersecret -
+</code></pre></div></div>
+
+<p>That’s the docker-compose.yml file:</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3.8'</span>
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">web</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">999999999.dkr.ecr.eu-central-1.amazonaws.com/ec2-web:latest</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">/bin/bash ./docker-entrypoint.sh</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">DEBUG</span><span class="pi">:</span> <span class="s1">'</span><span class="s">False'</span>
+    <span class="na">secrets</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">ec2.supersecret</span>
+    <span class="na">deploy</span><span class="pi">:</span>
+      <span class="na">replicas</span><span class="pi">:</span> <span class="m">1</span>
+    <span class="na">logging</span><span class="pi">:</span>
+      <span class="na">driver</span><span class="pi">:</span> <span class="s">awslogs</span>
+      <span class="na">options</span><span class="pi">:</span>
+        <span class="na">awslogs-group</span><span class="pi">:</span> <span class="s">/projects/ec2</span>
+        <span class="na">awslogs-region</span><span class="pi">:</span> <span class="s">eu-central-1</span>
+        <span class="na">awslogs-stream</span><span class="pi">:</span> <span class="s">app</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">static_volume:/src/staticfiles</span>
+  <span class="na">nginx</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">99999999.dkr.ecr.eu-central-1.amazonaws.com/ec2-nginx:latest</span>
+    <span class="na">deploy</span><span class="pi">:</span>
+      <span class="na">replicas</span><span class="pi">:</span> <span class="m">1</span>
+    <span class="na">logging</span><span class="pi">:</span>
+      <span class="na">driver</span><span class="pi">:</span> <span class="s">awslogs</span>
+      <span class="na">options</span><span class="pi">:</span>
+        <span class="na">awslogs-group</span><span class="pi">:</span> <span class="s">/projects/ec2</span>
+        <span class="na">awslogs-region</span><span class="pi">:</span> <span class="s">eu-central-1</span>
+        <span class="na">awslogs-stream</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">static_volume:/src/staticfiles:ro</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">8000:80</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">web</span>
+<span class="na">volumes</span><span class="pi">:</span>
+  <span class="na">static_volume</span><span class="pi">:</span>
+
+<span class="na">secrets</span><span class="pi">:</span>
+  <span class="s">ec2.supersecret</span><span class="pi">:</span>
+    <span class="na">external</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre></div></div>
+
+<p>And that’s all. Maybe ECS or EKS are better solutions to deploy docker applications in AWS, but we also can deploy easily to one docker host in a EC2 instance that it can be ready within a couple of minutes.</p>
+
+<p>Source code in my <a href="https://github.com/gonzalo123/django-2-ec2">github</a></p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Deploying+Django+application+to+AWS+EC2+instance+with+Docker%20%2F2020%2F07%2F06%2Fdeploying-django-application-to-aws-ec2-instance-with-docker%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2020%2F07%2F06%2Fdeploying-django-application-to-aws-ec2-instance-with-docker%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Deploying+Django+application+to+AWS+EC2+instance+with+Docker&url=%2F2020%2F07%2F06%2Fdeploying-django-application-to-aws-ec2-instance-with-docker%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2020/07/06/deploying-django-application-to-aws-ec2-instance-with-docker/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2020/07/06/deploying-django-application-to-aws-ec2-instance-with-docker'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617367282087848000"></script>
+
+
+    </div>
+  </body>
+</html>
