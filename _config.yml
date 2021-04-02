@@ -44,4 +44,14 @@ kramdown:
   hard_wrap: false
 
 plugins: ['jekyll-paginate']
-exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']
+exclude: [
+    'README.md',
+    'Gemfile',
+    'Gemfile.lock',
+    'screenshot.png',
+    'output/*'
+]
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.

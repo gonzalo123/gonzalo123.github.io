@@ -5,8 +5,8 @@
     <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 02 Apr 2021 12:19:15 +0200</pubDate>
-    <lastBuildDate>Fri, 02 Apr 2021 12:19:15 +0200</lastBuildDate>
+    <pubDate>Fri, 02 Apr 2021 13:00:51 +0200</pubDate>
+    <lastBuildDate>Fri, 02 Apr 2021 13:00:51 +0200</lastBuildDate>
     <generator>Jekyll v3.9.0</generator>
     
       <item>
@@ -1414,6 +1414,234 @@
         <category>php</category>
         
         <category>technology</category>
+        
+      </item>
+    
+      <item>
+        <title>JSONP. JSON with Padding</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/JSON&quot; title=&quot;JSON&quot;&gt;JSON&lt;/a&gt; is a really good solution to send data from server to client in web applications. Almost every program language has his own json encode and decode. PHP allows natively to do &lt;a href=&quot;http://es2.php.net/json&quot; title=&quot;this&quot;&gt;this&lt;/a&gt; encoding from php arrays and objets to JSON. And Zend Framework implements &lt;a href=&quot;http://framework.zend.com/manual/en/zend.json.html&quot; title=&quot;Zend_JSON&quot;&gt;Zend_JSON&lt;/a&gt; who also allows you to encode/decode from XML.&lt;/p&gt;
+
+&lt;p&gt;When I was developing a rss client to my personal home page. I discover JSONP services. Those services are really easy to use and really easy to integrate them into your projects:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;If the following url gives you a json data url: www.server.com/service {&quot;identifier&quot;:&quot;id&quot;,&quot;items&quot;:\[{&quot;id&quot;:&quot;18&quot;,&quot;title&quot;:&quot; Asterisk. The future of telephony&quot;,&quot;author&quot;:&quot;Jim Van Meggelen&quot;,&quot;bookyear&quot;:&quot;2008&quot;,&quot;why&quot;:&quot;&quot;}\]}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;It is very helpfully when&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;url: www.server.com/service?callback=myfunction myfunction({&quot;identifier&quot;:&quot;id&quot;,&quot;items&quot;:\[{&quot;id&quot;:&quot;18&quot;,&quot;title&quot;:&quot; Asterisk. The future of telephony&quot;,&quot;author&quot;:&quot;Jim Van Meggelen&quot;,&quot;bookyear&quot;:&quot;2008&quot;,&quot;why&quot;:&quot;&quot;}\]})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;with this if you develop the function ‘myfunction’ with a few javascrip lines you can consume those jsonp webservices.&lt;/p&gt;
+
+&lt;p&gt;This is the source code I use to read&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;googleSearch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bibkeys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;scriptElement&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;scriptElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jsonScript&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;scriptElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//books.google.com/books?bibkeys=” + &lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;bibkeys&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jscmd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;viewapi&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;googleCallback&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;scriptElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;setAttribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;javascript&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;documentElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;firstChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;scriptElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;googleCallback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;booksInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// do what you want with the booksInfo }&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Tue, 20 Jan 2009 00:00:00 +0100</pubDate>
+        <link>http://localhost:4000/2009/01/20/jsonp-json-with-padding/</link>
+        <guid isPermaLink="true">http://localhost:4000/2009/01/20/jsonp-json-with-padding/</guid>
+        
+        
+        <category>web-development</category>
+        
+      </item>
+    
+      <item>
+        <title>Bagera...</title>
+        <description>&lt;p&gt;BAGERA…¡ GU ERE BAI¡ GU BETI POZEZ, BETI ALAI&lt;/p&gt;
+
+&lt;p&gt;SEBASTIAN BAT BADA ZERUAN DONOSTIA BAT BAKARRA MUNDUAN HURA DA SANTUA TA HAU DA HERRIA HORRA ZER DEN GURE DONOSTIA&lt;/p&gt;
+
+&lt;p&gt;HIRUTXULOKO GAZTELUPEKO JOXEMARITAR ZAHAR ETA GAZTE. JOXEMARITAR ZAHAR ETA GAZTE. KALERIK KALE DANBORRA JOAZ UMORE ONA ZABALTZEN OR DIHOAZ JOXE MARI¡&lt;/p&gt;
+
+&lt;p&gt;GAURTANDIK GERORA PENAK ZOKORA FESTARA¡ DANTZARA¡ DONOSTIARREI OIHU EGITERA GATOZ POZALDIZ IHAUTERIAK DATOZ! IHAUTERIAK DATOZ! BAGERA…¡ GU ERE BAI¡ GU BETI POZEZ, BETI ALAI&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=nhncDjXMeQ4&quot;&gt;&lt;img src=&quot;https://img.youtube.com/vi/nhncDjXMeQ4/0.jpg&quot; alt=&quot;youtube&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 20 Jan 2009 00:00:00 +0100</pubDate>
+        <link>http://localhost:4000/2009/01/20/bagera/</link>
+        <guid isPermaLink="true">http://localhost:4000/2009/01/20/bagera/</guid>
+        
+        
+        <category>personal</category>
+        
+      </item>
+    
+      <item>
+        <title>Adding my blog's feed to my personal site</title>
+        <description>&lt;p&gt;I have my &lt;a href=&quot;http://gonzalo123.co.cc/&quot; title=&quot;personal&quot;&gt;personal&lt;/a&gt; web page hosted in a free hosting service. Basically it’s a &lt;a href=&quot;http://dojotoolkit.org/&quot; title=&quot;dojo&quot;&gt;dojo&lt;/a&gt; application working with a &lt;a href=&quot;http://framework.zend.com/&quot; title=&quot;Zend Framework&quot;&gt;Zend Framework&lt;/a&gt; Backend. I had the idea of include a the last posts of my blog from the rss to the front page (original isn’t it?), and I start to develop it.&lt;/p&gt;
+
+&lt;p&gt;I started using Zend\Feed to fetch the RSS from my blog. The idea of my &lt;a href=&quot;http://gonzalo123.co.cc/&quot; title=&quot;personal&quot;&gt;personal&lt;/a&gt; site was to develop a web application based on &lt;a href=&quot;http://dojotoolkit.org/&quot; title=&quot;dojo&quot;&gt;dojo&lt;/a&gt; framework so I decide to use the dojo way using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dojox.data.AtomReadStore.&lt;/code&gt;That sounds cool but I faced with the first problem. Due to security reasons XHR requests can’t be done to a different domain. My &lt;a href=&quot;http://gonzalo123.co.cc/&quot; title=&quot;personal&quot;&gt;personal&lt;/a&gt; page and the url of the blog’s feed were under different domain.&lt;/p&gt;
+
+&lt;h2 id=&quot;problem-1-xhr-with-different-domains&quot;&gt;Problem 1: XHR with different domains.&lt;/h2&gt;
+
+&lt;p&gt;To solve this problem I must create a proxy with PHP to RSS feed in my &lt;a href=&quot;http://gonzalo123.co.cc/&quot; title=&quot;personal&quot;&gt;personal&lt;/a&gt; page. With this proxy XHR requests will be in the same domain, so &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dojox.data.AtomReadStore&lt;/code&gt; will work correctly. the proxy worked perfectly in my local computer but when I upload it to my hosting I realized that it didn’t work.&lt;/p&gt;
+
+&lt;h2 id=&quot;problem-2-the-hosting-of-my-project-doesnt-allow-phps-socket-functions&quot;&gt;Problem 2: The hosting of my project doesn’t allow php’s socket functions&lt;/h2&gt;
+
+&lt;p&gt;As I see in php.ini. some PHP functions (socket functions for example) are disallowed in the server. Because of that my code does not work. Surfing into Zend framework source code (open source is cool). I saw Zend_Feed uses Zend_Http_Client_Adapter_Socket. My hosting allows me to use curl extension instead of socket functions. But Zend Framework does not have a Zend_Http_Client_Adapter_Curl. So other problem.&lt;/p&gt;
+
+&lt;h2 id=&quot;problem-3-zend_http_client-with-curl&quot;&gt;Problem 3: Zend_Http_Client with Curl&lt;/h2&gt;
+
+&lt;p&gt;As I read in some newsgroup my problem with my hosting, curl and sockets was not only mine. Zend Framework doesn’t not have a curl adapter in the production tree but they have a Zend_Http_Client_Adapter_Curl in the incubator. This adapter is not fully tested and it can crash behind proxies and things like that but it sounds good for my situation. Using this adapter the code works in my local server and in my hosting. that’s sounds good but there is other problem&lt;/p&gt;
+
+&lt;h2 id=&quot;problem-4-cpu-usage&quot;&gt;Problem 4: CPU usage&lt;/h2&gt;
+
+&lt;p&gt;Looking in the statistics of my site in the hosting I realized that the CPU usage was hight. The application is a client side application and this CPU usage graph shows me the problem. Curl functions are slow and my rss proxy is consuming too much cpu time. It sounds I am under a no-solution problem. I need a proxy to avoid XHR cross domain restriction but this proxy uses too much CPU in my poor-man- hosting. Solution: turn the logic to the client and and do all the job with javascript.&lt;/p&gt;
+
+&lt;p&gt;Finding some RSS reader with js I faced with &lt;a href=&quot;http://www.google.com/uds/solutions/dynamicfeed/&quot; title=&quot;GFdynamicFeedControl&quot;&gt;GFdynamicFeedControl&lt;/a&gt;. Really easy to use. It also has a wizard to generate code to copy and paste. Of course the generated code didn’t work in my application but hacking a bit I have finally my RSS feeds in my &lt;a href=&quot;http://gonzalo123.co.cc/&quot; title=&quot;personal&quot;&gt;personal&lt;/a&gt; page. &lt;a href=&quot;http://www.google.com/uds/solutions/dynamicfeed/&quot; title=&quot;GFdynamicFeedControl&quot;&gt;GFdynamicFeedControl&lt;/a&gt; allow you to mix different RSS so y also include the rss of my &lt;a href=&quot;http://github.com/gonzalo123/gam/tree/master&quot; title=&quot;github&quot;&gt;github&lt;/a&gt; account with the source code.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;feed-control&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;color:#676767;font-size:11px;margin:10px;padding:4px;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Loading...&lt;span class=&quot;nt&quot;&gt;&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+@import url(&quot;http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.css&quot;);
+ 
+google.load('feeds', '1');
+dojo.addOnLoad(function(){
+    var options = {
+        stacked : true,
+        vertical : true,
+        title : &quot;Feeds&quot;
+    }
+    new GFdynamicFeedControl(gamJs.feeds, 'feed-control', options);
+})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Mon, 19 Jan 2009 00:00:00 +0100</pubDate>
+        <link>http://localhost:4000/2009/01/19/adding-my-blogs-feed-to-my-personal-site/</link>
+        <guid isPermaLink="true">http://localhost:4000/2009/01/19/adding-my-blogs-feed-to-my-personal-site/</guid>
+        
+        
+        <category>web-development</category>
+        
+      </item>
+    
+      <item>
+        <title>Como saber que Host tengo en mi red</title>
+        <description>&lt;p&gt;Cada vez que conecto un aparato a mired domestica me surge la misma duda: ¿Cual es su ip? Cada aparatito tiene su ip por defecto y como soy un poco vago para buscarla en los manuales pues uso el siguiente comando:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;nmap -sP 192.168.2.0/24&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        <pubDate>Sat, 05 Apr 2008 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/2008/04/05/como-saber-que-host-tengo-en-mi-red/</link>
+        <guid isPermaLink="true">http://localhost:4000/2008/04/05/como-saber-que-host-tengo-en-mi-red/</guid>
+        
+        
+        <category>linux</category>
+        
+      </item>
+    
+      <item>
+        <title>Detectar movimiento con Linksys WVC54GC</title>
+        <description>&lt;p&gt;Tengo una cámara Linksys WVC54GC y estoy jugando con la detección del movimiento. Para esto he encontrado un script en bash que tocado un poquito aqui y allá, que hace mas o menos lo que necesito.&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+ 
+&lt;span class=&quot;nv&quot;&gt;FRAMERATE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2
+&lt;span class=&quot;nv&quot;&gt;SENSITIVITY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;30
+&lt;span class=&quot;nv&quot;&gt;PNMPSNR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/bin/pnmpsnr
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /mnt/data/.cam/
+&lt;span class=&quot;k&quot;&gt;while &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;true
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;do
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sleep&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$FRAMERATE&lt;/span&gt;
+mplayer http://webcam/img/video.asf &lt;span class=&quot;nt&quot;&gt;-really-quiet&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-frames&lt;/span&gt; 1 &lt;span class=&quot;nt&quot;&gt;-vo&lt;/span&gt; jpeg
+djpeg 00000001.jpg &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; current.ppm
+&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;Ycolour
+&lt;span class=&quot;nv&quot;&gt;$PNMPSNR&lt;/span&gt; current.ppm last.ppm&amp;gt;&amp;gt;Ycolour 2&amp;gt;
+&lt;span class=&quot;nv&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;awk&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/Y  color/ {print int($5)}'&lt;/span&gt; Ycolour&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$Y&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-lt&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$SENSITIVITY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;then
+ 
+if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; ./&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; +%Y%m%d&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;then
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;00000001.jpg ./&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; +%Y%m%d&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;/&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; +%y%m%d%H%M%S.jpg&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;else
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt;  ./&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; +%Y%m%d&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;00000001.jpg ./&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; +%Y%m%d&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;/&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt; +%y%m%d%H%M%S.jpg&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;fi
+ 
+fi
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mv &lt;/span&gt;current.ppm last.ppm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Esto unido a un script en el init.d&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;donegonzalo@gnzl:/etc/init
+gonzalo@gnzl:/etc/init.d&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;webcamd
+&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### BEGIN INIT INFO&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Provides:          webcamd&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Required-Start:    networking&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Required-Stop:     networking&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Default-Start:     2 3 4 5&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Default-Stop:      0 1 6&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Short-Description: Start the webcamd web server.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;### END INIT INFO&lt;/span&gt;
+ 
+&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/sbin:/bin:/usr/sbin:/usr/bin
+&lt;span class=&quot;nv&quot;&gt;NAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;webcamd
+&lt;span class=&quot;nv&quot;&gt;DESC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;webcam snapshot motion&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;PIDFILE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/var/run/&lt;span class=&quot;nv&quot;&gt;$NAME&lt;/span&gt;.pid
+&lt;span class=&quot;nv&quot;&gt;SCRIPTNAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/etc/init.d/&lt;span class=&quot;nv&quot;&gt;$NAME&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;env -i LANG=C PATH=/usr/local/bin:/usr/bin:/bin&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;SSD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/sbin/start-stop-daemon&quot;&lt;/span&gt;
+ 
+&lt;span class=&quot;nv&quot;&gt;FRAMERATE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2
+&lt;span class=&quot;nv&quot;&gt;SENSITIVITY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;30
+&lt;span class=&quot;nv&quot;&gt;PNMPSNR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/bin/pnmpsnr
+&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; /lib/lsb/init-functions
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /mnt/data/.cam/
+&lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in
+&lt;/span&gt;start&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Starting &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$DESC&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$NAME&lt;/span&gt;
+      su &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; gonzalo &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;sh /mnt/data/.cam/startmotiondetection.sh &amp;amp;&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ 
+      &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1
+      &lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;esac&lt;/span&gt;
+ 
+&lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Hace más o menos lo que quiero.&lt;/p&gt;
+
+&lt;p&gt;Si ya se que es muy mejorable ya que el tiempo que le he dedicado es muy poco (modo escusas activado). Si ya se que hay programas como Motion y Zoneminder que hacen esto mas bonito, pero bueno algún dia los miraré.&lt;/p&gt;
+
+&lt;p&gt;Mi principal problema es que la única forma que tengo para obtener una imagen fija de la camara es con el comando:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;mplayer http://webcam/img/video.asf -really-quiet -frames 1 -vo jpeg&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;ya que la cámara no me da la posibilidad de obterner la imagen directamente (o al menos no se como hacerlo). Mi problema es que esto no lo quiero ejecutar en un PC, como esta ahora, si no en un NSLU2, que es un aparatito con arquitectura ARM. Pues bien no consigo compilar el mplayer para ARM y encima creo que aunque lo consiga hacer no me va a funcionar ya que los codecs necesarios para ver un stream asf en Linux solo estan en formato binario para x86.&lt;/p&gt;
+
+&lt;p&gt;Me gustaría saber como se hace lo mismo que hago con mplayer con vlc (que si lo tengo correctamente instalado en el NSLU2). Otra opción es seguir las instrucciones que veo &lt;a href=&quot;http://www.infohit.net/blog/post/motion-capture-using-the-wvc54gc-with-linux.html&quot;&gt;aqui&lt;/a&gt; para cer funcionar la camarita con Motion pero no consigo hacer el reetreaming con ffmpeg, ya que al hacer:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;ffmpeg -an -i http://yourwebcam.up/img/video.asf http://localhost:8090/feed1.ffm&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;me dice que no puede abrir el archivo asf y no tengo ni idea por que.&lt;/p&gt;
+
+&lt;p&gt;En fin seguire peleando,&lt;/p&gt;
+</description>
+        <pubDate>Sun, 23 Mar 2008 00:00:00 +0100</pubDate>
+        <link>http://localhost:4000/2008/03/23/detectar-movimiento-con-linksys-wvc54gc/</link>
+        <guid isPermaLink="true">http://localhost:4000/2008/03/23/detectar-movimiento-con-linksys-wvc54gc/</guid>
+        
+        
+        <category>linux</category>
         
       </item>
     
