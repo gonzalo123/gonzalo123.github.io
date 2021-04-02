@@ -1,8 +1,9 @@
 # Site settings
-title: Gonzalo Ayuso Web Architect
+title: Gonzalo Ayuso
+tagline: Web Architect
 email: gonzalo123@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Web Architect. Personal technical blog since 2008
+  Personal blog since 2008
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
@@ -41,7 +42,9 @@ kramdown:
   # do not replace newlines by <br>s
   hard_wrap: false
 
-plugins: ['jekyll-paginate']
+plugins:
+  - jekyll-paginate
+  - jekyll-seo-tag
 exclude: [
     'README.md',
     'Gemfile',

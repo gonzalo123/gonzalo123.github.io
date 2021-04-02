@@ -9,9 +9,6 @@ Developer & Designer: Gonzalo Ayuso
 Twitter: @gonzalo123
 Site: https://gonzalo123.com
 Location: San Sebastián, Spain
-						
-/* THANKS */
-Name: Dale Anthony
 
 /* SITE */
 Last update: {{ site.time | date: "%Y/%m/%d" }}
