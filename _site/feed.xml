@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Gonzalo Ayuso</title>
-    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</description>
+    <description>Web Architect. Personal technical blog since 2008</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 02 Apr 2021 13:42:38 +0200</pubDate>
-    <lastBuildDate>Fri, 02 Apr 2021 13:42:38 +0200</lastBuildDate>
+    <pubDate>Fri, 02 Apr 2021 13:51:21 +0200</pubDate>
+    <lastBuildDate>Fri, 02 Apr 2021 13:51:21 +0200</lastBuildDate>
     <generator>Jekyll v3.9.0</generator>
     
       <item>
@@ -1410,10 +1410,10 @@
         <link>/2010/01/24/pivot-tables-in-php/</link>
         <guid isPermaLink="true">/2010/01/24/pivot-tables-in-php/</guid>
         
-        
         <category>php</category>
         
         <category>technology</category>
+        
         
       </item>
     
@@ -1600,12 +1600,12 @@
         <link>/2009/12/31/calling-to-multiple-xmlrpc-remote-servers-in-a-clean-way/</link>
         <guid isPermaLink="true">/2009/12/31/calling-to-multiple-xmlrpc-remote-servers-in-a-clean-way/</guid>
         
-        
         <category>php</category>
         
         <category>technology</category>
         
         <category>web-development</category>
+        
         
       </item>
     
@@ -1822,12 +1822,12 @@
         <link>/2009/12/30/jugando-con-friendfeed-y-appengine-tv-sms-appspot-com/</link>
         <guid isPermaLink="true">/2009/12/30/jugando-con-friendfeed-y-appengine-tv-sms-appspot-com/</guid>
         
-        
         <category>appengine</category>
         
         <category>web-development</category>
         
         <category>webdev</category>
+        
         
       </item>
     
@@ -1912,8 +1912,8 @@
         <link>/2009/12/09/things-i-miss-in-php-function-decorators/</link>
         <guid isPermaLink="true">/2009/12/09/things-i-miss-in-php-function-decorators/</guid>
         
-        
         <category>php</category>
+        
         
       </item>
     
@@ -1996,10 +1996,10 @@ $BODY$
         <link>/2009/12/08/an-idea-for-calling-postgresqls-stored-procedures-with-pdo/</link>
         <guid isPermaLink="true">/2009/12/08/an-idea-for-calling-postgresqls-stored-procedures-with-pdo/</guid>
         
-        
         <category>php</category>
         
         <category>web-development</category>
+        
         
       </item>
     
@@ -2031,10 +2031,10 @@ $BODY$
         <link>/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/</link>
         <guid isPermaLink="true">/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/</guid>
         
-        
         <category>php</category>
         
         <category>web-development</category>
+        
         
       </item>
     
@@ -2134,10 +2134,10 @@ $BODY$
         <link>/2009/12/07/moving-singleton-and-factory-patterns-to-abstract-with-php-5-3/</link>
         <guid isPermaLink="true">/2009/12/07/moving-singleton-and-factory-patterns-to-abstract-with-php-5-3/</guid>
         
-        
         <category>php</category>
         
         <category>web-development</category>
+        
         
       </item>
     
@@ -2167,8 +2167,8 @@ $BODY$
         <link>/2009/09/09/soyrico/</link>
         <guid isPermaLink="true">/2009/09/09/soyrico/</guid>
         
-        
         <category>personal</category>
+        
         
       </item>
     

@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "Speed up page load with asynchronous javascript"
 date: "2009-04-18"
-categories: 
+tags: 
   - "technology"
   - "web-development"
 ---

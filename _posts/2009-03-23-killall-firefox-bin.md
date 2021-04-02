@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "killall firefox-bin"
 date: "2009-03-23"
-categories: 
+tags: 
   - "technology"
   - "web-development"
 ---

@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "JSONP. JSON with Padding"
 date: "2009-01-20"
-categories: 
+tags: 
   - "web-development"
 ---
 

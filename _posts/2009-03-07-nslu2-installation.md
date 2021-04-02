@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "nslu2 installation"
 date: "2009-03-07"
-categories: 
+tags: 
   - "linux"
   - "technology"
 ---

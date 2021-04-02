@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "Jugando con FriendFeed y Appengine: tv-sms.appspot.com"
 date: "2009-12-30"
-categories: 
+tags: 
   - "appengine"
   - "web-development"
   - "webdev"

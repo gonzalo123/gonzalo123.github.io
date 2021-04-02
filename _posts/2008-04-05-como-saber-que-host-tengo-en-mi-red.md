@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "Como saber que Host tengo en mi red"
 date: "2008-04-05"
-categories: 
+tags: 
   - "linux"
 ---
 

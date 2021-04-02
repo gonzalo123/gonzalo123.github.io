@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "fetching book cover with google API and dojo"
 date: "2009-04-10"
-categories: 
+tags: 
   - "dojo"
   - "technology"
   - "web-development"

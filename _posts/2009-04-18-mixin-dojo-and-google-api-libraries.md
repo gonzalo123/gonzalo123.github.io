@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "mixin dojo and google api libraries"
 date: "2009-04-18"
-categories: 
+tags: 
   - "dojo"
   - "technology"
   - "web-development"

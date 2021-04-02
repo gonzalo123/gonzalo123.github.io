@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "Server side web frameworks are dead"
 date: "2009-05-08"
-categories: 
+tags: 
   - "php"
   - "web-development"
 ---

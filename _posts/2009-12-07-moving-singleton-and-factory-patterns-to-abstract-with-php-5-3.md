@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "Moving singleton and factory patterns to Abstract with php 5.3"
 date: "2009-12-07"
-categories: 
+tags: 
   - "php"
   - "web-development"
 ---

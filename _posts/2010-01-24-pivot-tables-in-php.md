@@ -2,7 +2,7 @@
 layout: post
 title: "Pivot tables in PHP"
 date: "2010-01-24"
-categories: 
+tags: 
   - "php"
   - "technology"
 permalink: /:year/:month/:day/:title/

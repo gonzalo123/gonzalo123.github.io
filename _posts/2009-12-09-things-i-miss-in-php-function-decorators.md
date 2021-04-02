@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "Things I miss in PHP: Function decorators"
 date: "2009-12-09"
-categories: 
+tags: 
   - "php"
 ---
 

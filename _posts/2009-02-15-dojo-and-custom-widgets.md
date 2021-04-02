@@ -6,8 +6,6 @@ date: "2009-02-15"
 categories: 
   - "dojo"
   - "web-development"
-tags: 
-  - "dojo"
 ---
 
 I want to extend Dojo library with some custom widgets. Dojo widgets are really cool. You can use them from JavaScript and from HTML with the Dojo markup.

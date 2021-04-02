@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "Clean way to call to multiple xmlrpc remote servers"
 date: "2009-12-31"
-categories: 
+tags: 
   - "php"
   - "technology"
   - "web-development"

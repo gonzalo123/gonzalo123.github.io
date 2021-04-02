@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "An idea for calling PostgreSQL's stored procedures with PDO"
 date: "2009-12-08"
-categories: 
+tags: 
   - "php"
   - "web-development"
 ---

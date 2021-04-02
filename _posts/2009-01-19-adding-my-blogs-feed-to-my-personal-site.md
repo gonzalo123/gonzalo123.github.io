@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "Adding my blog's feed to my personal site"
 date: "2009-01-19"
-categories: 
+tags: 
   - "web-development"
 ---
 

@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "antivirus"
 date: "2009-07-30"
-categories: 
+tags: 
   - "personal"
 ---
 

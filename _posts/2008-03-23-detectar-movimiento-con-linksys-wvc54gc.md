@@ -3,7 +3,7 @@ layout: post
 permalink: /:year/:month/:day/:title/
 title: "Detectar movimiento con Linksys WVC54GC"
 date: "2008-03-23"
-categories: 
+tags: 
   - "linux"
 ---
 
