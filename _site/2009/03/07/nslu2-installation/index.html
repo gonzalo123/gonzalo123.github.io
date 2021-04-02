@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
 
-  <title>Bagera...</title>
-  <meta name="description" content="BAGERA…¡ GU ERE BAI¡ GU BETI POZEZ, BETI ALAI
+  <title>nslu2 installation</title>
+  <meta name="description" content="I need to change the HDD of my Linksys NSLU2 so I will use the opportunity to write a small HowTo to show how to set up an unslung firmware into my nslu2. Let’s start
 
 ">
   <meta name="author" content="Gonzalo Ayuso">
@@ -18,8 +18,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Bagera...">
-  <meta name="twitter:description" content="BAGERA…¡ GU ERE BAI¡ GU BETI POZEZ, BETI ALAI
+  <meta name="twitter:title" content="nslu2 installation">
+  <meta name="twitter:description" content="I need to change the HDD of my Linksys NSLU2 so I will use the opportunity to write a small HowTo to show how to set up an unslung firmware into my nslu2. Let’s start
 
 ">
   
@@ -28,8 +28,8 @@
   <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
 
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Bagera...">
-  <meta property="og:description" content="BAGERA…¡ GU ERE BAI¡ GU BETI POZEZ, BETI ALAI
+  <meta property="og:title" content="nslu2 installation">
+  <meta property="og:description" content="I need to change the HDD of my Linksys NSLU2 so I will use the opportunity to write a small HowTo to show how to set up an unslung firmware into my nslu2. Let’s start
 
 ">
   <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
@@ -55,7 +55,7 @@
   <meta name="theme-color" content="#ffffff">
   
   <link rel="stylesheet" href="/css/main.css?1617363758645752000">
-  <link rel="canonical" href="/2009/01/20/bagera/">
+  <link rel="canonical" href="/2009/03/07/nslu2-installation/">
   <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
 </head>
 
@@ -152,31 +152,119 @@
         <article class="post-container post-container--single">
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2009-01-20 00:00" class="post-meta__date date">20 Jan 2009</time>
+      <time datetime="2009-03-07 00:00" class="post-meta__date date">7 Mar 2009</time>
       
     </div>
-    <h1 class="post-title">Bagera...</h1>
+    <h1 class="post-title">nslu2 installation</h1>
   </header>
 
   <section class="post">
-    <p>BAGERA…¡ GU ERE BAI¡ GU BETI POZEZ, BETI ALAI</p>
+    <p>I need to change the HDD of my Linksys NSLU2 so I will use the opportunity to write a small HowTo to show how to set up an unslung firmware into my nslu2. Let’s start</p>
 
-<p>SEBASTIAN BAT BADA ZERUAN DONOSTIA BAT BAKARRA MUNDUAN HURA DA SANTUA TA HAU DA HERRIA HORRA ZER DEN GURE DONOSTIA</p>
+<p>First of all I need to download the last version of <a href="http://www.slug-firmware.net/u-dls.php">Unslung</a> firmware and install in my ubuntu box the software to put the firmware into my nslu2:</p>
 
-<p>HIRUTXULOKO GAZTELUPEKO JOXEMARITAR ZAHAR ETA GAZTE. JOXEMARITAR ZAHAR ETA GAZTE. KALERIK KALE DANBORRA JOAZ UMORE ONA ZABALTZEN OR DIHOAZ JOXE MARI¡</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>aptitude <span class="nb">install </span>upslug2
+</code></pre></div></div>
 
-<p>GAURTANDIK GERORA PENAK ZOKORA FESTARA¡ DANTZARA¡ DONOSTIARREI OIHU EGITERA GATOZ POZALDIZ IHAUTERIAK DATOZ! IHAUTERIAK DATOZ! BAGERA…¡ GU ERE BAI¡ GU BETI POZEZ, BETI ALAI</p>
+<p>I put my nslu2 into <a href="http://www.nslu2-linux.org/wiki/HowTo/UseTheResetButtonToEnterUpgradeMode">upgrade mode</a> and …</p>
 
-<p><a href="https://www.youtube.com/watch?v=nhncDjXMeQ4"><img src="https://img.youtube.com/vi/nhncDjXMeQ4/0.jpg" alt="youtube" /></a></p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># upslug2</span>
+ <span class="o">[</span>no NSLU2 machines found <span class="k">in </span>upgrade mode]
+</code></pre></div></div>
+
+<p>What happen? I always forget I have two network cards (eth0 and eth1) and I use eth1</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>upslug2 -help
+upslug2: usage: upslug2 {options}
+options:
+[extract]
+-d --device[eth0]: local ethernet device to use
+-t --target: NSLU2 to upgrade (MAC address)
+-i --image: complete flash image to use
+</code></pre></div></div>
+
+<p>so …</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo upslug2 -d eth1 -t  00:13:10:d9:03:ff -i Unslung-6.10-beta.bin
+</code></pre></div></div>
+<p>network is a my home network is a 192.168.2.0/24 so I need to change my IP if I want to connect to my nslu2:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ifconfig eth1 192.168.1.2 netmask 255.255.255.0 up
+
+</code></pre></div></div>
+
+<p>Now I open a browser and type http://192.168.1.77/</p>
+
+<p>From the web interface I change the ip from 192.168.1.77 to 192.168.2.77, the gateway and the dns.</p>
+
+<p>change again my IP</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ifconfig eth1 192.168.2.2 netmask 255.255.255.0 up
+</code></pre></div></div>
+
+<p>and open again a browser http://192.168.2.77/</p>
+
+<p>Now I format plug the HDD to the device (into Disk1) and format it from the web inteface.</p>
+
+<p>Now I enable telnet, telnet to the device with the default username/password (root/uNSLUng) and unsling disk1</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>telnet 192.168.2.77
+Trying 192.168.2.77...
+Connected to 192.168.2.77.
+Escape character is '^]'.
+LKGD903B8 login: root
+Password:
+Welcome to Unslung V2.3R63-uNSLUng-6.10-beta
+-------- NOTE: RUNNING FROM INTERNAL FLASH  --------
+This system is currently running from the internal flash memory,
+it has NOT booted up into "unslung" mode from an external drive.
+In this mode, very few services are running, and available disk
+space is extremely limited.  This mode is normally only used
+for initial installation, and system maintenance and recovery.
+BusyBox v1.3.1 (2007-12-29 03:38:35 UTC) Built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+ 
+# unsling disk1
+Waiting for /share/hdd/data ...
+Target disk is /share/hdd/data
+Checking that /share/hdd/data has been properly formatted...
+Checking that /share/hdd/data is clean...
+Please enter the new root password.  This will be the new root
+password used when the NSLU2 boots up with or without disks
+Changing password for root
+Enter the new password (minimum of 5, maximum of 8 characters)
+Please use a combination of upper and lower case letters and numbers.
+Enter new password:
+Re-enter new password:
+Password changed.
+Copying the complete rootfs from / to /share/hdd/data ...
+(this will take just a couple of minutes)
+Copy complete ...
+Linking /usr/bin/ipkg executable on target disk.
+Linking /etc/motd to the unslung motd on target disk.
+Updating /home/httpd/html/home.htm with target disk info.
+Creating /.sdb1root to direct switchbox to boot from /share/hdd/data.
+Unsling complete.
+Leave the device disk1, /dev/sdb1, plugged in and reboot (using
+either the Web GUI, or the command "DO_Reboot") in order to boot
+this system up into unslung mode.
+# Connection closed by foreign host.
+</code></pre></div></div>
+
+<p>Reboot the device enable telnet again and install openssh:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># ipkg update
+# ipkg install openssh
+</code></pre></div></div>
 
 
 
   </section>
   <p>
     <div class="page-share">
-  <a href="https://twitter.com/intent/tweet?text=Bagera...%20%2F2009%2F01%2F20%2Fbagera%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2009%2F01%2F20%2Fbagera%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
-  <a href="https://reddit.com/submit?title=Bagera...&url=%2F2009%2F01%2F20%2Fbagera%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+  <a href="https://twitter.com/intent/tweet?text=nslu2+installation%20%2F2009%2F03%2F07%2Fnslu2-installation%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2009%2F03%2F07%2Fnslu2-installation%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=nslu2+installation&url=%2F2009%2F03%2F07%2Fnslu2-installation%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
 </div>
 
   </p>
@@ -185,8 +273,8 @@
 
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = '/2009/01/20/bagera/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = '/2009/01/20/bagera'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = '/2009/03/07/nslu2-installation/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2009/03/07/nslu2-installation'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
       };
 
       (function() { // DON'T EDIT BELOW THIS LINE

@@ -48,6 +48,306 @@
   
     
     <url>
+      <loc>/2009/12/31/calling-to-multiple-xmlrpc-remote-servers-in-a-clean-way/</loc>
+      
+        <lastmod>2009-12-31T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/12/30/jugando-con-friendfeed-y-appengine-tv-sms-appspot-com/</loc>
+      
+        <lastmod>2009-12-30T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/12/09/things-i-miss-in-php-function-decorators/</loc>
+      
+        <lastmod>2009-12-09T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/12/08/an-idea-for-calling-postgresqls-stored-procedures-with-pdo/</loc>
+      
+        <lastmod>2009-12-08T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/</loc>
+      
+        <lastmod>2009-12-07T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/12/07/moving-singleton-and-factory-patterns-to-abstract-with-php-5-3/</loc>
+      
+        <lastmod>2009-12-07T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/09/09/soyrico/</loc>
+      
+        <lastmod>2009-09-09T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/07/30/antivirus/</loc>
+      
+        <lastmod>2009-07-30T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/05/08/server-side-web-frameworks-are-dead/</loc>
+      
+        <lastmod>2009-05-08T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/04/18/speed-up-page-load-with-asynchronous-javascript/</loc>
+      
+        <lastmod>2009-04-18T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/04/18/mixin-dojo-and-google-api-libraries/</loc>
+      
+        <lastmod>2009-04-18T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/04/10/fetching-book-cover-with-google-api-and-dojo/</loc>
+      
+        <lastmod>2009-04-10T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/04/10/consuming-external-javascript-services-with-dojo/</loc>
+      
+        <lastmod>2009-04-10T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/03/29/virus-letal/</loc>
+      
+        <lastmod>2009-03-29T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/03/23/killall-firefox-bin/</loc>
+      
+        <lastmod>2009-03-23T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/03/15/dojohitch/</loc>
+      
+        <lastmod>2009-03-15T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/03/07/nslu2-installation/</loc>
+      
+        <lastmod>2009-03-07T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/02/15/dojo-and-custom-widgets/</loc>
+      
+        <lastmod>2009-02-15T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/02/10/dojo-series/</loc>
+      
+        <lastmod>2009-02-10T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2009/01/22/3/</loc>
+      
+        <lastmod>2009-01-22T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>/2009/01/20/jsonp-json-with-padding/</loc>
       
         <lastmod>2009-01-20T00:00:00+01:00</lastmod>
@@ -128,7 +428,7 @@
     <url>
       <loc>/feed.xml</loc>
       
-        <lastmod>2021-04-02T13:02:15+02:00</lastmod>
+        <lastmod>2021-04-02T13:42:38+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -143,7 +443,7 @@
     <url>
       <loc>/humans.txt</loc>
       
-        <lastmod>2021-04-02T13:02:15+02:00</lastmod>
+        <lastmod>2021-04-02T13:42:38+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -160,7 +460,7 @@
     <url>
       <loc>/js/main.js</loc>
       
-        <lastmod>2021-04-02T13:02:15+02:00</lastmod>
+        <lastmod>2021-04-02T13:42:38+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -175,7 +475,7 @@
     <url>
       <loc>/css/main.css</loc>
       
-        <lastmod>2021-04-02T13:02:15+02:00</lastmod>
+        <lastmod>2021-04-02T13:42:38+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -194,7 +494,7 @@
     <url>
       <loc>/assets/css/style.css</loc>
       
-        <lastmod>2021-04-02T13:02:15+02:00</lastmod>
+        <lastmod>2021-04-02T13:42:38+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -203,6 +503,8 @@
         <priority>0.3</priority>
       
     </url>
+    
+  
     
   
 </urlset>

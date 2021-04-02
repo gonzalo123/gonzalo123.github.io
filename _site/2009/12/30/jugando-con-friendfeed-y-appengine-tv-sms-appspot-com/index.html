@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Jugando con FriendFeed y Appengine: tv-sms.appspot.com</title>
+  <meta name="description" content="INTRODUCCIÓN
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Jugando con FriendFeed y Appengine: tv-sms.appspot.com">
+  <meta name="twitter:description" content="INTRODUCCIÓN
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Jugando con FriendFeed y Appengine: tv-sms.appspot.com">
+  <meta property="og:description" content="INTRODUCCIÓN
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617363758645752000">
+  <link rel="canonical" href="/2009/12/30/jugando-con-friendfeed-y-appengine-tv-sms-appspot-com/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+  style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <a href="/" title="link to home of Gonzalo Ayuso">
+          <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <!-- Twitter -->
+              <li class="navigation__item">
+                <a href="http://twitter.com/gonzalo123"
+                  title="@gonzalo123 on Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/gonzaloayuso"
+                  title="gonzaloayuso on LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/gonzalo123"
+                  title="gonzalo123 on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+              
+
+              <!-- RSS -->
+              <li class="navigation__item">
+                <a href="/feed.xml" title="Subscribe" target="_blank">
+                  <i class="icon icon-rss"></i>
+                  <span class="label">RSS</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2009-12-30 00:00" class="post-meta__date date">30 Dec 2009</time>
+      
+    </div>
+    <h1 class="post-title">Jugando con FriendFeed y Appengine: tv-sms.appspot.com</h1>
+  </header>
+
+  <section class="post">
+    <h1 id="introducción">INTRODUCCIÓN</h1>
+
+<p>Estas navidades me he propuesto publicar un aplicación con google app engine. La idea de la aplicación es simple. Hoy en día es muy común disponer de un portátil o netbook y estar en la sala viendo la tele con nuestro portátil. Los canales de televisión suelen permitir que la gente mande sms a unos números de teléfono y estos mensajes aparezcan en la parte inferior de nuestras pantallas. Personalmente no lo he usado nunca pero parece ser que el servicio tiene mucho éxito. Estos mensajes tienen un coste bastante elevado y son una fuente de ingresos para los canales y para las operadoras. La idea de la aplicación es hacer esto por Internet agarrándonos los sms aprovechando que tenemos un portátil en la sala junto a nosotros.</p>
+
+<p>Los requisitos que me he impuesto son los siguientes:</p>
+
+<ul>
+  <li>No dispongo de tiempo ilimitado. Tengo que publicarla en un par de días.</li>
+  <li>Usar la <a href="http://friendfeed.com/api/documentation">API</a> de FriendFeed.</li>
+  <li>La aplicación tiene que limitar en lo posible el uso de recursos en el servidor.</li>
+  <li>Publicar el <a href="http://code.google.com/p/gam-tvsms/">código</a> en google code.</li>
+  <li>Subir la aplicación a appengine: <a href="http://tv-sms.appspot.com/">http://tv-sms.appspot.com/</a></li>
+  <li>Escribir una entrada en mi <a href="http://wp.me/pqmgV-2U">blog</a> explicando como esta hecha.</li>
+</ul>
+
+<p>Pues bien ya estoy en el ultimo punto así que paso a explicar como funciona.</p>
+
+<h1 id="funcionamiento-de-la-aplicación">FUNCIONAMIENTO DE LA APLICACIÓN</h1>
+
+<h2 id="creación-de-los-grupos">Creación de los grupos</h2>
+
+<p>La idea es la siguiente me creo con mi usuario un grupo público en FriendFeed por cada canal de televisión y después me creo un archivo javascript con la configuración de los canales:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">chanels</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">tvsmstve1</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">TVE 1</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">tvsmstve2</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">TVE 2</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">tvsms-antena3</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Antena 3</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">tvsmscuatro</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Cuatro</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">tvsms-tele5</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Tele 5</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">tvsmslasexta</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">La Sexta</span><span class="dl">'</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Entiendo que esta información la debería guardar en algún tipo de Base de datos pero por ahora se queda así. Al arrancar la aplicación leo esto y lo muestro en pantalla</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">populateChanels</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">chanels</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">chanel</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#chanels</span><span class="dl">'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">
+    &lt;li class=</span><span class="dl">"</span><span class="nx">status</span><span class="dl">"</span><span class="s2">&gt;&lt;a class=</span><span class="dl">"</span><span class="nx">chanelsLink</span><span class="dl">"</span><span class="s2"> onclick=</span><span class="dl">"</span><span class="nx">start</span><span class="p">(</span><span class="err">\</span><span class="o">&amp;</span><span class="nx">quot</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">quot</span><span class="p">;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="o">&amp;</span><span class="nx">quot</span><span class="p">;</span><span class="err">\</span><span class="o">&amp;</span><span class="nx">quot</span><span class="p">;)</span><span class="dl">"</span><span class="s2"> href=</span><span class="dl">"</span><span class="err">#</span><span class="dl">"</span><span class="s2">&gt;</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">chanel</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;/a&gt;&lt;/li&gt;
+</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="listado-de-las-últimas-modificaciones-de-los-grupos">Listado de las últimas modificaciones de los grupos</h2>
+
+<p>Friendfeed tiene una API muy sencilla de usar usando REST y JSONP. Para obtener una la lista de actualizaciones de un canal simplemente tenemos que hacer una petición GET a la siguiente url:</p>
+
+<blockquote>
+  <p>http://friendfeed-api.com/v2/feed/grupoid</p>
+</blockquote>
+
+<p>Por lo tanto y teniendo en cuenta que voy a utilizar jQuery para mi aplicación creo la siguiente función:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">users</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="kd">var</span> <span class="nx">frmInput</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">
+&lt;div class=</span><span class="dl">"</span><span class="nx">share</span><span class="dl">"</span><span class="s2">&gt;&lt;form action=</span><span class="dl">"</span><span class="p">?</span><span class="dl">"</span><span class="s2"> method=</span><span class="dl">"</span><span class="nx">post</span><span class="dl">"</span><span class="s2">&gt;&lt;input id=</span><span class="dl">"</span><span class="nx">body</span><span class="dl">"</span><span class="s2"> style=</span><span class="dl">"</span><span class="nx">width</span><span class="p">:</span> <span class="mi">300</span><span class="nx">px</span><span class="p">;</span><span class="dl">"</span><span class="s2"> name=</span><span class="dl">"</span><span class="nx">body</span><span class="dl">"</span><span class="s2"> type=</span><span class="dl">"</span><span class="nx">text</span><span class="dl">"</span><span class="s2"> /&gt;&lt;input id=</span><span class="dl">"</span><span class="nx">submit</span><span class="dl">"</span><span class="s2"> type=</span><span class="dl">"</span><span class="nx">submit</span><span class="dl">"</span><span class="s2"> value=</span><span class="dl">"</span><span class="nx">Post</span><span class="dl">"</span><span class="s2"> /&gt;&lt;/form&gt;&lt;/div&gt;
+</span><span class="dl">"</span><span class="p">;</span>
+ 
+<span class="kd">function</span> <span class="nx">_getLi</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="nx">user</span><span class="p">,</span> <span class="nx">date</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">fDade</span> <span class="o">=</span> <span class="nx">formatFriendFeedDate</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span>
+    <span class="k">return</span> <span class="dl">"</span><span class="s2">
+    &lt;li class=</span><span class="dl">"</span><span class="nx">status</span><span class="dl">"</span><span class="s2">&gt;&lt;span class=</span><span class="dl">"</span><span class="nx">thumb</span> <span class="nx">vcard</span> <span class="nx">author</span><span class="dl">"</span><span class="s2">&gt;&lt;img height='50' width='50' src='http://friendfeed-api.com/v2/picture/</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">user</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">?size=medium' alt='</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">user</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">'/&gt;&lt;/span&gt;&lt;span class=</span><span class="dl">"</span><span class="nx">status</span><span class="o">-</span><span class="nx">body</span><span class="dl">"</span><span class="s2">&gt;</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">user</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> : </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">body</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;span class=</span><span class="dl">"</span><span class="nx">meta</span> <span class="nx">entry</span><span class="o">-</span><span class="nx">meta</span><span class="dl">"</span><span class="s2">&gt;</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">fDade</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;
+</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="kd">function</span> <span class="nx">list</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">txt</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="dl">"</span><span class="s2">http://friendfeed-api.com/v2/feed/</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">id</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">?callback=?</span><span class="dl">"</span><span class="p">,</span>
+        <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#ff</span><span class="dl">'</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">entries</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">entry</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">users</span><span class="p">[</span><span class="nx">entry</span><span class="p">.</span><span class="k">from</span><span class="p">.</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">entry</span><span class="p">.</span><span class="k">from</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+                <span class="nx">txt</span><span class="o">+=</span> <span class="nx">_getLi</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="k">from</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">date</span><span class="p">);</span>
+            <span class="p">});</span>
+            <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#ff</span><span class="dl">"</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">txt</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">logged</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#inputForm</span><span class="dl">'</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">frmInput</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#txtCanal</span><span class="dl">'</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">chanels</span><span class="p">[</span><span class="nx">id</span><span class="p">]);</span>
+ 
+            <span class="nx">cometClient</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+        <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>En esta función lo que estoy haciendo es obtener la lista en formato JSON y añadirla a un ol. Además de la lista le añado un formulario para que el usuario pueda introducir comentarios y arranco el cliente comet pero esto lo explicaré más adelante.</p>
+
+<h2 id="actualizaciones-en-tiempo-real">Actualizaciones en tiempo real</h2>
+
+<p>Lo que mas me gusta de Friendfeed y lo que me ha hecho decantarme por el y no por Twitter es que Friendfeed me permite lo que llama <a href="http://friendfeed.com/api/documentation#realtime">Real-Time updates</a>. Esta caracteristica, que hasta donde yo se Twitter no nos la da nos permite hacer de forma muy sencilla clientes Comet. Aquí va el mio:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">cometClient</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">cursor</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">http://friendfeed-api.com/v2/updates/feed/</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">id</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">?callback=?&amp;timeout=5</span><span class="dl">"</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">cursor</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">url</span> <span class="o">+=</span> <span class="dl">"</span><span class="s2">&amp;cursor==</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">cursor</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">entries</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">entry</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#ff</span><span class="dl">'</span><span class="p">).</span><span class="nx">prepend</span><span class="p">(</span><span class="nx">_getLi</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="k">from</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">date</span><span class="p">));</span>
+        <span class="p">});</span>
+        <span class="nx">t</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span><span class="nx">cometClient</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">realtime</span><span class="p">.</span><span class="nx">cursor</span><span class="p">)},</span> <span class="mi">2000</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Pues nada gracias a esto tengo actualizaciones a tiempo real de mi aplicación y sin usar ningún recurso de servidor.</p>
+
+<h2 id="nuevo-comentario">Nuevo comentario</h2>
+
+<p>Para crear un nuevo comentario la API de FriendFeed no me deja hacerlo directamente desde javascript. Esto es una pequeña faena ya que si no tuviera esta restricción toda la aplicación correría sobre javascript y no necesitaría nada de código en servidor. Pero al no ser posible me tengo que autentificar con OAuth desde google appengine. Para hacer esto me baso en la aplicación de <a href="http://code.google.com/p/friendfeed-api-example/">ejemplo</a> que nos proporciona FriendFeed para jugar con su API.</p>
+
+<p>El citado ejemplo hace todo lo que necesito y lo hace todo en el servidor. Ya que yo solo voy a usar la parte que FriendFeed denomina creating an entry, me limito a leer el código y eliminar la parte que no necesito. Como una de mis premisas es que no dispongo de tiempo ilimitado para esta aplicación no me voy a dedicar a entender cada linea de código. Me dedico a entender mas o menos como funciona.</p>
+
+<p>En mi aplicación la opción de nuevo comentario va a ser llamada desde javascript y espero un JSON por lo que a parte de eliminar las partes del código que no me interesan, hago unas pequeñas modificaciones para que la respuesta sea JSON</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">EntryHandler</span><span class="p">(</span><span class="n">webapp</span><span class="p">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="o">@</span><span class="n">authenticated</span>
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">entry</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">friendfeed</span><span class="p">.</span><span class="n">post_entry</span><span class="p">(</span>
+                <span class="n">body</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"body"</span><span class="p">),</span>
+                <span class="n">to</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"to"</span><span class="p">))</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="p">{</span><span class="s">'error'</span> <span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="p">{</span><span class="s">"redirect"</span> <span class="p">:</span> <span class="s">'/oauth/authorize'</span><span class="p">}</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">response</span><span class="p">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'Content-Type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'application/json'</span>
+        <span class="n">jsonData</span> <span class="o">=</span> <span class="n">out</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">response</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">simplejson</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">jsonData</span><span class="p">))</span>
+        <span class="k">return</span>
+<span class="p">...</span>
+ 
+<span class="n">application</span> <span class="o">=</span> <span class="n">webapp</span><span class="p">.</span><span class="n">WSGIApplication</span><span class="p">([</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s">"/oauth/callback"</span><span class="p">,</span> <span class="n">OAuthCallbackHandler</span><span class="p">),</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s">"/oauth/authorize"</span><span class="p">,</span> <span class="n">OAuthAuthorizeHandler</span><span class="p">),</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s">"/oauth/check"</span><span class="p">,</span> <span class="n">OAuthCheck</span><span class="p">),</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s">"/a/entry"</span><span class="p">,</span> <span class="n">EntryHandler</span><span class="p">),</span>
+<span class="p">])</span>
+</code></pre></div></div>
+
+<p>El código es bastante mejorable (no hay gestión de errores y no se hace nada con la variable entry) pero hace lo que quiero: publica una entrada en FriendFeed.</p>
+
+<p><strong>Autentificando</strong></p>
+
+<p>Para publicar entradas en FrinedFeed necesito estar autentificado por lo cual quiero que la aplicación solo muestre el formulario de entrada de datos si el usuario esta autentificado. Para hacer esto hago una llamada asíncrona al servidor al cargar la aplicación que me mire si el usuario esta o no autentificado</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">checkFfLogin</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">"</span><span class="s2">/oauth/check</span><span class="dl">"</span><span class="p">,</span> <span class="p">{},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">redirect</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">logged</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">ok</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">ok</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">logged</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+ 
+        <span class="k">if</span> <span class="p">(</span><span class="nx">logged</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#login</span><span class="dl">'</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#login</span><span class="dl">'</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="dl">"</span><span class="s2">&lt;a href=</span><span class="dl">"</span><span class="o">&amp;</span><span class="nx">quot</span><span class="p">;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">redirect</span> <span class="o">+</span> <span class="o">&amp;</span><span class="nx">quot</span><span class="p">;</span><span class="dl">"</span><span class="s2">&gt;&lt;img border='0' src='/sign-in-with-friendfeed.png' alt='Sign in with FriendFeed'&gt;&lt;/a&gt;</span><span class="dl">"</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="nx">populateChanels</span><span class="p">();</span>
+    <span class="p">},</span> <span class="dl">"</span><span class="s2">json</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Esto se complementa con la parte del servidor.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">OAuthCheck</span><span class="p">(</span><span class="n">webapp</span><span class="p">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="o">@</span><span class="n">authenticated</span>
+    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cookie_val</span> <span class="o">=</span> <span class="n">parse_cookie</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">cookies</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"FF_API_AUTH"</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">key</span><span class="p">,</span> <span class="n">secret</span><span class="p">,</span> <span class="n">username</span> <span class="o">=</span> <span class="n">cookie_val</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"|"</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">response</span><span class="p">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'Content-Type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'application/json'</span>
+            <span class="n">jsonData</span> <span class="o">=</span> <span class="p">{</span><span class="s">"ok"</span> <span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">response</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">simplejson</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">jsonData</span><span class="p">))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">response</span><span class="p">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'Content-Type'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'application/json'</span>
+            <span class="n">jsonData</span> <span class="o">=</span> <span class="p">{</span><span class="s">"redirect"</span> <span class="p">:</span> <span class="s">'/oauth/authorize'</span><span class="p">}</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">response</span><span class="p">.</span><span class="n">out</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">simplejson</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">jsonData</span><span class="p">))</span>
+        <span class="k">return</span>
+</code></pre></div></div>
+
+<p><strong>Cambio de canal</strong></p>
+
+<p>Ya solo queda que el usuario pueda cambiar de canal.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">selectedChanel</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">start</span><span class="p">(</span><span class="nx">group</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#body</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+    <span class="nx">selectedChanel</span> <span class="o">=</span> <span class="nx">group</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">t</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">clearTimeout</span><span class="p">(</span><span class="nx">t</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#ff</span><span class="dl">'</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;img src="/ajax-loader.gif" alt="loader"/&gt;... cargando </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">chanels</span><span class="p">[</span><span class="nx">group</span><span class="p">]);</span>
+ 
+    <span class="nx">list</span><span class="p">(</span><span class="nx">group</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="fin">FIN</h1>
+
+<p>Pues bien la aplicación ya esta operativa. Entiendo que tiene bastantes lagunas pero funciona y he cumplido las premisas que me había propuesto: Un par de tardes para hacerla y otra más para escribir la entrada en el blog y subirla al appengine.</p>
+
+<p>Enlace a la aplicación: <a href="http://tv-sms.appspot.com/">http://tv-sms.appspot.com/</a> Código fuente: <a href="http://code.google.com/p/gam-tvsms/">http://code.google.com/p/gam-tvsms/</a></p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Jugando+con+FriendFeed+y+Appengine%3A+tv-sms.appspot.com%20%2F2009%2F12%2F30%2Fjugando-con-friendfeed-y-appengine-tv-sms-appspot-com%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2009%2F12%2F30%2Fjugando-con-friendfeed-y-appengine-tv-sms-appspot-com%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Jugando+con+FriendFeed+y+Appengine%3A+tv-sms.appspot.com&url=%2F2009%2F12%2F30%2Fjugando-con-friendfeed-y-appengine-tv-sms-appspot-com%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2009/12/30/jugando-con-friendfeed-y-appengine-tv-sms-appspot-com/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2009/12/30/jugando-con-friendfeed-y-appengine-tv-sms-appspot-com'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617363758645752000"></script>
+
+
+    </div>
+  </body>
+</html>
