@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Taking photos with an ionic2 application and upload them to S3 Bucket with SAP's Cloud Foundry using Silex and Lumen</title>
+  <meta name="description" content="Today I want to play with an experiment. When I work with mobile applications, I normally use ionic and on-premise backends. Today I want play with cloud based backends. In this small experiment I want to use an ionic2 application to take pictures and upload them to an S3 bucket. Let’s start.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Taking photos with an ionic2 application and upload them to S3 Bucket with SAP's Cloud Foundry using Silex and Lumen">
+  <meta name="twitter:description" content="Today I want to play with an experiment. When I work with mobile applications, I normally use ionic and on-premise backends. Today I want play with cloud based backends. In this small experiment I want to use an ionic2 application to take pictures and upload them to an S3 bucket. Let’s start.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Taking photos with an ionic2 application and upload them to S3 Bucket with SAP's Cloud Foundry using Silex and Lumen">
+  <meta property="og:description" content="Today I want to play with an experiment. When I work with mobile applications, I normally use ionic and on-premise backends. Today I want play with cloud based backends. In this small experiment I want to use an ionic2 application to take pictures and upload them to an S3 bucket. Let’s start.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617450359481950000">
+  <link rel="canonical" href="/2017/08/21/taking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Taking photos with an ionic2 application and upload them to S3 Bucket with SAP’s Cloud Foundry using Silex and Lumen | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Taking photos with an ionic2 application and upload them to S3 Bucket with SAP’s Cloud Foundry using Silex and Lumen" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Today I want to play with an experiment. When I work with mobile applications, I normally use ionic and on-premise backends. Today I want play with cloud based backends. In this small experiment I want to use an ionic2 application to take pictures and upload them to an S3 bucket. Let’s start." />
+<meta property="og:description" content="Today I want to play with an experiment. When I work with mobile applications, I normally use ionic and on-premise backends. Today I want play with cloud based backends. In this small experiment I want to use an ionic2 application to take pictures and upload them to an S3 bucket. Let’s start." />
+<link rel="canonical" href="/2017/08/21/taking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen/" />
+<meta property="og:url" content="/2017/08/21/taking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-08-21T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Taking photos with an ionic2 application and upload them to S3 Bucket with SAP’s Cloud Foundry using Silex and Lumen" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2017/08/21/taking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen/"},"url":"/2017/08/21/taking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Today I want to play with an experiment. When I work with mobile applications, I normally use ionic and on-premise backends. Today I want play with cloud based backends. In this small experiment I want to use an ionic2 application to take pictures and upload them to an S3 bucket. Let’s start.","dateModified":"2017-08-21T00:00:00+02:00","datePublished":"2017-08-21T00:00:00+02:00","headline":"Taking photos with an ionic2 application and upload them to S3 Bucket with SAP’s Cloud Foundry using Silex and Lumen","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-08-21 00:00" class="post-meta__date date">21 Aug 2017</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#ionic">ionic</a>, <a href="/tags/#sap">sap</a>, <a href="/tags/#sap-cloud-platform">sap-cloud-platform</a>, <a href="/tags/#silex">silex</a></span>
+      
+    </div>
+    <h1 class="post-title">Taking photos with an ionic2 application and upload them to S3 Bucket with SAP's Cloud Foundry using Silex and Lumen</h1>
+  </header>
+
+  <section class="post">
+    <p>Today I want to play with an experiment. When I work with mobile applications, I normally use ionic and on-premise backends. Today I want play with cloud based backends. In this small experiment I want to use an ionic2 application to take pictures and upload them to an S3 bucket. Let’s start.</p>
+
+<p>First I’ve created a simple ionic2 application. It’s a very simple application. Only one page with a button to trigger the device’s camera.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ion-header&gt;</span>
+    <span class="nt">&lt;ion-navbar&gt;</span>
+        <span class="nt">&lt;ion-title&gt;</span>
+            Photo
+        <span class="nt">&lt;/ion-title&gt;</span>
+    <span class="nt">&lt;/ion-navbar&gt;</span>
+<span class="nt">&lt;/ion-header&gt;</span>
+ 
+<span class="nt">&lt;ion-content</span> <span class="err">padding</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ion-fab</span> <span class="err">bottom</span> <span class="err">right</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;button</span> <span class="err">ion-fab</span> <span class="err">(click)="takePicture()"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ion-icon</span>  <span class="na">name=</span><span class="s">"camera"</span><span class="nt">&gt;&lt;/ion-icon&gt;</span>
+        <span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/ion-fab&gt;</span>
+<span class="nt">&lt;/ion-content&gt;</span>
+</code></pre></div></div>
+
+<p>The controller uses @ionic-native/camera to take photos and later we use @ionic-native/transfer to upload them to the backend.</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">Camera</span><span class="p">,</span> <span class="nx">CameraOptions</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@ionic-native/camera</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">Transfer</span><span class="p">,</span> <span class="nx">FileUploadOptions</span><span class="p">,</span> <span class="nx">TransferObject</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@ionic-native/transfer</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">ToastController</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">ionic-angular</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">LoadingController</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">ionic-angular</span><span class="dl">'</span><span class="p">;</span>
+ 
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+    <span class="na">selector</span><span class="p">:</span> <span class="dl">'</span><span class="s1">page-home</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">home.html</span><span class="dl">'</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">HomePage</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">transfer</span><span class="p">:</span> <span class="nx">Transfer</span><span class="p">,</span>
+                <span class="k">private</span> <span class="nx">camera</span><span class="p">:</span> <span class="nx">Camera</span><span class="p">,</span>
+                <span class="k">public</span> <span class="nx">toastCtrl</span><span class="p">:</span> <span class="nx">ToastController</span><span class="p">,</span>
+                <span class="k">public</span> <span class="nx">loading</span><span class="p">:</span> <span class="nx">LoadingController</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">takePicture</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">const</span> <span class="nx">options</span><span class="p">:</span> <span class="nx">CameraOptions</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="na">quality</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+            <span class="na">destinationType</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">camera</span><span class="p">.</span><span class="nx">DestinationType</span><span class="p">.</span><span class="nx">FILE_URI</span><span class="p">,</span>
+            <span class="na">sourceType</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">camera</span><span class="p">.</span><span class="nx">PictureSourceType</span><span class="p">.</span><span class="nx">CAMERA</span><span class="p">,</span>
+            <span class="na">encodingType</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">camera</span><span class="p">.</span><span class="nx">EncodingType</span><span class="p">.</span><span class="nx">JPEG</span><span class="p">,</span>
+            <span class="na">targetWidth</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+            <span class="na">targetHeight</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+            <span class="na">saveToPhotoAlbum</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="na">correctOrientation</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">};</span>
+ 
+        <span class="k">this</span><span class="p">.</span><span class="nx">camera</span><span class="p">.</span><span class="nx">getPicture</span><span class="p">(</span><span class="nx">options</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">uri</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="kd">const</span> <span class="na">fileTransfer</span><span class="p">:</span> <span class="nx">TransferObject</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">transfer</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+ 
+            <span class="kd">let</span> <span class="na">options</span><span class="p">:</span> <span class="nx">FileUploadOptions</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="na">fileKey</span><span class="p">:</span> <span class="dl">'</span><span class="s1">file</span><span class="dl">'</span><span class="p">,</span>
+                <span class="na">fileName</span><span class="p">:</span> <span class="nx">uri</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="nx">uri</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="na">chunkedMode</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">Connection</span><span class="p">:</span> <span class="dl">"</span><span class="s2">close</span><span class="dl">"</span>
+                <span class="p">},</span>
+                <span class="na">params</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="na">metadata</span><span class="p">:</span> <span class="p">{</span><span class="na">foo</span><span class="p">:</span> <span class="dl">'</span><span class="s1">bar</span><span class="dl">'</span><span class="p">},</span>
+                    <span class="na">token</span><span class="p">:</span> <span class="dl">'</span><span class="s1">mySuperSecretToken</span><span class="dl">'</span>
+                <span class="p">}</span>
+            <span class="p">};</span>
+ 
+            <span class="kd">let</span> <span class="nx">loader</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">loading</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+                <span class="na">content</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Uploading ...</span><span class="dl">'</span><span class="p">,</span>
+            <span class="p">});</span>
+ 
+            <span class="nx">loader</span><span class="p">.</span><span class="nx">present</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="kd">let</span> <span class="nx">s3UploadUri</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://myApp.cfapps.eu10.hana.ondemand.com/upload</span><span class="dl">'</span><span class="p">;</span>
+                <span class="nx">fileTransfer</span><span class="p">.</span><span class="nx">upload</span><span class="p">(</span><span class="nx">uri</span><span class="p">,</span> <span class="nx">s3UploadUri</span><span class="p">,</span> <span class="nx">options</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="kd">let</span> <span class="nx">message</span><span class="p">;</span>
+                    <span class="kd">let</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">response</span><span class="p">);</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">response</span><span class="p">[</span><span class="dl">'</span><span class="s1">status</span><span class="dl">'</span><span class="p">])</span> <span class="p">{</span>
+                        <span class="nx">message</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Picture uploaded to S3: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">response</span><span class="p">[</span><span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">]</span>
+                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                        <span class="nx">message</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Error Uploading to S3: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">response</span><span class="p">[</span><span class="dl">'</span><span class="s1">error</span><span class="dl">'</span><span class="p">]</span>
+                    <span class="p">}</span>
+                    <span class="nx">loader</span><span class="p">.</span><span class="nx">dismiss</span><span class="p">();</span>
+                    <span class="kd">let</span> <span class="nx">toast</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">toastCtrl</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+                        <span class="na">message</span><span class="p">:</span> <span class="nx">message</span><span class="p">,</span>
+                        <span class="na">duration</span><span class="p">:</span> <span class="mi">3000</span>
+                    <span class="p">});</span>
+                    <span class="nx">toast</span><span class="p">.</span><span class="nx">present</span><span class="p">();</span>
+                <span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                    <span class="nx">loader</span><span class="p">.</span><span class="nx">dismiss</span><span class="p">();</span>
+                    <span class="kd">let</span> <span class="nx">toast</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">toastCtrl</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+                        <span class="na">message</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Error</span><span class="dl">"</span><span class="p">,</span>
+                        <span class="na">duration</span><span class="p">:</span> <span class="mi">3000</span>
+                    <span class="p">});</span>
+                    <span class="nx">toast</span><span class="p">.</span><span class="nx">present</span><span class="p">();</span>
+                <span class="p">});</span>
+            <span class="p">});</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now let’s work with the backend. Next time I’ll use JavaScript AWS SDK to upload pictures directly from mobile application (without backend), but today We’ll use a backend. Nowadays I’m involved with <a href="https://cloudplatform.sap.com/index.html">SAP Cloud platform</a> projects, so we’ll use SAP’s Cloud Foundry tenant (using a free account). In this tenant we’ll create a PHP application using the PHP buildpack with nginx</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">applications</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span>    <span class="s">myApp</span>
+  <span class="na">path</span><span class="pi">:</span> <span class="s">.</span>
+  <span class="na">memory</span><span class="pi">:</span>  <span class="s">128MB</span>
+  <span class="na">buildpack</span><span class="pi">:</span> <span class="s">php_buildpack</span>
+</code></pre></div></div>
+
+<p>The PHP application is a simple Silex application to handle the file uploads and post the pictures to S3 using the official AWS SDK for PHP (based on Guzzle)</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Aws\S3\S3Client</span><span class="p">;</span>
+ 
+<span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">([</span>
+    <span class="s1">'debug'</span>        <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s1">'aws.config'</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">'debug'</span>       <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="s1">'version'</span>     <span class="o">=&gt;</span> <span class="s1">'latest'</span><span class="p">,</span>
+        <span class="s1">'region'</span>      <span class="o">=&gt;</span> <span class="s1">'eu-west-1'</span><span class="p">,</span>
+        <span class="s1">'credentials'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'key'</span>    <span class="o">=&gt;</span> <span class="nv">$_ENV</span><span class="p">[</span><span class="s1">'s3key'</span><span class="p">],</span>
+            <span class="s1">'secret'</span> <span class="o">=&gt;</span> <span class="nv">$_ENV</span><span class="p">[</span><span class="s1">'s3secret'</span><span class="p">],</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">]);</span>
+ 
+<span class="nv">$app</span><span class="p">[</span><span class="s1">'aws'</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span> <span class="p">()</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nc">S3Client</span><span class="p">(</span><span class="nv">$app</span><span class="p">[</span><span class="s1">'aws.config'</span><span class="p">]);</span>
+<span class="p">};</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">post</span><span class="p">(</span><span class="s1">'/upload'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Request</span> <span class="nv">$request</span><span class="p">,</span> <span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$metadata</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'metadata'</span><span class="p">),</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="nv">$token</span>    <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'token'</span><span class="p">);</span>
+ 
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$token</span> <span class="o">===</span> <span class="nv">$_ENV</span><span class="p">[</span><span class="s1">'token'</span><span class="p">])</span> <span class="p">{</span>
+        <span class="nv">$fileName</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">'file'</span><span class="p">][</span><span class="s1">'name'</span><span class="p">];</span>
+        <span class="nv">$fileType</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">'file'</span><span class="p">][</span><span class="s1">'type'</span><span class="p">];</span>
+        <span class="nv">$tmpName</span>  <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">'file'</span><span class="p">][</span><span class="s1">'tmp_name'</span><span class="p">];</span>
+ 
+        <span class="cd">/** @var \Aws\S3\S3Client $s3 */</span>
+        <span class="nv">$s3</span> <span class="o">=</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">'aws'</span><span class="p">];</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="nv">$key</span> <span class="o">=</span> <span class="nb">date</span><span class="p">(</span><span class="s1">'YmdHis'</span><span class="p">)</span> <span class="mf">.</span> <span class="s2">"_"</span> <span class="mf">.</span> <span class="nv">$fileName</span><span class="p">;</span>
+            <span class="nv">$s3</span><span class="o">-&gt;</span><span class="nf">putObject</span><span class="p">([</span>
+                <span class="s1">'Bucket'</span>      <span class="o">=&gt;</span> <span class="nv">$_ENV</span><span class="p">[</span><span class="s1">'s3bucket'</span><span class="p">],</span>
+                <span class="s1">'Key'</span>         <span class="o">=&gt;</span> <span class="nv">$key</span><span class="p">,</span>
+                <span class="s1">'SourceFile'</span>  <span class="o">=&gt;</span> <span class="nv">$tmpName</span><span class="p">,</span>
+                <span class="s1">'ContentType'</span> <span class="o">=&gt;</span> <span class="nv">$fileType</span><span class="p">,</span>
+                <span class="s1">'Metadata'</span>    <span class="o">=&gt;</span> <span class="nv">$metadata</span><span class="p">,</span>
+            <span class="p">]);</span>
+            <span class="nb">unlink</span><span class="p">(</span><span class="nv">$tmpName</span><span class="p">);</span>
+ 
+            <span class="k">return</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">([</span>
+                <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="s1">'key'</span>    <span class="o">=&gt;</span> <span class="nv">$key</span><span class="p">,</span>
+            <span class="p">]);</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Aws\S3\Exception\S3Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">([</span>
+                <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
+                <span class="s1">'error'</span>  <span class="o">=&gt;</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">(),</span>
+            <span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">([</span>
+            <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="s1">'error'</span>  <span class="o">=&gt;</span> <span class="s2">"Token error"</span><span class="p">,</span>
+        <span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>I just wanted a simple prototype (a working one). Enough for a Sunday morning hacking.</p>
+
+<p>UPDATE</p>
+
+<p>I had this post ready weeks ago but something has changed. <a href="https://gonzalo123.com/2017/07/10/silex-is-dead-or-not/">Silex is dead</a>. So, as an exercise I’ll migrate current Silex application to Lumen (a quick prototype).</p>
+
+<p>That’s the main application.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">App\Http\Middleware</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Aws\S3\S3Client</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Illuminate\Http\Request</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Laravel\Lumen\Application</span><span class="p">;</span>
+ 
+<span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
+ 
+<span class="p">(</span><span class="k">new</span> <span class="nc">Dotenv\Dotenv</span><span class="p">(</span><span class="k">__DIR__</span> <span class="mf">.</span> <span class="s2">"/../env"</span><span class="p">))</span><span class="o">-&gt;</span><span class="nf">load</span><span class="p">();</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">();</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">routeMiddleware</span><span class="p">([</span>
+    <span class="s1">'auth'</span> <span class="o">=&gt;</span> <span class="nc">Middleware\AuthMiddleware</span><span class="o">::</span><span class="n">class</span><span class="p">,</span>
+<span class="p">]);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">register</span><span class="p">(</span><span class="nc">App\Providers\S3ServiceProvider</span><span class="o">::</span><span class="n">class</span><span class="p">);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">group</span><span class="p">([</span><span class="s1">'middleware'</span> <span class="o">=&gt;</span> <span class="s1">'auth'</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">post</span><span class="p">(</span><span class="s1">'/upload'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Request</span> <span class="nv">$request</span><span class="p">,</span> <span class="kt">Application</span> <span class="nv">$app</span><span class="p">,</span> <span class="kt">S3Client</span> <span class="nv">$s3</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$metadata</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'metadata'</span><span class="p">),</span> <span class="kc">true</span><span class="p">);</span>
+        <span class="nv">$fileName</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">'file'</span><span class="p">][</span><span class="s1">'name'</span><span class="p">];</span>
+        <span class="nv">$fileType</span> <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">'file'</span><span class="p">][</span><span class="s1">'type'</span><span class="p">];</span>
+        <span class="nv">$tmpName</span>  <span class="o">=</span> <span class="nv">$_FILES</span><span class="p">[</span><span class="s1">'file'</span><span class="p">][</span><span class="s1">'tmp_name'</span><span class="p">];</span>
+ 
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="nv">$key</span> <span class="o">=</span> <span class="nb">date</span><span class="p">(</span><span class="s1">'YmdHis'</span><span class="p">)</span> <span class="mf">.</span> <span class="s2">"_"</span> <span class="mf">.</span> <span class="nv">$fileName</span><span class="p">;</span>
+            <span class="nv">$s3</span><span class="o">-&gt;</span><span class="nf">putObject</span><span class="p">([</span>
+                <span class="s1">'Bucket'</span>      <span class="o">=&gt;</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'s3bucket'</span><span class="p">),</span>
+                <span class="s1">'Key'</span>         <span class="o">=&gt;</span> <span class="nv">$key</span><span class="p">,</span>
+                <span class="s1">'SourceFile'</span>  <span class="o">=&gt;</span> <span class="nv">$tmpName</span><span class="p">,</span>
+                <span class="s1">'ContentType'</span> <span class="o">=&gt;</span> <span class="nv">$fileType</span><span class="p">,</span>
+                <span class="s1">'Metadata'</span>    <span class="o">=&gt;</span> <span class="nv">$metadata</span><span class="p">,</span>
+            <span class="p">]);</span>
+            <span class="nb">unlink</span><span class="p">(</span><span class="nv">$tmpName</span><span class="p">);</span>
+ 
+            <span class="k">return</span> <span class="nf">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">([</span>
+                <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+                <span class="s1">'key'</span>    <span class="o">=&gt;</span> <span class="nv">$key</span><span class="p">,</span>
+            <span class="p">]);</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Aws\S3\Exception\S3Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">([</span>
+                <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
+                <span class="s1">'error'</span>  <span class="o">=&gt;</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">(),</span>
+            <span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Probably we can find a S3 Service provider, but I’ve built a simple one for this example.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">namespace</span> <span class="nn">App\Providers</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Illuminate\Support\ServiceProvider</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Aws\S3\S3Client</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">S3ServiceProvider</span> <span class="kd">extends</span> <span class="nc">ServiceProvider</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">register</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">app</span><span class="o">-&gt;</span><span class="nf">bind</span><span class="p">(</span><span class="nc">S3Client</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$conf</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s1">'debug'</span>       <span class="o">=&gt;</span> <span class="kc">false</span><span class="p">,</span>
+                <span class="s1">'version'</span>     <span class="o">=&gt;</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'AWS_VERSION'</span><span class="p">),</span>
+                <span class="s1">'region'</span>      <span class="o">=&gt;</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'AWS_REGION'</span><span class="p">),</span>
+                <span class="s1">'credentials'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                    <span class="s1">'key'</span>    <span class="o">=&gt;</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'s3key'</span><span class="p">),</span>
+                    <span class="s1">'secret'</span> <span class="o">=&gt;</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'s3secret'</span><span class="p">),</span>
+                <span class="p">],</span>
+            <span class="p">];</span>
+ 
+            <span class="k">return</span> <span class="k">new</span> <span class="nc">S3Client</span><span class="p">(</span><span class="nv">$conf</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>And also I’m using a middleware for the authentication</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">namespace</span> <span class="nn">App\Http\Middleware</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Closure</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Illuminate\Http\Request</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">AuthMiddleware</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">handle</span><span class="p">(</span><span class="kt">Request</span> <span class="nv">$request</span><span class="p">,</span> <span class="kt">Closure</span> <span class="nv">$next</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$token</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'token'</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$token</span> <span class="o">===</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'token'</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">response</span><span class="p">(</span><span class="s1">'Admin Login'</span><span class="p">,</span> <span class="mi">401</span><span class="p">);</span>
+        <span class="p">}</span>
+ 
+        <span class="k">return</span> <span class="nv">$next</span><span class="p">(</span><span class="nv">$request</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Ok. I’ll post this article soon. At least before Lumen will be dead also, and I need to update this post again :)</p>
+
+<p>Full project (mobile application and both backends) in my github<a href="https://github.com/gonzalo123/ionic2_to_s3">github</a></p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Taking+photos+with+an+ionic2+application+and+upload+them+to+S3+Bucket+with+SAP%27s+Cloud+Foundry+using+Silex+and+Lumen%20%2F2017%2F08%2F21%2Ftaking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2017%2F08%2F21%2Ftaking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Taking+photos+with+an+ionic2+application+and+upload+them+to+S3+Bucket+with+SAP%27s+Cloud+Foundry+using+Silex+and+Lumen&url=%2F2017%2F08%2F21%2Ftaking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2017/08/21/taking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2017/08/21/taking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617450359481950000"></script>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>NFC tag reader with Raspberry Pi</title>
+  <meta name="description" content="In another post we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="NFC tag reader with Raspberry Pi">
+  <meta name="twitter:description" content="In another post we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="NFC tag reader with Raspberry Pi">
+  <meta property="og:description" content="In another post we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617450359481950000">
+  <link rel="canonical" href="/2017/09/04/nfc-tag-reader-with-raspberry-pi/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>NFC tag reader with Raspberry Pi | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="NFC tag reader with Raspberry Pi" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="In another post we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other." />
+<meta property="og:description" content="In another post we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other." />
+<link rel="canonical" href="/2017/09/04/nfc-tag-reader-with-raspberry-pi/" />
+<meta property="og:url" content="/2017/09/04/nfc-tag-reader-with-raspberry-pi/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-09-04T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="NFC tag reader with Raspberry Pi" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2017/09/04/nfc-tag-reader-with-raspberry-pi/"},"url":"/2017/09/04/nfc-tag-reader-with-raspberry-pi/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"In another post we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other.","dateModified":"2017-09-04T00:00:00+02:00","datePublished":"2017-09-04T00:00:00+02:00","headline":"NFC tag reader with Raspberry Pi","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-09-04 00:00" class="post-meta__date date">4 Sep 2017</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#iot">iot</a>, <a href="/tags/#mfrc522">mfrc522</a>, <a href="/tags/#nfc">nfc</a>, <a href="/tags/#raspberry-pi">raspberry-pi</a></span>
+      
+    </div>
+    <h1 class="post-title">NFC tag reader with Raspberry Pi</h1>
+  </header>
+
+  <section class="post">
+    <p>In <a href="http://gonzalo123.com/2017/06/12/nfc-tag-reader-with-arduino/">another post</a> we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other.</p>
+
+<p>So let’s start connecting our <a href="http://playground.arduino.cc/Learning/MFRC522">RFID/NFC Sensor MFRC522</a> to our Raspberry Py 3 The wiring:</p>
+
+<ul>
+  <li>RC522 VCC &gt; RP 3V3</li>
+  <li>RC522 RST &gt; RPGPIO25</li>
+  <li>RC522 GND &gt; RP Ground</li>
+  <li>RC522 MISO &gt; RPGPIO9 (MISO)</li>
+  <li>RC522 MOSI &gt; RPGPIO10 (MOSO)</li>
+  <li>RC522 SCK &gt; RPGPIO11 (SCLK)</li>
+  <li>RC522 NSS &gt; RPGPIO8 (CE0)</li>
+  <li>RC522 IRQ &gt; RPNone</li>
+</ul>
+
+<p>I will a Python port of the example code for the NFC module MF522-AN thank to <a href="https://github.com/mxgxw/MFRC522-python">mxgxw</a></p>
+
+<p>I’m going to use two Python Scripts. One to control NFC reader</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">RPi.GPIO</span> <span class="k">as</span> <span class="n">gpio</span>
+<span class="kn">import</span> <span class="nn">MFRC522</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+ 
+<span class="n">MIFAREReader</span> <span class="o">=</span> <span class="n">MFRC522</span><span class="p">.</span><span class="n">MFRC522</span><span class="p">()</span>
+<span class="n">GREEN</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">RED</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">YELLOW</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">SERVO</span> <span class="o">=</span> <span class="mi">12</span>
+ 
+<span class="n">gpio</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">gpio</span><span class="p">.</span><span class="n">OUT</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">gpio</span><span class="p">.</span><span class="n">LOW</span><span class="p">)</span>
+<span class="n">gpio</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="n">RED</span><span class="p">,</span> <span class="n">gpio</span><span class="p">.</span><span class="n">OUT</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">gpio</span><span class="p">.</span><span class="n">LOW</span><span class="p">)</span>
+<span class="n">gpio</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="n">YELLOW</span><span class="p">,</span> <span class="n">gpio</span><span class="p">.</span><span class="n">OUT</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">gpio</span><span class="p">.</span><span class="n">LOW</span><span class="p">)</span>
+<span class="n">gpio</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="n">SERVO</span><span class="p">,</span> <span class="n">gpio</span><span class="p">.</span><span class="n">OUT</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">gpio</span><span class="p">.</span><span class="n">PWM</span><span class="p">(</span><span class="n">SERVO</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+ 
+<span class="n">good</span> <span class="o">=</span> <span class="p">[</span><span class="mi">211</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">217</span><span class="p">,</span> <span class="mi">168</span><span class="p">]</span>
+ 
+<span class="k">def</span> <span class="nf">servoInit</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">"servoInit"</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="mf">7.5</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">servoOn</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">"servoOn"</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">ChangeDutyCycle</span><span class="p">(</span><span class="mf">4.5</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">servoNone</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">"servoOn"</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">ChangeDutyCycle</span><span class="p">(</span><span class="mf">7.5</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">servoOff</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">"servoOff"</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">ChangeDutyCycle</span><span class="p">(</span><span class="mf">10.5</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">clean</span><span class="p">():</span>
+    <span class="n">gpio</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">GREEN</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">gpio</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">RED</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">gpio</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">YELLOW</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">servoInit</span><span class="p">()</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">TagType</span><span class="p">)</span> <span class="o">=</span> <span class="n">MIFAREReader</span><span class="p">.</span><span class="n">MFRC522_Request</span><span class="p">(</span><span class="n">MIFAREReader</span><span class="p">.</span><span class="n">PICC_REQIDL</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">MIFAREReader</span><span class="p">.</span><span class="n">MI_OK</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">backData</span><span class="p">)</span> <span class="o">=</span> <span class="n">MIFAREReader</span><span class="p">.</span><span class="n">MFRC522_Anticoll</span><span class="p">()</span>
+            <span class="n">gpio</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">YELLOW</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">MIFAREReader</span><span class="p">.</span><span class="n">MI_OK</span><span class="p">:</span>
+                <span class="n">mac</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">backData</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">mac</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">x</span><span class="p">).</span><span class="n">split</span><span class="p">(</span><span class="s">'x'</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="n">upper</span><span class="p">())</span>
+                <span class="k">print</span> <span class="s">":"</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">mac</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">good</span> <span class="o">==</span> <span class="n">backData</span><span class="p">:</span>
+                    <span class="n">servoOn</span><span class="p">()</span>
+                    <span class="n">gpio</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">GREEN</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+                    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+                    <span class="n">servoNone</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">gpio</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">RED</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+                    <span class="n">servoOff</span><span class="p">()</span>
+                    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+                    <span class="n">servoNone</span><span class="p">()</span>
+                <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">gpio</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">YELLOW</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+                <span class="n">gpio</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">RED</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+ 
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">main</span><span class="p">()</span>
+    <span class="k">except</span> <span class="nb">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">'Interrupted'</span>
+        <span class="n">clean</span><span class="p">()</span>
+        <span class="n">MIFAREReader</span><span class="p">.</span><span class="n">GPIO_CLEEN</span><span class="p">()</span>
+        <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>And another one to control push button. I use this second script only to see how to use different processes.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">RPi.GPIO</span> <span class="k">as</span> <span class="n">gpio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+ 
+<span class="n">gpio</span><span class="p">.</span><span class="n">setwarnings</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">gpio</span><span class="p">.</span><span class="n">setmode</span><span class="p">(</span><span class="n">gpio</span><span class="p">.</span><span class="n">BOARD</span><span class="p">)</span>
+<span class="n">BUTTON</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">GREEN</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">RED</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">YELLOW</span> <span class="o">=</span> <span class="mi">15</span>
+ 
+<span class="n">gpio</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">gpio</span><span class="p">.</span><span class="n">OUT</span><span class="p">)</span>
+<span class="n">gpio</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="n">RED</span><span class="p">,</span> <span class="n">gpio</span><span class="p">.</span><span class="n">OUT</span><span class="p">)</span>
+<span class="n">gpio</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="n">YELLOW</span><span class="p">,</span> <span class="n">gpio</span><span class="p">.</span><span class="n">OUT</span><span class="p">)</span>
+ 
+<span class="n">gpio</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="n">BUTTON</span><span class="p">,</span> <span class="n">gpio</span><span class="p">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">pull_up_down</span><span class="o">=</span><span class="n">gpio</span><span class="p">.</span><span class="n">PUD_DOWN</span><span class="p">)</span>
+<span class="n">gpio</span><span class="p">.</span><span class="n">add_event_detect</span><span class="p">(</span><span class="n">BUTTON</span><span class="p">,</span> <span class="n">gpio</span><span class="p">.</span><span class="n">RISING</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">leds</span><span class="p">(</span><span class="n">status</span><span class="p">):</span>
+    <span class="n">gpio</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">YELLOW</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+    <span class="n">gpio</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+    <span class="n">gpio</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">RED</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">buttonCallback</span><span class="p">(</span><span class="n">pin</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">gpio</span><span class="p">.</span><span class="nb">input</span><span class="p">(</span><span class="n">pin</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">"STOP"</span>
+        <span class="n">leds</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="n">leds</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="n">leds</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="n">leds</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+ 
+<span class="n">gpio</span><span class="p">.</span><span class="n">add_event_callback</span><span class="p">(</span><span class="n">BUTTON</span><span class="p">,</span> <span class="n">buttonCallback</span><span class="p">)</span>
+<span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">pass</span>
+</code></pre></div></div>
+
+<p>Here a video with a working example (I’ve also put a servo and and three leds only because it looks good :))</p>
+
+<p><a href="https://www.youtube.com/watch?v=IUGeVg7DE9Q"><img src="https://img.youtube.com/vi/IUGeVg7DE9Q/0.jpg" alt="youtube" /></a></p>
+
+<p>Code in my github <a href="https://github.com/gonzalo123/RPi_nfc">account</a></p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=NFC+tag+reader+with+Raspberry+Pi%20%2F2017%2F09%2F04%2Fnfc-tag-reader-with-raspberry-pi%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2017%2F09%2F04%2Fnfc-tag-reader-with-raspberry-pi%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=NFC+tag+reader+with+Raspberry+Pi&url=%2F2017%2F09%2F04%2Fnfc-tag-reader-with-raspberry-pi%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2017/09/04/nfc-tag-reader-with-raspberry-pi/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2017/09/04/nfc-tag-reader-with-raspberry-pi'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617450359481950000"></script>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Controlling bedside lamp with the TV's remote using Arduino and IR receiver.</title>
+  <meta name="description" content="I’ve got a new Arduino board (Arduino nano) and I want to hack a little bit. Today I want to play with IR receiver. My idea is to use my TV’s remote and switch on/off one bedside lamp, using one relay. It’s a simple Arduino program. First we need to include de IRremote library.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Controlling bedside lamp with the TV's remote using Arduino and IR receiver.">
+  <meta name="twitter:description" content="I’ve got a new Arduino board (Arduino nano) and I want to hack a little bit. Today I want to play with IR receiver. My idea is to use my TV’s remote and switch on/off one bedside lamp, using one relay. It’s a simple Arduino program. First we need to include de IRremote library.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Controlling bedside lamp with the TV's remote using Arduino and IR receiver.">
+  <meta property="og:description" content="I’ve got a new Arduino board (Arduino nano) and I want to hack a little bit. Today I want to play with IR receiver. My idea is to use my TV’s remote and switch on/off one bedside lamp, using one relay. It’s a simple Arduino program. First we need to include de IRremote library.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617450359481950000">
+  <link rel="canonical" href="/2017/08/07/controlling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Controlling bedside lamp with the TV’s remote using Arduino and IR receiver. | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Controlling bedside lamp with the TV’s remote using Arduino and IR receiver." />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I’ve got a new Arduino board (Arduino nano) and I want to hack a little bit. Today I want to play with IR receiver. My idea is to use my TV’s remote and switch on/off one bedside lamp, using one relay. It’s a simple Arduino program. First we need to include de IRremote library." />
+<meta property="og:description" content="I’ve got a new Arduino board (Arduino nano) and I want to hack a little bit. Today I want to play with IR receiver. My idea is to use my TV’s remote and switch on/off one bedside lamp, using one relay. It’s a simple Arduino program. First we need to include de IRremote library." />
+<link rel="canonical" href="/2017/08/07/controlling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver/" />
+<meta property="og:url" content="/2017/08/07/controlling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-08-07T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Controlling bedside lamp with the TV’s remote using Arduino and IR receiver." />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2017/08/07/controlling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver/"},"url":"/2017/08/07/controlling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"I’ve got a new Arduino board (Arduino nano) and I want to hack a little bit. Today I want to play with IR receiver. My idea is to use my TV’s remote and switch on/off one bedside lamp, using one relay. It’s a simple Arduino program. First we need to include de IRremote library.","dateModified":"2017-08-07T00:00:00+02:00","datePublished":"2017-08-07T00:00:00+02:00","headline":"Controlling bedside lamp with the TV’s remote using Arduino and IR receiver.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-08-07 00:00" class="post-meta__date date">7 Aug 2017</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#iot">iot</a>, <a href="/tags/#ir">ir</a></span>
+      
+    </div>
+    <h1 class="post-title">Controlling bedside lamp with the TV's remote using Arduino and IR receiver.</h1>
+  </header>
+
+  <section class="post">
+    <p>I’ve got a new Arduino board (Arduino nano) and I want to hack a little bit. Today I want to play with IR receiver. My idea is to use my TV’s remote and switch on/off one bedside lamp, using one relay. It’s a simple Arduino program. First we need to include de IRremote library.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;IRremote.h&gt;
+</span> 
+<span class="cp">#define IR 11
+#define RELAY 9
+</span> 
+<span class="n">IRrecv</span> <span class="nf">irrecv</span><span class="p">(</span><span class="n">IR</span><span class="p">);</span>
+<span class="n">IRsend</span> <span class="n">irsender</span><span class="p">;</span>
+<span class="n">decode_results</span> <span class="n">results</span><span class="p">;</span>
+ 
+<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">code</span><span class="p">;</span>
+ 
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">RELAY</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">RELAY</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+ 
+  <span class="n">irrecv</span><span class="p">.</span><span class="n">blink13</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+  <span class="n">irrecv</span><span class="p">.</span><span class="n">enableIRIn</span><span class="p">();</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">irrecv</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">results</span><span class="p">))</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">current</span> <span class="o">=</span> <span class="n">results</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">current</span> <span class="o">!=</span> <span class="n">code</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">code</span> <span class="o">=</span> <span class="n">current</span><span class="p">;</span>
+      <span class="k">switch</span> <span class="p">(</span><span class="n">code</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="mi">3772833823</span><span class="p">:</span>
+          <span class="n">digitalWrite</span><span class="p">(</span><span class="n">RELAY</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+          <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="mi">3772829743</span><span class="p">:</span>
+          <span class="n">digitalWrite</span><span class="p">(</span><span class="n">RELAY</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+          <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="n">irrecv</span><span class="p">.</span><span class="n">resume</span><span class="p">();</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>Normally IR receivers have three pins. Vcc (5V), Gnd and signal. We only need to connect the IR receiver to our Arduino and see which hex codes uses our TV’s remote. Then we only need to fire our relay depending on the code.</p>
+
+<p>The circuit:</p>
+
+<p><img src="/assets/images/img.png" alt="" /></p>
+
+<p>The hardware:</p>
+
+<ul>
+  <li>1 Arduino Nano</li>
+  <li>1 IR receiver</li>
+  <li>1 Relay</li>
+  <li>1 Red led</li>
+  <li>a couple of pull down resistors</li>
+</ul>
+
+<p><a href="https://www.youtube.com/watch?v=VrvagWlpvPc"><img src="https://img.youtube.com/vi/VrvagWlpvPc/0.jpg" alt="youtube" /></a></p>
+
+<p>Source code is available in my <a href="https://github.com/gonzalo123/arduino_ir_relay">github</a>.</p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Controlling+bedside+lamp+with+the+TV%27s+remote+using+Arduino+and+IR+receiver.%20%2F2017%2F08%2F07%2Fcontrolling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2017%2F08%2F07%2Fcontrolling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Controlling+bedside+lamp+with+the+TV%27s+remote+using+Arduino+and+IR+receiver.&url=%2F2017%2F08%2F07%2Fcontrolling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2017/08/07/controlling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2017/08/07/controlling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617450359481950000"></script>
+
+
+    </div>
+  </body>
+</html>

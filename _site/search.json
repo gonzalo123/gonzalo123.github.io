@@ -372,6 +372,186 @@
   
     {
 
+      "title"    : "Authenticate OpenUI5 applications and Lumen backends with Amazon Cognito and JWT",
+      "url"      : "/2017/12/11/authenticate-openui5-applications-and-lumen-backends-with-amazon-cognito-and-jwt/",
+      "category" : "",
+      "tags"     : "amazon, cognito, js, openui5, php, symfony",
+      "date"     : "2017-12-11 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Tracking blue objects with Opencv and Python",
+      "url"      : "/2017/11/20/tracking-blue-objects-with-opencv-and-python/",
+      "category" : "",
+      "tags"     : "computer-vision, opencv",
+      "date"     : "2017-11-20 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with IoT, MQTT, Arduino and Raspberry Pi. Building a dashboard with OpenUI5",
+      "url"      : "/2017/10/23/playing-with-iot-mqtt-arduino-and-raspberry-pi-building-a-dashboard-with-openui5/",
+      "category" : "",
+      "tags"     : "iot, js, nodemcu, openui5, raspberry-pi, sap",
+      "date"     : "2017-10-23 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "PHP application in SAP Cloud Platform. With PostgreSQL, Redis and Cloud Foundry",
+      "url"      : "/2017/09/25/php-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry/",
+      "category" : "",
+      "tags"     : "cloud-foundry, postgresql, redis, sap, sap-cloud-platform, silex",
+      "date"     : "2017-09-25 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Real Time IoT in the cloud with SAP&#39;s SCP, Cloud Foundry and WebSockets",
+      "url"      : "/2017/09/18/real-time-iot-in-the-cloud-with-saps-scp-cloud-foundry-and-websockets/",
+      "category" : "",
+      "tags"     : "cloud-foundry, iot, sap, sap-cloud-platform, websockets",
+      "date"     : "2017-09-18 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "NFC tag reader with Raspberry Pi",
+      "url"      : "/2017/09/04/nfc-tag-reader-with-raspberry-pi/",
+      "category" : "",
+      "tags"     : "iot, mfrc522, nfc, raspberry-pi",
+      "date"     : "2017-09-04 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Taking photos with an ionic2 application and upload them to S3 Bucket with SAP&#39;s Cloud Foundry using Silex and Lumen",
+      "url"      : "/2017/08/21/taking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen/",
+      "category" : "",
+      "tags"     : "ionic, sap, sap-cloud-platform, silex",
+      "date"     : "2017-08-21 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Controlling bedside lamp with the TV&#39;s remote using Arduino and IR receiver.",
+      "url"      : "/2017/08/07/controlling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver/",
+      "category" : "",
+      "tags"     : "iot, ir",
+      "date"     : "2017-08-07 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Silex is dead (... or not)",
+      "url"      : "/2017/07/10/silex-is-dead-or-not/",
+      "category" : "",
+      "tags"     : "desymfony, laravel, silex",
+      "date"     : "2017-07-10 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with Raspberry Pi, Arduino, NodeMcu and MQTT",
+      "url"      : "/2017/06/26/playing-with-raspberry-pi-arduino-nodemcu-and-mqtt/",
+      "category" : "",
+      "tags"     : "iot, mqtt, nodemcu",
+      "date"     : "2017-06-26 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "NFC tag reader with Arduino",
+      "url"      : "/2017/06/12/nfc-tag-reader-with-arduino/",
+      "category" : "",
+      "tags"     : "iot, node",
+      "date"     : "2017-06-12 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Arduino and Raspberry Pi working together. Part 2 (now with i2c)",
+      "url"      : "/2017/05/22/arduino-and-raspberry-pi-working-together-part-2-now-with-i2c/",
+      "category" : "",
+      "tags"     : "i2c, iot, raspberry-pi",
+      "date"     : "2017-05-22 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Arduino and Raspberry Pi working together",
+      "url"      : "/2017/05/08/arduino-and-raspberry-pi-working-together/",
+      "category" : "",
+      "tags"     : "iot, raspberry-pi",
+      "date"     : "2017-05-08 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "PHP Redis cache wrapper",
+      "url"      : "/2017/04/19/php-redis-cache-wrapper/",
+      "category" : "",
+      "tags"     : "predis, redis",
+      "date"     : "2017-04-19 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Control humidity with a Raspberry Pi and IoT devices",
+      "url"      : "/2017/04/03/control-humidity-with-a-raspberry-pi-and-iot-devices/",
+      "category" : "",
+      "tags"     : "btle, iot, node, raspberry-pi",
+      "date"     : "2017-04-03 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with RabbitMQ (part 2). Now with Python",
+      "url"      : "/2017/03/13/playing-with-rabbitmq-part-2-now-with-python/",
+      "category" : "",
+      "tags"     : "rabbitmq",
+      "date"     : "2017-03-13 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with RabbitMQ, PHP and node",
+      "url"      : "/2017/02/20/playing-with-rabbitmq-php-and-node/",
+      "category" : "",
+      "tags"     : "javascrip, node, rabbitmq",
+      "date"     : "2017-02-20 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with Docker, Silex, Python, Node and WebSockets",
+      "url"      : "/2017/01/02/playing-with-docker-silex-python-node-and-websockets/",
+      "category" : "",
+      "tags"     : "node, silex, websocket, websockets",
+      "date"     : "2017-01-02 00:00:00 +0100"
+
+    } ,
+  
+    {
+
       "title"    : "Pivot tables in PHP",
       "url"      : "/2010/01/24/pivot-tables-in-php/",
       "category" : "",

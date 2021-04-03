@@ -558,6 +558,276 @@
   
     
     <url>
+      <loc>/2017/12/11/authenticate-openui5-applications-and-lumen-backends-with-amazon-cognito-and-jwt/</loc>
+      
+        <lastmod>2017-12-11T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/11/20/tracking-blue-objects-with-opencv-and-python/</loc>
+      
+        <lastmod>2017-11-20T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/10/23/playing-with-iot-mqtt-arduino-and-raspberry-pi-building-a-dashboard-with-openui5/</loc>
+      
+        <lastmod>2017-10-23T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/09/25/php-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry/</loc>
+      
+        <lastmod>2017-09-25T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/09/18/real-time-iot-in-the-cloud-with-saps-scp-cloud-foundry-and-websockets/</loc>
+      
+        <lastmod>2017-09-18T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/09/04/nfc-tag-reader-with-raspberry-pi/</loc>
+      
+        <lastmod>2017-09-04T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/08/21/taking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen/</loc>
+      
+        <lastmod>2017-08-21T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/08/07/controlling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver/</loc>
+      
+        <lastmod>2017-08-07T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/07/10/silex-is-dead-or-not/</loc>
+      
+        <lastmod>2017-07-10T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/06/26/playing-with-raspberry-pi-arduino-nodemcu-and-mqtt/</loc>
+      
+        <lastmod>2017-06-26T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/06/12/nfc-tag-reader-with-arduino/</loc>
+      
+        <lastmod>2017-06-12T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/05/22/arduino-and-raspberry-pi-working-together-part-2-now-with-i2c/</loc>
+      
+        <lastmod>2017-05-22T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/05/08/arduino-and-raspberry-pi-working-together/</loc>
+      
+        <lastmod>2017-05-08T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/04/19/php-redis-cache-wrapper/</loc>
+      
+        <lastmod>2017-04-19T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/04/03/control-humidity-with-a-raspberry-pi-and-iot-devices/</loc>
+      
+        <lastmod>2017-04-03T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/03/13/playing-with-rabbitmq-part-2-now-with-python/</loc>
+      
+        <lastmod>2017-03-13T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/02/20/playing-with-rabbitmq-php-and-node/</loc>
+      
+        <lastmod>2017-02-20T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2017/01/02/playing-with-docker-silex-python-node-and-websockets/</loc>
+      
+        <lastmod>2017-01-02T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>/2010/01/24/pivot-tables-in-php/</loc>
       
         <lastmod>2010-01-24T00:00:00+01:00</lastmod>
@@ -951,7 +1221,7 @@
     <url>
       <loc>/about/</loc>
       
-        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
+        <lastmod>2021-04-03T13:45:59+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -968,7 +1238,7 @@
     <url>
       <loc>/feed.xml</loc>
       
-        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
+        <lastmod>2021-04-03T13:45:59+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -983,7 +1253,7 @@
     <url>
       <loc>/humans.txt</loc>
       
-        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
+        <lastmod>2021-04-03T13:45:59+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1000,7 +1270,7 @@
     <url>
       <loc>/js/main.js</loc>
       
-        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
+        <lastmod>2021-04-03T13:45:59+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1015,7 +1285,7 @@
     <url>
       <loc>/css/main.css</loc>
       
-        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
+        <lastmod>2021-04-03T13:45:59+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1030,7 +1300,7 @@
     <url>
       <loc>/search.json</loc>
       
-        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
+        <lastmod>2021-04-03T13:45:59+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1049,7 +1319,7 @@
     <url>
       <loc>/assets/css/style.css</loc>
       
-        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
+        <lastmod>2021-04-03T13:45:59+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1058,6 +1328,8 @@
         <priority>0.3</priority>
       
     </url>
+    
+  
     
   
     

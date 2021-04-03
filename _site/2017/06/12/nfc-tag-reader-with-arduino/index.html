@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>NFC tag reader with Arduino</title>
+  <meta name="description" content="Today I want to use the NFC tag reader module with my Arduino. The idea is build a simple prototype to read NFC tags and validate them against a remote server (for example a node tcp server). Depending on the tag we’ll trigger one digital output or another. In the example we’ll connect leds to those outputs, but in the real life we can open door or something similar.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="NFC tag reader with Arduino">
+  <meta name="twitter:description" content="Today I want to use the NFC tag reader module with my Arduino. The idea is build a simple prototype to read NFC tags and validate them against a remote server (for example a node tcp server). Depending on the tag we’ll trigger one digital output or another. In the example we’ll connect leds to those outputs, but in the real life we can open door or something similar.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="NFC tag reader with Arduino">
+  <meta property="og:description" content="Today I want to use the NFC tag reader module with my Arduino. The idea is build a simple prototype to read NFC tags and validate them against a remote server (for example a node tcp server). Depending on the tag we’ll trigger one digital output or another. In the example we’ll connect leds to those outputs, but in the real life we can open door or something similar.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617450359481950000">
+  <link rel="canonical" href="/2017/06/12/nfc-tag-reader-with-arduino/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>NFC tag reader with Arduino | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="NFC tag reader with Arduino" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Today I want to use the NFC tag reader module with my Arduino. The idea is build a simple prototype to read NFC tags and validate them against a remote server (for example a node tcp server). Depending on the tag we’ll trigger one digital output or another. In the example we’ll connect leds to those outputs, but in the real life we can open door or something similar." />
+<meta property="og:description" content="Today I want to use the NFC tag reader module with my Arduino. The idea is build a simple prototype to read NFC tags and validate them against a remote server (for example a node tcp server). Depending on the tag we’ll trigger one digital output or another. In the example we’ll connect leds to those outputs, but in the real life we can open door or something similar." />
+<link rel="canonical" href="/2017/06/12/nfc-tag-reader-with-arduino/" />
+<meta property="og:url" content="/2017/06/12/nfc-tag-reader-with-arduino/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-06-12T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="NFC tag reader with Arduino" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2017/06/12/nfc-tag-reader-with-arduino/"},"url":"/2017/06/12/nfc-tag-reader-with-arduino/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Today I want to use the NFC tag reader module with my Arduino. The idea is build a simple prototype to read NFC tags and validate them against a remote server (for example a node tcp server). Depending on the tag we’ll trigger one digital output or another. In the example we’ll connect leds to those outputs, but in the real life we can open door or something similar.","dateModified":"2017-06-12T00:00:00+02:00","datePublished":"2017-06-12T00:00:00+02:00","headline":"NFC tag reader with Arduino","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-06-12 00:00" class="post-meta__date date">12 Jun 2017</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#iot">iot</a>, <a href="/tags/#node">node</a></span>
+      
+    </div>
+    <h1 class="post-title">NFC tag reader with Arduino</h1>
+  </header>
+
+  <section class="post">
+    <p>Today I want to use the NFC tag reader module with my Arduino. The idea is build a simple prototype to read NFC tags and validate them against a remote server (for example a node tcp server). Depending on the tag we’ll trigger one digital output or another. In the example we’ll connect leds to those outputs, but in the real life we can open door or something similar.</p>
+
+<p>We’ll use a MFRC522 module. It’s a cheap Mifare RFID/NFC tag reader and writer.</p>
+
+<p>MFRC522 Connection:</p>
+
+<ul>
+  <li>sda: 10 (*) -&gt; 8</li>
+  <li>sck: 13</li>
+  <li>Mosi: 11</li>
+  <li>Miso: 12</li>
+  <li>Rq: –</li>
+  <li>Gnd: Gnd</li>
+  <li>Rst: 9</li>
+  <li>3.3V: 3.3V</li>
+</ul>
+
+<p>In this example we’ll use a ethernet shield to connect our Arduino board to the LAN. We must take care with it. If we use ethernet shield with a MFRC522 there’s a SPI conflict (due to ethernet shield’s SD card reader). We need to use another SDA pin (here I’m using pin 8 instead of 10) and disable w5100 SPI before configure ethernet.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// disable w5100 SPI</span>
+<span class="n">pinMode</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+<span class="n">digitalWrite</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Here is the Arduino code</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;SPI.h&gt;
+#include &lt;MFRC522.h&gt;
+#include &lt;Ethernet.h&gt;
+#include &lt;EthernetClient.h&gt;
+</span> 
+<span class="cp">#define RST_PIN 9
+#define SS_PIN  8
+#define ERROR_PIN 7
+#define OPEN_PIN 6
+#define OPEN_DELAY 2000
+</span> 
+<span class="kt">char</span> <span class="n">server</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"192.168.1.104"</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">port</span> <span class="o">=</span> <span class="mi">28001</span><span class="p">;</span>
+ 
+<span class="kt">signed</span> <span class="kt">long</span> <span class="n">timeout</span><span class="p">;</span>
+ 
+<span class="n">byte</span> <span class="n">mac</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xBB</span><span class="p">,</span> <span class="mh">0xCC</span><span class="p">,</span> <span class="mh">0xDE</span><span class="p">,</span> <span class="mh">0x02</span> <span class="p">};</span>
+<span class="n">MFRC522</span> <span class="nf">mfrc522</span><span class="p">(</span><span class="n">SS_PIN</span><span class="p">,</span> <span class="n">RST_PIN</span><span class="p">);</span>
+<span class="n">EthernetClient</span> <span class="n">client</span><span class="p">;</span>
+ 
+<span class="kt">void</span> <span class="nf">printArray</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="n">byte</span> <span class="n">bufferSize</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">byte</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">bufferSize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mh">0x10</span> <span class="o">?</span> <span class="s">" 0"</span> <span class="o">:</span> <span class="s">" "</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">HEX</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="n">String</span> <span class="nf">dump_byte_array</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="n">byte</span> <span class="n">bufferSize</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">String</span> <span class="n">out</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">byte</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">bufferSize</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">out</span> <span class="o">+=</span> <span class="n">String</span><span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mh">0x10</span> <span class="o">?</span> <span class="s">" 0"</span> <span class="o">:</span> <span class="s">" "</span><span class="p">)</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">buffer</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">HEX</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">out</span><span class="p">.</span><span class="n">toUpperCase</span><span class="p">();</span>
+    <span class="n">out</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">" "</span><span class="p">,</span> <span class="s">""</span><span class="p">);</span>
+     
+    <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">resetLeds</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">OPEN_PIN</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ERROR_PIN</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">open</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"OPEN!"</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">OPEN_PIN</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="n">OPEN_DELAY</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">OPEN_PIN</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">error</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"ERROR!"</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ERROR_PIN</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="n">OPEN_DELAY</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ERROR_PIN</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">scanCard</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">byte</span> <span class="n">status</span><span class="p">;</span>
+  <span class="n">byte</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">18</span><span class="p">];</span>
+  <span class="kt">int</span> <span class="n">err</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">byte</span> <span class="n">size</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+  <span class="n">EthernetClient</span> <span class="n">c</span><span class="p">;</span>
+       
+  <span class="k">if</span> <span class="p">(</span><span class="n">mfrc522</span><span class="p">.</span><span class="n">PICC_IsNewCardPresent</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mfrc522</span><span class="p">.</span><span class="n">PICC_ReadCardSerial</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">const</span> <span class="n">String</span> <span class="n">ID</span> <span class="o">=</span> <span class="n">dump_byte_array</span><span class="p">(</span><span class="n">mfrc522</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">uidByte</span><span class="p">,</span> <span class="n">mfrc522</span><span class="p">.</span><span class="n">uid</span><span class="p">.</span><span class="n">size</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"New tag read: "</span> <span class="o">+</span> <span class="n">ID</span><span class="p">);</span>
+      <span class="n">mfrc522</span><span class="p">.</span><span class="n">PICC_HaltA</span><span class="p">();</span>
+      
+      <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="n">millis</span><span class="p">()</span> <span class="o">+</span> <span class="mi">3000</span><span class="p">;</span>
+        <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"OPEN:"</span> <span class="o">+</span> <span class="n">ID</span><span class="p">);</span>
+        <span class="n">delay</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+ 
+        <span class="k">while</span><span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">available</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="n">timeout</span> <span class="o">-</span> <span class="n">millis</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">)</span> <span class="p">{</span>
+              <span class="n">error</span><span class="p">();</span>
+              <span class="k">goto</span> <span class="n">close</span><span class="p">;</span>
+          <span class="p">}</span>
+        <span class="p">}</span> 
+        <span class="kt">int</span> <span class="n">size</span><span class="p">;</span>
+        <span class="n">bool</span> <span class="n">status</span><span class="p">;</span>
+         
+        <span class="k">while</span><span class="p">((</span><span class="n">size</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">available</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+          <span class="kt">uint8_t</span><span class="o">*</span> <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+          <span class="n">size</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span><span class="n">size</span><span class="p">);</span>
+          <span class="c1">//Serial.write(msg, size);</span>
+          <span class="c1">// 4F4B   -&gt; OK</span>
+          <span class="c1">// 4E4F4B -&gt; NOK</span>
+          <span class="n">status</span> <span class="o">=</span> <span class="n">dump_byte_array</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span> <span class="o">==</span> <span class="s">"4F4B"</span><span class="p">;</span>
+          <span class="n">free</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+        <span class="p">}</span>
+         
+        <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">status</span> <span class="o">?</span> <span class="s">"OK!"</span> <span class="o">:</span> <span class="s">"NOK!"</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">status</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">open</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+          <span class="n">error</span><span class="p">();</span>
+        <span class="p">}</span>
+<span class="nl">close:</span>
+        <span class="n">client</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Connection Error"</span><span class="p">);</span>
+        <span class="n">error</span><span class="p">();</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">resetLeds</span><span class="p">();</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Setup ..."</span><span class="p">);</span>
+ 
+  <span class="c1">// disable w5100 SPI</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+ 
+  <span class="n">SPI</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+  <span class="n">mfrc522</span><span class="p">.</span><span class="n">PCD_Init</span><span class="p">();</span>
+ 
+  <span class="k">if</span> <span class="p">(</span><span class="n">Ethernet</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">mac</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"DHCP Error"</span><span class="p">);</span>
+    <span class="n">error</span><span class="p">();</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="p">}</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"My IP: "</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">byte</span> <span class="n">B</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">B</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">B</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">Ethernet</span><span class="p">.</span><span class="n">localIP</span><span class="p">()[</span><span class="n">B</span><span class="p">],</span> <span class="n">DEC</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"."</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Finish setup"</span><span class="p">);</span>
+  <span class="n">timeout</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">resetLeds</span><span class="p">();</span>
+  <span class="n">scanCard</span><span class="p">();</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+<span class="p">}</span> 
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">net</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">net</span><span class="dl">'</span><span class="p">);</span>
+ 
+<span class="kd">var</span> <span class="nx">LOCAL_PORT</span> <span class="o">=</span> <span class="mi">28001</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">validTags</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">X3C86AD9</span><span class="dl">'</span><span class="p">];</span>
+ 
+<span class="kd">var</span> <span class="nx">validateTag</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">tag</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">validTags</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">tag</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">};</span>
+ 
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">net</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">socket</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">socket</span><span class="p">.</span><span class="nx">remoteAddress</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">:</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">remotePort</span><span class="p">);</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">data</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">out</span><span class="p">;</span>
+        <span class="p">[</span><span class="nx">action</span><span class="p">,</span> <span class="nx">tag</span><span class="p">]</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">toUpperCase</span><span class="p">().</span><span class="nx">trim</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="dl">"</span><span class="s2">:</span><span class="dl">"</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">action</span><span class="p">,</span> <span class="nx">tag</span><span class="p">);</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="dl">'</span><span class="s1">OPEN</span><span class="dl">'</span><span class="p">:</span>
+                <span class="nx">out</span> <span class="o">=</span> <span class="nx">validateTag</span><span class="p">(</span><span class="nx">tag</span><span class="p">)</span> <span class="p">?</span> <span class="dl">"</span><span class="s2">OK</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">NOK</span><span class="dl">"</span><span class="p">;</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">out</span><span class="p">);</span>
+                <span class="nx">socket</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">out</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="nl">default</span><span class="p">:</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">unknown action:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">action</span><span class="p">);</span>
+        <span class="p">}</span>
+ 
+        <span class="nx">socket</span><span class="p">.</span><span class="nx">destroy</span><span class="p">();</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+ 
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">LOCAL_PORT</span><span class="p">,</span> <span class="dl">'</span><span class="s1">0.0.0.0</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>And that’s all. Here a video with the working example</p>
+
+<p><a href="https://www.youtube.com/watch?v=hV4BeSx0Kw4"><img src="https://img.youtube.com/vi/hV4BeSx0Kw4/0.jpg" alt="youtube" /></a></p>
+
+<p>And full code available in my <a href="https://github.com/gonzalo123/arduino-nfc-reader">github</a> account.</p>
+
+<p>References about rfid and Arduino: <a href="https://www.luisllamas.es/arduino-rfid-mifare-rc522/">here</a>, <a href="http://hetpro-store.com/TUTORIALES/modulo-lector-rfid-rc522-rf-con-arduino/">here</a> and <a href="https://forum.arduino.cc/index.php?topic=198768.0">here</a></p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=NFC+tag+reader+with+Arduino%20%2F2017%2F06%2F12%2Fnfc-tag-reader-with-arduino%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2017%2F06%2F12%2Fnfc-tag-reader-with-arduino%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=NFC+tag+reader+with+Arduino&url=%2F2017%2F06%2F12%2Fnfc-tag-reader-with-arduino%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2017/06/12/nfc-tag-reader-with-arduino/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2017/06/12/nfc-tag-reader-with-arduino'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617450359481950000"></script>
+
+
+    </div>
+  </body>
+</html>

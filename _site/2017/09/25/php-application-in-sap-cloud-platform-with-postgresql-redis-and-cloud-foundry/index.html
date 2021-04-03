@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>PHP application in SAP Cloud Platform. With PostgreSQL, Redis and Cloud Foundry</title>
+  <meta name="description" content="Keeping on with my study of SAP’s cloud platform (SCP) and Cloud Foundry today I’m going to build a simple PHP application. This application serves a simple Bootstrap landing page. The application uses a HTTP basic authentication. The credentials are validated against a PostgreSQL database. It also has a API to retrieve the localtimestamp from database server (just for play with a database server). I also want to play with Redis in the cloud too, so the API request will have a Time To Live (ttl) of 5 seconds. I will use a Redis service to do it.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="PHP application in SAP Cloud Platform. With PostgreSQL, Redis and Cloud Foundry">
+  <meta name="twitter:description" content="Keeping on with my study of SAP’s cloud platform (SCP) and Cloud Foundry today I’m going to build a simple PHP application. This application serves a simple Bootstrap landing page. The application uses a HTTP basic authentication. The credentials are validated against a PostgreSQL database. It also has a API to retrieve the localtimestamp from database server (just for play with a database server). I also want to play with Redis in the cloud too, so the API request will have a Time To Live (ttl) of 5 seconds. I will use a Redis service to do it.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="PHP application in SAP Cloud Platform. With PostgreSQL, Redis and Cloud Foundry">
+  <meta property="og:description" content="Keeping on with my study of SAP’s cloud platform (SCP) and Cloud Foundry today I’m going to build a simple PHP application. This application serves a simple Bootstrap landing page. The application uses a HTTP basic authentication. The credentials are validated against a PostgreSQL database. It also has a API to retrieve the localtimestamp from database server (just for play with a database server). I also want to play with Redis in the cloud too, so the API request will have a Time To Live (ttl) of 5 seconds. I will use a Redis service to do it.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617450359481950000">
+  <link rel="canonical" href="/2017/09/25/php-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>PHP application in SAP Cloud Platform. With PostgreSQL, Redis and Cloud Foundry | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="PHP application in SAP Cloud Platform. With PostgreSQL, Redis and Cloud Foundry" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Keeping on with my study of SAP’s cloud platform (SCP) and Cloud Foundry today I’m going to build a simple PHP application. This application serves a simple Bootstrap landing page. The application uses a HTTP basic authentication. The credentials are validated against a PostgreSQL database. It also has a API to retrieve the localtimestamp from database server (just for play with a database server). I also want to play with Redis in the cloud too, so the API request will have a Time To Live (ttl) of 5 seconds. I will use a Redis service to do it." />
+<meta property="og:description" content="Keeping on with my study of SAP’s cloud platform (SCP) and Cloud Foundry today I’m going to build a simple PHP application. This application serves a simple Bootstrap landing page. The application uses a HTTP basic authentication. The credentials are validated against a PostgreSQL database. It also has a API to retrieve the localtimestamp from database server (just for play with a database server). I also want to play with Redis in the cloud too, so the API request will have a Time To Live (ttl) of 5 seconds. I will use a Redis service to do it." />
+<link rel="canonical" href="/2017/09/25/php-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry/" />
+<meta property="og:url" content="/2017/09/25/php-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-09-25T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="PHP application in SAP Cloud Platform. With PostgreSQL, Redis and Cloud Foundry" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2017/09/25/php-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry/"},"url":"/2017/09/25/php-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Keeping on with my study of SAP’s cloud platform (SCP) and Cloud Foundry today I’m going to build a simple PHP application. This application serves a simple Bootstrap landing page. The application uses a HTTP basic authentication. The credentials are validated against a PostgreSQL database. It also has a API to retrieve the localtimestamp from database server (just for play with a database server). I also want to play with Redis in the cloud too, so the API request will have a Time To Live (ttl) of 5 seconds. I will use a Redis service to do it.","dateModified":"2017-09-25T00:00:00+02:00","datePublished":"2017-09-25T00:00:00+02:00","headline":"PHP application in SAP Cloud Platform. With PostgreSQL, Redis and Cloud Foundry","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-09-25 00:00" class="post-meta__date date">25 Sep 2017</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#cloud-foundry">cloud-foundry</a>, <a href="/tags/#postgresql">postgresql</a>, <a href="/tags/#redis">redis</a>, <a href="/tags/#sap">sap</a>, <a href="/tags/#sap-cloud-platform">sap-cloud-platform</a>, <a href="/tags/#silex">silex</a></span>
+      
+    </div>
+    <h1 class="post-title">PHP application in SAP Cloud Platform. With PostgreSQL, Redis and Cloud Foundry</h1>
+  </header>
+
+  <section class="post">
+    <p>Keeping on with my study of <a href="https://account.hana.ondemand.com/">SAP’s cloud platform</a> (SCP) and <a href="https://cloudplatform.sap.com/capabilities/runtimes-containers/cloud-foundry.html">Cloud Foundry</a> today I’m going to build a simple <a href="https://docs.cloudfoundry.org/buildpacks/php/index.html">PHP</a> application. This application serves a simple Bootstrap landing page. The application uses a HTTP basic authentication. The credentials are validated against a PostgreSQL database. It also has a API to retrieve the localtimestamp from database server (just for play with a database server). I also want to play with Redis in the cloud too, so the API request will have a Time To Live (ttl) of 5 seconds. I will use a Redis service to do it.</p>
+
+<p>First we create our services in cloud foundry. I’m using the free layer of SAP cloud foundry for this example. I’m not going to explain here how to do that. It’s pretty straightforward within SAP’s coopkit. Time ago I played with IBM’s cloud foundry too. I remember that it was also very simple too.</p>
+
+<p>Then we create our application (.bp-config/options.json)</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"WEBDIR"</span><span class="p">:</span><span class="w"> </span><span class="s2">"www"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"LIBDIR"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lib"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"PHP_VERSION"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{PHP_70_LATEST}"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"PHP_MODULES"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"cli"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"WEB_SERVER"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nginx"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>If we want to use our PostgreSQL and Redis services with our PHP Appliacation we need to connect those services to our application. This operation can be done also with SAP’s Cockpit.</p>
+
+<p>Now is the turn of PHP application. I normally use Silex framework within my backends, but now there’s a problem: <a href="https://gonzalo123.com/2017/07/10/silex-is-dead-or-not/">Silex is dead</a>. I feel a little bit sad but I’m not going to cry. It’s just a tool and there’re another ones. I’ve got my example with Silex but, as an exercise, I will also do it with <a href="https://lumen.laravel.com/">Lumen</a>.</p>
+
+<p>Let’s start with Silex. If you’re familiar with Silex micro framework (or another microframework, indeed) you can see that there isn’t anything especial.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Symfony\Component\HttpKernel\Exception\HttpException</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Silex\Provider\TwigServiceProvider</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Predis\Client</span><span class="p">;</span>
+ 
+<span class="k">if</span> <span class="p">(</span><span class="nb">php_sapi_name</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"cli-server"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// when I start the server my local machine vendors are in a different path</span>
+    <span class="k">require</span> <span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/../vendor/autoload.php'</span><span class="p">;</span>
+    <span class="c1">// and also I mock VCAP_SERVICES env</span>
+    <span class="nv">$env</span>   <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="k">__DIR__</span> <span class="mf">.</span> <span class="s2">"/../conf/vcap_services.json"</span><span class="p">);</span>
+    <span class="nv">$debug</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
+    <span class="nv">$env</span>   <span class="o">=</span> <span class="nv">$_ENV</span><span class="p">[</span><span class="s2">"VCAP_SERVICES"</span><span class="p">];</span>
+    <span class="nv">$debug</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="nv">$vcapServices</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$env</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">([</span><span class="s1">'debug'</span> <span class="o">=&gt;</span> <span class="nv">$debug</span><span class="p">,</span> <span class="s1">'ttl'</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">]);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">register</span><span class="p">(</span><span class="k">new</span> <span class="nc">TwigServiceProvider</span><span class="p">(),</span> <span class="p">[</span>
+    <span class="s1">'twig.path'</span> <span class="o">=&gt;</span> <span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/../views'</span><span class="p">,</span>
+<span class="p">]);</span>
+ 
+<span class="nv">$app</span><span class="p">[</span><span class="s1">'db'</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span> <span class="p">()</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$vcapServices</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$dbConf</span> <span class="o">=</span> <span class="nv">$vcapServices</span><span class="p">[</span><span class="s1">'postgresql'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">'credentials'</span><span class="p">];</span>
+    <span class="nv">$dsn</span>    <span class="o">=</span> <span class="s2">"pgsql:dbname=</span><span class="si">{</span><span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'dbname'</span><span class="p">]</span><span class="si">}</span><span class="s2">;host=</span><span class="si">{</span><span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'hostname'</span><span class="p">]</span><span class="si">}</span><span class="s2">;port=</span><span class="si">{</span><span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'port'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">;</span>
+    <span class="nv">$dbh</span>    <span class="o">=</span> <span class="k">new</span> <span class="nc">PDO</span><span class="p">(</span><span class="nv">$dsn</span><span class="p">,</span> <span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'username'</span><span class="p">],</span> <span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'password'</span><span class="p">]);</span>
+    <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">setAttribute</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">ATTR_ERRMODE</span><span class="p">,</span> <span class="no">PDO</span><span class="o">::</span><span class="no">ERRMODE_EXCEPTION</span><span class="p">);</span>
+    <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">setAttribute</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">ATTR_CASE</span><span class="p">,</span> <span class="no">PDO</span><span class="o">::</span><span class="no">CASE_UPPER</span><span class="p">);</span>
+    <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">setAttribute</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">ATTR_DEFAULT_FETCH_MODE</span><span class="p">,</span> <span class="no">PDO</span><span class="o">::</span><span class="no">FETCH_ASSOC</span><span class="p">);</span>
+ 
+    <span class="k">return</span> <span class="nv">$dbh</span><span class="p">;</span>
+<span class="p">};</span>
+ 
+<span class="nv">$app</span><span class="p">[</span><span class="s1">'redis'</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span> <span class="p">()</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$vcapServices</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$redisConf</span> <span class="o">=</span> <span class="nv">$vcapServices</span><span class="p">[</span><span class="s1">'redis'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">'credentials'</span><span class="p">];</span>
+ 
+    <span class="k">return</span> <span class="k">new</span> <span class="nc">Client</span><span class="p">([</span>
+        <span class="s1">'scheme'</span>   <span class="o">=&gt;</span> <span class="s1">'tcp'</span><span class="p">,</span>
+        <span class="s1">'host'</span>     <span class="o">=&gt;</span> <span class="nv">$redisConf</span><span class="p">[</span><span class="s1">'hostname'</span><span class="p">],</span>
+        <span class="s1">'port'</span>     <span class="o">=&gt;</span> <span class="nv">$redisConf</span><span class="p">[</span><span class="s1">'port'</span><span class="p">],</span>
+        <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="nv">$redisConf</span><span class="p">[</span><span class="s1">'password'</span><span class="p">],</span>
+    <span class="p">]);</span>
+<span class="p">};</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/"</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">'twig'</span><span class="p">]</span><span class="o">-&gt;</span><span class="nf">render</span><span class="p">(</span><span class="s1">'index.html.twig'</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s1">'user'</span> <span class="o">=&gt;</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">'user'</span><span class="p">],</span>
+        <span class="s1">'ttl'</span>  <span class="o">=&gt;</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">'ttl'</span><span class="p">],</span>
+    <span class="p">]);</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/timestamp"</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$app</span><span class="p">[</span><span class="s1">'redis'</span><span class="p">]</span><span class="o">-&gt;</span><span class="nf">exists</span><span class="p">(</span><span class="s1">'timestamp'</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">'db'</span><span class="p">]</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s1">'SELECT localtimestamp'</span><span class="p">);</span>
+        <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">();</span>
+        <span class="nv">$app</span><span class="p">[</span><span class="s1">'redis'</span><span class="p">]</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s1">'timestamp'</span><span class="p">,</span> <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">()[</span><span class="s1">'TIMESTAMP'</span><span class="p">],</span> <span class="s1">'EX'</span><span class="p">,</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">'ttl'</span><span class="p">]);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">return</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">(</span><span class="nv">$app</span><span class="p">[</span><span class="s1">'redis'</span><span class="p">]</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'timestamp'</span><span class="p">));</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">before</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="kt">Request</span> <span class="nv">$request</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$username</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="n">server</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'PHP_AUTH_USER'</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="nv">$password</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="n">server</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'PHP_AUTH_PW'</span><span class="p">);</span>
+ 
+    <span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">'db'</span><span class="p">]</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s1">'SELECT name, surname FROM public.user WHERE username=:USER AND pass=:PASS'</span><span class="p">);</span>
+    <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">([</span><span class="s1">'USER'</span> <span class="o">=&gt;</span> <span class="nv">$username</span><span class="p">,</span> <span class="s1">'PASS'</span> <span class="o">=&gt;</span> <span class="nb">md5</span><span class="p">(</span><span class="nv">$password</span><span class="p">)]);</span>
+    <span class="nv">$row</span> <span class="o">=</span> <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$row</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$app</span><span class="p">[</span><span class="s1">'user'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$row</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nb">header</span><span class="p">(</span><span class="s2">"WWW-Authenticate: Basic realm='RIS'"</span><span class="p">);</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nc">HttpException</span><span class="p">(</span><span class="mi">401</span><span class="p">,</span> <span class="s1">'Please sign in.'</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Maybe the only especial thing is the way that autoloader is done. We are initializing autoloader in two different ways. One way when the application is run in the cloud and another one when the application is run locally with PHP’s built-in server. That’s because vendors are located in different paths depending on which environment the application lives in. When Cloud Foundry connect services to appliations it injects environment variables with the service configuration (credentials, host, …). It uses VCAP_SERVICES env var.</p>
+
+<p>I use the built-in server to run the application locally. When I’m doing that I don’t have VCAP_SERVICES variable. And also my services information are different than when I’m running the application in the cloud. Maybe it’s better with an environment variable but I’m using this trick:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nb">php_sapi_name</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"cli-server"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// I'm runing the application locally</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// I'm in the cloud</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>So when I’m locally I mock VCAP_SERVICES with my local values and also, for example, configure Silex application in debug mode.</p>
+
+<p>Sometimes I want to run my application locally but I want to use the cloud services. I cannot connect directly to those services, but we can do it over ssh through our connected application. For example If our PostgreSQL application is running on 10.11.241.0:48825 we can map this remote port (in a private network) to our local port with this command.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cf ssh -N -T -L 48825:10.11.241.0:48825 silex
+</code></pre></div></div>
+
+<p>You can see more information about this command <a href="https://docs.cloudfoundry.org/devguide/deploy-apps/ssh-services.html">here</a>.</p>
+
+<p>Now we can use pgAdmin, for example, in our local machine to connect to cloud server.</p>
+
+<p>We can do the same with Redis</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cf ssh -N -T -L 54266:10.11.241.9:54266 silex
+</code></pre></div></div>
+
+<p>And basically that’s all. Now we’ll do the same with Lumen. The idea is create the same application with Lumen instead of Silex. It’s a dummy application but it cover task that I normally use. I also will re-use the Redis and PostgreSQL services from the previous project.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">App\Http\Middleware</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Laravel\Lumen\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Laravel\Lumen\Routing\Router</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Predis\Client</span><span class="p">;</span>
+ 
+<span class="k">if</span> <span class="p">(</span><span class="nb">php_sapi_name</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"cli-server"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">require</span> <span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/../vendor/autoload.php'</span><span class="p">;</span>
+    <span class="nv">$env</span> <span class="o">=</span> <span class="s1">'dev'</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
+    <span class="nv">$env</span> <span class="o">=</span> <span class="s1">'prod'</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="p">(</span><span class="k">new</span> <span class="nc">Dotenv\Dotenv</span><span class="p">(</span><span class="k">__DIR__</span> <span class="mf">.</span> <span class="s2">"/../env/</span><span class="si">{</span><span class="nv">$env</span><span class="si">}</span><span class="s2">"</span><span class="p">))</span><span class="o">-&gt;</span><span class="nf">load</span><span class="p">();</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">();</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">routeMiddleware</span><span class="p">([</span>
+    <span class="s1">'auth'</span> <span class="o">=&gt;</span> <span class="nc">Middleware\AuthMiddleware</span><span class="o">::</span><span class="n">class</span><span class="p">,</span>
+<span class="p">]);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">register</span><span class="p">(</span><span class="nc">App\Providers\VcapServiceProvider</span><span class="o">::</span><span class="n">class</span><span class="p">);</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">register</span><span class="p">(</span><span class="nc">App\Providers\StdoutLogServiceProvider</span><span class="o">::</span><span class="n">class</span><span class="p">);</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">register</span><span class="p">(</span><span class="nc">App\Providers\DbServiceProvider</span><span class="o">::</span><span class="n">class</span><span class="p">);</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">register</span><span class="p">(</span><span class="nc">App\Providers\RedisServiceProvider</span><span class="o">::</span><span class="n">class</span><span class="p">);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="n">router</span><span class="o">-&gt;</span><span class="nf">group</span><span class="p">([</span><span class="s1">'middleware'</span> <span class="o">=&gt;</span> <span class="s1">'auth'</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Router</span> <span class="nv">$router</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$router</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/"</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nf">view</span><span class="p">(</span><span class="s2">"index"</span><span class="p">,</span> <span class="p">[</span>
+            <span class="s1">'user'</span> <span class="o">=&gt;</span> <span class="nf">config</span><span class="p">(</span><span class="s2">"user"</span><span class="p">),</span>
+            <span class="s1">'ttl'</span>  <span class="o">=&gt;</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'TTL'</span><span class="p">),</span>
+        <span class="p">]);</span>
+    <span class="p">});</span>
+ 
+    <span class="nv">$router</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/timestamp"</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Client</span> <span class="nv">$redis</span><span class="p">,</span> <span class="kt">PDO</span> <span class="nv">$conn</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$redis</span><span class="o">-&gt;</span><span class="nf">exists</span><span class="p">(</span><span class="s1">'timestamp'</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s1">'SELECT localtimestamp'</span><span class="p">);</span>
+            <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">();</span>
+            <span class="nv">$redis</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s1">'timestamp'</span><span class="p">,</span> <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">fetch</span><span class="p">()[</span><span class="s1">'TIMESTAMP'</span><span class="p">],</span> <span class="s1">'EX'</span><span class="p">,</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">'TTL'</span><span class="p">));</span>
+        <span class="p">}</span>
+ 
+        <span class="k">return</span> <span class="nf">response</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">(</span><span class="nv">$redis</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'timestamp'</span><span class="p">));</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>I’ve created four servicer providers. One for handle Database connections (I don’t like ORMs)</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">namespace</span> <span class="nn">App\Providers</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Illuminate\Support\ServiceProvider</span><span class="p">;</span>
+<span class="kn">use</span> <span class="no">PDO</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">DbServiceProvider</span> <span class="kd">extends</span> <span class="nc">ServiceProvider</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">register</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">boot</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$vcapServices</span> <span class="o">=</span> <span class="nf">app</span><span class="p">(</span><span class="s1">'vcap_services'</span><span class="p">);</span>
+ 
+        <span class="nv">$dbConf</span> <span class="o">=</span> <span class="nv">$vcapServices</span><span class="p">[</span><span class="s1">'postgresql'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">'credentials'</span><span class="p">];</span>
+        <span class="nv">$dsn</span>    <span class="o">=</span> <span class="s2">"pgsql:dbname=</span><span class="si">{</span><span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'dbname'</span><span class="p">]</span><span class="si">}</span><span class="s2">;host=</span><span class="si">{</span><span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'hostname'</span><span class="p">]</span><span class="si">}</span><span class="s2">;port=</span><span class="si">{</span><span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'port'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">;</span>
+        <span class="nv">$dbh</span>    <span class="o">=</span> <span class="k">new</span> <span class="nc">PDO</span><span class="p">(</span><span class="nv">$dsn</span><span class="p">,</span> <span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'username'</span><span class="p">],</span> <span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'password'</span><span class="p">]);</span>
+        <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">setAttribute</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">ATTR_ERRMODE</span><span class="p">,</span> <span class="no">PDO</span><span class="o">::</span><span class="no">ERRMODE_EXCEPTION</span><span class="p">);</span>
+        <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">setAttribute</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">ATTR_CASE</span><span class="p">,</span> <span class="no">PDO</span><span class="o">::</span><span class="no">CASE_UPPER</span><span class="p">);</span>
+        <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">setAttribute</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">ATTR_DEFAULT_FETCH_MODE</span><span class="p">,</span> <span class="no">PDO</span><span class="o">::</span><span class="no">FETCH_ASSOC</span><span class="p">);</span>
+ 
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">app</span><span class="o">-&gt;</span><span class="nf">bind</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$dbh</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$dbh</span><span class="p">;</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Another one for Redis. I need to study a little bit more Lumen. I know that Lumen has a built-in tool to work with Redis.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">namespace</span> <span class="nn">App\Providers</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Illuminate\Support\ServiceProvider</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Predis\Client</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">RedisServiceProvider</span> <span class="kd">extends</span> <span class="nc">ServiceProvider</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">register</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">boot</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$vcapServices</span> <span class="o">=</span> <span class="nf">app</span><span class="p">(</span><span class="s1">'vcap_services'</span><span class="p">);</span>
+        <span class="nv">$redisConf</span>    <span class="o">=</span> <span class="nv">$vcapServices</span><span class="p">[</span><span class="s1">'redis'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">'credentials'</span><span class="p">];</span>
+ 
+        <span class="nv">$redis</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Client</span><span class="p">([</span>
+            <span class="s1">'scheme'</span>   <span class="o">=&gt;</span> <span class="s1">'tcp'</span><span class="p">,</span>
+            <span class="s1">'host'</span>     <span class="o">=&gt;</span> <span class="nv">$redisConf</span><span class="p">[</span><span class="s1">'hostname'</span><span class="p">],</span>
+            <span class="s1">'port'</span>     <span class="o">=&gt;</span> <span class="nv">$redisConf</span><span class="p">[</span><span class="s1">'port'</span><span class="p">],</span>
+            <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="nv">$redisConf</span><span class="p">[</span><span class="s1">'password'</span><span class="p">],</span>
+        <span class="p">]);</span>
+ 
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">app</span><span class="o">-&gt;</span><span class="nf">bind</span><span class="p">(</span><span class="nc">Client</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$redis</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$redis</span><span class="p">;</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>And the last one to work with Vcap environment variables. Probably I need to integrate it with dotenv files</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">namespace</span> <span class="nn">App\Providers</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Illuminate\Support\ServiceProvider</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Monolog</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">StdoutLogServiceProvider</span> <span class="kd">extends</span> <span class="nc">ServiceProvider</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">register</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nf">app</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">configureMonologUsing</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="kt">Monolog</span><span class="err">\</span><span class="nc">Logger</span> <span class="nv">$monolog</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$monolog</span><span class="o">-&gt;</span><span class="nf">pushHandler</span><span class="p">(</span><span class="k">new</span> <span class="err">\</span><span class="nf">Monolog\Handler\ErrorLogHandler</span><span class="p">());</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We also need to handle authentication (http basic auth in this case) so we’ll create a simple middleware</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">namespace</span> <span class="nn">App\Providers</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Illuminate\Support\ServiceProvider</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">VcapServiceProvider</span> <span class="kd">extends</span> <span class="nc">ServiceProvider</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">register</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">php_sapi_name</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"cli-server"</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$env</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="k">__DIR__</span> <span class="mf">.</span> <span class="s2">"/../../conf/vcap_services.json"</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nv">$env</span> <span class="o">=</span> <span class="nv">$_ENV</span><span class="p">[</span><span class="s2">"VCAP_SERVICES"</span><span class="p">];</span>
+        <span class="p">}</span>
+ 
+        <span class="nv">$vcapServices</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$env</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+ 
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">app</span><span class="o">-&gt;</span><span class="nf">bind</span><span class="p">(</span><span class="s1">'vcap_services'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$vcapServices</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$vcapServices</span><span class="p">;</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>In summary: Lumen is cool. The interface is very similar to Silex. I can swap my mind from thinking in Silex to thinking in Lumen easily. Blade instead Twig: no problem. Service providers are very similar. Routing is almost the same and Middlewares are much better. Nowadays backend is a commodity for me so I don’t want to spend to much time working on it. I want something that just work. Lumen looks like that.</p>
+
+<p>Both projects: <a href="https://github.com/gonzalo123/scp-cf-silex">Silex</a> and <a href="https://github.com/gonzalo123/scp-cf-lumen">Lumen</a> are available in my github</p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=PHP+application+in+SAP+Cloud+Platform.+With+PostgreSQL%2C+Redis+and+Cloud+Foundry%20%2F2017%2F09%2F25%2Fphp-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2017%2F09%2F25%2Fphp-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=PHP+application+in+SAP+Cloud+Platform.+With+PostgreSQL%2C+Redis+and+Cloud+Foundry&url=%2F2017%2F09%2F25%2Fphp-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2017/09/25/php-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2017/09/25/php-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617450359481950000"></script>
+
+
+    </div>
+  </body>
+</html>
