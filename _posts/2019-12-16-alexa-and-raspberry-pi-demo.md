@@ -5,7 +5,7 @@ date: "2019-12-16"
 tags: 
   - "alexa"
   - "iot"
-  - "javascrip"
+  - "javascript"
   - "python"
   - "rpi"
 coverImage: "119518.png"

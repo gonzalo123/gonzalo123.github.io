@@ -2,10 +2,9 @@
 layout: post
 title: "Using cache buster with OpenUI5 outside SCP"
 date: "2019-01-14"
-categories: 
+tags: 
   - "scp"
   - "technology"
-tags: 
   - "cache"
   - "grunt"
   - "js"

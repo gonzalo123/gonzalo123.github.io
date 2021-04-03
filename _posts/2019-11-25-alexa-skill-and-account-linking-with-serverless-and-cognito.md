@@ -6,7 +6,7 @@ tags:
   - "alexa"
   - "aws"
   - "cognito"
-  - "js"
+  - "javascript"
   - "node"
 ---
 

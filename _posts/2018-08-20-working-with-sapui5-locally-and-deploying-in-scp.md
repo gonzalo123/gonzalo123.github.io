@@ -8,7 +8,7 @@ categories:
   - "scp"
   - "technology"
 tags: 
-  - "js"
+  - "javascript"
   - "sap"
   - "sap-cloud-platform"
   - "ui5"

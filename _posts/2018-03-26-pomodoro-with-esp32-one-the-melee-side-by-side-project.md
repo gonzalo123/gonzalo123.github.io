@@ -7,7 +7,8 @@ categories:
   - "node-js"
   - "technology"
   - "websockets"
-tags: 
+tags:
+  - "javascript"
   - "angular"
   - "arduino"
   - "esp32"

@@ -7,7 +7,7 @@ categories:
   - "technology"
 tags: 
   - "iot"
-  - "js"
+  - "javascript"
   - "nodemcu"
   - "openui5"
   - "raspberry-pi"

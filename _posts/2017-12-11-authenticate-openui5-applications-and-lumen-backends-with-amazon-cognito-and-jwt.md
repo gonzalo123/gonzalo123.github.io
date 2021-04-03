@@ -10,7 +10,7 @@ categories:
 tags: 
   - "amazon"
   - "cognito"
-  - "js"
+  - "javascript"
   - "openui5"
   - "php"
   - "symfony"

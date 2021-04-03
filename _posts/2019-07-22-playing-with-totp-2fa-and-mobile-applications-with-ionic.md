@@ -3,7 +3,7 @@ layout: post
 title: "Playing with TOTP (2FA) and mobile applications with ionic"
 date: "2019-07-22"
 tags: 
-  - "js"
+  - "javascript"
   - "python"
   - "technology"
   - "2fa"

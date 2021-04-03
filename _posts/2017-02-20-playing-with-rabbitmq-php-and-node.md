@@ -8,7 +8,7 @@ categories:
   - "php"
   - "technology"
 tags: 
-  - "javascrip"
+  - "javascript"
   - "node"
   - "rabbitmq"
 ---

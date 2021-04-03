@@ -17,7 +17,6 @@ categories:
 tags: 
   - "node"
   - "silex"
-  - "websocket"
   - "websockets"
 ---
 

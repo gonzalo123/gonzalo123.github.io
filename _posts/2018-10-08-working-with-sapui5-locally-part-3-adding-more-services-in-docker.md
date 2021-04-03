@@ -2,14 +2,12 @@
 layout: post
 title: "Working with SAPUI5 locally (part 3). Adding more services in Docker"
 date: "2018-10-08"
-categories: 
+tags: 
+  - "php"
   - "docker"
   - "js"
   - "lumen"
   - "postgresql"
-  - "technology"
-tags: 
-  - "php"
   - "rabbitmq"
   - "sap"
   - "socket-io"

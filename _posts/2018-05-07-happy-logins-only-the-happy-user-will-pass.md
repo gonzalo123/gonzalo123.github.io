@@ -9,13 +9,14 @@ categories:
   - "websockets"
 tags: 
   - "html5"
-  - "js"
+  - "python"
+  - "javascript"
   - "keras"
   - "node"
   - "opencv"
   - "rabbitmq"
   - "tensorflow"
-  - "websocket"
+  - "websockets"
 coverImage: "code.png"
 ---
 

@@ -145,7 +145,7 @@
       "title"    : "Alexa and Raspberry Pi demo",
       "url"      : "/2019/12/16/alexa-and-raspberry-pi-demo/",
       "category" : "",
-      "tags"     : "alexa, iot, javascrip, python, rpi",
+      "tags"     : "alexa, iot, javascript, python, rpi",
       "date"     : "2019-12-16 00:00:00 +0100"
 
     } ,
@@ -155,7 +155,7 @@
       "title"    : "Alexa skill and account linking with serverless and Cognito",
       "url"      : "/2019/11/25/alexa-skill-and-account-linking-with-serverless-and-cognito/",
       "category" : "",
-      "tags"     : "alexa, aws, cognito, js, node",
+      "tags"     : "alexa, aws, cognito, javascript, node",
       "date"     : "2019-11-25 00:00:00 +0100"
 
     } ,
@@ -175,7 +175,7 @@
       "title"    : "Alexa skill example with Serverless framework",
       "url"      : "/2019/09/02/alexa-skill-example-with-serverless-framework/",
       "category" : "",
-      "tags"     : "js, technology, alexa, nodejs, serverless, voice",
+      "tags"     : "javascript, technology, alexa, nodejs, serverless, voice",
       "date"     : "2019-09-02 00:00:00 +0200"
 
     } ,
@@ -195,7 +195,7 @@
       "title"    : "Playing with TOTP (2FA) and mobile applications with ionic",
       "url"      : "/2019/07/22/playing-with-totp-2fa-and-mobile-applications-with-ionic/",
       "category" : "",
-      "tags"     : "js, python, technology, 2fa, flask, ionic, totp",
+      "tags"     : "javascript, python, technology, 2fa, flask, ionic, totp",
       "date"     : "2019-07-22 00:00:00 +0200"
 
     } ,
@@ -245,7 +245,7 @@
       "title"    : "Using cache buster with OpenUI5 outside SCP",
       "url"      : "/2019/01/14/using-cache-buster-with-openui5-outside-scp/",
       "category" : "",
-      "tags"     : "cache, grunt, js, openui5, sap, sap-cloud-platform",
+      "tags"     : "scp, technology, cache, grunt, js, openui5, sap, sap-cloud-platform",
       "date"     : "2019-01-14 00:00:00 +0100"
 
     } ,
@@ -275,7 +275,7 @@
       "title"    : "Working with SAPUI5 locally (part 3). Adding more services in Docker",
       "url"      : "/2018/10/08/working-with-sapui5-locally-part-3-adding-more-services-in-docker/",
       "category" : "",
-      "tags"     : "php, rabbitmq, sap, socket-io, ui5, websockets",
+      "tags"     : "php, docker, js, lumen, postgresql, rabbitmq, sap, socket-io, ui5, websockets",
       "date"     : "2018-10-08 00:00:00 +0200"
 
     } ,
@@ -295,7 +295,7 @@
       "title"    : "Working with SAPUI5 locally and deploying in SCP",
       "url"      : "/2018/08/20/working-with-sapui5-locally-and-deploying-in-scp/",
       "category" : "",
-      "tags"     : "js, sap, sap-cloud-platform, ui5",
+      "tags"     : "javascript, sap, sap-cloud-platform, ui5",
       "date"     : "2018-08-20 00:00:00 +0200"
 
     } ,
@@ -325,7 +325,7 @@
       "title"    : "Happy logins. Only the happy user will pass",
       "url"      : "/2018/05/07/happy-logins-only-the-happy-user-will-pass/",
       "category" : "",
-      "tags"     : "html5, js, keras, node, opencv, rabbitmq, tensorflow, websocket",
+      "tags"     : "html5, python, javascript, keras, node, opencv, rabbitmq, tensorflow, websockets",
       "date"     : "2018-05-07 00:00:00 +0200"
 
     } ,
@@ -345,7 +345,7 @@
       "title"    : "Pomodoro with ESP32. One &quot;The Melee - Side by side&quot; project",
       "url"      : "/2018/03/26/pomodoro-with-esp32-one-the-melee-side-by-side-project/",
       "category" : "",
-      "tags"     : "angular, arduino, esp32, iot, mqtt, socket-io, the-melee",
+      "tags"     : "javascript, angular, arduino, esp32, iot, mqtt, socket-io, the-melee",
       "date"     : "2018-03-26 00:00:00 +0200"
 
     } ,
@@ -355,7 +355,7 @@
       "title"    : "Playing with Ionic, Lumen, Firebase, Google maps, Raspberry Pi and background geolocation",
       "url"      : "/2018/02/19/playing-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation/",
       "category" : "",
-      "tags"     : "firebase, google-maps, ionic, lumen, raspberry-pi",
+      "tags"     : "firebase, javascript, php, google-maps, ionic, lumen, raspberry-pi",
       "date"     : "2018-02-19 00:00:00 +0100"
 
     } ,
@@ -375,7 +375,7 @@
       "title"    : "Authenticate OpenUI5 applications and Lumen backends with Amazon Cognito and JWT",
       "url"      : "/2017/12/11/authenticate-openui5-applications-and-lumen-backends-with-amazon-cognito-and-jwt/",
       "category" : "",
-      "tags"     : "amazon, cognito, js, openui5, php, symfony",
+      "tags"     : "amazon, cognito, javascript, openui5, php, symfony",
       "date"     : "2017-12-11 00:00:00 +0100"
 
     } ,
@@ -395,7 +395,7 @@
       "title"    : "Playing with IoT, MQTT, Arduino and Raspberry Pi. Building a dashboard with OpenUI5",
       "url"      : "/2017/10/23/playing-with-iot-mqtt-arduino-and-raspberry-pi-building-a-dashboard-with-openui5/",
       "category" : "",
-      "tags"     : "iot, js, nodemcu, openui5, raspberry-pi, sap",
+      "tags"     : "iot, javascript, nodemcu, openui5, raspberry-pi, sap",
       "date"     : "2017-10-23 00:00:00 +0200"
 
     } ,
@@ -535,7 +535,7 @@
       "title"    : "Playing with RabbitMQ, PHP and node",
       "url"      : "/2017/02/20/playing-with-rabbitmq-php-and-node/",
       "category" : "",
-      "tags"     : "javascrip, node, rabbitmq",
+      "tags"     : "javascript, node, rabbitmq",
       "date"     : "2017-02-20 00:00:00 +0100"
 
     } ,
@@ -545,7 +545,7 @@
       "title"    : "Playing with Docker, Silex, Python, Node and WebSockets",
       "url"      : "/2017/01/02/playing-with-docker-silex-python-node-and-websockets/",
       "category" : "",
-      "tags"     : "node, silex, websocket, websockets",
+      "tags"     : "node, silex, websockets",
       "date"     : "2017-01-02 00:00:00 +0100"
 
     } ,

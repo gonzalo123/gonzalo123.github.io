@@ -6,8 +6,10 @@ categories:
   - "js"
   - "php"
   - "technology"
-tags: 
+tags:
   - "firebase"
+  - "javascript"
+  - "php"
   - "google-maps"
   - "ionic"
   - "lumen"
