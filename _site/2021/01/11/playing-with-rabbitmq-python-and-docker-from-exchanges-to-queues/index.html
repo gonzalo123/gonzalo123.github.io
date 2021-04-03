@@ -60,7 +60,7 @@
     <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="/css/main.css?1617453764168120000">
+    <link rel="stylesheet" href="/css/main.css?1617458848690451000">
     <link rel="canonical"
           href="/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/">
     <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
@@ -80,7 +80,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Playing with RabbitMQ, Python and Docker. From Exchanges to Queues" />
 <script type="application/ld+json">
-{"headline":"Playing with RabbitMQ, Python and Docker. From Exchanges to Queues","dateModified":"2021-01-11T00:00:00+01:00","datePublished":"2021-01-11T00:00:00+01:00","url":"/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/","mainEntityOfPage":{"@type":"WebPage","@id":"/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/"},"author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Lately in all my projects message queues appear in one way or another. Normally I work with AWS and I use SQS and SNS, but I also use quite often, RabbitMQ and MQTT. In AWS there’s something that I use a lot to isolate services. The process that emits messages emits message to SNS and I bind SNS to SQS. With this technique I can attach n SQS to the the same SNS. I’ve used it here. In AWS is pretty straightforward to do that. Today We’re going to do the same with RabbitMQ. In fact it’s very easy to do it in RabbitMQ. We only need to follow the tutorial in official RabbitMQ documentation.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/"},"url":"/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Lately in all my projects message queues appear in one way or another. Normally I work with AWS and I use SQS and SNS, but I also use quite often, RabbitMQ and MQTT. In AWS there’s something that I use a lot to isolate services. The process that emits messages emits message to SNS and I bind SNS to SQS. With this technique I can attach n SQS to the the same SNS. I’ve used it here. In AWS is pretty straightforward to do that. Today We’re going to do the same with RabbitMQ. In fact it’s very easy to do it in RabbitMQ. We only need to follow the tutorial in official RabbitMQ documentation.","dateModified":"2021-01-11T00:00:00+01:00","datePublished":"2021-01-11T00:00:00+01:00","headline":"Playing with RabbitMQ, Python and Docker. From Exchanges to Queues","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -108,15 +108,14 @@
                     <nav class="cover-navigation navigation--social">
                         <nav class="cover-navigation">
                             <ul class="navigation">
-                                <li>
+                                <li class="navigation__item">
                                     <a href="/about" title="about">
-                                        About Me
+                                        <span>About Me</span>
                                     </a>
                                 </li>
                                 <li class="navigation__item">
                                     <a href="/search" title="search">
-                                         <i class="icon icon-page-search"></i>
-                                        <span class="label">Search</span>
+                                        <span>Search</span>
                                     </a>
                                 </li>
 
@@ -511,29 +510,157 @@ server {
 
 
 
-<div class="related">
-    <h2>Related Posts</h2>
-    <ul>
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2020/12/14/running-python-django-docker-containers-with-non-root-user/">Running Python/Django docker containers with non-root user <span class="label label-default">docker</span>  <span class="label label-default">python</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2020/07/06/deploying-django-application-to-aws-ec2-instance-with-docker/">Deploying Django application to AWS EC2 instance with Docker <span class="label label-default">docker</span>  <span class="label label-default">python</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2020/05/04/real-time-python-applications-with-django-channels-docker-and-kubernetes/">Building real time Python applications with Django Channels, Docker and Kubernetes <span class="label label-default">docker</span>  <span class="label label-default">python</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/10/07/playing-with-threads-and-python-part-2/">Playing with threads and Python. Part 2 <span class="label label-default">python</span>  <span class="label label-default">rabbitmq</span> </a></h5>
+      </div>
+      
+      
         
-        <a href="/2021/03/08/playing-with-go-and-file-system-watchers/">
-            <li>
-                <h3>Playing with Go and file system watchers&nbsp;&nbsp;08 Mar 2021</h3>
-            </li>
-        </a>
-        
-        <a href="/2021/02/15/database-utils-for-psycopg2/">
-            <li>
-                <h3>Database utils for psycopg2&nbsp;&nbsp;15 Feb 2021</h3>
-            </li>
-        </a>
-        
-        <a href="/2020/12/14/running-python-django-docker-containers-with-non-root-user/">
-            <li>
-                <h3>Running Python/Django docker containers with non-root user&nbsp;&nbsp;14 Dec 2020</h3>
-            </li>
-        </a>
-        
-    </ul>
+
 </div>
 
       </div>
@@ -543,7 +670,7 @@ server {
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617453764168120000"></script>
+<script type="text/javascript" src="/js/main.js?1617458848690451000"></script>
 
     </div>
   </body>

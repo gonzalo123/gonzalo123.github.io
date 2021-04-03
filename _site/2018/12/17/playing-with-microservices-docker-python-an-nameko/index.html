@@ -60,7 +60,7 @@
     <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="/css/main.css?1617453764168120000">
+    <link rel="stylesheet" href="/css/main.css?1617458848690451000">
     <link rel="canonical"
           href="/2018/12/17/playing-with-microservices-docker-python-an-nameko/">
     <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
@@ -80,7 +80,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Playing with microservices, Docker, Python an Nameko" />
 <script type="application/ld+json">
-{"headline":"Playing with microservices, Docker, Python an Nameko","dateModified":"2018-12-17T00:00:00+01:00","datePublished":"2018-12-17T00:00:00+01:00","url":"/2018/12/17/playing-with-microservices-docker-python-an-nameko/","mainEntityOfPage":{"@type":"WebPage","@id":"/2018/12/17/playing-with-microservices-docker-python-an-nameko/"},"author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"In the last projects that I’ve been involved with I’ve playing, in one way or another, with microservices, queues and things like that. I’m always facing the same tasks: Building RPCs, Workers, API gateways, … Because of that I’ve searching one framework to help me with those kind of stuff. Finally I discover Nameko. Basically Nameko is the Python tool that I’ve been looking for. In this post I will create a simple proof of concept to learn how to integrate Nameko within my projects. Let start.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2018/12/17/playing-with-microservices-docker-python-an-nameko/"},"url":"/2018/12/17/playing-with-microservices-docker-python-an-nameko/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"In the last projects that I’ve been involved with I’ve playing, in one way or another, with microservices, queues and things like that. I’m always facing the same tasks: Building RPCs, Workers, API gateways, … Because of that I’ve searching one framework to help me with those kind of stuff. Finally I discover Nameko. Basically Nameko is the Python tool that I’ve been looking for. In this post I will create a simple proof of concept to learn how to integrate Nameko within my projects. Let start.","dateModified":"2018-12-17T00:00:00+01:00","datePublished":"2018-12-17T00:00:00+01:00","headline":"Playing with microservices, Docker, Python an Nameko","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -108,15 +108,14 @@
                     <nav class="cover-navigation navigation--social">
                         <nav class="cover-navigation">
                             <ul class="navigation">
-                                <li>
+                                <li class="navigation__item">
                                     <a href="/about" title="about">
-                                        About Me
+                                        <span>About Me</span>
                                     </a>
                                 </li>
                                 <li class="navigation__item">
                                     <a href="/search" title="search">
-                                         <i class="icon icon-page-search"></i>
-                                        <span class="label">Search</span>
+                                        <span>Search</span>
                                     </a>
                                 </li>
 
@@ -437,29 +436,589 @@
 
 
 
-<div class="related">
-    <h2>Related Posts</h2>
-    <ul>
-        
-        <a href="/2021/03/08/playing-with-go-and-file-system-watchers/">
-            <li>
-                <h3>Playing with Go and file system watchers&nbsp;&nbsp;08 Mar 2021</h3>
-            </li>
-        </a>
-        
-        <a href="/2021/02/15/database-utils-for-psycopg2/">
-            <li>
-                <h3>Database utils for psycopg2&nbsp;&nbsp;15 Feb 2021</h3>
-            </li>
-        </a>
-        
-        <a href="/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/">
-            <li>
-                <h3>Playing with RabbitMQ, Python and Docker. From Exchanges to Queues&nbsp;&nbsp;11 Jan 2021</h3>
-            </li>
-        </a>
-        
-    </ul>
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/02/04/monitoring-the-bandwidth-part-2-now-with-python-nameko-microservice/">Monitoring the bandwidth (part 2) now with Python Nameko microservice <span class="label label-default">microservices</span>  <span class="label label-default">nameko</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+
 </div>
 
       </div>
@@ -469,7 +1028,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617453764168120000"></script>
+<script type="text/javascript" src="/js/main.js?1617458848690451000"></script>
 
     </div>
   </body>

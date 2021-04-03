@@ -60,7 +60,7 @@
     <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="/css/main.css?1617453764168120000">
+    <link rel="stylesheet" href="/css/main.css?1617458848690451000">
     <link rel="canonical"
           href="/2020/06/01/django-reactive-users-with-celery-and-channels/">
     <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
@@ -80,7 +80,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Django reactive users with Celery and Channels" />
 <script type="application/ld+json">
-{"headline":"Django reactive users with Celery and Channels","dateModified":"2020-06-01T00:00:00+02:00","datePublished":"2020-06-01T00:00:00+02:00","url":"/2020/06/01/django-reactive-users-with-celery-and-channels/","mainEntityOfPage":{"@type":"WebPage","@id":"/2020/06/01/django-reactive-users-with-celery-and-channels/"},"author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Today I want to build a prototype. The idea is to create two Django applications. One application will be the master and the other one will the client. Both applications will have their User model but each change within master User model will be propagated through the client (or clients). Let me show you what I’ve got in my mind:","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2020/06/01/django-reactive-users-with-celery-and-channels/"},"url":"/2020/06/01/django-reactive-users-with-celery-and-channels/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Today I want to build a prototype. The idea is to create two Django applications. One application will be the master and the other one will the client. Both applications will have their User model but each change within master User model will be propagated through the client (or clients). Let me show you what I’ve got in my mind:","dateModified":"2020-06-01T00:00:00+02:00","datePublished":"2020-06-01T00:00:00+02:00","headline":"Django reactive users with Celery and Channels","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -108,15 +108,14 @@
                     <nav class="cover-navigation navigation--social">
                         <nav class="cover-navigation">
                             <ul class="navigation">
-                                <li>
+                                <li class="navigation__item">
                                     <a href="/about" title="about">
-                                        About Me
+                                        <span>About Me</span>
                                     </a>
                                 </li>
                                 <li class="navigation__item">
                                     <a href="/search" title="search">
-                                         <i class="icon icon-page-search"></i>
-                                        <span class="label">Search</span>
+                                        <span>Search</span>
                                     </a>
                                 </li>
 
@@ -597,29 +596,94 @@
 
 
 
-<div class="related">
-    <h2>Related Posts</h2>
-    <ul>
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2020/12/14/running-python-django-docker-containers-with-non-root-user/">Running Python/Django docker containers with non-root user <span class="label label-default">django</span>  <span class="label label-default">python</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2020/10/26/django-logs-to-elk-using-filebeat/">Django logs to ELK using Filebeat <span class="label label-default">django</span>  <span class="label label-default">python</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2020/09/21/dont-repeat-password-validator-in-django/">Don't repeat password validator in Django <span class="label label-default">django</span>  <span class="label label-default">python</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2020/08/10/monitoring-django-applications-with-grafana-and-kibana-using-prometheus-and-elasticsearch/">Monitoring Django applications with Grafana and Kibana using Prometheus and Elasticsearch <span class="label label-default">django</span>  <span class="label label-default">python</span> </a></h5>
+      </div>
+      
+      
         
-        <a href="/2021/03/08/playing-with-go-and-file-system-watchers/">
-            <li>
-                <h3>Playing with Go and file system watchers&nbsp;&nbsp;08 Mar 2021</h3>
-            </li>
-        </a>
-        
-        <a href="/2021/02/15/database-utils-for-psycopg2/">
-            <li>
-                <h3>Database utils for psycopg2&nbsp;&nbsp;15 Feb 2021</h3>
-            </li>
-        </a>
-        
-        <a href="/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/">
-            <li>
-                <h3>Playing with RabbitMQ, Python and Docker. From Exchanges to Queues&nbsp;&nbsp;11 Jan 2021</h3>
-            </li>
-        </a>
-        
-    </ul>
+
 </div>
 
       </div>
@@ -629,7 +693,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617453764168120000"></script>
+<script type="text/javascript" src="/js/main.js?1617458848690451000"></script>
 
     </div>
   </body>
