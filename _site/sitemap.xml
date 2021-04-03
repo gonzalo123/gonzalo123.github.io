@@ -3,7 +3,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2021/03/08/playing-with-go-and-file-system-watchers/</loc>
+      <loc>/2021/03/08/playing-with-go-and-file-system-watchers/</loc>
       
         <lastmod>2021-03-08T00:00:00+01:00</lastmod>
       
@@ -18,7 +18,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2021/02/15/database-utils-for-psycopg2/</loc>
+      <loc>/2021/02/15/database-utils-for-psycopg2/</loc>
       
         <lastmod>2021-02-15T00:00:00+01:00</lastmod>
       
@@ -33,7 +33,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/</loc>
+      <loc>/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/</loc>
       
         <lastmod>2021-01-11T00:00:00+01:00</lastmod>
       
@@ -48,7 +48,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2020/12/14/running-python-django-docker-containers-with-non-root-user/</loc>
+      <loc>/2020/12/14/running-python-django-docker-containers-with-non-root-user/</loc>
       
         <lastmod>2020-12-14T00:00:00+01:00</lastmod>
       
@@ -63,7 +63,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2020/11/16/playing-with-python-threads-part-2/</loc>
+      <loc>/2020/11/16/playing-with-python-threads-part-2/</loc>
       
         <lastmod>2020-11-16T00:00:00+01:00</lastmod>
       
@@ -78,7 +78,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2020/10/26/django-logs-to-elk-using-filebeat/</loc>
+      <loc>/2020/10/26/django-logs-to-elk-using-filebeat/</loc>
       
         <lastmod>2020-10-26T00:00:00+01:00</lastmod>
       
@@ -93,7 +93,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2020/09/21/dont-repeat-password-validator-in-django/</loc>
+      <loc>/2020/09/21/dont-repeat-password-validator-in-django/</loc>
       
         <lastmod>2020-09-21T00:00:00+02:00</lastmod>
       
@@ -108,7 +108,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2020/08/10/monitoring-django-applications-with-grafana-and-kibana-using-prometheus-and-elasticsearch/</loc>
+      <loc>/2020/08/10/monitoring-django-applications-with-grafana-and-kibana-using-prometheus-and-elasticsearch/</loc>
       
         <lastmod>2020-08-10T00:00:00+02:00</lastmod>
       
@@ -123,7 +123,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2020/07/06/deploying-django-application-to-aws-ec2-instance-with-docker/</loc>
+      <loc>/2020/07/06/deploying-django-application-to-aws-ec2-instance-with-docker/</loc>
       
         <lastmod>2020-07-06T00:00:00+02:00</lastmod>
       
@@ -138,7 +138,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2020/06/01/django-reactive-users-with-celery-and-channels/</loc>
+      <loc>/2020/06/01/django-reactive-users-with-celery-and-channels/</loc>
       
         <lastmod>2020-06-01T00:00:00+02:00</lastmod>
       
@@ -153,7 +153,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2020/05/04/real-time-python-applications-with-django-channels-docker-and-kubernetes/</loc>
+      <loc>/2020/05/04/real-time-python-applications-with-django-channels-docker-and-kubernetes/</loc>
       
         <lastmod>2020-05-04T00:00:00+02:00</lastmod>
       
@@ -168,7 +168,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2020/04/20/deploying-python-application-using-docker-and-kubernetes/</loc>
+      <loc>/2020/04/20/deploying-python-application-using-docker-and-kubernetes/</loc>
       
         <lastmod>2020-04-20T00:00:00+02:00</lastmod>
       
@@ -183,7 +183,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2020/03/30/building-bluetooth-iot-devices-compatible-with-alexa/</loc>
+      <loc>/2020/03/30/building-bluetooth-iot-devices-compatible-with-alexa/</loc>
       
         <lastmod>2020-03-30T00:00:00+02:00</lastmod>
       
@@ -198,7 +198,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2020/01/13/alexa-and-raspberry-pi-demo-part-2-listening-to-external-events/</loc>
+      <loc>/2020/01/13/alexa-and-raspberry-pi-demo-part-2-listening-to-external-events/</loc>
       
         <lastmod>2020-01-13T00:00:00+01:00</lastmod>
       
@@ -213,7 +213,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2019/12/16/alexa-and-raspberry-pi-demo/</loc>
+      <loc>/2019/12/16/alexa-and-raspberry-pi-demo/</loc>
       
         <lastmod>2019-12-16T00:00:00+01:00</lastmod>
       
@@ -228,7 +228,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2019/11/25/alexa-skill-and-account-linking-with-serverless-and-cognito/</loc>
+      <loc>/2019/11/25/alexa-skill-and-account-linking-with-serverless-and-cognito/</loc>
       
         <lastmod>2019-11-25T00:00:00+01:00</lastmod>
       
@@ -243,7 +243,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2019/10/07/playing-with-threads-and-python-part-2/</loc>
+      <loc>/2019/10/07/playing-with-threads-and-python-part-2/</loc>
       
         <lastmod>2019-10-07T00:00:00+02:00</lastmod>
       
@@ -258,7 +258,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2019/09/02/alexa-skill-example-with-serverless-framework/</loc>
+      <loc>/2019/09/02/alexa-skill-example-with-serverless-framework/</loc>
       
         <lastmod>2019-09-02T00:00:00+02:00</lastmod>
       
@@ -273,7 +273,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2019/08/19/playing-with-threads-and-python/</loc>
+      <loc>/2019/08/19/playing-with-threads-and-python/</loc>
       
         <lastmod>2019-08-19T00:00:00+02:00</lastmod>
       
@@ -288,7 +288,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2019/07/22/playing-with-totp-2fa-and-mobile-applications-with-ionic/</loc>
+      <loc>/2019/07/22/playing-with-totp-2fa-and-mobile-applications-with-ionic/</loc>
       
         <lastmod>2019-07-22T00:00:00+02:00</lastmod>
       
@@ -303,7 +303,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2019/06/10/php-lumen-data-source-for-grafana/</loc>
+      <loc>/2019/06/10/php-lumen-data-source-for-grafana/</loc>
       
         <lastmod>2019-06-10T00:00:00+02:00</lastmod>
       
@@ -318,7 +318,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2019/05/27/playing-with-lambda-serverless-and-python/</loc>
+      <loc>/2019/05/27/playing-with-lambda-serverless-and-python/</loc>
       
         <lastmod>2019-05-27T00:00:00+02:00</lastmod>
       
@@ -333,7 +333,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2019/03/11/data-analysis-with-python-pivot-tables-with-pandas/</loc>
+      <loc>/2019/03/11/data-analysis-with-python-pivot-tables-with-pandas/</loc>
       
         <lastmod>2019-03-11T00:00:00+01:00</lastmod>
       
@@ -348,7 +348,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2019/02/04/monitoring-the-bandwidth-part-2-now-with-python-nameko-microservice/</loc>
+      <loc>/2019/02/04/monitoring-the-bandwidth-part-2-now-with-python-nameko-microservice/</loc>
       
         <lastmod>2019-02-04T00:00:00+01:00</lastmod>
       
@@ -363,7 +363,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2019/01/14/using-cache-buster-with-openui5-outside-scp/</loc>
+      <loc>/2019/01/14/using-cache-buster-with-openui5-outside-scp/</loc>
       
         <lastmod>2019-01-14T00:00:00+01:00</lastmod>
       
@@ -378,7 +378,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/12/17/playing-with-microservices-docker-python-an-nameko/</loc>
+      <loc>/2018/12/17/playing-with-microservices-docker-python-an-nameko/</loc>
       
         <lastmod>2018-12-17T00:00:00+01:00</lastmod>
       
@@ -393,7 +393,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/11/26/monitoring-the-bandwidth-with-grafana-influxdb-and-docker/</loc>
+      <loc>/2018/11/26/monitoring-the-bandwidth-with-grafana-influxdb-and-docker/</loc>
       
         <lastmod>2018-11-26T00:00:00+01:00</lastmod>
       
@@ -408,7 +408,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/10/08/working-with-sapui5-locally-part-3-adding-more-services-in-docker/</loc>
+      <loc>/2018/10/08/working-with-sapui5-locally-part-3-adding-more-services-in-docker/</loc>
       
         <lastmod>2018-10-08T00:00:00+02:00</lastmod>
       
@@ -423,7 +423,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/09/03/working-with-sapui5-locally-part-2-now-with-docker/</loc>
+      <loc>/2018/09/03/working-with-sapui5-locally-part-2-now-with-docker/</loc>
       
         <lastmod>2018-09-03T00:00:00+02:00</lastmod>
       
@@ -438,7 +438,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/08/20/working-with-sapui5-locally-and-deploying-in-scp/</loc>
+      <loc>/2018/08/20/working-with-sapui5-locally-and-deploying-in-scp/</loc>
       
         <lastmod>2018-08-20T00:00:00+02:00</lastmod>
       
@@ -453,7 +453,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/07/23/playing-with-grafana-and-weather-apis/</loc>
+      <loc>/2018/07/23/playing-with-grafana-and-weather-apis/</loc>
       
         <lastmod>2018-07-23T00:00:00+02:00</lastmod>
       
@@ -468,7 +468,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/06/04/playing-with-docker-mqtt-grafana-influxdb-python-and-arduino/</loc>
+      <loc>/2018/06/04/playing-with-docker-mqtt-grafana-influxdb-python-and-arduino/</loc>
       
         <lastmod>2018-06-04T00:00:00+02:00</lastmod>
       
@@ -483,7 +483,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/05/07/happy-logins-only-the-happy-user-will-pass/</loc>
+      <loc>/2018/05/07/happy-logins-only-the-happy-user-will-pass/</loc>
       
         <lastmod>2018-05-07T00:00:00+02:00</lastmod>
       
@@ -498,7 +498,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/</loc>
+      <loc>/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/</loc>
       
         <lastmod>2018-04-09T00:00:00+02:00</lastmod>
       
@@ -513,7 +513,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/03/26/pomodoro-with-esp32-one-the-melee-side-by-side-project/</loc>
+      <loc>/2018/03/26/pomodoro-with-esp32-one-the-melee-side-by-side-project/</loc>
       
         <lastmod>2018-03-26T00:00:00+02:00</lastmod>
       
@@ -528,7 +528,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/02/19/playing-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation/</loc>
+      <loc>/2018/02/19/playing-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation/</loc>
       
         <lastmod>2018-02-19T00:00:00+01:00</lastmod>
       
@@ -543,7 +543,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/01/22/handling-amazon-sns-messages-with-php-lumen-and-cloudwatch/</loc>
+      <loc>/2018/01/22/handling-amazon-sns-messages-with-php-lumen-and-cloudwatch/</loc>
       
         <lastmod>2018-01-22T00:00:00+01:00</lastmod>
       
@@ -558,7 +558,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/12/11/authenticate-openui5-applications-and-lumen-backends-with-amazon-cognito-and-jwt/</loc>
+      <loc>/2017/12/11/authenticate-openui5-applications-and-lumen-backends-with-amazon-cognito-and-jwt/</loc>
       
         <lastmod>2017-12-11T00:00:00+01:00</lastmod>
       
@@ -573,7 +573,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/11/20/tracking-blue-objects-with-opencv-and-python/</loc>
+      <loc>/2017/11/20/tracking-blue-objects-with-opencv-and-python/</loc>
       
         <lastmod>2017-11-20T00:00:00+01:00</lastmod>
       
@@ -588,7 +588,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/10/23/playing-with-iot-mqtt-arduino-and-raspberry-pi-building-a-dashboard-with-openui5/</loc>
+      <loc>/2017/10/23/playing-with-iot-mqtt-arduino-and-raspberry-pi-building-a-dashboard-with-openui5/</loc>
       
         <lastmod>2017-10-23T00:00:00+02:00</lastmod>
       
@@ -603,7 +603,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/09/25/php-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry/</loc>
+      <loc>/2017/09/25/php-application-in-sap-cloud-platform-with-postgresql-redis-and-cloud-foundry/</loc>
       
         <lastmod>2017-09-25T00:00:00+02:00</lastmod>
       
@@ -618,7 +618,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/09/18/real-time-iot-in-the-cloud-with-saps-scp-cloud-foundry-and-websockets/</loc>
+      <loc>/2017/09/18/real-time-iot-in-the-cloud-with-saps-scp-cloud-foundry-and-websockets/</loc>
       
         <lastmod>2017-09-18T00:00:00+02:00</lastmod>
       
@@ -633,7 +633,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/09/04/nfc-tag-reader-with-raspberry-pi/</loc>
+      <loc>/2017/09/04/nfc-tag-reader-with-raspberry-pi/</loc>
       
         <lastmod>2017-09-04T00:00:00+02:00</lastmod>
       
@@ -648,7 +648,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/08/21/taking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen/</loc>
+      <loc>/2017/08/21/taking-photos-with-an-ionic2-application-and-upload-them-to-s3-bucket-with-saps-cloud-foundry-using-silex-and-lumen/</loc>
       
         <lastmod>2017-08-21T00:00:00+02:00</lastmod>
       
@@ -663,7 +663,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/08/07/controlling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver/</loc>
+      <loc>/2017/08/07/controlling-bedside-lamp-with-the-tvs-remote-using-arduino-and-ir-receiver/</loc>
       
         <lastmod>2017-08-07T00:00:00+02:00</lastmod>
       
@@ -678,7 +678,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/07/10/silex-is-dead-or-not/</loc>
+      <loc>/2017/07/10/silex-is-dead-or-not/</loc>
       
         <lastmod>2017-07-10T00:00:00+02:00</lastmod>
       
@@ -693,7 +693,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/06/26/playing-with-raspberry-pi-arduino-nodemcu-and-mqtt/</loc>
+      <loc>/2017/06/26/playing-with-raspberry-pi-arduino-nodemcu-and-mqtt/</loc>
       
         <lastmod>2017-06-26T00:00:00+02:00</lastmod>
       
@@ -708,7 +708,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/06/12/nfc-tag-reader-with-arduino/</loc>
+      <loc>/2017/06/12/nfc-tag-reader-with-arduino/</loc>
       
         <lastmod>2017-06-12T00:00:00+02:00</lastmod>
       
@@ -723,7 +723,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/05/22/arduino-and-raspberry-pi-working-together-part-2-now-with-i2c/</loc>
+      <loc>/2017/05/22/arduino-and-raspberry-pi-working-together-part-2-now-with-i2c/</loc>
       
         <lastmod>2017-05-22T00:00:00+02:00</lastmod>
       
@@ -738,7 +738,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/05/08/arduino-and-raspberry-pi-working-together/</loc>
+      <loc>/2017/05/08/arduino-and-raspberry-pi-working-together/</loc>
       
         <lastmod>2017-05-08T00:00:00+02:00</lastmod>
       
@@ -753,7 +753,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/04/19/php-redis-cache-wrapper/</loc>
+      <loc>/2017/04/19/php-redis-cache-wrapper/</loc>
       
         <lastmod>2017-04-19T00:00:00+02:00</lastmod>
       
@@ -768,7 +768,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/04/03/control-humidity-with-a-raspberry-pi-and-iot-devices/</loc>
+      <loc>/2017/04/03/control-humidity-with-a-raspberry-pi-and-iot-devices/</loc>
       
         <lastmod>2017-04-03T00:00:00+02:00</lastmod>
       
@@ -783,7 +783,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/03/13/playing-with-rabbitmq-part-2-now-with-python/</loc>
+      <loc>/2017/03/13/playing-with-rabbitmq-part-2-now-with-python/</loc>
       
         <lastmod>2017-03-13T00:00:00+01:00</lastmod>
       
@@ -798,7 +798,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/02/20/playing-with-rabbitmq-php-and-node/</loc>
+      <loc>/2017/02/20/playing-with-rabbitmq-php-and-node/</loc>
       
         <lastmod>2017-02-20T00:00:00+01:00</lastmod>
       
@@ -813,7 +813,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2017/01/02/playing-with-docker-silex-python-node-and-websockets/</loc>
+      <loc>/2017/01/02/playing-with-docker-silex-python-node-and-websockets/</loc>
       
         <lastmod>2017-01-02T00:00:00+01:00</lastmod>
       
@@ -828,7 +828,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2010/01/24/pivot-tables-in-php/</loc>
+      <loc>/2010/01/24/pivot-tables-in-php/</loc>
       
         <lastmod>2010-01-24T00:00:00+01:00</lastmod>
       
@@ -843,7 +843,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/12/31/calling-to-multiple-xmlrpc-remote-servers-in-a-clean-way/</loc>
+      <loc>/2009/12/31/calling-to-multiple-xmlrpc-remote-servers-in-a-clean-way/</loc>
       
         <lastmod>2009-12-31T00:00:00+01:00</lastmod>
       
@@ -858,7 +858,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/12/30/jugando-con-friendfeed-y-appengine-tv-sms-appspot-com/</loc>
+      <loc>/2009/12/30/jugando-con-friendfeed-y-appengine-tv-sms-appspot-com/</loc>
       
         <lastmod>2009-12-30T00:00:00+01:00</lastmod>
       
@@ -873,7 +873,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/12/09/things-i-miss-in-php-function-decorators/</loc>
+      <loc>/2009/12/09/things-i-miss-in-php-function-decorators/</loc>
       
         <lastmod>2009-12-09T00:00:00+01:00</lastmod>
       
@@ -888,7 +888,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/12/08/an-idea-for-calling-postgresqls-stored-procedures-with-pdo/</loc>
+      <loc>/2009/12/08/an-idea-for-calling-postgresqls-stored-procedures-with-pdo/</loc>
       
         <lastmod>2009-12-08T00:00:00+01:00</lastmod>
       
@@ -903,7 +903,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/</loc>
+      <loc>/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/</loc>
       
         <lastmod>2009-12-07T00:00:00+01:00</lastmod>
       
@@ -918,7 +918,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/12/07/moving-singleton-and-factory-patterns-to-abstract-with-php-5-3/</loc>
+      <loc>/2009/12/07/moving-singleton-and-factory-patterns-to-abstract-with-php-5-3/</loc>
       
         <lastmod>2009-12-07T00:00:00+01:00</lastmod>
       
@@ -933,7 +933,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/09/09/soyrico/</loc>
+      <loc>/2009/09/09/soyrico/</loc>
       
         <lastmod>2009-09-09T00:00:00+02:00</lastmod>
       
@@ -948,7 +948,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/07/30/antivirus/</loc>
+      <loc>/2009/07/30/antivirus/</loc>
       
         <lastmod>2009-07-30T00:00:00+02:00</lastmod>
       
@@ -963,7 +963,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/05/08/server-side-web-frameworks-are-dead/</loc>
+      <loc>/2009/05/08/server-side-web-frameworks-are-dead/</loc>
       
         <lastmod>2009-05-08T00:00:00+02:00</lastmod>
       
@@ -978,7 +978,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/04/18/speed-up-page-load-with-asynchronous-javascript/</loc>
+      <loc>/2009/04/18/speed-up-page-load-with-asynchronous-javascript/</loc>
       
         <lastmod>2009-04-18T00:00:00+02:00</lastmod>
       
@@ -993,7 +993,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/04/18/mixin-dojo-and-google-api-libraries/</loc>
+      <loc>/2009/04/18/mixin-dojo-and-google-api-libraries/</loc>
       
         <lastmod>2009-04-18T00:00:00+02:00</lastmod>
       
@@ -1008,7 +1008,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/04/10/fetching-book-cover-with-google-api-and-dojo/</loc>
+      <loc>/2009/04/10/fetching-book-cover-with-google-api-and-dojo/</loc>
       
         <lastmod>2009-04-10T00:00:00+02:00</lastmod>
       
@@ -1023,7 +1023,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/04/10/consuming-external-javascript-services-with-dojo/</loc>
+      <loc>/2009/04/10/consuming-external-javascript-services-with-dojo/</loc>
       
         <lastmod>2009-04-10T00:00:00+02:00</lastmod>
       
@@ -1038,7 +1038,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/03/29/virus-letal/</loc>
+      <loc>/2009/03/29/virus-letal/</loc>
       
         <lastmod>2009-03-29T00:00:00+01:00</lastmod>
       
@@ -1053,7 +1053,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/03/23/killall-firefox-bin/</loc>
+      <loc>/2009/03/23/killall-firefox-bin/</loc>
       
         <lastmod>2009-03-23T00:00:00+01:00</lastmod>
       
@@ -1068,7 +1068,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/03/15/dojohitch/</loc>
+      <loc>/2009/03/15/dojohitch/</loc>
       
         <lastmod>2009-03-15T00:00:00+01:00</lastmod>
       
@@ -1083,7 +1083,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/03/07/nslu2-installation/</loc>
+      <loc>/2009/03/07/nslu2-installation/</loc>
       
         <lastmod>2009-03-07T00:00:00+01:00</lastmod>
       
@@ -1098,7 +1098,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/02/15/dojo-and-custom-widgets/</loc>
+      <loc>/2009/02/15/dojo-and-custom-widgets/</loc>
       
         <lastmod>2009-02-15T00:00:00+01:00</lastmod>
       
@@ -1113,7 +1113,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/02/10/dojo-series/</loc>
+      <loc>/2009/02/10/dojo-series/</loc>
       
         <lastmod>2009-02-10T00:00:00+01:00</lastmod>
       
@@ -1128,7 +1128,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/01/22/3/</loc>
+      <loc>/2009/01/22/3/</loc>
       
         <lastmod>2009-01-22T00:00:00+01:00</lastmod>
       
@@ -1143,7 +1143,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/01/20/jsonp-json-with-padding/</loc>
+      <loc>/2009/01/20/jsonp-json-with-padding/</loc>
       
         <lastmod>2009-01-20T00:00:00+01:00</lastmod>
       
@@ -1158,7 +1158,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/01/20/bagera/</loc>
+      <loc>/2009/01/20/bagera/</loc>
       
         <lastmod>2009-01-20T00:00:00+01:00</lastmod>
       
@@ -1173,7 +1173,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2009/01/19/adding-my-blogs-feed-to-my-personal-site/</loc>
+      <loc>/2009/01/19/adding-my-blogs-feed-to-my-personal-site/</loc>
       
         <lastmod>2009-01-19T00:00:00+01:00</lastmod>
       
@@ -1188,7 +1188,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2008/04/05/como-saber-que-host-tengo-en-mi-red/</loc>
+      <loc>/2008/04/05/como-saber-que-host-tengo-en-mi-red/</loc>
       
         <lastmod>2008-04-05T00:00:00+02:00</lastmod>
       
@@ -1203,7 +1203,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2008/03/23/detectar-movimiento-con-linksys-wvc54gc/</loc>
+      <loc>/2008/03/23/detectar-movimiento-con-linksys-wvc54gc/</loc>
       
         <lastmod>2008-03-23T00:00:00+01:00</lastmod>
       
@@ -1219,41 +1219,9 @@
   
     
     <url>
-      <loc>http://localhost:4000/about/</loc>
+      <loc>/about/</loc>
       
-        <lastmod>2021-04-03T14:30:37+02:00</lastmod>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-  
-    
-    <url>
-      <loc>http://localhost:4000/feed.xml</loc>
-      
-        <lastmod>2021-04-03T14:30:37+02:00</lastmod>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>http://localhost:4000/humans.txt</loc>
-      
-        <lastmod>2021-04-03T14:30:37+02:00</lastmod>
+        <lastmod>2021-04-03T14:31:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1268,24 +1236,9 @@
   
     
     <url>
-      <loc>http://localhost:4000/js/main.js</loc>
+      <loc>/feed.xml</loc>
       
-        <lastmod>2021-04-03T14:30:37+02:00</lastmod>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>http://localhost:4000/css/main.css</loc>
-      
-        <lastmod>2021-04-03T14:30:37+02:00</lastmod>
+        <lastmod>2021-04-03T14:31:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1298,24 +1251,9 @@
   
     
     <url>
-      <loc>http://localhost:4000/search/</loc>
+      <loc>/humans.txt</loc>
       
-        <lastmod>2021-04-03T14:30:37+02:00</lastmod>
-      
-      
-        <changefreq>monthly</changefreq>
-      
-      
-        <priority>0.3</priority>
-      
-    </url>
-    
-  
-    
-    <url>
-      <loc>http://localhost:4000/search.json</loc>
-      
-        <lastmod>2021-04-03T14:30:37+02:00</lastmod>
+        <lastmod>2021-04-03T14:31:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1329,12 +1267,74 @@
     
   
     
+    <url>
+      <loc>/js/main.js</loc>
+      
+        <lastmod>2021-04-03T14:31:16+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
   
     
     <url>
-      <loc>http://localhost:4000/assets/css/style.css</loc>
+      <loc>/css/main.css</loc>
       
-        <lastmod>2021-04-03T14:30:37+02:00</lastmod>
+        <lastmod>2021-04-03T14:31:16+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/search/</loc>
+      
+        <lastmod>2021-04-03T14:31:16+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/search.json</loc>
+      
+        <lastmod>2021-04-03T14:31:16+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+  
+    
+  
+    
+    <url>
+      <loc>/assets/css/style.css</loc>
+      
+        <lastmod>2021-04-03T14:31:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
