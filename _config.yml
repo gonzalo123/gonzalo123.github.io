@@ -8,7 +8,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
 google_analytics: 'G-HLM742Z1VH'
-disqus_shortname: 'gonzalo123-com'
+disqus_shortname: 'https-gonzalo123-github-io'
 disable_landing_page: true
 
 author:
