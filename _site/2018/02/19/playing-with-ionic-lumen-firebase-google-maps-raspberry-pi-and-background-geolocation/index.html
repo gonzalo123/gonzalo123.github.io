@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Playing with Ionic, Lumen, Firebase, Google maps, Raspberry Pi and background geolocation</title>
+  <meta name="description" content="I wanna do a simple pet project. The idea is to build a mobile application. This application will track my GPS location and send this information to a Firebase database. I’ve never play with Firebase and I want to learn a little bit. With this information I will build a simple web application hosted in my Raspberry Pi. This web application will show a Google map with my last location. I will put this web application in my TV and anyone in my house will see where I am every time.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Playing with Ionic, Lumen, Firebase, Google maps, Raspberry Pi and background geolocation">
+  <meta name="twitter:description" content="I wanna do a simple pet project. The idea is to build a mobile application. This application will track my GPS location and send this information to a Firebase database. I’ve never play with Firebase and I want to learn a little bit. With this information I will build a simple web application hosted in my Raspberry Pi. This web application will show a Google map with my last location. I will put this web application in my TV and anyone in my house will see where I am every time.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Playing with Ionic, Lumen, Firebase, Google maps, Raspberry Pi and background geolocation">
+  <meta property="og:description" content="I wanna do a simple pet project. The idea is to build a mobile application. This application will track my GPS location and send this information to a Firebase database. I’ve never play with Firebase and I want to learn a little bit. With this information I will build a simple web application hosted in my Raspberry Pi. This web application will show a Google map with my last location. I will put this web application in my TV and anyone in my house will see where I am every time.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617447287703593000">
+  <link rel="canonical" href="/2018/02/19/playing-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Playing with Ionic, Lumen, Firebase, Google maps, Raspberry Pi and background geolocation | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Playing with Ionic, Lumen, Firebase, Google maps, Raspberry Pi and background geolocation" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I wanna do a simple pet project. The idea is to build a mobile application. This application will track my GPS location and send this information to a Firebase database. I’ve never play with Firebase and I want to learn a little bit. With this information I will build a simple web application hosted in my Raspberry Pi. This web application will show a Google map with my last location. I will put this web application in my TV and anyone in my house will see where I am every time." />
+<meta property="og:description" content="I wanna do a simple pet project. The idea is to build a mobile application. This application will track my GPS location and send this information to a Firebase database. I’ve never play with Firebase and I want to learn a little bit. With this information I will build a simple web application hosted in my Raspberry Pi. This web application will show a Google map with my last location. I will put this web application in my TV and anyone in my house will see where I am every time." />
+<link rel="canonical" href="/2018/02/19/playing-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation/" />
+<meta property="og:url" content="/2018/02/19/playing-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-02-19T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Playing with Ionic, Lumen, Firebase, Google maps, Raspberry Pi and background geolocation" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2018/02/19/playing-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation/"},"url":"/2018/02/19/playing-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"I wanna do a simple pet project. The idea is to build a mobile application. This application will track my GPS location and send this information to a Firebase database. I’ve never play with Firebase and I want to learn a little bit. With this information I will build a simple web application hosted in my Raspberry Pi. This web application will show a Google map with my last location. I will put this web application in my TV and anyone in my house will see where I am every time.","dateModified":"2018-02-19T00:00:00+01:00","datePublished":"2018-02-19T00:00:00+01:00","headline":"Playing with Ionic, Lumen, Firebase, Google maps, Raspberry Pi and background geolocation","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-02-19 00:00" class="post-meta__date date">19 Feb 2018</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#firebase">firebase</a>, <a href="/tags/#google-maps">google-maps</a>, <a href="/tags/#ionic">ionic</a>, <a href="/tags/#lumen">lumen</a>, <a href="/tags/#raspberry-pi">raspberry-pi</a></span>
+      
+    </div>
+    <h1 class="post-title">Playing with Ionic, Lumen, Firebase, Google maps, Raspberry Pi and background geolocation</h1>
+  </header>
+
+  <section class="post">
+    <p>I wanna do a simple pet project. The idea is to build a mobile application. This application will track my GPS location and send this information to a <a href="https://firebase.google.com/">Firebase</a> database. I’ve never play with Firebase and I want to learn a little bit. With this information I will build a simple web application hosted in my Raspberry Pi. This web application will show a Google map with my last location. I will put this web application in my TV and anyone in my house will see where I am every time.</p>
+
+<p>That’s the idea. I want a MVP. First the mobile application. I will use <a href="https://ionicframework.com/">ionic</a> framework. I’m big fan of <a href="https://gonzalo123.com/tag/ionic/">ionic</a>.</p>
+
+<p>The mobile application is very simple. It only has a toggle to activate-deactivate the background geolocation (sometimes I don’t want to be tracked :).</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ion-header&gt;</span>
+    <span class="nt">&lt;ion-navbar&gt;</span>
+        <span class="nt">&lt;ion-title&gt;</span>
+            Ionic Blank
+        <span class="nt">&lt;/ion-title&gt;</span>
+    <span class="nt">&lt;/ion-navbar&gt;</span>
+<span class="nt">&lt;/ion-header&gt;</span>
+ 
+<span class="nt">&lt;ion-header&gt;</span>
+    <span class="nt">&lt;ion-toolbar</span> <span class="err">[color]="toolbarColor"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ion-title&gt;&lt;/ion-title&gt;</span>
+        <span class="nt">&lt;ion-buttons</span> <span class="err">end</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ion-toggle</span> <span class="na">color=</span><span class="s">"light"</span>
+                        <span class="na">checked=</span><span class="s">""</span>
+                        <span class="err">(ionChange)="changeWorkingStatus($event)"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;/ion-toggle&gt;</span>
+        <span class="nt">&lt;/ion-buttons&gt;</span>
+    <span class="nt">&lt;/ion-toolbar&gt;</span>
+<span class="nt">&lt;/ion-header&gt;</span>
+ 
+<span class="nt">&lt;ion-content</span> <span class="err">padding</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/ion-content&gt;</span>
+</code></pre></div></div>
+
+<p>And the controller:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">Platform</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">ionic-angular</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">LocationTracker</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../providers/location-tracker/location-tracker</span><span class="dl">"</span><span class="p">;</span>
+ 
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+    <span class="na">selector</span><span class="p">:</span> <span class="dl">'</span><span class="s1">page-home</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">home.html</span><span class="dl">'</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">HomePage</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="nx">status</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="nx">localStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="dl">'</span><span class="s1">status</span><span class="dl">'</span><span class="p">)</span> <span class="o">||</span> <span class="dl">"</span><span class="s2">-</span><span class="dl">"</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">title</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">isBgEnabled</span><span class="p">:</span> <span class="nx">boolean</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">toolbarColor</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+ 
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">platform</span><span class="p">:</span> <span class="nx">Platform</span><span class="p">,</span>
+                <span class="k">public</span> <span class="nx">locationTracker</span><span class="p">:</span> <span class="nx">LocationTracker</span><span class="p">)</span> <span class="p">{</span>
+ 
+        <span class="nx">platform</span><span class="p">.</span><span class="nx">ready</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+ 
+                <span class="k">if</span> <span class="p">(</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="dl">'</span><span class="s1">isBgEnabled</span><span class="dl">'</span><span class="p">)</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">on</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">isBgEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Working ...</span><span class="dl">"</span><span class="p">;</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">toolbarColor</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">secondary</span><span class="dl">'</span><span class="p">;</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">isBgEnabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Idle</span><span class="dl">"</span><span class="p">;</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">toolbarColor</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">light</span><span class="dl">'</span><span class="p">;</span>
+                <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="nx">changeWorkingStatus</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">checked</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="dl">'</span><span class="s1">isBgEnabled</span><span class="dl">'</span><span class="p">,</span> <span class="dl">"</span><span class="s2">on</span><span class="dl">"</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Working ...</span><span class="dl">"</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">toolbarColor</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">secondary</span><span class="dl">'</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">locationTracker</span><span class="p">.</span><span class="nx">startTracking</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="dl">'</span><span class="s1">isBgEnabled</span><span class="dl">'</span><span class="p">,</span> <span class="dl">"</span><span class="s2">off</span><span class="dl">"</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Idle</span><span class="dl">"</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">toolbarColor</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">light</span><span class="dl">'</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">locationTracker</span><span class="p">.</span><span class="nx">stopTracking</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>As you can see, the toggle button will activate-deactivate the background geolocation and it also changes de background color of the toolbar.</p>
+
+<p>For background geolocation I will use one cordova plugin available as ionic native <a href="https://ionicframework.com/docs/native/background-geolocation/">plugin</a></p>
+
+<p><a href="https://www.joshmorony.com/adding-background-geolocation-to-an-ionic-2-application/">Here</a> you can see read a very nice article explaining how to use the plugin with ionic. As the article explains I’ve created a provider</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span><span class="nx">Injectable</span><span class="p">,</span> <span class="nx">NgZone</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">BackgroundGeolocation</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@ionic-native/background-geolocation</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">CONF</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../conf/conf</span><span class="dl">"</span><span class="p">;</span>
+ 
+<span class="p">@</span><span class="nd">Injectable</span><span class="p">()</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">LocationTracker</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="k">public</span> <span class="nx">zone</span><span class="p">:</span> <span class="nx">NgZone</span><span class="p">,</span>
+                <span class="k">private</span> <span class="nx">backgroundGeolocation</span><span class="p">:</span> <span class="nx">BackgroundGeolocation</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">showAppSettings</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">backgroundGeolocation</span><span class="p">.</span><span class="nx">showAppSettings</span><span class="p">();</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">startTracking</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">startBackgroundGeolocation</span><span class="p">();</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">stopTracking</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">backgroundGeolocation</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="nx">startBackgroundGeolocation</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">backgroundGeolocation</span><span class="p">.</span><span class="nx">configure</span><span class="p">(</span><span class="nx">CONF</span><span class="p">.</span><span class="nx">BG_GPS</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">backgroundGeolocation</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The idea of the plugin is send a POST request to a url with the gps data in the body of the request. So, I will create a web api server to handle this request. I will use my Raspberry Pi3. to serve the application. I will create a simple PHP/Lumen application. This application will handle the POST request of the mobile application and also will serve a html page with the map (using google maps).</p>
+
+<p>Mobile requests will be authenticated with a token in the header and web application will use a basic http authentication. Because of that I will create two middlewares to handle the the different ways to authenticate.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="k">require</span> <span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/../vendor/autoload.php'</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">App\Http\Middleware</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">App\Model\Gps</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Illuminate\Contracts\Debug\ExceptionHandler</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Illuminate\Http\Request</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Laravel\Lumen\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Laravel\Lumen\Routing\Router</span><span class="p">;</span>
+ 
+<span class="p">(</span><span class="k">new</span> <span class="nc">Dotenv\Dotenv</span><span class="p">(</span><span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/../env/'</span><span class="p">))</span><span class="o">-&gt;</span><span class="nf">load</span><span class="p">();</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">(</span><span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/..'</span><span class="p">);</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">singleton</span><span class="p">(</span><span class="nc">ExceptionHandler</span><span class="o">::</span><span class="n">class</span><span class="p">,</span> <span class="nc">App\Exceptions\Handler</span><span class="o">::</span><span class="n">class</span><span class="p">);</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">routeMiddleware</span><span class="p">([</span>
+    <span class="s1">'auth'</span>  <span class="o">=&gt;</span> <span class="nc">Middleware\AuthMiddleware</span><span class="o">::</span><span class="n">class</span><span class="p">,</span>
+    <span class="s1">'basic'</span> <span class="o">=&gt;</span> <span class="nc">Middleware\BasicAuthMiddleware</span><span class="o">::</span><span class="n">class</span><span class="p">,</span>
+<span class="p">]);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="n">router</span><span class="o">-&gt;</span><span class="nf">group</span><span class="p">([</span><span class="s1">'middleware'</span> <span class="o">=&gt;</span> <span class="s1">'auth'</span><span class="p">,</span> <span class="s1">'prefix'</span> <span class="o">=&gt;</span> <span class="s1">'/locator'</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Router</span> <span class="nv">$route</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$route</span><span class="o">-&gt;</span><span class="nf">post</span><span class="p">(</span><span class="s1">'/gps'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Gps</span> <span class="nv">$gps</span><span class="p">,</span> <span class="kt">Request</span> <span class="nv">$request</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$requestData</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">all</span><span class="p">();</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$requestData</span> <span class="k">as</span> <span class="nv">$poi</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$gps</span><span class="o">-&gt;</span><span class="nf">persistsData</span><span class="p">([</span>
+                <span class="s1">'date'</span>             <span class="o">=&gt;</span> <span class="nb">date</span><span class="p">(</span><span class="s1">'YmdHis'</span><span class="p">),</span>
+                <span class="s1">'serverTime'</span>       <span class="o">=&gt;</span> <span class="nb">time</span><span class="p">(),</span>
+                <span class="s1">'time'</span>             <span class="o">=&gt;</span> <span class="nv">$poi</span><span class="p">[</span><span class="s1">'time'</span><span class="p">],</span>
+                <span class="s1">'latitude'</span>         <span class="o">=&gt;</span> <span class="nv">$poi</span><span class="p">[</span><span class="s1">'latitude'</span><span class="p">],</span>
+                <span class="s1">'longitude'</span>        <span class="o">=&gt;</span> <span class="nv">$poi</span><span class="p">[</span><span class="s1">'longitude'</span><span class="p">],</span>
+                <span class="s1">'accuracy'</span>         <span class="o">=&gt;</span> <span class="nv">$poi</span><span class="p">[</span><span class="s1">'accuracy'</span><span class="p">],</span>
+                <span class="s1">'speed'</span>            <span class="o">=&gt;</span> <span class="nv">$poi</span><span class="p">[</span><span class="s1">'speed'</span><span class="p">],</span>
+                <span class="s1">'altitude'</span>         <span class="o">=&gt;</span> <span class="nv">$poi</span><span class="p">[</span><span class="s1">'altitude'</span><span class="p">],</span>
+                <span class="s1">'locationProvider'</span> <span class="o">=&gt;</span> <span class="nv">$poi</span><span class="p">[</span><span class="s1">'locationProvider'</span><span class="p">],</span>
+            <span class="p">]);</span>
+        <span class="p">}</span>
+ 
+        <span class="k">return</span> <span class="s1">'OK'</span><span class="p">;</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+ 
+<span class="k">return</span> <span class="nv">$app</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>As we can see the route /locator/gps will handle the post request. I’ve created a model to persists gps data in the firebase database:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+ 
+<span class="kn">namespace</span> <span class="nn">App\Model</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Kreait\Firebase\Factory</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Kreait\Firebase\ServiceAccount</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">Gps</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$database</span><span class="p">;</span>
+ 
+    <span class="k">private</span> <span class="k">const</span> <span class="no">FIREBASE_CONF</span> <span class="o">=</span> <span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/../../conf/firebase.json'</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$serviceAccount</span> <span class="o">=</span> <span class="nc">ServiceAccount</span><span class="o">::</span><span class="nf">fromJsonFile</span><span class="p">(</span><span class="k">self</span><span class="o">::</span><span class="no">FIREBASE_CONF</span><span class="p">);</span>
+        <span class="nv">$firebase</span>       <span class="o">=</span> <span class="p">(</span><span class="k">new</span> <span class="nc">Factory</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="nf">withServiceAccount</span><span class="p">(</span><span class="nv">$serviceAccount</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="nf">create</span><span class="p">();</span>
+ 
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">database</span> <span class="o">=</span> <span class="nv">$firebase</span><span class="o">-&gt;</span><span class="nf">getDatabase</span><span class="p">();</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getLast</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$value</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">database</span><span class="o">-&gt;</span><span class="nf">getReference</span><span class="p">(</span><span class="s1">'gps/poi'</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="nf">orderByKey</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="nf">limitToLast</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="nf">getValue</span><span class="p">();</span>
+ 
+        <span class="nv">$out</span>                 <span class="o">=</span> <span class="nb">array_values</span><span class="p">(</span><span class="nv">$value</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="nv">$out</span><span class="p">[</span><span class="s1">'formatedDate'</span><span class="p">]</span> <span class="o">=</span> <span class="err">\</span><span class="nc">DateTimeImmutable</span><span class="o">::</span><span class="nf">createFromFormat</span><span class="p">(</span><span class="s1">'YmdHis'</span><span class="p">,</span> <span class="nv">$out</span><span class="p">[</span><span class="s1">'date'</span><span class="p">])</span><span class="o">-&gt;</span><span class="nf">format</span><span class="p">(</span><span class="s1">'d/m/Y H:i:s'</span><span class="p">);</span>
+ 
+        <span class="k">return</span> <span class="nv">$out</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">persistsData</span><span class="p">(</span><span class="kt">array</span> <span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">database</span>
+            <span class="o">-&gt;</span><span class="nf">getReference</span><span class="p">(</span><span class="s1">'gps/poi'</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="nf">push</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The project is almost finished. Now we only need to create the google map.</p>
+
+<p>That’s the api</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="n">router</span><span class="o">-&gt;</span><span class="nf">group</span><span class="p">([</span><span class="s1">'middleware'</span> <span class="o">=&gt;</span> <span class="s1">'basic'</span><span class="p">,</span> <span class="s1">'prefix'</span> <span class="o">=&gt;</span> <span class="s1">'/map'</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Router</span> <span class="nv">$route</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$route</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Gps</span> <span class="nv">$gps</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nf">view</span><span class="p">(</span><span class="s2">"index"</span><span class="p">,</span> <span class="nv">$gps</span><span class="o">-&gt;</span><span class="nf">getLast</span><span class="p">());</span>
+    <span class="p">});</span>
+ 
+    <span class="nv">$route</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'/last'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Gps</span> <span class="nv">$gps</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$gps</span><span class="o">-&gt;</span><span class="nf">getLast</span><span class="p">();</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>And the HTML</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"initial-scale=1.0, user-scalable=no"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Locator<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;style&gt;</span>
+        <span class="nf">#map</span> <span class="p">{</span>
+            <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+        <span class="p">}</span>
+ 
+        <span class="nt">html</span><span class="o">,</span> <span class="nt">body</span> <span class="p">{</span>
+            <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+            <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+            <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"map"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+ 
+    <span class="kd">var</span> <span class="nx">lastDate</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">DELAY</span> <span class="o">=</span> <span class="mi">60</span><span class="p">;</span>
+ 
+    <span class="kd">function</span> <span class="nx">drawMap</span><span class="p">(</span><span class="nx">lat</span><span class="p">,</span> <span class="nx">long</span><span class="p">,</span> <span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">CENTER</span> <span class="o">=</span> <span class="p">{</span><span class="na">lat</span><span class="p">:</span> <span class="nx">lat</span><span class="p">,</span> <span class="na">lng</span><span class="p">:</span> <span class="nx">long</span><span class="p">};</span>
+        <span class="kd">var</span> <span class="nx">contentString</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">&lt;div id="content"&gt;</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">text</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;/div&gt;</span><span class="dl">'</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">infowindow</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">InfoWindow</span><span class="p">({</span>
+            <span class="na">content</span><span class="p">:</span> <span class="nx">contentString</span>
+        <span class="p">});</span>
+        <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nb">Map</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">map</span><span class="dl">'</span><span class="p">),</span> <span class="p">{</span>
+            <span class="na">zoom</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+            <span class="na">center</span><span class="p">:</span> <span class="nx">CENTER</span><span class="p">,</span>
+            <span class="na">disableDefaultUI</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">});</span>
+ 
+        <span class="kd">var</span> <span class="nx">marker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Marker</span><span class="p">({</span>
+            <span class="na">position</span><span class="p">:</span> <span class="nx">CENTER</span><span class="p">,</span>
+            <span class="na">map</span><span class="p">:</span> <span class="nx">map</span>
+        <span class="p">});</span>
+        <span class="kd">var</span> <span class="nx">trafficLayer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">TrafficLayer</span><span class="p">();</span>
+ 
+        <span class="nx">trafficLayer</span><span class="p">.</span><span class="nx">setMap</span><span class="p">(</span><span class="nx">map</span><span class="p">);</span>
+        <span class="nx">infowindow</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">map</span><span class="p">,</span> <span class="nx">marker</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="kd">function</span> <span class="nx">initMap</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">lastDate</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+        <span class="nx">drawMap</span><span class="p">(,</span> <span class="p">,</span> <span class="nx">lastDate</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">/map/last</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span><span class="na">credentials</span><span class="p">:</span> <span class="dl">"</span><span class="s2">same-origin</span><span class="dl">"</span><span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">lastDate</span> <span class="o">!==</span> <span class="nx">data</span><span class="p">.</span><span class="nx">formatedDate</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">drawMap</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">latitude</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">longitude</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">formatedDate</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+        <span class="p">});</span>
+    <span class="p">},</span> <span class="nx">DELAY</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">async</span> <span class="na">defer</span> <span class="na">src=</span><span class="s">"https://maps.googleapis.com/maps/api/js?key=my_google_maps_key&amp;callback=initMap"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>And that’s all just enough for a weekend. Source code is available in my <a href="https://github.com/gonzalo123/locator">github account</a></p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Playing+with+Ionic%2C+Lumen%2C+Firebase%2C+Google+maps%2C+Raspberry+Pi+and+background+geolocation%20%2F2018%2F02%2F19%2Fplaying-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2018%2F02%2F19%2Fplaying-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Playing+with+Ionic%2C+Lumen%2C+Firebase%2C+Google+maps%2C+Raspberry+Pi+and+background+geolocation&url=%2F2018%2F02%2F19%2Fplaying-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2018/02/19/playing-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2018/02/19/playing-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617447287703593000"></script>
+
+
+    </div>
+  </body>
+</html>

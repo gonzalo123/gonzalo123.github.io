@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Pomodoro with ESP32. One "The Melee - Side by side" project</title>
+  <meta name="description" content="Last weekend there was a great event called The Melee - Side by side (Many thanks to @ojoven and @diversius).
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pomodoro with ESP32. One "The Melee - Side by side" project">
+  <meta name="twitter:description" content="Last weekend there was a great event called The Melee - Side by side (Many thanks to @ojoven and @diversius).
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Pomodoro with ESP32. One "The Melee - Side by side" project">
+  <meta property="og:description" content="Last weekend there was a great event called The Melee - Side by side (Many thanks to @ojoven and @diversius).
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617447287703593000">
+  <link rel="canonical" href="/2018/03/26/pomodoro-with-esp32-one-the-melee-side-by-side-project/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Pomodoro with ESP32. One “The Melee - Side by side” project | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Pomodoro with ESP32. One “The Melee - Side by side” project" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Last weekend there was a great event called The Melee - Side by side (Many thanks to @ojoven and @diversius)." />
+<meta property="og:description" content="Last weekend there was a great event called The Melee - Side by side (Many thanks to @ojoven and @diversius)." />
+<link rel="canonical" href="/2018/03/26/pomodoro-with-esp32-one-the-melee-side-by-side-project/" />
+<meta property="og:url" content="/2018/03/26/pomodoro-with-esp32-one-the-melee-side-by-side-project/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-03-26T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Pomodoro with ESP32. One “The Melee - Side by side” project" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2018/03/26/pomodoro-with-esp32-one-the-melee-side-by-side-project/"},"url":"/2018/03/26/pomodoro-with-esp32-one-the-melee-side-by-side-project/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Last weekend there was a great event called The Melee - Side by side (Many thanks to @ojoven and @diversius).","dateModified":"2018-03-26T00:00:00+02:00","datePublished":"2018-03-26T00:00:00+02:00","headline":"Pomodoro with ESP32. One “The Melee - Side by side” project","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-03-26 00:00" class="post-meta__date date">26 Mar 2018</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#angular">angular</a>, <a href="/tags/#arduino">arduino</a>, <a href="/tags/#esp32">esp32</a>, <a href="/tags/#iot">iot</a>, <a href="/tags/#mqtt">mqtt</a>, <a href="/tags/#socket-io">socket-io</a>, <a href="/tags/#the-melee">the-melee</a></span>
+      
+    </div>
+    <h1 class="post-title">Pomodoro with ESP32. One "The Melee - Side by side" project</h1>
+  </header>
+
+  <section class="post">
+    <p>Last weekend there was a great event called <a href="http://themelee.org/post/171755270566/the-m%C3%AAl%C3%A9e-side-by-side">The Melee - Side by side</a> (Many thanks to <a href="https://twitter.com/ojoven">@ojoven</a> and <a href="https://diversius.com/">@diversius</a>).</p>
+
+<p>The event was one kind of Hackathon where a group of people meet together one day, to share our side projects and to work together (yes. We also have a lunch and beers also :). The format of the event is just a copy of the event that our colleagues from Bilbao called “<a href="https://twitter.com/elcomite_bio">El Comité</a>”.</p>
+
+<p><a href="https://twitter.com/ibaiimaz">@ibaiimaz</a> spoke about one project to create one collaborative pomodoro where the people of one team can share their status and see the status of the rest of the team. When I heard pomodoro and status I immediately thought in one servo moving a flag and some LEDs turning on and off. We had a project. <a href="https://twitter.com/penniath">@penniath</a> and <a href="https://twitter.com/tatai">@tatai</a> also joined us. We also had a team.</p>
+
+<p>We had a project and we also had a deadline. We must show a working prototype at the end of the day. That means that we didn’t have too many time. First we decided the mockup of the project, reducing the initial scope (more ambitious) to fit it within our time slot. We discuss intensely for 10 minutes and finally we describe an ultra detailed blueprint. That’s the full blueprint of the project:</p>
+
+<p><img src="/assets/images/blueprint.png" alt="" /></p>
+
+<p>It was time to start working.</p>
+
+<p>@penniath and @tatai worked in the Backend. It must be the responsible of the pomodoro timers, listen to MQTT events and create an API for the frontend. The backend also must provide a WebSockets interface to allow real time events within the frontend. They decided to use node and socket.io for the WebSockets. You can see the source code <a href="https://github.com/penniath/pomodoro-api">here</a>.</p>
+
+<p>@ibaiimaz started with the frontend. He decided to create an Angular web application listening to socket.io events to show the status of the pomodoro. You can see the source code <a href="https://github.com/ibaiimaz/Pomoled">here</a>.</p>
+
+<p>Finaly I worked with the hardware. I created a prototype with one ESP32, two RGB LEDs, one button, one servo and a couple of resistors.</p>
+
+<p><img src="/assets/images/fritzing.png" alt="" /></p>
+
+<p><img src="/assets/images/circuit.png" alt="" /></p>
+
+<p>That’s the source code.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;WiFi.h&gt;
+#include &lt;PubSubClient.h&gt;
+</span> 
+<span class="kt">int</span> <span class="n">redPin_g</span> <span class="o">=</span> <span class="mi">19</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">greenPin_g</span> <span class="o">=</span> <span class="mi">17</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">bluePin_g</span> <span class="o">=</span> <span class="mi">18</span><span class="p">;</span>
+ 
+<span class="kt">int</span> <span class="n">redPin_i</span> <span class="o">=</span> <span class="mi">21</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">greenPin_i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">bluePin_i</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+ 
+<span class="cp">#define SERVO_PIN 16
+</span> 
+<span class="k">const</span> <span class="kt">int</span> <span class="n">buttonPin</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">buttonState</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ 
+<span class="kt">int</span> <span class="n">channel</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">hz</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">depth</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+ 
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">ssid</span> <span class="o">=</span> <span class="s">"SSID"</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">password</span> <span class="o">=</span> <span class="s">"password"</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">server</span> <span class="o">=</span> <span class="s">"192.168.1.105"</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">topic</span> <span class="o">=</span> <span class="s">"/pomodoro/+"</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">clientName</span> <span class="o">=</span> <span class="s">"com.gonzalo123.esp32"</span><span class="p">;</span>
+ 
+<span class="n">WiFiClient</span> <span class="n">wifiClient</span><span class="p">;</span>
+<span class="n">PubSubClient</span> <span class="nf">client</span><span class="p">(</span><span class="n">wifiClient</span><span class="p">);</span>
+ 
+<span class="kt">void</span> <span class="nf">wifiConnect</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Connecting to "</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">ssid</span><span class="p">);</span>
+ 
+  <span class="n">WiFi</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
+ 
+  <span class="k">while</span> <span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">status</span><span class="p">()</span> <span class="o">!=</span> <span class="n">WL_CONNECTED</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"*"</span><span class="p">);</span>
+  <span class="p">}</span>
+ 
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"WiFi connected: "</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">localIP</span><span class="p">());</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">mqttReConnect</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">client</span><span class="p">.</span><span class="n">connected</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Attempting MQTT connection..."</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">clientName</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"connected"</span><span class="p">);</span>
+      <span class="n">client</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">topic</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"failed, rc="</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">state</span><span class="p">());</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" try again in 5 seconds"</span><span class="p">);</span>
+      <span class="n">delay</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">callback</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">topic</span><span class="p">,</span> <span class="n">byte</span><span class="o">*</span> <span class="n">payload</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Message arrived ["</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">topic</span><span class="p">);</span>
+ 
+  <span class="n">String</span> <span class="n">data</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">payload</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+  <span class="p">}</span>
+ 
+  <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">toInt</span><span class="p">();</span>
+ 
+  <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="s">"/pomodoro/gonzalo"</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"[gonzalo]"</span><span class="p">);</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">ledcWrite</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3400</span><span class="p">);</span>
+        <span class="n">setColor_g</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">setColor_g</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">ledcWrite</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6400</span><span class="p">);</span>
+        <span class="n">setColor_g</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"[ibai]"</span><span class="p">);</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">setColor_i</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">setColor_i</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">setColor_i</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>  <span class="c1">// green</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+ 
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"] value:"</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+ 
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">buttonPin</span><span class="p">,</span> <span class="n">INPUT_PULLUP</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">redPin_g</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">greenPin_g</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">bluePin_g</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+ 
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">redPin_i</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">greenPin_i</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">bluePin_i</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+ 
+  <span class="n">ledcSetup</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">hz</span><span class="p">,</span> <span class="n">depth</span><span class="p">);</span>
+  <span class="n">ledcAttachPin</span><span class="p">(</span><span class="n">SERVO_PIN</span><span class="p">,</span> <span class="n">channel</span><span class="p">);</span>
+  <span class="n">wifiConnect</span><span class="p">();</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">setServer</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="mi">1883</span><span class="p">);</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">setCallback</span><span class="p">(</span><span class="n">callback</span><span class="p">);</span>
+ 
+  <span class="n">delay</span><span class="p">(</span><span class="mi">1500</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">mqttEmit</span><span class="p">(</span><span class="n">String</span> <span class="n">topic</span><span class="p">,</span> <span class="n">String</span> <span class="n">value</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">publish</span><span class="p">((</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span> <span class="n">topic</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span> <span class="n">value</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">client</span><span class="p">.</span><span class="n">connected</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">mqttReConnect</span><span class="p">();</span>
+  <span class="p">}</span>
+ 
+  <span class="n">client</span><span class="p">.</span><span class="n">loop</span><span class="p">();</span>
+ 
+  <span class="n">buttonState</span> <span class="o">=</span> <span class="n">digitalRead</span><span class="p">(</span><span class="n">buttonPin</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">buttonState</span> <span class="o">==</span> <span class="n">HIGH</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">mqttEmit</span><span class="p">(</span><span class="s">"/start/gonzalo"</span><span class="p">,</span> <span class="p">(</span><span class="n">String</span><span class="p">)</span> <span class="s">"3"</span><span class="p">);</span>
+  <span class="p">}</span>
+ 
+  <span class="n">delay</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">setColor_i</span><span class="p">(</span><span class="kt">int</span> <span class="n">red</span><span class="p">,</span> <span class="kt">int</span> <span class="n">green</span><span class="p">,</span> <span class="kt">int</span> <span class="n">blue</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">redPin_i</span><span class="p">,</span> <span class="n">red</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">greenPin_i</span><span class="p">,</span> <span class="n">green</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">bluePin_i</span><span class="p">,</span> <span class="n">blue</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">setColor_g</span><span class="p">(</span><span class="kt">int</span> <span class="n">red</span><span class="p">,</span> <span class="kt">int</span> <span class="n">green</span><span class="p">,</span> <span class="kt">int</span> <span class="n">blue</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">redPin_g</span><span class="p">,</span> <span class="n">red</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">greenPin_g</span><span class="p">,</span> <span class="n">green</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">bluePin_g</span><span class="p">,</span> <span class="n">blue</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The MQTT server (a <a href="https://mosquitto.org/">mosquitto</a> server) was initially running in my laptop but as well as I had one Raspberry Pi Zero also in my bag we decided to user the Pi Zero as a server and run mosquitto MQTT server with Raspbian. Everything is better with a Raspberry Pi. @tatai helped me to set up the server.</p>
+
+<p>Here you can see the prototype in action</p>
+
+<p><a href="https://www.youtube.com/watch?v=nhncDjXMeQ4"><img src="https://img.youtube.com/vi/yfV9qYOHiSY/0.jpg" alt="youtube" /></a></p>
+
+<p>That’s the kind of side projects that I normally create alone but definitely it’s more fun to do it with other colleagues even it I need to wake up early one Saturday morning.</p>
+
+<p>Source code of ESP32 <a href="https://github.com/gonzalo123/pomodoro.esp32">here</a>.</p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Pomodoro+with+ESP32.+One+%22The+Melee+-+Side+by+side%22+project%20%2F2018%2F03%2F26%2Fpomodoro-with-esp32-one-the-melee-side-by-side-project%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2018%2F03%2F26%2Fpomodoro-with-esp32-one-the-melee-side-by-side-project%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Pomodoro+with+ESP32.+One+%22The+Melee+-+Side+by+side%22+project&url=%2F2018%2F03%2F26%2Fpomodoro-with-esp32-one-the-melee-side-by-side-project%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2018/03/26/pomodoro-with-esp32-one-the-melee-side-by-side-project/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2018/03/26/pomodoro-with-esp32-one-the-melee-side-by-side-project'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617447287703593000"></script>
+
+
+    </div>
+  </body>
+</html>

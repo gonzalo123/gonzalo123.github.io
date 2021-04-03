@@ -54,7 +54,7 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="theme-color" content="#ffffff">
   
-  <link rel="stylesheet" href="/css/main.css?1617444526878584000">
+  <link rel="stylesheet" href="/css/main.css?1617447287703593000">
   <link rel="canonical" href="/2019/07/22/playing-with-totp-2fa-and-mobile-applications-with-ionic/">
   <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
   <!-- Begin Jekyll SEO tag v2.7.1 -->
@@ -221,96 +221,209 @@
 
 <p>The sever will be a simple Flask server to handle routes. One route (GET /) will generate one QR code to allow us to configure or TOTP client. I’m using the library pyotp to handle totp operations.</p>
 
-<p>[sourcecode language=”python”] from flask import Flask, jsonify, abort, render_template, request import os from dotenv import load_dotenv from functools import wraps import pyotp from flask_qrcode import QRcode</p>
-
-<p>current_dir = os.path.dirname(os.path.abspath(__file__)) load_dotenv(dotenv_path=”{}/.env”.format(current_dir))</p>
-
-<p>totp = pyotp.TOTP(os.getenv(‘TOTP_BASE32_SECRET’))</p>
-
-<p>app = Flask(__name__) QRcode(app)</p>
-
-<p>def verify(key): return totp.verify(key)</p>
-
-<p>def authorize(f): @wraps(f) def decorated_function(*args, **kws): if not ‘Authorization’ in request.headers: abort(401)</p>
-
-<p>data = request.headers[‘Authorization’] token = str.replace(str(data), ‘Bearer ‘, ‘’)</p>
-
-<p>if token != os.getenv(‘BEARER’): abort(401)</p>
-
-<p>return f(*args, **kws)</p>
-
-<p>return decorated_function</p>
-
-<p>@app.route(‘/’) def index(): return render_template(‘index.html’, totp=pyotp.totp.TOTP(os.getenv(‘TOTP_BASE32_SECRET’)).provisioning_uri(“gonzalo123.com”, issuer_name=”TOTP Example”))</p>
-
-<p>@app.route(‘/check/<key>', methods=\['GET'\]) @authorize def alert(key): status = verify(key) return jsonify({'status': status})</key></p>
-
-<p>if __name__ == “__main__”: app.run(host=’0.0.0.0’) [/sourcecode]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">abort</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">import</span> <span class="nn">pyotp</span>
+<span class="kn">from</span> <span class="nn">flask_qrcode</span> <span class="kn">import</span> <span class="n">QRcode</span>
+ 
+<span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+<span class="n">load_dotenv</span><span class="p">(</span><span class="n">dotenv_path</span><span class="o">=</span><span class="s">"{}/.env"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">current_dir</span><span class="p">))</span>
+ 
+<span class="n">totp</span> <span class="o">=</span> <span class="n">pyotp</span><span class="p">.</span><span class="n">TOTP</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'TOTP_BASE32_SECRET'</span><span class="p">))</span>
+ 
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">QRcode</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+ 
+ 
+<span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">totp</span><span class="p">.</span><span class="n">verify</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+ 
+ 
+<span class="k">def</span> <span class="nf">authorize</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="o">@</span><span class="n">wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">decorated_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s">'Authorization'</span> <span class="ow">in</span> <span class="n">request</span><span class="p">.</span><span class="n">headers</span><span class="p">:</span>
+            <span class="n">abort</span><span class="p">(</span><span class="mi">401</span><span class="p">)</span>
+ 
+        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'Authorization'</span><span class="p">]</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="nb">str</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="s">'Bearer '</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+ 
+        <span class="k">if</span> <span class="n">token</span> <span class="o">!=</span> <span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'BEARER'</span><span class="p">):</span>
+            <span class="n">abort</span><span class="p">(</span><span class="mi">401</span><span class="p">)</span>
+ 
+        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+ 
+    <span class="k">return</span> <span class="n">decorated_function</span>
+ 
+ 
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">'index.html'</span><span class="p">,</span> <span class="n">totp</span><span class="o">=</span><span class="n">pyotp</span><span class="p">.</span><span class="n">totp</span><span class="p">.</span><span class="n">TOTP</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'TOTP_BASE32_SECRET'</span><span class="p">)).</span><span class="n">provisioning_uri</span><span class="p">(</span><span class="s">"gonzalo123.com"</span><span class="p">,</span> <span class="n">issuer_name</span><span class="o">=</span><span class="s">"TOTP Example"</span><span class="p">))</span>
+ 
+ 
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/check/&lt;key&gt;'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">])</span>
+<span class="o">@</span><span class="n">authorize</span>
+<span class="k">def</span> <span class="nf">alert</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s">'status'</span><span class="p">:</span> <span class="n">status</span><span class="p">})</span>
+ 
+ 
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'0.0.0.0'</span><span class="p">)</span>
+</code></pre></div></div>
 
 <p>I’ll use an standard TOTP client to generate the tokens but with pyotp we can easily create a client also</p>
 
-<p>[sourcecode language=”python”] import pyotp import time import os from dotenv import load_dotenv import logging</p>
-
-<p>logging.basicConfig(level=logging.INFO)</p>
-
-<p>current_dir = os.path.dirname(os.path.abspath(__file__)) load_dotenv(dotenv_path=”{}/.env”.format(current_dir))</p>
-
-<p>totp = pyotp.TOTP(os.getenv(‘TOTP_BASE32_SECRET’))</p>
-
-<p>mem = None while True: now = totp.now() if mem != now: logging.info(now) mem = now time.sleep(1) [/sourcecode]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pyotp</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+ 
+<span class="n">logging</span><span class="p">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="p">.</span><span class="n">INFO</span><span class="p">)</span>
+ 
+<span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+<span class="n">load_dotenv</span><span class="p">(</span><span class="n">dotenv_path</span><span class="o">=</span><span class="s">"{}/.env"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">current_dir</span><span class="p">))</span>
+ 
+<span class="n">totp</span> <span class="o">=</span> <span class="n">pyotp</span><span class="p">.</span><span class="n">TOTP</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'TOTP_BASE32_SECRET'</span><span class="p">))</span>
+ 
+<span class="n">mem</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">totp</span><span class="p">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">mem</span> <span class="o">!=</span> <span class="n">now</span><span class="p">:</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+        <span class="n">mem</span> <span class="o">=</span> <span class="n">now</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
 
 <p>And finally the mobile application. It’s a simple ionic application. That’s the view:</p>
 
-<p>[sourcecode language=”html”] <ion-header> <ion-toolbar> <ion-title> TOTP Validation demo </ion-title> </ion-toolbar> </ion-header></p>
-
-<ion-content> <div class="ion-padding"> <ion-item> <ion-label position="stacked">totp</ion-label> &lt;ion-input placeholder="Enter value" \[(ngModel)\]="totp"&gt;&lt;/ion-input&gt; </ion-item> &lt;ion-button fill="solid" color="secondary" (click)="validate()" \[disabled\]="!totp"&gt; Validate <ion-icon slot="end" name="help-circle-outline"></ion-icon> &lt;/ion-button&gt; </div> </ion-content>
-<p>[/sourcecode]</p>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ion-header&gt;</span>
+  <span class="nt">&lt;ion-toolbar&gt;</span>
+    <span class="nt">&lt;ion-title&gt;</span>
+      TOTP Validation demo
+    <span class="nt">&lt;/ion-title&gt;</span>
+  <span class="nt">&lt;/ion-toolbar&gt;</span>
+<span class="nt">&lt;/ion-header&gt;</span>
+ 
+<span class="nt">&lt;ion-content&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ion-padding"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ion-item&gt;</span>
+      <span class="nt">&lt;ion-label</span> <span class="na">position=</span><span class="s">"stacked"</span><span class="nt">&gt;</span>totp<span class="nt">&lt;/ion-label&gt;</span>
+      <span class="nt">&lt;ion-input</span> <span class="na">placeholder=</span><span class="s">"Enter value"</span> <span class="err">[(ngModel)]="totp"</span><span class="nt">&gt;&lt;/ion-input&gt;</span>
+    <span class="nt">&lt;/ion-item&gt;</span>
+    <span class="nt">&lt;ion-button</span> <span class="na">fill=</span><span class="s">"solid"</span> <span class="na">color=</span><span class="s">"secondary"</span> <span class="err">(click)="validate()"</span> <span class="err">[disabled]="!totp"</span><span class="nt">&gt;</span>
+      Validate
+      <span class="nt">&lt;ion-icon</span> <span class="na">slot=</span><span class="s">"end"</span> <span class="na">name=</span><span class="s">"help-circle-outline"</span><span class="nt">&gt;&lt;/ion-icon&gt;</span>
+    <span class="nt">&lt;/ion-button&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/ion-content&gt;</span>
+</code></pre></div></div>
 
 <p>The controller:</p>
 
-<p>[sourcecode language=”js”] import { Component } from ‘@angular/core’ import { ApiService } from ‘../sercices/api.service’ import { ToastController } from ‘@ionic/angular’</p>
-
-<p>@Component({ selector: ‘app-home’, templateUrl: ‘home.page.html’, styleUrls: [‘home.page.scss’] }) export class HomePage { public totp</p>
-
-<p>constructor (private api: ApiService, public toastController: ToastController) {}</p>
-
-<p>validate () { this.api.get(‘/check/’ + this.totp).then(data =&gt; this.alert(data.status)) }</p>
-
-<p>async alert (status) { const toast = await this.toastController.create({ message: status ? ‘OK’ : ‘Not valid code’, duration: 2000, color: status ? ‘primary’ : ‘danger’, }) toast.present() } } [/sourcecode]</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Component</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">ApiService</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../sercices/api.service</span><span class="dl">'</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">ToastController</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@ionic/angular</span><span class="dl">'</span>
+ 
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+  <span class="na">selector</span><span class="p">:</span> <span class="dl">'</span><span class="s1">app-home</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">home.page.html</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">styleUrls</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">home.page.scss</span><span class="dl">'</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">HomePage</span> <span class="p">{</span>
+  <span class="k">public</span> <span class="nx">totp</span>
+ 
+  <span class="kd">constructor</span> <span class="p">(</span><span class="k">private</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">ApiService</span><span class="p">,</span> <span class="k">public</span> <span class="nx">toastController</span><span class="p">:</span> <span class="nx">ToastController</span><span class="p">)</span> <span class="p">{}</span>
+ 
+  <span class="nx">validate</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/check/</span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">totp</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">status</span><span class="p">))</span>
+  <span class="p">}</span>
+ 
+  <span class="k">async</span> <span class="nx">alert</span> <span class="p">(</span><span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">toast</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">toastController</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+      <span class="na">message</span><span class="p">:</span> <span class="nx">status</span> <span class="p">?</span> <span class="dl">'</span><span class="s1">OK</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Not valid code</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">duration</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
+      <span class="na">color</span><span class="p">:</span> <span class="nx">status</span> <span class="p">?</span> <span class="dl">'</span><span class="s1">primary</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">danger</span><span class="dl">'</span><span class="p">,</span>
+    <span class="p">})</span>
+    <span class="nx">toast</span><span class="p">.</span><span class="nx">present</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <p>I’ve also put a simple security system. In a real life application we’ll need something better, but here I’ve got a Auth Bearer harcoded and I send it en every http request. To do it I’ve created a simple api service</p>
 
-<p>[sourcecode language=”js”] import { Injectable } from ‘@angular/core’ import { isDevMode } from ‘@angular/core’ import { HttpClient, HttpHeaders, HttpParams } from ‘@angular/common/http’ import { CONF } from ‘./conf’</p>
-
-<p>@Injectable({ providedIn: ‘root’ }) export class ApiService {</p>
-
-<p>private isDev: boolean = isDevMode() private apiUrl: string</p>
-
-<p>constructor (private http: HttpClient) { this.apiUrl = this.isDev ? CONF.API_DEV : CONF.API_PROD }</p>
-
-<p>public get (uri: string, params?: Object): Promise<any> { return new Promise((resolve, reject) =&gt; { this.http.get(this.apiUrl + uri, { headers: ApiService.getHeaders(), params: ApiService.getParams(params) }).subscribe( res =&gt; {this.handleHttpNext(res), resolve(res)}, err =&gt; {this.handleHttpError(err), reject(err)}, () =&gt; this.handleHttpComplete() ) }) }</any></p>
-
-<p>private static getHeaders (): HttpHeaders {</p>
-
-<p>const headers = { ‘Content-Type’: ‘application/json’ }</p>
-
-<p>headers[‘Authorization’] = ‘Bearer ‘ + CONF.bearer</p>
-
-<p>return new HttpHeaders(headers) }</p>
-
-<p>private static getParams (params?: Object): HttpParams { let Params = new HttpParams() for (const key in params) { if (params.hasOwnProperty(key)) { Params = Params.set(key, params[key]) } }</p>
-
-<p>return Params }</p>
-
-<p>private handleHttpError (err) { console.log(‘HTTP Error’, err) }</p>
-
-<p>private handleHttpNext (res) { console.log(‘HTTP response’, res) }</p>
-
-<p>private handleHttpComplete () { console.log(‘HTTP request completed.’) } } [/sourcecode]</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Injectable</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">isDevMode</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/core</span><span class="dl">'</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">HttpClient</span><span class="p">,</span> <span class="nx">HttpHeaders</span><span class="p">,</span> <span class="nx">HttpParams</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@angular/common/http</span><span class="dl">'</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">CONF</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./conf</span><span class="dl">'</span>
+ 
+<span class="p">@</span><span class="nd">Injectable</span><span class="p">({</span>
+  <span class="na">providedIn</span><span class="p">:</span> <span class="dl">'</span><span class="s1">root</span><span class="dl">'</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">ApiService</span> <span class="p">{</span>
+ 
+  <span class="k">private</span> <span class="nx">isDev</span><span class="p">:</span> <span class="nx">boolean</span> <span class="o">=</span> <span class="nx">isDevMode</span><span class="p">()</span>
+  <span class="k">private</span> <span class="nx">apiUrl</span><span class="p">:</span> <span class="kr">string</span>
+ 
+  <span class="kd">constructor</span> <span class="p">(</span><span class="k">private</span> <span class="nx">http</span><span class="p">:</span> <span class="nx">HttpClient</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">apiUrl</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">isDev</span> <span class="p">?</span> <span class="nx">CONF</span><span class="p">.</span><span class="nx">API_DEV</span> <span class="p">:</span> <span class="nx">CONF</span><span class="p">.</span><span class="nx">API_PROD</span>
+  <span class="p">}</span>
+ 
+  <span class="k">public</span> <span class="kd">get</span> <span class="p">(</span><span class="nx">uri</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">params</span><span class="p">?:</span> <span class="nb">Object</span><span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">http</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">apiUrl</span> <span class="o">+</span> <span class="nx">uri</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">headers</span><span class="p">:</span> <span class="nx">ApiService</span><span class="p">.</span><span class="nx">getHeaders</span><span class="p">(),</span>
+        <span class="na">params</span><span class="p">:</span> <span class="nx">ApiService</span><span class="p">.</span><span class="nx">getParams</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span>
+      <span class="p">}).</span><span class="nx">subscribe</span><span class="p">(</span>
+        <span class="nx">res</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleHttpNext</span><span class="p">(</span><span class="nx">res</span><span class="p">),</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">res</span><span class="p">)},</span>
+        <span class="nx">err</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleHttpError</span><span class="p">(</span><span class="nx">err</span><span class="p">),</span> <span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">)},</span>
+        <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">handleHttpComplete</span><span class="p">()</span>
+      <span class="p">)</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+ 
+  <span class="k">private</span> <span class="k">static</span> <span class="nx">getHeaders</span> <span class="p">():</span> <span class="nx">HttpHeaders</span> <span class="p">{</span>
+ 
+    <span class="kd">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">headers</span><span class="p">[</span><span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">]</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Bearer </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">CONF</span><span class="p">.</span><span class="nx">bearer</span>
+ 
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">HttpHeaders</span><span class="p">(</span><span class="nx">headers</span><span class="p">)</span>
+  <span class="p">}</span>
+ 
+  <span class="k">private</span> <span class="k">static</span> <span class="nx">getParams</span> <span class="p">(</span><span class="nx">params</span><span class="p">?:</span> <span class="nb">Object</span><span class="p">):</span> <span class="nx">HttpParams</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">Params</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">HttpParams</span><span class="p">()</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">params</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">params</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">Params</span> <span class="o">=</span> <span class="nx">Params</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">params</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="k">return</span> <span class="nx">Params</span>
+  <span class="p">}</span>
+ 
+  <span class="k">private</span> <span class="nx">handleHttpError</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">HTTP Error</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+  <span class="p">}</span>
+ 
+  <span class="k">private</span> <span class="nx">handleHttpNext</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">HTTP response</span><span class="dl">'</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
+  <span class="p">}</span>
+ 
+  <span class="k">private</span> <span class="nx">handleHttpComplete</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">HTTP request completed.</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
 <p>And that’s all. Here one video with a working example of the prototype:</p>
 
-<p>[embed]https://www.youtube.com/watch?v=bgljQu0RVNs[/embed]</p>
+<p><a href="https://www.youtube.com/watch?v=bgljQu0RVNs"><img src="https://img.youtube.com/vi/bgljQu0RVNs/0.jpg" alt="youtube" /></a></p>
 
 <p>Source code <a href="https://github.com/gonzalo123/totp">here</a></p>
 
@@ -353,7 +466,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617444526878584000"></script>
+<script type="text/javascript" src="/js/main.js?1617447287703593000"></script>
 
 
     </div>

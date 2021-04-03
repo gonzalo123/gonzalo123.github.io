@@ -378,6 +378,186 @@
   
     
     <url>
+      <loc>/2018/12/17/playing-with-microservices-docker-python-an-nameko/</loc>
+      
+        <lastmod>2018-12-17T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2018/11/26/monitoring-the-bandwidth-with-grafana-influxdb-and-docker/</loc>
+      
+        <lastmod>2018-11-26T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2018/10/08/working-with-sapui5-locally-part-3-adding-more-services-in-docker/</loc>
+      
+        <lastmod>2018-10-08T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2018/09/03/working-with-sapui5-locally-part-2-now-with-docker/</loc>
+      
+        <lastmod>2018-09-03T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2018/08/20/working-with-sapui5-locally-and-deploying-in-scp/</loc>
+      
+        <lastmod>2018-08-20T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2018/07/23/playing-with-grafana-and-weather-apis/</loc>
+      
+        <lastmod>2018-07-23T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2018/06/04/playing-with-docker-mqtt-grafana-influxdb-python-and-arduino/</loc>
+      
+        <lastmod>2018-06-04T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2018/05/07/happy-logins-only-the-happy-user-will-pass/</loc>
+      
+        <lastmod>2018-05-07T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/</loc>
+      
+        <lastmod>2018-04-09T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2018/03/26/pomodoro-with-esp32-one-the-melee-side-by-side-project/</loc>
+      
+        <lastmod>2018-03-26T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2018/02/19/playing-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation/</loc>
+      
+        <lastmod>2018-02-19T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2018/01/22/handling-amazon-sns-messages-with-php-lumen-and-cloudwatch/</loc>
+      
+        <lastmod>2018-01-22T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>/2010/01/24/pivot-tables-in-php/</loc>
       
         <lastmod>2010-01-24T00:00:00+01:00</lastmod>
@@ -771,7 +951,7 @@
     <url>
       <loc>/about/</loc>
       
-        <lastmod>2021-04-03T12:08:46+02:00</lastmod>
+        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -788,7 +968,7 @@
     <url>
       <loc>/feed.xml</loc>
       
-        <lastmod>2021-04-03T12:08:46+02:00</lastmod>
+        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -803,7 +983,7 @@
     <url>
       <loc>/humans.txt</loc>
       
-        <lastmod>2021-04-03T12:08:46+02:00</lastmod>
+        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -820,7 +1000,7 @@
     <url>
       <loc>/js/main.js</loc>
       
-        <lastmod>2021-04-03T12:08:46+02:00</lastmod>
+        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -835,7 +1015,7 @@
     <url>
       <loc>/css/main.css</loc>
       
-        <lastmod>2021-04-03T12:08:46+02:00</lastmod>
+        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -850,7 +1030,7 @@
     <url>
       <loc>/search.json</loc>
       
-        <lastmod>2021-04-03T12:08:46+02:00</lastmod>
+        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -869,7 +1049,7 @@
     <url>
       <loc>/assets/css/style.css</loc>
       
-        <lastmod>2021-04-03T12:08:46+02:00</lastmod>
+        <lastmod>2021-04-03T12:54:47+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -878,6 +1058,8 @@
         <priority>0.3</priority>
       
     </url>
+    
+  
     
   
     

@@ -252,6 +252,126 @@
   
     {
 
+      "title"    : "Playing with microservices, Docker, Python an Nameko",
+      "url"      : "/2018/12/17/playing-with-microservices-docker-python-an-nameko/",
+      "category" : "",
+      "tags"     : "microservices, nameko, rabbitmq",
+      "date"     : "2018-12-17 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Monitoring the bandwidth with Grafana, InfluxDB and Docker",
+      "url"      : "/2018/11/26/monitoring-the-bandwidth-with-grafana-influxdb-and-docker/",
+      "category" : "",
+      "tags"     : "grafana, influxdb",
+      "date"     : "2018-11-26 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Working with SAPUI5 locally (part 3). Adding more services in Docker",
+      "url"      : "/2018/10/08/working-with-sapui5-locally-part-3-adding-more-services-in-docker/",
+      "category" : "",
+      "tags"     : "php, rabbitmq, sap, socket-io, ui5, websockets",
+      "date"     : "2018-10-08 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Working with SAPUI5 locally (part 2). Now with docker",
+      "url"      : "/2018/09/03/working-with-sapui5-locally-part-2-now-with-docker/",
+      "category" : "",
+      "tags"     : "lumen, sap, scp, ui5",
+      "date"     : "2018-09-03 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Working with SAPUI5 locally and deploying in SCP",
+      "url"      : "/2018/08/20/working-with-sapui5-locally-and-deploying-in-scp/",
+      "category" : "",
+      "tags"     : "js, sap, sap-cloud-platform, ui5",
+      "date"     : "2018-08-20 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with Grafana and weather APIs",
+      "url"      : "/2018/07/23/playing-with-grafana-and-weather-apis/",
+      "category" : "",
+      "tags"     : "api, grafana, influxdb, iot, node, raspberry-pi",
+      "date"     : "2018-07-23 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with Docker, MQTT, Grafana, InfluxDB, Python and Arduino",
+      "url"      : "/2018/06/04/playing-with-docker-mqtt-grafana-influxdb-python-and-arduino/",
+      "category" : "",
+      "tags"     : "docker, grafana, influxdb, iot, mosquitto, mqtt, raspberry-pi",
+      "date"     : "2018-06-04 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Happy logins. Only the happy user will pass",
+      "url"      : "/2018/05/07/happy-logins-only-the-happy-user-will-pass/",
+      "category" : "",
+      "tags"     : "html5, js, keras, node, opencv, rabbitmq, tensorflow, websocket",
+      "date"     : "2018-05-07 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Opencv and esp32 experiment. Moving a servo with my face alignment",
+      "url"      : "/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/",
+      "category" : "",
+      "tags"     : "arduino, esp32, iot, mqtt, opencv",
+      "date"     : "2018-04-09 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Pomodoro with ESP32. One &quot;The Melee - Side by side&quot; project",
+      "url"      : "/2018/03/26/pomodoro-with-esp32-one-the-melee-side-by-side-project/",
+      "category" : "",
+      "tags"     : "angular, arduino, esp32, iot, mqtt, socket-io, the-melee",
+      "date"     : "2018-03-26 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with Ionic, Lumen, Firebase, Google maps, Raspberry Pi and background geolocation",
+      "url"      : "/2018/02/19/playing-with-ionic-lumen-firebase-google-maps-raspberry-pi-and-background-geolocation/",
+      "category" : "",
+      "tags"     : "firebase, google-maps, ionic, lumen, raspberry-pi",
+      "date"     : "2018-02-19 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Handling Amazon SNS messages with PHP, Lumen and CloudWatch",
+      "url"      : "/2018/01/22/handling-amazon-sns-messages-with-php-lumen-and-cloudwatch/",
+      "category" : "",
+      "tags"     : "amazon, cloudwatch, php, sns",
+      "date"     : "2018-01-22 00:00:00 +0100"
+
+    } ,
+  
+    {
+
       "title"    : "Pivot tables in PHP",
       "url"      : "/2010/01/24/pivot-tables-in-php/",
       "category" : "",

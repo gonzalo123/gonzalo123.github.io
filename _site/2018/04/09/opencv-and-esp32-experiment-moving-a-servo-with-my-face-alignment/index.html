@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Opencv and esp32 experiment. Moving a servo with my face alignment</title>
+  <meta name="description" content="One saturday morning I was having a breakfast and I discovered face_recognition project. I started to play with the opencv example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Opencv and esp32 experiment. Moving a servo with my face alignment">
+  <meta name="twitter:description" content="One saturday morning I was having a breakfast and I discovered face_recognition project. I started to play with the opencv example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Opencv and esp32 experiment. Moving a servo with my face alignment">
+  <meta property="og:description" content="One saturday morning I was having a breakfast and I discovered face_recognition project. I started to play with the opencv example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617447287703593000">
+  <link rel="canonical" href="/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Opencv and esp32 experiment. Moving a servo with my face alignment | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Opencv and esp32 experiment. Moving a servo with my face alignment" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="One saturday morning I was having a breakfast and I discovered face_recognition project. I started to play with the opencv example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position." />
+<meta property="og:description" content="One saturday morning I was having a breakfast and I discovered face_recognition project. I started to play with the opencv example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position." />
+<link rel="canonical" href="/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/" />
+<meta property="og:url" content="/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-04-09T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Opencv and esp32 experiment. Moving a servo with my face alignment" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/"},"url":"/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"One saturday morning I was having a breakfast and I discovered face_recognition project. I started to play with the opencv example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position.","dateModified":"2018-04-09T00:00:00+02:00","datePublished":"2018-04-09T00:00:00+02:00","headline":"Opencv and esp32 experiment. Moving a servo with my face alignment","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2018-04-09 00:00" class="post-meta__date date">9 Apr 2018</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#arduino">arduino</a>, <a href="/tags/#esp32">esp32</a>, <a href="/tags/#iot">iot</a>, <a href="/tags/#mqtt">mqtt</a>, <a href="/tags/#opencv">opencv</a></span>
+      
+    </div>
+    <h1 class="post-title">Opencv and esp32 experiment. Moving a servo with my face alignment</h1>
+  </header>
+
+  <section class="post">
+    <p>One saturday morning I was having a breakfast and I discovered <a href="https://github.com/ageitgey/face_recognition">face_recognition</a> project. I started to play with the <a href="https://opencv.org/">opencv</a> example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position.</p>
+
+<p>First we have the main python script. With this script I detect my face, the nose tip and the position of my face. With this position I will emit an event to a mqtt broker (a <a href="https://mosquitto.org/">mosquitto</a> server running on my laptop).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">face_recognition</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">paho.mqtt.client</span> <span class="k">as</span> <span class="n">mqtt</span>
+ 
+<span class="n">video_capture</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+ 
+<span class="n">gonzalo_image</span> <span class="o">=</span> <span class="n">face_recognition</span><span class="p">.</span><span class="n">load_image_file</span><span class="p">(</span><span class="s">"gonzalo.png"</span><span class="p">)</span>
+<span class="n">gonzalo_face_encoding</span> <span class="o">=</span> <span class="n">face_recognition</span><span class="p">.</span><span class="n">face_encodings</span><span class="p">(</span><span class="n">gonzalo_image</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+ 
+<span class="n">known_face_encodings</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">gonzalo_face_encoding</span>
+<span class="p">]</span>
+<span class="n">known_face_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">"Gonzalo"</span>
+<span class="p">]</span>
+ 
+<span class="n">RED</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">GREEN</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">BLUE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+ 
+<span class="n">face_locations</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">face_encodings</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">face_names</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">process_this_frame</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">status</span> <span class="o">=</span> <span class="s">''</span>
+<span class="n">labelColor</span> <span class="o">=</span> <span class="n">GREEN</span>
+ 
+<span class="n">client</span> <span class="o">=</span> <span class="n">mqtt</span><span class="p">.</span><span class="n">Client</span><span class="p">()</span>
+<span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">"localhost"</span><span class="p">,</span> <span class="mi">1883</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+ 
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">ret</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">video_capture</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+ 
+    <span class="c1"># Resize frame of video to 1/4 size for faster face recognition processing
+</span>    <span class="n">small_frame</span> <span class="o">=</span> <span class="n">cv2</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">fx</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">fy</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+ 
+    <span class="c1"># Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
+</span>    <span class="n">rgb_small_frame</span> <span class="o">=</span> <span class="n">small_frame</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+ 
+    <span class="n">face_locations</span> <span class="o">=</span> <span class="n">face_recognition</span><span class="p">.</span><span class="n">face_locations</span><span class="p">(</span><span class="n">rgb_small_frame</span><span class="p">)</span>
+    <span class="n">face_encodings</span> <span class="o">=</span> <span class="n">face_recognition</span><span class="p">.</span><span class="n">face_encodings</span><span class="p">(</span><span class="n">rgb_small_frame</span><span class="p">,</span> <span class="n">face_locations</span><span class="p">)</span>
+    <span class="n">face_landmarks_list</span> <span class="o">=</span> <span class="n">face_recognition</span><span class="p">.</span><span class="n">face_landmarks</span><span class="p">(</span><span class="n">rgb_small_frame</span><span class="p">,</span> <span class="n">face_locations</span><span class="p">)</span>
+ 
+    <span class="n">face_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">face_encoding</span><span class="p">,</span> <span class="n">face_landmarks</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">face_encodings</span><span class="p">,</span> <span class="n">face_landmarks_list</span><span class="p">):</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="n">face_recognition</span><span class="p">.</span><span class="n">compare_faces</span><span class="p">(</span><span class="n">known_face_encodings</span><span class="p">,</span> <span class="n">face_encoding</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s">"Unknown"</span>
+ 
+        <span class="k">if</span> <span class="bp">True</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">:</span>
+            <span class="n">first_match_index</span> <span class="o">=</span> <span class="n">matches</span><span class="p">.</span><span class="n">index</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">known_face_names</span><span class="p">[</span><span class="n">first_match_index</span><span class="p">]</span>
+ 
+            <span class="n">nose_tip</span> <span class="o">=</span> <span class="n">face_landmarks</span><span class="p">[</span><span class="s">'nose_tip'</span><span class="p">]</span>
+            <span class="n">maxLandmark</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">nose_tip</span><span class="p">)</span>
+            <span class="n">minLandmark</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">nose_tip</span><span class="p">)</span>
+ 
+            <span class="n">diff</span> <span class="o">=</span> <span class="n">math</span><span class="p">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">maxLandmark</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">minLandmark</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">diff</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="s">"center"</span>
+                <span class="n">labelColor</span> <span class="o">=</span> <span class="n">BLUE</span>
+                <span class="n">client</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="s">"/face/{}/center"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="s">"1"</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">maxLandmark</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">minLandmark</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="s">"&gt;&gt;&gt;&gt;"</span>
+                <span class="n">labelColor</span> <span class="o">=</span> <span class="n">RED</span>
+                <span class="n">client</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="s">"/face/{}/left"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="s">"1"</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="s">"&lt;&lt;&lt;&lt;"</span>
+                <span class="n">client</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="s">"/face/{}/right"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="s">"1"</span><span class="p">)</span>
+                <span class="n">labelColor</span> <span class="o">=</span> <span class="n">RED</span>
+ 
+            <span class="n">shape</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">face_landmarks</span><span class="p">[</span><span class="s">'nose_bridge'</span><span class="p">],</span> <span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="p">.</span><span class="n">polylines</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">[</span><span class="n">shape</span><span class="p">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="mi">4</span><span class="p">],</span> <span class="bp">True</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+            <span class="n">cv2</span><span class="p">.</span><span class="n">fillPoly</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">[</span><span class="n">shape</span><span class="p">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="mi">4</span><span class="p">],</span> <span class="n">GREEN</span><span class="p">)</span>
+ 
+        <span class="n">face_names</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">"{} {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">status</span><span class="p">))</span>
+ 
+    <span class="k">for</span> <span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">bottom</span><span class="p">,</span> <span class="n">left</span><span class="p">),</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">face_locations</span><span class="p">,</span> <span class="n">face_names</span><span class="p">):</span>
+        <span class="c1"># Scale back up face locations since the frame we detected in was scaled to 1/4 size
+</span>        <span class="n">top</span> <span class="o">*=</span> <span class="mi">4</span>
+        <span class="n">right</span> <span class="o">*=</span> <span class="mi">4</span>
+        <span class="n">bottom</span> <span class="o">*=</span> <span class="mi">4</span>
+        <span class="n">left</span> <span class="o">*=</span> <span class="mi">4</span>
+ 
+        <span class="k">if</span> <span class="s">'Unknown'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">name</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">):</span>
+            <span class="n">cv2</span><span class="p">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">),</span> <span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">bottom</span><span class="p">),</span> <span class="n">labelColor</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="p">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">-</span> <span class="mi">35</span><span class="p">),</span> <span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">bottom</span><span class="p">),</span> <span class="n">labelColor</span><span class="p">,</span> <span class="n">cv2</span><span class="p">.</span><span class="n">FILLED</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="p">.</span><span class="n">putText</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="mi">6</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">-</span> <span class="mi">6</span><span class="p">),</span> <span class="n">cv2</span><span class="p">.</span><span class="n">FONT_HERSHEY_DUPLEX</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cv2</span><span class="p">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">),</span> <span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">bottom</span><span class="p">),</span> <span class="n">BLUE</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+ 
+    <span class="n">cv2</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="s">'Video'</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+ 
+    <span class="k">if</span> <span class="n">cv2</span><span class="p">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="o">==</span> <span class="nb">ord</span><span class="p">(</span><span class="s">'q'</span><span class="p">):</span>
+        <span class="k">break</span>
+ 
+<span class="n">video_capture</span><span class="p">.</span><span class="n">release</span><span class="p">()</span>
+<span class="n">cv2</span><span class="p">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Now another Python script will be listening to mqtt events and it will trigger one event with the position of the servo. I know that this second Python script maybe is unnecessary. We can move its logic to esp32 and main opencv script, but I was playing with mqtt and I wanted to decouple it a little bit.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">paho.mqtt.client</span> <span class="k">as</span> <span class="n">mqtt</span>
+ 
+<span class="k">class</span> <span class="nc">Iot</span><span class="p">:</span>
+    <span class="n">_state</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">_client</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'left'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s">'center'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s">'right'</span><span class="p">:</span> <span class="mi">2</span>
+    <span class="p">}</span>
+ 
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+ 
+    <span class="k">def</span> <span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">event</span> <span class="o">!=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_state</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">event</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">_client</span><span class="p">.</span><span class="n">publish</span><span class="p">(</span><span class="s">"/servo"</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">_dict</span><span class="p">[</span><span class="n">event</span><span class="p">])</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"emit /servo envent with value {} - {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">_dict</span><span class="p">[</span><span class="n">event</span><span class="p">],</span> <span class="n">name</span><span class="p">))</span>
+ 
+ 
+<span class="k">def</span> <span class="nf">on_message</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">iot</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">iot</span><span class="p">.</span><span class="n">emit</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+ 
+ 
+<span class="n">client</span> <span class="o">=</span> <span class="n">mqtt</span><span class="p">.</span><span class="n">Client</span><span class="p">()</span>
+<span class="n">iot</span> <span class="o">=</span> <span class="n">Iot</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+ 
+<span class="n">client</span><span class="p">.</span><span class="n">on_connect</span> <span class="o">=</span> <span class="k">lambda</span> <span class="bp">self</span><span class="p">,</span> <span class="n">mosq</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">rc</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="s">"/face/#"</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">on_message</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">on_message</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">topic</span><span class="p">,</span> <span class="n">iot</span><span class="p">)</span>
+ 
+<span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">"localhost"</span><span class="p">,</span> <span class="mi">1883</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">loop_forever</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>And finally the ESP32. Here will connect to my wifi and to my mqtt broker.</p>
+
+<p><img src="/assets/images/20180224_195036_001_jpg.png" alt="" /></p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;WiFi.h&gt;
+#include &lt;PubSubClient.h&gt;
+</span> 
+<span class="cp">#define LED0 17
+#define LED1 18
+#define LED2 19
+#define SERVO_PIN 5
+</span> 
+<span class="c1">// wifi configuration</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">ssid</span> <span class="o">=</span> <span class="s">"my_ssid"</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">password</span> <span class="o">=</span> <span class="s">"my_wifi_password"</span><span class="p">;</span>
+<span class="c1">// mqtt configuration</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">server</span> <span class="o">=</span> <span class="s">"192.168.1.111"</span><span class="p">;</span> <span class="c1">// mqtt broker ip</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">topic</span> <span class="o">=</span> <span class="s">"/servo"</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">clientName</span> <span class="o">=</span> <span class="s">"com.gonzalo123.esp32"</span><span class="p">;</span>
+ 
+<span class="kt">int</span> <span class="n">channel</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">hz</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">depth</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+ 
+<span class="n">WiFiClient</span> <span class="n">wifiClient</span><span class="p">;</span>
+<span class="n">PubSubClient</span> <span class="nf">client</span><span class="p">(</span><span class="n">wifiClient</span><span class="p">);</span>
+ 
+<span class="kt">void</span> <span class="nf">wifiConnect</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Connecting to "</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">ssid</span><span class="p">);</span>
+ 
+  <span class="n">WiFi</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
+ 
+  <span class="k">while</span> <span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">status</span><span class="p">()</span> <span class="o">!=</span> <span class="n">WL_CONNECTED</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"*"</span><span class="p">);</span>
+  <span class="p">}</span>
+ 
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"WiFi connected: "</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">localIP</span><span class="p">());</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">mqttReConnect</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">client</span><span class="p">.</span><span class="n">connected</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Attempting MQTT connection..."</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">clientName</span><span class="p">))</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"connected"</span><span class="p">);</span>
+      <span class="n">client</span><span class="p">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">topic</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"failed, rc="</span><span class="p">);</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">state</span><span class="p">());</span>
+      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" try again in 5 seconds"</span><span class="p">);</span>
+      <span class="n">delay</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">callback</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">topic</span><span class="p">,</span> <span class="n">byte</span><span class="o">*</span> <span class="n">payload</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Message arrived ["</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">topic</span><span class="p">);</span>
+ 
+  <span class="n">String</span> <span class="n">data</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">data</span> <span class="o">+=</span> <span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">payload</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+  <span class="p">}</span>
+ 
+  <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">toInt</span><span class="p">();</span>
+  <span class="n">cleanLeds</span><span class="p">();</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">value</span><span class="p">)</span>  <span class="p">{</span>
+    <span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">ledcWrite</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3400</span><span class="p">);</span>
+      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED0</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="n">ledcWrite</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4900</span><span class="p">);</span>
+      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED1</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="n">ledcWrite</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6400</span><span class="p">);</span>
+      <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED2</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"] value:"</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span> <span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">cleanLeds</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED0</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED1</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED2</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+ 
+  <span class="n">ledcSetup</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">hz</span><span class="p">,</span> <span class="n">depth</span><span class="p">);</span>
+  <span class="n">ledcAttachPin</span><span class="p">(</span><span class="n">SERVO_PIN</span><span class="p">,</span> <span class="n">channel</span><span class="p">);</span>
+ 
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">LED0</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">LED1</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">pinMode</span><span class="p">(</span><span class="n">LED2</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
+  <span class="n">cleanLeds</span><span class="p">();</span>
+  <span class="n">wifiConnect</span><span class="p">();</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">setServer</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="mi">1883</span><span class="p">);</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">setCallback</span><span class="p">(</span><span class="n">callback</span><span class="p">);</span>
+ 
+  <span class="n">delay</span><span class="p">(</span><span class="mi">1500</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">client</span><span class="p">.</span><span class="n">connected</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">mqttReConnect</span><span class="p">();</span>
+  <span class="p">}</span>
+ 
+  <span class="n">client</span><span class="p">.</span><span class="n">loop</span><span class="p">();</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Here a video with the working prototype in action</p>
+
+<p><a href="https://www.youtube.com/watch?v=5WecMaVBF3U"><img src="https://img.youtube.com/vi/5WecMaVBF3U/0.jpg" alt="youtube" /></a></p>
+
+<p>The source code is available in my <a href="https://github.com/gonzalo123/face.iot">github</a> account.</p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Opencv+and+esp32+experiment.+Moving+a+servo+with+my+face+alignment%20%2F2018%2F04%2F09%2Fopencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2018%2F04%2F09%2Fopencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Opencv+and+esp32+experiment.+Moving+a+servo+with+my+face+alignment&url=%2F2018%2F04%2F09%2Fopencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617447287703593000"></script>
+
+
+    </div>
+  </body>
+</html>
