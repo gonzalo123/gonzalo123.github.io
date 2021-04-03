@@ -3,10 +3,10 @@
   <channel>
     <title>Gonzalo Ayuso</title>
     <description>Personal blog since 2008</description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 02 Apr 2021 21:16:39 +0200</pubDate>
-    <lastBuildDate>Fri, 02 Apr 2021 21:16:39 +0200</lastBuildDate>
+    <link>/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Sat, 03 Apr 2021 12:08:46 +0200</pubDate>
+    <lastBuildDate>Sat, 03 Apr 2021 12:08:46 +0200</lastBuildDate>
     <generator>Jekyll v3.9.0</generator>
     
       <item>
@@ -106,8 +106,8 @@
 &lt;p&gt;Full code in my &lt;a href=&quot;https://github.com/gonzalo123/gofswatcher&quot;&gt;github&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 08 Mar 2021 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/2021/03/08/playing-with-go-and-file-system-watchers/</link>
-        <guid isPermaLink="true">http://localhost:4000/2021/03/08/playing-with-go-and-file-system-watchers/</guid>
+        <link>/2021/03/08/playing-with-go-and-file-system-watchers/</link>
+        <guid isPermaLink="true">/2021/03/08/playing-with-go-and-file-system-watchers/</guid>
         
         <category>fswatcher</category>
         
@@ -399,8 +399,8 @@
 &lt;p&gt;Full code in my &lt;a href=&quot;https://github.com/gonzalo123/dbutils&quot;&gt;github&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 15 Feb 2021 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/2021/02/15/database-utils-for-psycopg2/</link>
-        <guid isPermaLink="true">http://localhost:4000/2021/02/15/database-utils-for-psycopg2/</guid>
+        <link>/2021/02/15/database-utils-for-psycopg2/</link>
+        <guid isPermaLink="true">/2021/02/15/database-utils-for-psycopg2/</guid>
         
         <category>postgresql</category>
         
@@ -671,8 +671,8 @@ server {
 &lt;p&gt;Full code in my &lt;a href=&quot;https://github.com/gonzalo123/exchange2queue&quot;&gt;github&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 11 Jan 2021 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/</link>
-        <guid isPermaLink="true">http://localhost:4000/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/</guid>
+        <link>/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/</link>
+        <guid isPermaLink="true">/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/</guid>
         
         <category>docker</category>
         
@@ -749,8 +749,8 @@ server {
 &lt;p&gt;And that’s all. Source code of a boilerplate application in my &lt;a href=&quot;https://github.com/gonzalo123/django-non-root&quot;&gt;github&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 14 Dec 2020 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/2020/12/14/running-python-django-docker-containers-with-non-root-user/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/12/14/running-python-django-docker-containers-with-non-root-user/</guid>
+        <link>/2020/12/14/running-python-django-docker-containers-with-non-root-user/</link>
+        <guid isPermaLink="true">/2020/12/14/running-python-django-docker-containers-with-non-root-user/</guid>
         
         <category>django</category>
         
@@ -874,8 +874,8 @@ server {
 &lt;p&gt;And that’s all. Full source code available &lt;a href=&quot;https://github.com/gonzalo123/threads_circuitbreaker&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 16 Nov 2020 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/2020/11/16/playing-with-python-threads-part-2/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/11/16/playing-with-python-threads-part-2/</guid>
+        <link>/2020/11/16/playing-with-python-threads-part-2/</link>
+        <guid isPermaLink="true">/2020/11/16/playing-with-python-threads-part-2/</guid>
         
         <category>python</category>
         
@@ -998,8 +998,8 @@ server {
 &lt;p&gt;Source code available &lt;a href=&quot;https://github.com/gonzalo123/django-logs-filebeat&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 26 Oct 2020 00:00:00 +0100</pubDate>
-        <link>http://localhost:4000/2020/10/26/django-logs-to-elk-using-filebeat/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/10/26/django-logs-to-elk-using-filebeat/</guid>
+        <link>/2020/10/26/django-logs-to-elk-using-filebeat/</link>
+        <guid isPermaLink="true">/2020/10/26/django-logs-to-elk-using-filebeat/</guid>
         
         <category>django</category>
         
@@ -1140,8 +1140,8 @@ server {
 &lt;p&gt;Full source code in my &lt;a href=&quot;https://github.com/gonzalo123/dont-repeat-password-validator-Django&quot;&gt;github&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 21 Sep 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/2020/09/21/dont-repeat-password-validator-in-django/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/09/21/dont-repeat-password-validator-in-django/</guid>
+        <link>/2020/09/21/dont-repeat-password-validator-in-django/</link>
+        <guid isPermaLink="true">/2020/09/21/dont-repeat-password-validator-in-django/</guid>
         
         <category>django</category>
         
@@ -1363,8 +1363,8 @@ output {
 &lt;p&gt;Source code in my &lt;a href=&quot;https://github.com/gonzalo123/django-logs&quot;&gt;github&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 10 Aug 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/2020/08/10/monitoring-django-applications-with-grafana-and-kibana-using-prometheus-and-elasticsearch/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/08/10/monitoring-django-applications-with-grafana-and-kibana-using-prometheus-and-elasticsearch/</guid>
+        <link>/2020/08/10/monitoring-django-applications-with-grafana-and-kibana-using-prometheus-and-elasticsearch/</link>
+        <guid isPermaLink="true">/2020/08/10/monitoring-django-applications-with-grafana-and-kibana-using-prometheus-and-elasticsearch/</guid>
         
         <category>django</category>
         
@@ -1524,8 +1524,8 @@ REGION=eu-central-1
 &lt;p&gt;Source code in my &lt;a href=&quot;https://github.com/gonzalo123/django-2-ec2&quot;&gt;github&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 06 Jul 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/2020/07/06/deploying-django-application-to-aws-ec2-instance-with-docker/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/07/06/deploying-django-application-to-aws-ec2-instance-with-docker/</guid>
+        <link>/2020/07/06/deploying-django-application-to-aws-ec2-instance-with-docker/</link>
+        <guid isPermaLink="true">/2020/07/06/deploying-django-application-to-aws-ec2-instance-with-docker/</guid>
         
         <category>architecture</category>
         
@@ -1889,8 +1889,8 @@ REGION=eu-central-1
 &lt;p&gt;Source code in my &lt;a href=&quot;https://github.com/gonzalo123/django_reactive_users&quot;&gt;github&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Mon, 01 Jun 2020 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/2020/06/01/django-reactive-users-with-celery-and-channels/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/06/01/django-reactive-users-with-celery-and-channels/</guid>
+        <link>/2020/06/01/django-reactive-users-with-celery-and-channels/</link>
+        <guid isPermaLink="true">/2020/06/01/django-reactive-users-with-celery-and-channels/</guid>
         
         <category>aws</category>
         

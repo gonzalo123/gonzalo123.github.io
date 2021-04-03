@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Monitoring the bandwidth (part 2) now with Python Nameko microservice</title>
+  <meta name="description" content="This days I’ve been playing with Nameko. The Python framework for building microservices. Today I want to upgrade one small pet project that I’ve got in my house to monitor the bandwidth of my internet connection. I want to use one nameko microservice using the Timer entrypoint.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Monitoring the bandwidth (part 2) now with Python Nameko microservice">
+  <meta name="twitter:description" content="This days I’ve been playing with Nameko. The Python framework for building microservices. Today I want to upgrade one small pet project that I’ve got in my house to monitor the bandwidth of my internet connection. I want to use one nameko microservice using the Timer entrypoint.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Monitoring the bandwidth (part 2) now with Python Nameko microservice">
+  <meta property="og:description" content="This days I’ve been playing with Nameko. The Python framework for building microservices. Today I want to upgrade one small pet project that I’ve got in my house to monitor the bandwidth of my internet connection. I want to use one nameko microservice using the Timer entrypoint.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617444526878584000">
+  <link rel="canonical" href="/2019/02/04/monitoring-the-bandwidth-part-2-now-with-python-nameko-microservice/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Monitoring the bandwidth (part 2) now with Python Nameko microservice | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Monitoring the bandwidth (part 2) now with Python Nameko microservice" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This days I’ve been playing with Nameko. The Python framework for building microservices. Today I want to upgrade one small pet project that I’ve got in my house to monitor the bandwidth of my internet connection. I want to use one nameko microservice using the Timer entrypoint." />
+<meta property="og:description" content="This days I’ve been playing with Nameko. The Python framework for building microservices. Today I want to upgrade one small pet project that I’ve got in my house to monitor the bandwidth of my internet connection. I want to use one nameko microservice using the Timer entrypoint." />
+<link rel="canonical" href="/2019/02/04/monitoring-the-bandwidth-part-2-now-with-python-nameko-microservice/" />
+<meta property="og:url" content="/2019/02/04/monitoring-the-bandwidth-part-2-now-with-python-nameko-microservice/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-02-04T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Monitoring the bandwidth (part 2) now with Python Nameko microservice" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2019/02/04/monitoring-the-bandwidth-part-2-now-with-python-nameko-microservice/"},"url":"/2019/02/04/monitoring-the-bandwidth-part-2-now-with-python-nameko-microservice/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"This days I’ve been playing with Nameko. The Python framework for building microservices. Today I want to upgrade one small pet project that I’ve got in my house to monitor the bandwidth of my internet connection. I want to use one nameko microservice using the Timer entrypoint.","dateModified":"2019-02-04T00:00:00+01:00","datePublished":"2019-02-04T00:00:00+01:00","headline":"Monitoring the bandwidth (part 2) now with Python Nameko microservice","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2019-02-04 00:00" class="post-meta__date date">4 Feb 2019</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#python">python</a>, <a href="/tags/#technology">technology</a>, <a href="/tags/#grafana">grafana</a>, <a href="/tags/#microservices">microservices</a>, <a href="/tags/#nameko">nameko</a></span>
+      
+    </div>
+    <h1 class="post-title">Monitoring the bandwidth (part 2) now with Python Nameko microservice</h1>
+  </header>
+
+  <section class="post">
+    <p>This days I’ve been playing with <a href="https://nameko.readthedocs.io/en/stable/">Nameko</a>. The Python framework for building microservices. Today I want to upgrade one small <a href="http://gonzalo123.com/2018/11/26/monitoring-the-bandwidth-with-grafana-influxdb-and-docker/">pet project</a> that I’ve got in my house to monitor the bandwidth of my internet connection. I want to use one nameko microservice using the <a href="https://nameko.readthedocs.io/en/stable/built_in_extensions.html#timer">Timer</a> entrypoint.</p>
+
+<p>That’s the worker:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nameko.timer</span> <span class="kn">import</span> <span class="n">timer</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">speedtest</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">from</span> <span class="nn">influxdb</span> <span class="kn">import</span> <span class="n">InfluxDBClient</span>
+ 
+<span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+<span class="n">load_dotenv</span><span class="p">(</span><span class="n">dotenv_path</span><span class="o">=</span><span class="s">"{}/.env"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">current_dir</span><span class="p">))</span>
+ 
+ 
+<span class="k">class</span> <span class="nc">SpeedService</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">"speed"</span>
+ 
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">influx_client</span> <span class="o">=</span> <span class="n">InfluxDBClient</span><span class="p">(</span>
+            <span class="n">host</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">"INFLUXDB_HOST"</span><span class="p">),</span>
+            <span class="n">port</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">"INFLUXDB_PORT"</span><span class="p">),</span>
+            <span class="n">database</span><span class="o">=</span><span class="n">os</span><span class="p">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">"INFLUXDB_DATABASE"</span><span class="p">)</span>
+        <span class="p">)</span>
+ 
+    <span class="o">@</span><span class="n">timer</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">3600</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">speedTest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"speedTest"</span><span class="p">)</span>
+        <span class="n">current_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">utcnow</span><span class="p">().</span><span class="n">isoformat</span><span class="p">()</span>
+        <span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_speed</span><span class="p">()</span>
+ 
+        <span class="bp">self</span><span class="p">.</span><span class="n">persists</span><span class="p">(</span><span class="n">measurement</span><span class="o">=</span><span class="s">'download'</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">{</span><span class="s">"value"</span><span class="p">:</span> <span class="n">speed</span><span class="p">[</span><span class="s">'download'</span><span class="p">]},</span> <span class="n">time</span><span class="o">=</span><span class="n">current_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">persists</span><span class="p">(</span><span class="n">measurement</span><span class="o">=</span><span class="s">'upload'</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">{</span><span class="s">"value"</span><span class="p">:</span> <span class="n">speed</span><span class="p">[</span><span class="s">'upload'</span><span class="p">]},</span> <span class="n">time</span><span class="o">=</span><span class="n">current_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">persists</span><span class="p">(</span><span class="n">measurement</span><span class="o">=</span><span class="s">'ping'</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">{</span><span class="s">"value"</span><span class="p">:</span> <span class="n">speed</span><span class="p">[</span><span class="s">'ping'</span><span class="p">]},</span> <span class="n">time</span><span class="o">=</span><span class="n">current_time</span><span class="p">)</span>
+ 
+    <span class="k">def</span> <span class="nf">persists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">measurement</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"{} {} {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">measurement</span><span class="p">,</span> <span class="n">fields</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">influx_client</span><span class="p">.</span><span class="n">write_points</span><span class="p">([{</span>
+            <span class="s">"measurement"</span><span class="p">:</span> <span class="n">measurement</span><span class="p">,</span>
+            <span class="s">"time"</span><span class="p">:</span> <span class="n">time</span><span class="p">,</span>
+            <span class="s">"fields"</span><span class="p">:</span> <span class="n">fields</span>
+        <span class="p">}])</span>
+ 
+    <span class="o">@</span><span class="nb">staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_speed</span><span class="p">():</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Calculating speed ..."</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">speedtest</span><span class="p">.</span><span class="n">Speedtest</span><span class="p">()</span>
+        <span class="n">s</span><span class="p">.</span><span class="n">get_best_server</span><span class="p">()</span>
+        <span class="n">s</span><span class="p">.</span><span class="n">download</span><span class="p">()</span>
+        <span class="n">s</span><span class="p">.</span><span class="n">upload</span><span class="p">()</span>
+ 
+        <span class="k">return</span> <span class="n">s</span><span class="p">.</span><span class="n">results</span><span class="p">.</span><span class="nb">dict</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>I need to adapt my docker-compose file to include the RabbitMQ server (Nameko needs a RabbitMQ message broker)</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3'</span>
+ 
+<span class="na">services</span><span class="pi">:</span>
+  <span class="s">speed.worker</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">speed.worker</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">speed/worker</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">./src/speed.worker</span>
+      <span class="na">dockerfile</span><span class="pi">:</span> <span class="s">.docker/Dockerfile-worker</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">/bin/bash run.sh</span>
+  <span class="na">rabbit</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">speed.rabbit</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">rabbitmq:3-management</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">15672:15672"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">5672:5672"</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">RABBITMQ_ERLANG_COOKIE</span><span class="pi">:</span>
+      <span class="na">RABBITMQ_DEFAULT_VHOST</span><span class="pi">:</span> <span class="s">/</span>
+      <span class="na">RABBITMQ_DEFAULT_USER</span><span class="pi">:</span> <span class="s">${RABBITMQ_DEFAULT_USER}</span>
+      <span class="na">RABBITMQ_DEFAULT_PASS</span><span class="pi">:</span> <span class="s">${RABBITMQ_DEFAULT_PASS}</span>
+  <span class="na">influxdb</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">speed.influxdb</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">influxdb:latest</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">environment</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">INFLUXDB_DB=${INFLUXDB_DB}</span>
+    <span class="pi">-</span> <span class="s">INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER}</span>
+    <span class="pi">-</span> <span class="s">INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD}</span>
+    <span class="pi">-</span> <span class="s">INFLUXDB_HTTP_AUTH_ENABLED=${INFLUXDB_HTTP_AUTH_ENABLED}</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">influxdb-data:/data</span>
+  <span class="na">grafana</span><span class="pi">:</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">speed.grafana</span>
+    <span class="na">build</span><span class="pi">:</span>
+      <span class="na">context</span><span class="pi">:</span> <span class="s">./src/grafana</span>
+      <span class="na">dockerfile</span><span class="pi">:</span> <span class="s">.docker/Dockerfile-grafana</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">environment</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}</span>
+    <span class="pi">-</span> <span class="s">GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}</span>
+    <span class="pi">-</span> <span class="s">GF_USERS_DEFAULT_THEME=${GF_USERS_DEFAULT_THEME}</span>
+    <span class="pi">-</span> <span class="s">GF_USERS_ALLOW_SIGN_UP=${GF_USERS_ALLOW_SIGN_UP}</span>
+    <span class="pi">-</span> <span class="s">GF_USERS_ALLOW_ORG_CREATE=${GF_USERS_ALLOW_ORG_CREATE}</span>
+    <span class="pi">-</span> <span class="s">GF_AUTH_ANONYMOUS_ENABLED=${GF_AUTH_ANONYMOUS_ENABLED}</span>
+    <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">3000:3000"</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">influxdb</span>
+<span class="na">volumes</span><span class="pi">:</span>
+  <span class="na">influxdb-data</span><span class="pi">:</span>
+    <span class="na">driver</span><span class="pi">:</span> <span class="s">local</span>
+</code></pre></div></div>
+
+<p>And that’s all. Over engineering to control my Internet Connection? Maybe, but that’s the way I learn new stuff :)</p>
+
+<p>Source code available in my <a href="https://github.com/gonzalo123/speed-nameko">github</a>.</p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Monitoring+the+bandwidth+%28part+2%29+now+with+Python+Nameko+microservice%20%2F2019%2F02%2F04%2Fmonitoring-the-bandwidth-part-2-now-with-python-nameko-microservice%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2019%2F02%2F04%2Fmonitoring-the-bandwidth-part-2-now-with-python-nameko-microservice%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Monitoring+the+bandwidth+%28part+2%29+now+with+Python+Nameko+microservice&url=%2F2019%2F02%2F04%2Fmonitoring-the-bandwidth-part-2-now-with-python-nameko-microservice%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2019/02/04/monitoring-the-bandwidth-part-2-now-with-python-nameko-microservice/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2019/02/04/monitoring-the-bandwidth-part-2-now-with-python-nameko-microservice'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617444526878584000"></script>
+
+
+    </div>
+  </body>
+</html>

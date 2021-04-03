@@ -54,8 +54,8 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="theme-color" content="#ffffff">
   
-  <link rel="stylesheet" href="/css/main.css?1617390999503576000">
-  <link rel="canonical" href="http://localhost:4000/2020/12/14/running-python-django-docker-containers-with-non-root-user/">
+  <link rel="stylesheet" href="/css/main.css?1617444526878584000">
+  <link rel="canonical" href="/2020/12/14/running-python-django-docker-containers-with-non-root-user/">
   <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
   <!-- Begin Jekyll SEO tag v2.7.1 -->
 <title>Running Python/Django docker containers with non-root user | Gonzalo Ayuso</title>
@@ -65,21 +65,22 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Running linux processes as root is not a good idea. One problem or exploit with the process can give to the attacker a root shell. When we run one docker container, especially if this container is in production it shouldn’t be run as root." />
 <meta property="og:description" content="Running linux processes as root is not a good idea. One problem or exploit with the process can give to the attacker a root shell. When we run one docker container, especially if this container is in production it shouldn’t be run as root." />
-<link rel="canonical" href="http://localhost:4000/2020/12/14/running-python-django-docker-containers-with-non-root-user/" />
-<meta property="og:url" content="http://localhost:4000/2020/12/14/running-python-django-docker-containers-with-non-root-user/" />
+<link rel="canonical" href="/2020/12/14/running-python-django-docker-containers-with-non-root-user/" />
+<meta property="og:url" content="/2020/12/14/running-python-django-docker-containers-with-non-root-user/" />
 <meta property="og:site_name" content="Gonzalo Ayuso" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-12-14T00:00:00+01:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Running Python/Django docker containers with non-root user" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/12/14/running-python-django-docker-containers-with-non-root-user/"},"url":"http://localhost:4000/2020/12/14/running-python-django-docker-containers-with-non-root-user/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Running linux processes as root is not a good idea. One problem or exploit with the process can give to the attacker a root shell. When we run one docker container, especially if this container is in production it shouldn’t be run as root.","dateModified":"2020-12-14T00:00:00+01:00","datePublished":"2020-12-14T00:00:00+01:00","headline":"Running Python/Django docker containers with non-root user","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2020/12/14/running-python-django-docker-containers-with-non-root-user/"},"url":"/2020/12/14/running-python-django-docker-containers-with-non-root-user/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Running linux processes as root is not a good idea. One problem or exploit with the process can give to the attacker a root shell. When we run one docker container, especially if this container is in production it shouldn’t be run as root.","dateModified":"2020-12-14T00:00:00+01:00","datePublished":"2020-12-14T00:00:00+01:00","headline":"Running Python/Django docker containers with non-root user","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
 
 
   <body>
+
     <span class="mobile btn-mobile-menu">
   <i class="icon icon-list btn-mobile-menu__icon"></i>
   <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
@@ -280,9 +281,9 @@
   </section>
   <p>
     <div class="page-share">
-  <a href="https://twitter.com/intent/tweet?text=Running+Python%2FDjango+docker+containers+with+non-root+user%20http%3A%2F%2Flocalhost%3A4000%2F2020%2F12%2F14%2Frunning-python-django-docker-containers-with-non-root-user%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2020%2F12%2F14%2Frunning-python-django-docker-containers-with-non-root-user%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
-  <a href="https://reddit.com/submit?title=Running+Python%2FDjango+docker+containers+with+non-root+user&url=http%3A%2F%2Flocalhost%3A4000%2F2020%2F12%2F14%2Frunning-python-django-docker-containers-with-non-root-user%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Running+Python%2FDjango+docker+containers+with+non-root+user%20%2F2020%2F12%2F14%2Frunning-python-django-docker-containers-with-non-root-user%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2020%2F12%2F14%2Frunning-python-django-docker-containers-with-non-root-user%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Running+Python%2FDjango+docker+containers+with+non-root+user&url=%2F2020%2F12%2F14%2Frunning-python-django-docker-containers-with-non-root-user%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
 </div>
 
   </p>
@@ -291,7 +292,7 @@
 
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'http://localhost:4000/2020/12/14/running-python-django-docker-containers-with-non-root-user/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.url = '/2020/12/14/running-python-django-docker-containers-with-non-root-user/';  // Replace PAGE_URL with your page's canonical URL variable
         this.page.identifier = '/2020/12/14/running-python-django-docker-containers-with-non-root-user'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
       };
 
@@ -314,7 +315,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617390999503576000"></script>
+<script type="text/javascript" src="/js/main.js?1617444526878584000"></script>
 
 
     </div>

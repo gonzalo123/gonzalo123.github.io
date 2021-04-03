@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Alexa skill and account linking with serverless and Cognito</title>
+  <meta name="description" content="Sometimes when we’re building one Alexa skill, we need to identify the user. To do that Alexa provides account linking. Basically we need an Oauth2 server to link our account within our Alexa skill. AWS provide us a managed Oauth2 service called Cognito, so we can use use Cognito identity pool to handle the authentication for our Alexa Skills.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Alexa skill and account linking with serverless and Cognito">
+  <meta name="twitter:description" content="Sometimes when we’re building one Alexa skill, we need to identify the user. To do that Alexa provides account linking. Basically we need an Oauth2 server to link our account within our Alexa skill. AWS provide us a managed Oauth2 service called Cognito, so we can use use Cognito identity pool to handle the authentication for our Alexa Skills.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Alexa skill and account linking with serverless and Cognito">
+  <meta property="og:description" content="Sometimes when we’re building one Alexa skill, we need to identify the user. To do that Alexa provides account linking. Basically we need an Oauth2 server to link our account within our Alexa skill. AWS provide us a managed Oauth2 service called Cognito, so we can use use Cognito identity pool to handle the authentication for our Alexa Skills.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617444526878584000">
+  <link rel="canonical" href="/2019/11/25/alexa-skill-and-account-linking-with-serverless-and-cognito/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Alexa skill and account linking with serverless and Cognito | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Alexa skill and account linking with serverless and Cognito" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Sometimes when we’re building one Alexa skill, we need to identify the user. To do that Alexa provides account linking. Basically we need an Oauth2 server to link our account within our Alexa skill. AWS provide us a managed Oauth2 service called Cognito, so we can use use Cognito identity pool to handle the authentication for our Alexa Skills." />
+<meta property="og:description" content="Sometimes when we’re building one Alexa skill, we need to identify the user. To do that Alexa provides account linking. Basically we need an Oauth2 server to link our account within our Alexa skill. AWS provide us a managed Oauth2 service called Cognito, so we can use use Cognito identity pool to handle the authentication for our Alexa Skills." />
+<link rel="canonical" href="/2019/11/25/alexa-skill-and-account-linking-with-serverless-and-cognito/" />
+<meta property="og:url" content="/2019/11/25/alexa-skill-and-account-linking-with-serverless-and-cognito/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-25T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Alexa skill and account linking with serverless and Cognito" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2019/11/25/alexa-skill-and-account-linking-with-serverless-and-cognito/"},"url":"/2019/11/25/alexa-skill-and-account-linking-with-serverless-and-cognito/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Sometimes when we’re building one Alexa skill, we need to identify the user. To do that Alexa provides account linking. Basically we need an Oauth2 server to link our account within our Alexa skill. AWS provide us a managed Oauth2 service called Cognito, so we can use use Cognito identity pool to handle the authentication for our Alexa Skills.","dateModified":"2019-11-25T00:00:00+01:00","datePublished":"2019-11-25T00:00:00+01:00","headline":"Alexa skill and account linking with serverless and Cognito","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2019-11-25 00:00" class="post-meta__date date">25 Nov 2019</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#alexa">alexa</a>, <a href="/tags/#aws">aws</a>, <a href="/tags/#cognito">cognito</a>, <a href="/tags/#js">js</a>, <a href="/tags/#node">node</a></span>
+      
+    </div>
+    <h1 class="post-title">Alexa skill and account linking with serverless and Cognito</h1>
+  </header>
+
+  <section class="post">
+    <p>Sometimes when we’re building one Alexa skill, we need to identify the user. To do that Alexa provides account linking. Basically we need an Oauth2 server to link our account within our Alexa skill. AWS provide us a managed Oauth2 service called Cognito, so we can use use Cognito identity pool to handle the authentication for our Alexa Skills.</p>
+
+<p>In this example I’ve followed the following blog <a href="https://aws.amazon.com/blogs/compute/amazon-cognito-for-alexa-skills-user-management/">post</a>. Cognito is is a bit weird to set up but after following all the steps we can use Account Linking in Alexa skill.</p>
+
+<p>There’s also a good sample skill <a href="https://github.com/alexa/skill-sample-nodejs-linked-profile">here</a>. I’ve studied a little bit this example and create a working prototype by my own, basically to understand the process.</p>
+
+<p>That’s my skill:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Alexa</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">ask-sdk</span><span class="dl">'</span><span class="p">)</span>
+ 
+<span class="kd">const</span> <span class="nx">RequestInterceptor</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./interceptors/RequestInterceptor</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">ResponseInterceptor</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./interceptors/ResponseInterceptor</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">LocalizationInterceptor</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./interceptors/LocalizationInterceptor</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">GetLinkedInfoInterceptor</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./interceptors/GetLinkedInfoInterceptor</span><span class="dl">'</span><span class="p">)</span>
+ 
+<span class="kd">const</span> <span class="nx">LaunchRequestHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/LaunchRequestHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">CheckAccountLinkedHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/CheckAccountLinkedHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">HelloWorldIntentHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/HelloWorldIntentHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">HelpIntentHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/HelpIntentHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">CancelAndStopIntentHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/CancelAndStopIntentHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">SessionEndedRequestHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/SessionEndedRequestHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">FallbackHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/FallbackHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">ErrorHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/ErrorHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">RequestInfoHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/RequestInfoHandler</span><span class="dl">'</span><span class="p">)</span>
+ 
+<span class="kd">let</span> <span class="nx">skill</span>
+ 
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="k">async</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">skill</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">skill</span> <span class="o">=</span> <span class="nx">Alexa</span><span class="p">.</span><span class="nx">SkillBuilders</span><span class="p">.</span><span class="nx">custom</span><span class="p">().</span>
+      <span class="nx">addRequestInterceptors</span><span class="p">(</span>
+        <span class="nx">RequestInterceptor</span><span class="p">,</span>
+        <span class="nx">ResponseInterceptor</span><span class="p">,</span>
+        <span class="nx">LocalizationInterceptor</span><span class="p">,</span>
+        <span class="nx">GetLinkedInfoInterceptor</span>
+      <span class="p">).</span>
+      <span class="nx">addRequestHandlers</span><span class="p">(</span>
+        <span class="nx">LaunchRequestHandler</span><span class="p">,</span>
+        <span class="nx">CheckAccountLinkedHandler</span><span class="p">,</span>
+        <span class="nx">HelloWorldIntentHandler</span><span class="p">,</span>
+        <span class="nx">RequestInfoHandler</span><span class="p">,</span>
+        <span class="nx">HelpIntentHandler</span><span class="p">,</span>
+        <span class="nx">CancelAndStopIntentHandler</span><span class="p">,</span>
+        <span class="nx">SessionEndedRequestHandler</span><span class="p">,</span>
+        <span class="nx">FallbackHandler</span><span class="p">).</span>
+      <span class="nx">addErrorHandlers</span><span class="p">(</span>
+        <span class="nx">ErrorHandler</span><span class="p">).</span>
+      <span class="nx">create</span><span class="p">()</span>
+  <span class="p">}</span>
+ 
+  <span class="k">return</span> <span class="k">await</span> <span class="nx">skill</span><span class="p">.</span><span class="nx">invoke</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The most important thing here is maybe GetLinkedInfoInterceptor.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">log</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../lib/log</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">cognito</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../lib/cognito</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">utils</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../lib/utils</span><span class="dl">'</span><span class="p">)</span>
+ 
+<span class="kd">const</span> <span class="nx">GetLinkedInfoInterceptor</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="k">async</span> <span class="nx">process</span> <span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">utils</span><span class="p">.</span><span class="nx">isAccountLinked</span><span class="p">(</span><span class="nx">handlerInput</span><span class="p">))</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">userData</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">cognito</span><span class="p">.</span><span class="nx">getUserData</span><span class="p">(</span><span class="nx">handlerInput</span><span class="p">.</span><span class="nx">requestEnvelope</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">accessToken</span><span class="p">)</span>
+      <span class="nx">log</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">GetLinkedInfoInterceptor: getUserData: </span><span class="dl">'</span><span class="p">,</span> <span class="nx">userData</span><span class="p">)</span>
+      <span class="kd">const</span> <span class="nx">sessionAttributes</span> <span class="o">=</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">attributesManager</span><span class="p">.</span><span class="nx">getSessionAttributes</span><span class="p">()</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">userData</span><span class="p">.</span><span class="nx">Username</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">sessionAttributes</span><span class="p">.</span><span class="nx">auth</span> <span class="o">=</span> <span class="kc">true</span>
+        <span class="nx">sessionAttributes</span><span class="p">.</span><span class="nx">emailAddress</span> <span class="o">=</span> <span class="nx">cognito</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="nx">userData</span><span class="p">.</span><span class="nx">UserAttributes</span><span class="p">,</span> <span class="dl">'</span><span class="s1">email</span><span class="dl">'</span><span class="p">)</span>
+        <span class="nx">sessionAttributes</span><span class="p">.</span><span class="nx">userName</span> <span class="o">=</span> <span class="nx">userData</span><span class="p">.</span><span class="nx">Username</span>
+        <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">attributesManager</span><span class="p">.</span><span class="nx">setSessionAttributes</span><span class="p">(</span><span class="nx">sessionAttributes</span><span class="p">)</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">sessionAttributes</span><span class="p">.</span><span class="nx">auth</span> <span class="o">=</span> <span class="kc">false</span>
+        <span class="nx">log</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">GetLinkedInfoInterceptor: No user data was found.</span><span class="dl">'</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">GetLinkedInfoInterceptor</span>
+
+</code></pre></div></div>
+
+<p>This interceptor retrieves the user info from cognito when we provide the accessToken. We can obtain the accessToken from session (if our skill is account linked). Then we inject the user information (in my example the email and the username of the Cognito identity pool) into the session.</p>
+
+<p>Then we can create one intent in our request handlers chain called CheckAccountLinkedHandler. With this intent we check if our skill is account linked. If not we can provide ‘withLinkAccountCard’ to force user to login with Cognito and link the skill’s account.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">utils</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../lib/utils</span><span class="dl">'</span><span class="p">)</span>
+ 
+<span class="kd">const</span> <span class="nx">CheckAccountLinkedHandler</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">canHandle</span> <span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">!</span><span class="nx">utils</span><span class="p">.</span><span class="nx">isAccountLinked</span><span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="nx">handle</span> <span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">requestAttributes</span> <span class="o">=</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">attributesManager</span><span class="p">.</span><span class="nx">getRequestAttributes</span><span class="p">()</span>
+    <span class="kd">const</span> <span class="nx">speakOutput</span> <span class="o">=</span> <span class="nx">requestAttributes</span><span class="p">.</span><span class="nx">t</span><span class="p">(</span><span class="dl">'</span><span class="s1">NEED_TO_LINK_MESSAGE</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">SKILL_NAME</span><span class="dl">'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">responseBuilder</span><span class="p">.</span>
+      <span class="nx">speak</span><span class="p">(</span><span class="nx">speakOutput</span><span class="p">).</span>
+      <span class="nx">withLinkAccountCard</span><span class="p">().</span>
+      <span class="nx">getResponse</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">CheckAccountLinkedHandler</span>
+</code></pre></div></div>
+
+<p>Later we can create one intent to give the information to the user of maybe, in another case, perform an authorization workflow</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">RequestInfoHandler</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">canHandle</span> <span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">requestEnvelope</span><span class="p">.</span><span class="nx">request</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">IntentRequest</span><span class="dl">'</span>
+      <span class="o">&amp;&amp;</span> <span class="nx">request</span><span class="p">.</span><span class="nx">intent</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">RequestInfoIntent</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="nx">handle</span> <span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">requestEnvelope</span><span class="p">.</span><span class="nx">request</span>
+    <span class="kd">const</span> <span class="nx">requestAttributes</span> <span class="o">=</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">attributesManager</span><span class="p">.</span><span class="nx">getRequestAttributes</span><span class="p">()</span>
+    <span class="kd">const</span> <span class="nx">sessionAttributes</span> <span class="o">=</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">attributesManager</span><span class="p">.</span><span class="nx">getSessionAttributes</span><span class="p">()</span>
+    <span class="kd">const</span> <span class="nx">repromptOutput</span> <span class="o">=</span> <span class="nx">requestAttributes</span><span class="p">.</span><span class="nx">t</span><span class="p">(</span><span class="dl">'</span><span class="s1">FOLLOW_UP_MESSAGE</span><span class="dl">'</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">cardTitle</span> <span class="o">=</span> <span class="nx">requestAttributes</span><span class="p">.</span><span class="nx">t</span><span class="p">(</span><span class="dl">'</span><span class="s1">SKILL_NAME</span><span class="dl">'</span><span class="p">)</span>
+ 
+    <span class="kd">let</span> <span class="nx">speakOutput</span> <span class="o">=</span> <span class="dl">''</span>
+ 
+    <span class="kd">let</span> <span class="nx">inquiryTypeId</span> <span class="o">=</span> <span class="nx">getResolvedSlotIDValue</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="dl">'</span><span class="s1">infoTypeRequested</span><span class="dl">'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">inquiryTypeId</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">inquiryTypeId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">fullProfile</span><span class="dl">'</span>
+      <span class="nx">speakOutput</span> <span class="o">+=</span> <span class="nx">requestAttributes</span><span class="p">.</span><span class="nx">t</span><span class="p">(</span><span class="dl">'</span><span class="s1">NOT_SURE_OF_TYPE_MESSAGE</span><span class="dl">'</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">inquiryTypeId</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">emailAddress</span><span class="dl">'</span> <span class="o">||</span> <span class="nx">inquiryTypeId</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">fullProfile</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">speakOutput</span> <span class="o">+=</span> <span class="nx">requestAttributes</span><span class="p">.</span><span class="nx">t</span><span class="p">(</span><span class="dl">'</span><span class="s1">REPORT_EMAIL_ADDRESS</span><span class="dl">'</span><span class="p">,</span> <span class="nx">sessionAttributes</span><span class="p">.</span><span class="nx">emailAddress</span><span class="p">)</span>
+      <span class="p">}</span>
+ 
+      <span class="k">if</span> <span class="p">(</span><span class="nx">inquiryTypeId</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">userName</span><span class="dl">'</span> <span class="o">||</span> <span class="nx">inquiryTypeId</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">fullProfile</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">speakOutput</span> <span class="o">+=</span> <span class="nx">requestAttributes</span><span class="p">.</span><span class="nx">t</span><span class="p">(</span><span class="dl">'</span><span class="s1">REPORT_USERNAME</span><span class="dl">'</span><span class="p">,</span> <span class="nx">sessionAttributes</span><span class="p">.</span><span class="nx">userName</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">speakOutput</span> <span class="o">+=</span> <span class="nx">repromptOutput</span>
+ 
+    <span class="k">return</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">responseBuilder</span><span class="p">.</span>
+      <span class="nx">speak</span><span class="p">(</span><span class="nx">speakOutput</span><span class="p">).</span>
+      <span class="nx">reprompt</span><span class="p">(</span><span class="nx">repromptOutput</span><span class="p">).</span>
+      <span class="nx">withSimpleCard</span><span class="p">(</span><span class="nx">cardTitle</span><span class="p">,</span> <span class="nx">speakOutput</span><span class="p">).</span>
+      <span class="nx">getResponse</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">RequestInfoHandler</span>
+</code></pre></div></div>
+
+<p>And basically that’s all. In fact isn’t very different than traditional web authentication. Maybe the most complicated part especially if you’re not used to Oauth2 is to configure Cognito properly.</p>
+
+<p>Here you can see the source code in my <a href="https://github.com/gonzalo123/alexa_cognito">github</a>.</p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Alexa+skill+and+account+linking+with+serverless+and+Cognito%20%2F2019%2F11%2F25%2Falexa-skill-and-account-linking-with-serverless-and-cognito%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2019%2F11%2F25%2Falexa-skill-and-account-linking-with-serverless-and-cognito%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Alexa+skill+and+account+linking+with+serverless+and+Cognito&url=%2F2019%2F11%2F25%2Falexa-skill-and-account-linking-with-serverless-and-cognito%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2019/11/25/alexa-skill-and-account-linking-with-serverless-and-cognito/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2019/11/25/alexa-skill-and-account-linking-with-serverless-and-cognito'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617444526878584000"></script>
+
+
+    </div>
+  </body>
+</html>

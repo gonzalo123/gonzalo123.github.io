@@ -5,7 +5,7 @@ Site: https://gonzalo123.com
 Location: San Sebastián, Spain
 
 /* SITE */
-Last update: 2021/04/02
+Last update: 2021/04/03
 Standards: HTML5, CSS3
 Components: Jekyll
 Software: PyCharm

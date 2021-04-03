@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Using cache buster with OpenUI5 outside SCP</title>
+  <meta name="description" content="When we work with SPAs and web applications we need to handle with the browser’s cache. Sometimes we change our static files but the client’s browser uses a cached version of the file instead of the new one. We can tell the user: Please empty your cache to use the new version. But most of the times the user don’t know what we’re speaking about, and we have a problem. There’s a technique called cache buster used to bypass this issue. It consists on to change the name of the file (or adding an extra parameter), basically to ensure that the browser will send a different request to the server to prevent the browser from reusing the cached version of the file.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Using cache buster with OpenUI5 outside SCP">
+  <meta name="twitter:description" content="When we work with SPAs and web applications we need to handle with the browser’s cache. Sometimes we change our static files but the client’s browser uses a cached version of the file instead of the new one. We can tell the user: Please empty your cache to use the new version. But most of the times the user don’t know what we’re speaking about, and we have a problem. There’s a technique called cache buster used to bypass this issue. It consists on to change the name of the file (or adding an extra parameter), basically to ensure that the browser will send a different request to the server to prevent the browser from reusing the cached version of the file.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Using cache buster with OpenUI5 outside SCP">
+  <meta property="og:description" content="When we work with SPAs and web applications we need to handle with the browser’s cache. Sometimes we change our static files but the client’s browser uses a cached version of the file instead of the new one. We can tell the user: Please empty your cache to use the new version. But most of the times the user don’t know what we’re speaking about, and we have a problem. There’s a technique called cache buster used to bypass this issue. It consists on to change the name of the file (or adding an extra parameter), basically to ensure that the browser will send a different request to the server to prevent the browser from reusing the cached version of the file.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617444526878584000">
+  <link rel="canonical" href="/2019/01/14/using-cache-buster-with-openui5-outside-scp/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Using cache buster with OpenUI5 outside SCP | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Using cache buster with OpenUI5 outside SCP" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="When we work with SPAs and web applications we need to handle with the browser’s cache. Sometimes we change our static files but the client’s browser uses a cached version of the file instead of the new one. We can tell the user: Please empty your cache to use the new version. But most of the times the user don’t know what we’re speaking about, and we have a problem. There’s a technique called cache buster used to bypass this issue. It consists on to change the name of the file (or adding an extra parameter), basically to ensure that the browser will send a different request to the server to prevent the browser from reusing the cached version of the file." />
+<meta property="og:description" content="When we work with SPAs and web applications we need to handle with the browser’s cache. Sometimes we change our static files but the client’s browser uses a cached version of the file instead of the new one. We can tell the user: Please empty your cache to use the new version. But most of the times the user don’t know what we’re speaking about, and we have a problem. There’s a technique called cache buster used to bypass this issue. It consists on to change the name of the file (or adding an extra parameter), basically to ensure that the browser will send a different request to the server to prevent the browser from reusing the cached version of the file." />
+<link rel="canonical" href="/2019/01/14/using-cache-buster-with-openui5-outside-scp/" />
+<meta property="og:url" content="/2019/01/14/using-cache-buster-with-openui5-outside-scp/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-01-14T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Using cache buster with OpenUI5 outside SCP" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2019/01/14/using-cache-buster-with-openui5-outside-scp/"},"url":"/2019/01/14/using-cache-buster-with-openui5-outside-scp/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"When we work with SPAs and web applications we need to handle with the browser’s cache. Sometimes we change our static files but the client’s browser uses a cached version of the file instead of the new one. We can tell the user: Please empty your cache to use the new version. But most of the times the user don’t know what we’re speaking about, and we have a problem. There’s a technique called cache buster used to bypass this issue. It consists on to change the name of the file (or adding an extra parameter), basically to ensure that the browser will send a different request to the server to prevent the browser from reusing the cached version of the file.","dateModified":"2019-01-14T00:00:00+01:00","datePublished":"2019-01-14T00:00:00+01:00","headline":"Using cache buster with OpenUI5 outside SCP","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2019-01-14 00:00" class="post-meta__date date">14 Jan 2019</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#cache">cache</a>, <a href="/tags/#grunt">grunt</a>, <a href="/tags/#js">js</a>, <a href="/tags/#openui5">openui5</a>, <a href="/tags/#sap">sap</a>, <a href="/tags/#sap-cloud-platform">sap-cloud-platform</a></span>
+      
+    </div>
+    <h1 class="post-title">Using cache buster with OpenUI5 outside SCP</h1>
+  </header>
+
+  <section class="post">
+    <p>When we work with SPAs and web applications we need to handle with the browser’s cache. Sometimes we change our static files but the client’s browser uses a cached version of the file instead of the new one. We can tell the user: Please empty your cache to use the new version. But most of the times the user don’t know what we’re speaking about, and we have a problem. There’s a technique called cache buster used to bypass this issue. It consists on to change the name of the file (or adding an extra parameter), basically to ensure that the browser will send a different request to the server to prevent the browser from reusing the cached version of the file.</p>
+
+<p>When we work with <a href="https://sapui5.hana.ondemand.com/">sapui5</a> application over <a href="https://cloudplatform.sap.com/index.html">SCP</a>, we only need to use the cachebuster version of sap-ui-core</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">"sap-ui-bootstrap"</span>
+      <span class="na">src=</span><span class="s">"https://sapui5.hana.ondemand.com/resources/sap-ui-cachebuster/sap-ui-core.js"</span>
+      <span class="na">data-sap-ui-libs=</span><span class="s">"sap.m"</span>
+      <span class="na">data-sap-ui-theme=</span><span class="s">"sap_belize"</span>
+      <span class="na">data-sap-ui-compatVersion=</span><span class="s">"edge"</span>
+      <span class="na">data-sap-ui-appCacheBuster=</span><span class="s">""</span>
+      <span class="na">data-sap-ui-preload=</span><span class="s">"async"</span>
+      <span class="na">data-sap-ui-resourceroots=</span><span class="s">'{"app": ""}'</span>
+      <span class="na">data-sap-ui-frameOptions=</span><span class="s">"trusted"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>With this configuration, our framework will use a “cache buster friendly” version of our files and SCP will serve them properly.</p>
+
+<p>For example, when our framework wants the /dist/Component.js file, the browser will request /dist/~1541685070813~/Component.js to the server. And the server will server the file /dist/Component.js. As I said before when we work with SCP, our standard build process automatically takes care about it. It creates a file called sap-ui-cachebuster-info.json where we can find all our files with one kind of hash that our build process changes each time our file is changed.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">Component-dbg.js</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1545316733136</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">Component-preload.js</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1545316733226</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">Component.js</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1541685070813</span><span class="p">,</span>
+  <span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>It works like a charm but I not always use SCP. Sometimes I use <a href="https://openui5.org/">OpenUI5</a> in one nginx server, for example. So cache buster “doesn’t work”. That’s a problem because I need to handle with browser caches again each time we deploy the new version of the application. I wanted to solve the issue. Let me explain how I did it.</p>
+
+<p>Since I was using one Lumen/PHP server to the backend, my first idea was to create a dynamic route in Lumen to handle cache-buster urls. With this approach I know I can solve the problem but there’s something that I did not like: I’ll use a dynamic server to serve static content. I don’t have a huge traffic. I can use this approach but it isn’t beautiful.</p>
+
+<p>My second approach was: Ok I’ve got a sap-ui-cachebuster-info.json file where I can see all the files that cache buster will use and their hashes. So, Why not I create those files in my build script. With this approach I will create the full static structure each time I deploy de application, without needing any server side scripting language to generate dynamic content. OpenUI5 uses grunt so I can create a simple grunt task to create my files.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+ 
+<span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">fs</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">chalk</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">chalk</span><span class="dl">'</span><span class="p">);</span>
+ 
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">grunt</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">cacheBuster</span><span class="dl">'</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">info</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Generates Cache buster files</span><span class="dl">'</span><span class="p">;</span>
+ 
+  <span class="kd">var</span> <span class="nx">cacheBuster</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">grunt</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">t</span><span class="p">,</span> <span class="nx">src</span><span class="p">,</span> <span class="nx">dest</span><span class="p">,</span> <span class="nx">dir</span><span class="p">,</span> <span class="nx">prop</span><span class="p">;</span>
+ 
+    <span class="nx">data</span> <span class="o">=</span> <span class="nx">grunt</span><span class="p">.</span><span class="nx">file</span><span class="p">.</span><span class="nx">readJSON</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">src</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">/sap-ui-cachebuster-info.json</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nx">prop</span> <span class="k">in</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">t</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
+        <span class="nx">src</span> <span class="o">=</span> <span class="nx">config</span><span class="p">.</span><span class="nx">src</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">prop</span><span class="p">;</span>
+        <span class="nx">dest</span> <span class="o">=</span> <span class="nx">config</span><span class="p">.</span><span class="nx">src</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">/~</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">t</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">~/</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">prop</span><span class="p">;</span>
+        <span class="nx">grunt</span><span class="p">.</span><span class="nx">verbose</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span>
+            <span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">chalk</span><span class="p">.</span><span class="nx">cyan</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">src</span><span class="p">))</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> to </span><span class="dl">'</span> <span class="o">+</span>
+            <span class="nx">chalk</span><span class="p">.</span><span class="nx">cyan</span><span class="p">(</span><span class="nx">dest</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">.</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">dir</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">dest</span><span class="p">);</span>
+        <span class="nx">grunt</span><span class="p">.</span><span class="nx">file</span><span class="p">.</span><span class="nx">mkdir</span><span class="p">(</span><span class="nx">dir</span><span class="p">);</span>
+        <span class="nx">fs</span><span class="p">.</span><span class="nx">copyFileSync</span><span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">dest</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+ 
+  <span class="nx">grunt</span><span class="p">.</span><span class="nx">registerMultiTask</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">info</span><span class="p">,</span> <span class="nx">cacheBuster</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>I deploy my grunt task to npm so when I need to use it I only need to:</p>
+
+<p>Install the task</p>
+
+<blockquote>
+  <p>npm install gonzalo123-cachebuster</p>
+</blockquote>
+
+<p>Add the task to my gruntfile</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">gonzalo123-cachebuster</span><span class="dl">'</span><span class="p">)(</span><span class="nx">grunt</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>and set up the path where ui5 task generates our dist files</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">grunt</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">merge</span><span class="p">({</span>
+  <span class="na">pkg</span><span class="p">:</span> <span class="nx">grunt</span><span class="p">.</span><span class="nx">file</span><span class="p">.</span><span class="nx">readJSON</span><span class="p">(</span><span class="dl">'</span><span class="s1">package.json</span><span class="dl">'</span><span class="p">),</span>
+  <span class="p">...</span>
+  <span class="na">cacheBuster</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">src</span><span class="p">:</span> <span class="dl">'</span><span class="s1">dist</span><span class="dl">'</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>And that’s all. My users with enjoy (or suffer) the new versions of my applications without having problems with cached files.</p>
+
+<p>Grunt task available in my <a href="https://github.com/gonzalo123/cachebuster">github</a></p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Using+cache+buster+with+OpenUI5+outside+SCP%20%2F2019%2F01%2F14%2Fusing-cache-buster-with-openui5-outside-scp%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2019%2F01%2F14%2Fusing-cache-buster-with-openui5-outside-scp%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Using+cache+buster+with+OpenUI5+outside+SCP&url=%2F2019%2F01%2F14%2Fusing-cache-buster-with-openui5-outside-scp%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2019/01/14/using-cache-buster-with-openui5-outside-scp/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2019/01/14/using-cache-buster-with-openui5-outside-scp'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617444526878584000"></script>
+
+
+    </div>
+  </body>
+</html>

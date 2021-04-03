@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Alexa skill example with Serverless framework</title>
+  <meta name="description" content="Today I want to play with Alexa and serverless framework. I’ve created a sample hello world skill. In fact this example is more or less the official hello-world sample.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Alexa skill example with Serverless framework">
+  <meta name="twitter:description" content="Today I want to play with Alexa and serverless framework. I’ve created a sample hello world skill. In fact this example is more or less the official hello-world sample.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Alexa skill example with Serverless framework">
+  <meta property="og:description" content="Today I want to play with Alexa and serverless framework. I’ve created a sample hello world skill. In fact this example is more or less the official hello-world sample.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617444526878584000">
+  <link rel="canonical" href="/2019/09/02/alexa-skill-example-with-serverless-framework/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Alexa skill example with Serverless framework | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Alexa skill example with Serverless framework" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Today I want to play with Alexa and serverless framework. I’ve created a sample hello world skill. In fact this example is more or less the official hello-world sample." />
+<meta property="og:description" content="Today I want to play with Alexa and serverless framework. I’ve created a sample hello world skill. In fact this example is more or less the official hello-world sample." />
+<link rel="canonical" href="/2019/09/02/alexa-skill-example-with-serverless-framework/" />
+<meta property="og:url" content="/2019/09/02/alexa-skill-example-with-serverless-framework/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-09-02T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Alexa skill example with Serverless framework" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2019/09/02/alexa-skill-example-with-serverless-framework/"},"url":"/2019/09/02/alexa-skill-example-with-serverless-framework/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Today I want to play with Alexa and serverless framework. I’ve created a sample hello world skill. In fact this example is more or less the official hello-world sample.","dateModified":"2019-09-02T00:00:00+02:00","datePublished":"2019-09-02T00:00:00+02:00","headline":"Alexa skill example with Serverless framework","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2019-09-02 00:00" class="post-meta__date date">2 Sep 2019</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#js">js</a>, <a href="/tags/#technology">technology</a>, <a href="/tags/#alexa">alexa</a>, <a href="/tags/#nodejs">nodejs</a>, <a href="/tags/#serverless">serverless</a>, <a href="/tags/#voice">voice</a></span>
+      
+    </div>
+    <h1 class="post-title">Alexa skill example with Serverless framework</h1>
+  </header>
+
+  <section class="post">
+    <p>Today I want to play with Alexa and <a href="https://serverless.com/">serverless framework</a>. I’ve created a sample hello world skill. In fact this example is more or less the official hello-world <a href="https://github.com/alexa/skill-sample-nodejs-hello-world">sample</a>.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Alexa</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">ask-sdk-core</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">RequestInterceptor</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./interceptors/RequestInterceptor</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">ResponseInterceptor</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./interceptors/ResponseInterceptor</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">LaunchRequestHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/LaunchRequestHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">HelloWorldIntentHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/HelloWorldIntentHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">HelpIntentHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/HelpIntentHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">CancelAndStopIntentHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/CancelAndStopIntentHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">SessionEndedRequestHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/SessionEndedRequestHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">FallbackHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/FallbackHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">ErrorHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/ErrorHandler</span><span class="dl">'</span><span class="p">)</span>
+ 
+<span class="kd">let</span> <span class="nx">skill</span>
+ 
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="k">async</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">skill</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">skill</span> <span class="o">=</span> <span class="nx">Alexa</span><span class="p">.</span><span class="nx">SkillBuilders</span><span class="p">.</span><span class="nx">custom</span><span class="p">().</span>
+      <span class="nx">addRequestInterceptors</span><span class="p">(</span><span class="nx">RequestInterceptor</span><span class="p">).</span>
+      <span class="nx">addResponseInterceptors</span><span class="p">(</span><span class="nx">ResponseInterceptor</span><span class="p">).</span>
+      <span class="nx">addRequestHandlers</span><span class="p">(</span>
+        <span class="nx">LaunchRequestHandler</span><span class="p">,</span>
+        <span class="nx">HelloWorldIntentHandler</span><span class="p">,</span>
+        <span class="nx">HelpIntentHandler</span><span class="p">,</span>
+        <span class="nx">CancelAndStopIntentHandler</span><span class="p">,</span>
+        <span class="nx">SessionEndedRequestHandler</span><span class="p">,</span>
+        <span class="nx">FallbackHandler</span><span class="p">).</span>
+      <span class="nx">addErrorHandlers</span><span class="p">(</span>
+        <span class="nx">ErrorHandler</span><span class="p">).</span>
+      <span class="nx">create</span><span class="p">()</span>
+  <span class="p">}</span>
+ 
+  <span class="k">return</span> <span class="k">await</span> <span class="nx">skill</span><span class="p">.</span><span class="nx">invoke</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>It has one Intent that answers to hello command.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">HelloWorldIntentHandler</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">canHandle</span> <span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">requestEnvelope</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">IntentRequest</span><span class="dl">'</span>
+      <span class="o">&amp;&amp;</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">requestEnvelope</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">intent</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">HelloWorldIntent</span><span class="dl">'</span>
+  <span class="p">},</span>
+  <span class="nx">handle</span> <span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">speechOutput</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Hello World</span><span class="dl">'</span>
+    <span class="kd">const</span> <span class="nx">cardTitle</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Hello world</span><span class="dl">'</span>
+ 
+    <span class="k">return</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">responseBuilder</span><span class="p">.</span>
+      <span class="nx">speak</span><span class="p">(</span><span class="nx">speechOutput</span><span class="p">).</span>
+      <span class="nx">reprompt</span><span class="p">(</span><span class="nx">speechOutput</span><span class="p">).</span>
+      <span class="nx">withSimpleCard</span><span class="p">(</span><span class="nx">cardTitle</span><span class="p">,</span> <span class="nx">speechOutput</span><span class="p">).</span>
+      <span class="nx">getResponse</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">HelloWorldIntentHandler</span>
+
+</code></pre></div></div>
+
+<p>I’m using <a href="https://serverless.com/">Serverless</a> framework to deploy the skill. I know that serverless frameworks has plugins for Alexa skills that help us to create the whole skill, but in this example I want to do it a little more manually (it’s the way that I learn new things).</p>
+
+<p>First I create the skill in the Alexa developer console (or via ask cli). There’re a lot of tutorials about it. Then I take my alexaSkillId and I use this id within my serverless config file as the trigger event of my lambda function.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">service</span><span class="pi">:</span> <span class="s">hello-world</span>
+ 
+<span class="na">provider</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">aws</span>
+  <span class="na">runtime</span><span class="pi">:</span> <span class="s">nodejs8.10</span>
+  <span class="na">region</span><span class="pi">:</span> <span class="s">${opt:region, self:custom.defaultRegion}</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">${opt:stage, self:custom.defaultStage}</span>
+ 
+<span class="na">custom</span><span class="pi">:</span>
+  <span class="na">defaultRegion</span><span class="pi">:</span> <span class="s">eu-west-1</span>
+  <span class="na">defaultStage</span><span class="pi">:</span> <span class="s">prod</span>
+ 
+<span class="na">functions</span><span class="pi">:</span>
+  <span class="na">info</span><span class="pi">:</span>
+    <span class="na">handler</span><span class="pi">:</span> <span class="s">src/index.handler</span>
+    <span class="na">events</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">alexaSkill</span><span class="pi">:</span> <span class="s">amzn1.ask.skill.my_skill</span>
+</code></pre></div></div>
+
+<p>then I deploy the lambda function</p>
+
+<blockquote>
+  <p>npx serverless deploy –aws-s3-accelerate</p>
+</blockquote>
+
+<p>And I take the ARN of the lambda function and I use this lambda as my endpoint in the Alexa developer console.</p>
+
+<p>Also we can test our skill (at least the lambda function) using our favorite testing framework. I will use jest in this example. Testing is very important, at least for me, when I’m working with lambdas and serverless. I want to test my script locally, instead of deploying to AWS again and again (it’s slow).</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">when</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./steps/when</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">init</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./steps/init</span><span class="dl">'</span><span class="p">)</span>
+ 
+<span class="nx">describe</span><span class="p">(</span><span class="dl">'</span><span class="s1">When we invoke the skill</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">beforeAll</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">init</span><span class="p">()</span>
+  <span class="p">})</span>
+ 
+  <span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">launch intent</span><span class="dl">'</span><span class="p">,</span> <span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">when</span><span class="p">.</span><span class="nx">we_invoke_intent</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./events/use_skill</span><span class="dl">'</span><span class="p">))</span>
+    <span class="kd">const</span> <span class="nx">card</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">card</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">card</span><span class="p">.</span><span class="nx">title</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello world</span><span class="dl">'</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">card</span><span class="p">.</span><span class="nx">content</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Welcome to Hello world, you can say Hello or Help. Which would you like to try?</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">})</span>
+ 
+  <span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">help handler</span><span class="dl">'</span><span class="p">,</span> <span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">when</span><span class="p">.</span><span class="nx">we_invoke_intent</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./events/help_handler</span><span class="dl">'</span><span class="p">))</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">outputSpeech</span><span class="p">.</span><span class="nx">ssml</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">outputSpeech</span><span class="p">.</span><span class="nx">ssml</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;speak&gt;You can say hello to me! How can I help?&lt;/speak&gt;</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">})</span>
+ 
+  <span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello world handler</span><span class="dl">'</span><span class="p">,</span> <span class="k">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">when</span><span class="p">.</span><span class="nx">we_invoke_intent</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./events/hello_world_handler</span><span class="dl">'</span><span class="p">))</span>
+    <span class="kd">const</span> <span class="nx">card</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">card</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">card</span><span class="p">.</span><span class="nx">title</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello world</span><span class="dl">'</span><span class="p">)</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">card</span><span class="p">.</span><span class="nx">content</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello World</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">})</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>Full code in my <a href="https://github.com/gonzalo123/alexa.serverless">github</a> account.</p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Alexa+skill+example+with+Serverless+framework%20%2F2019%2F09%2F02%2Falexa-skill-example-with-serverless-framework%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2019%2F09%2F02%2Falexa-skill-example-with-serverless-framework%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Alexa+skill+example+with+Serverless+framework&url=%2F2019%2F09%2F02%2Falexa-skill-example-with-serverless-framework%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2019/09/02/alexa-skill-example-with-serverless-framework/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2019/09/02/alexa-skill-example-with-serverless-framework'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617444526878584000"></script>
+
+
+    </div>
+  </body>
+</html>

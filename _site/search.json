@@ -1,0 +1,513 @@
+[
+  
+    {
+
+      "title"    : "Playing with Go and file system watchers",
+      "url"      : "/2021/03/08/playing-with-go-and-file-system-watchers/",
+      "category" : "",
+      "tags"     : "fswatcher, go, rabbitmq",
+      "date"     : "2021-03-08 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Database utils for psycopg2",
+      "url"      : "/2021/02/15/database-utils-for-psycopg2/",
+      "category" : "",
+      "tags"     : "postgresql, python",
+      "date"     : "2021-02-15 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with RabbitMQ, Python and Docker. From Exchanges to Queues",
+      "url"      : "/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/",
+      "category" : "",
+      "tags"     : "docker, python, rabbitmq",
+      "date"     : "2021-01-11 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Running Python/Django docker containers with non-root user",
+      "url"      : "/2020/12/14/running-python-django-docker-containers-with-non-root-user/",
+      "category" : "",
+      "tags"     : "django, docker, python",
+      "date"     : "2020-12-14 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with Python threads. Part 2",
+      "url"      : "/2020/11/16/playing-with-python-threads-part-2/",
+      "category" : "",
+      "tags"     : "python, threads",
+      "date"     : "2020-11-16 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Django logs to ELK using Filebeat",
+      "url"      : "/2020/10/26/django-logs-to-elk-using-filebeat/",
+      "category" : "",
+      "tags"     : "django, elk, python",
+      "date"     : "2020-10-26 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Don&#39;t repeat password validator in Django",
+      "url"      : "/2020/09/21/dont-repeat-password-validator-in-django/",
+      "category" : "",
+      "tags"     : "django, python",
+      "date"     : "2020-09-21 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Monitoring Django applications with Grafana and Kibana using Prometheus and Elasticsearch",
+      "url"      : "/2020/08/10/monitoring-django-applications-with-grafana-and-kibana-using-prometheus-and-elasticsearch/",
+      "category" : "",
+      "tags"     : "django, elasticsearch, elk, grafana, kibana, prometheus, python",
+      "date"     : "2020-08-10 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Deploying Django application to AWS EC2 instance with Docker",
+      "url"      : "/2020/07/06/deploying-django-application-to-aws-ec2-instance-with-docker/",
+      "category" : "",
+      "tags"     : "architecture, aws, cloud, django, docker, ec2, python",
+      "date"     : "2020-07-06 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Django reactive users with Celery and Channels",
+      "url"      : "/2020/06/01/django-reactive-users-with-celery-and-channels/",
+      "category" : "",
+      "tags"     : "aws, celery, channels, django, python, websockets",
+      "date"     : "2020-06-01 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building real time Python applications with Django Channels, Docker and Kubernetes",
+      "url"      : "/2020/05/04/real-time-python-applications-with-django-channels-docker-and-kubernetes/",
+      "category" : "",
+      "tags"     : "channels, django, docker, k8s, python, websockets, ws",
+      "date"     : "2020-05-04 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Deploying Python Application using Docker and Kubernetes",
+      "url"      : "/2020/04/20/deploying-python-application-using-docker-and-kubernetes/",
+      "category" : "",
+      "tags"     : "devops, flask, k8s, kubernetes",
+      "date"     : "2020-04-20 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building Bluetooth iot devices compatible with Alexa",
+      "url"      : "/2020/03/30/building-bluetooth-iot-devices-compatible-with-alexa/",
+      "category" : "",
+      "tags"     : "alexa, arduino, bluetooth, iot",
+      "date"     : "2020-03-30 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Alexa and Raspberry Pi demo (Part 2). Listening to external events",
+      "url"      : "/2020/01/13/alexa-and-raspberry-pi-demo-part-2-listening-to-external-events/",
+      "category" : "",
+      "tags"     : "alexa, arduino, esp32, iot, javascript, raspberry-pi",
+      "date"     : "2020-01-13 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Alexa and Raspberry Pi demo",
+      "url"      : "/2019/12/16/alexa-and-raspberry-pi-demo/",
+      "category" : "",
+      "tags"     : "alexa, iot, javascrip, python, rpi",
+      "date"     : "2019-12-16 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Alexa skill and account linking with serverless and Cognito",
+      "url"      : "/2019/11/25/alexa-skill-and-account-linking-with-serverless-and-cognito/",
+      "category" : "",
+      "tags"     : "alexa, aws, cognito, js, node",
+      "date"     : "2019-11-25 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with threads and Python. Part 2",
+      "url"      : "/2019/10/07/playing-with-threads-and-python-part-2/",
+      "category" : "",
+      "tags"     : "python, technology, rabbitmq, threads",
+      "date"     : "2019-10-07 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Alexa skill example with Serverless framework",
+      "url"      : "/2019/09/02/alexa-skill-example-with-serverless-framework/",
+      "category" : "",
+      "tags"     : "js, technology, alexa, nodejs, serverless, voice",
+      "date"     : "2019-09-02 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with threads and Python",
+      "url"      : "/2019/08/19/playing-with-threads-and-python/",
+      "category" : "",
+      "tags"     : "python, technology, threads",
+      "date"     : "2019-08-19 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with TOTP (2FA) and mobile applications with ionic",
+      "url"      : "/2019/07/22/playing-with-totp-2fa-and-mobile-applications-with-ionic/",
+      "category" : "",
+      "tags"     : "js, python, technology, 2fa, flask, ionic, totp",
+      "date"     : "2019-07-22 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "PHP/Lumen data source for Grafana",
+      "url"      : "/2019/06/10/php-lumen-data-source-for-grafana/",
+      "category" : "",
+      "tags"     : "php, technology, grafana, laravel, lumen",
+      "date"     : "2019-06-10 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with lambda, serverless and Python",
+      "url"      : "/2019/05/27/playing-with-lambda-serverless-and-python/",
+      "category" : "",
+      "tags"     : "aws, cloud, python, lambda, serveless",
+      "date"     : "2019-05-27 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Data Analysis with Python. Pivot tables with Pandas",
+      "url"      : "/2019/03/11/data-analysis-with-python-pivot-tables-with-pandas/",
+      "category" : "",
+      "tags"     : "python, technology, data-analysis, jupyter, notebook, numpy, pandas, pivot-tables",
+      "date"     : "2019-03-11 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Monitoring the bandwidth (part 2) now with Python Nameko microservice",
+      "url"      : "/2019/02/04/monitoring-the-bandwidth-part-2-now-with-python-nameko-microservice/",
+      "category" : "",
+      "tags"     : "python, technology, grafana, microservices, nameko",
+      "date"     : "2019-02-04 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Using cache buster with OpenUI5 outside SCP",
+      "url"      : "/2019/01/14/using-cache-buster-with-openui5-outside-scp/",
+      "category" : "",
+      "tags"     : "cache, grunt, js, openui5, sap, sap-cloud-platform",
+      "date"     : "2019-01-14 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Pivot tables in PHP",
+      "url"      : "/2010/01/24/pivot-tables-in-php/",
+      "category" : "",
+      "tags"     : "php, technology",
+      "date"     : "2010-01-24 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Clean way to call to multiple xmlrpc remote servers",
+      "url"      : "/2009/12/31/calling-to-multiple-xmlrpc-remote-servers-in-a-clean-way/",
+      "category" : "",
+      "tags"     : "php, technology, web-development",
+      "date"     : "2009-12-31 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Jugando con FriendFeed y Appengine: tv-sms.appspot.com",
+      "url"      : "/2009/12/30/jugando-con-friendfeed-y-appengine-tv-sms-appspot-com/",
+      "category" : "",
+      "tags"     : "appengine, web-development, webdev",
+      "date"     : "2009-12-30 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Things I miss in PHP: Function decorators",
+      "url"      : "/2009/12/09/things-i-miss-in-php-function-decorators/",
+      "category" : "",
+      "tags"     : "php",
+      "date"     : "2009-12-09 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "An idea for calling PostgreSQL&#39;s stored procedures with PDO",
+      "url"      : "/2009/12/08/an-idea-for-calling-postgresqls-stored-procedures-with-pdo/",
+      "category" : "",
+      "tags"     : "php, web-development",
+      "date"     : "2009-12-08 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Should we use our own frameworks in a production system?",
+      "url"      : "/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/",
+      "category" : "",
+      "tags"     : "php, web-development",
+      "date"     : "2009-12-07 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Moving singleton and factory patterns to Abstract with php 5.3",
+      "url"      : "/2009/12/07/moving-singleton-and-factory-patterns-to-abstract-with-php-5-3/",
+      "category" : "",
+      "tags"     : "php, web-development",
+      "date"     : "2009-12-07 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Soy rico",
+      "url"      : "/2009/09/09/soyrico/",
+      "category" : "",
+      "tags"     : "personal",
+      "date"     : "2009-09-09 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "antivirus",
+      "url"      : "/2009/07/30/antivirus/",
+      "category" : "",
+      "tags"     : "personal",
+      "date"     : "2009-07-30 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Server side web frameworks are dead",
+      "url"      : "/2009/05/08/server-side-web-frameworks-are-dead/",
+      "category" : "",
+      "tags"     : "php, web-development",
+      "date"     : "2009-05-08 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Speed up page load with asynchronous javascript",
+      "url"      : "/2009/04/18/speed-up-page-load-with-asynchronous-javascript/",
+      "category" : "",
+      "tags"     : "technology, web-development",
+      "date"     : "2009-04-18 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "mixin dojo and google api libraries",
+      "url"      : "/2009/04/18/mixin-dojo-and-google-api-libraries/",
+      "category" : "",
+      "tags"     : "dojo, technology, web-development",
+      "date"     : "2009-04-18 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "fetching book cover with google API and dojo",
+      "url"      : "/2009/04/10/fetching-book-cover-with-google-api-and-dojo/",
+      "category" : "",
+      "tags"     : "dojo, technology, web-development",
+      "date"     : "2009-04-10 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Consuming external javascript services with Dojo",
+      "url"      : "/2009/04/10/consuming-external-javascript-services-with-dojo/",
+      "category" : "",
+      "tags"     : "dojo, technology, web-development",
+      "date"     : "2009-04-10 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "virus letal",
+      "url"      : "/2009/03/29/virus-letal/",
+      "category" : "",
+      "tags"     : "personal",
+      "date"     : "2009-03-29 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "killall firefox-bin",
+      "url"      : "/2009/03/23/killall-firefox-bin/",
+      "category" : "",
+      "tags"     : "technology, web-development",
+      "date"     : "2009-03-23 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "dojo.hitch",
+      "url"      : "/2009/03/15/dojohitch/",
+      "category" : "",
+      "tags"     : "dojo, technology, web-development",
+      "date"     : "2009-03-15 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "nslu2 installation",
+      "url"      : "/2009/03/07/nslu2-installation/",
+      "category" : "",
+      "tags"     : "linux, technology",
+      "date"     : "2009-03-07 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Dojo and custom widgets",
+      "url"      : "/2009/02/15/dojo-and-custom-widgets/",
+      "category" : "",
+      "tags"     : "",
+      "date"     : "2009-02-15 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Dojo series",
+      "url"      : "/2009/02/10/dojo-series/",
+      "category" : "",
+      "tags"     : "dojo, web-development",
+      "date"     : "2009-02-10 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Cambio de Blog",
+      "url"      : "/2009/01/22/3/",
+      "category" : "",
+      "tags"     : "personal",
+      "date"     : "2009-01-22 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "JSONP. JSON with Padding",
+      "url"      : "/2009/01/20/jsonp-json-with-padding/",
+      "category" : "",
+      "tags"     : "web-development",
+      "date"     : "2009-01-20 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Bagera...",
+      "url"      : "/2009/01/20/bagera/",
+      "category" : "",
+      "tags"     : "personal",
+      "date"     : "2009-01-20 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Adding my blog&#39;s feed to my personal site",
+      "url"      : "/2009/01/19/adding-my-blogs-feed-to-my-personal-site/",
+      "category" : "",
+      "tags"     : "web-development",
+      "date"     : "2009-01-19 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Como saber que Host tengo en mi red",
+      "url"      : "/2008/04/05/como-saber-que-host-tengo-en-mi-red/",
+      "category" : "",
+      "tags"     : "linux",
+      "date"     : "2008-04-05 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Detectar movimiento con Linksys WVC54GC",
+      "url"      : "/2008/03/23/detectar-movimiento-con-linksys-wvc54gc/",
+      "category" : "",
+      "tags"     : "linux",
+      "date"     : "2008-03-23 00:00:00 +0100"
+
+    } 
+  
+]

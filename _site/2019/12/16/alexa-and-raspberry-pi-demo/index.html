@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Alexa and Raspberry Pi demo</title>
+  <meta name="description" content="We’re keeping on playing with Alexa. This time I want to create one skill that uses a compatible device (for example one Raspberry Pi 3). Here you can see the documentation and examples that the people of Alexa provides us. Basically we need to create a new Product/Alexa gadget in the console. It gives us one amazonId and alexaGadgetSecret.
+
+">
+  <meta name="author" content="Gonzalo Ayuso">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Alexa and Raspberry Pi demo">
+  <meta name="twitter:description" content="We’re keeping on playing with Alexa. This time I want to create one skill that uses a compatible device (for example one Raspberry Pi 3). Here you can see the documentation and examples that the people of Alexa provides us. Basically we need to create a new Product/Alexa gadget in the console. It gives us one amazonId and alexaGadgetSecret.
+
+">
+  
+  <meta name="twitter:creator" content="gonzalo123">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Alexa and Raspberry Pi demo">
+  <meta property="og:description" content="We’re keeping on playing with Alexa. This time I want to create one skill that uses a compatible device (for example one Raspberry Pi 3). Here you can see the documentation and examples that the people of Alexa provides us. Basically we need to create a new Product/Alexa gadget in the console. It gives us one amazonId and alexaGadgetSecret.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1617444526878584000">
+  <link rel="canonical" href="/2019/12/16/alexa-and-raspberry-pi-demo/">
+  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Alexa and Raspberry Pi demo | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Alexa and Raspberry Pi demo" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="We’re keeping on playing with Alexa. This time I want to create one skill that uses a compatible device (for example one Raspberry Pi 3). Here you can see the documentation and examples that the people of Alexa provides us. Basically we need to create a new Product/Alexa gadget in the console. It gives us one amazonId and alexaGadgetSecret." />
+<meta property="og:description" content="We’re keeping on playing with Alexa. This time I want to create one skill that uses a compatible device (for example one Raspberry Pi 3). Here you can see the documentation and examples that the people of Alexa provides us. Basically we need to create a new Product/Alexa gadget in the console. It gives us one amazonId and alexaGadgetSecret." />
+<link rel="canonical" href="/2019/12/16/alexa-and-raspberry-pi-demo/" />
+<meta property="og:url" content="/2019/12/16/alexa-and-raspberry-pi-demo/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-16T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Alexa and Raspberry Pi demo" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2019/12/16/alexa-and-raspberry-pi-demo/"},"url":"/2019/12/16/alexa-and-raspberry-pi-demo/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"We’re keeping on playing with Alexa. This time I want to create one skill that uses a compatible device (for example one Raspberry Pi 3). Here you can see the documentation and examples that the people of Alexa provides us. Basically we need to create a new Product/Alexa gadget in the console. It gives us one amazonId and alexaGadgetSecret.","dateModified":"2019-12-16T00:00:00+01:00","datePublished":"2019-12-16T00:00:00+01:00","headline":"Alexa and Raspberry Pi demo","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <hr class="panel-cover__divider">
+                <p class="panel-cover__description">Personal blog since 2008</p>
+                <div class="navigation-wrapper">
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a class="navigation__item" href="/about" title="about">
+                                        About Me
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="https://leanpub.com/codigosolido"
+       rel="noreferrer"
+       data-ss1617366980="1">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+    <p class="panel-cover__description">
+        <i>
+            Buy my book (Spanish) on Leanpub. (It's free but if you pay I'll donate all profits)
+        </i>
+    </p>
+</div>
+
+                    <form method="get" action="http://www.google.com/search" target="_blank">
+    <input type="hidden"
+           name="sitesearch"
+           value="https://gonzalo123.com/"/>
+    <input type="text"
+           name="q"
+           maxlength="255"
+           placeholder="Search with Google"/>
+</form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2019-12-16 00:00" class="post-meta__date date">16 Dec 2019</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#alexa">alexa</a>, <a href="/tags/#iot">iot</a>, <a href="/tags/#javascrip">javascrip</a>, <a href="/tags/#python">python</a>, <a href="/tags/#rpi">rpi</a></span>
+      
+    </div>
+    <h1 class="post-title">Alexa and Raspberry Pi demo</h1>
+  </header>
+
+  <section class="post">
+    <p>We’re keeping on playing with Alexa. This time I want to create one skill that uses a compatible device (for example one Raspberry Pi 3). Here you can see the documentation and examples that the people of Alexa <a href="https://github.com/alexa/Alexa-Gadgets-Raspberry-Pi-Samples">provides us</a>. Basically we need to create a new Product/Alexa gadget in the console. It gives us one amazonId and alexaGadgetSecret.</p>
+
+<p>Then we need to install the SDK in our Raspberry Pi (it install several python libraries). The we can create our gadget script running on our Raspberry Pi, using the amazonId and alexaGadgetSecret. We can listen to several Alexa events. For example: When we say the wakeword, with a timer, an alarm and also we can create our custom events.</p>
+
+<p>I’m going to create one skill that allows me to say something like: “Alexa, use device demo and set color to green” or “Alexa, use device demo and set color to red” and I’ll put this color in the led matrix that I’ve got (one Raspberry Pi Sense Hat)</p>
+
+<p>This is the python script:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">agt</span> <span class="kn">import</span> <span class="n">AlexaGadget</span>
+<span class="kn">from</span> <span class="nn">sense_hat</span> <span class="kn">import</span> <span class="n">SenseHat</span>
+ 
+<span class="n">logging</span><span class="p">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="p">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+ 
+<span class="n">sense</span> <span class="o">=</span> <span class="n">SenseHat</span><span class="p">()</span>
+<span class="n">sense</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+ 
+<span class="n">RED</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">GREEN</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">BLUE</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>
+<span class="n">YELLOW</span> <span class="o">=</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">BLACK</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+ 
+<span class="k">class</span> <span class="nc">Gadget</span><span class="p">(</span><span class="n">AlexaGadget</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_alexa_gadget_statelistener_stateupdate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directive</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">directive</span><span class="p">.</span><span class="n">payload</span><span class="p">.</span><span class="n">states</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">state</span><span class="p">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">'wakeword'</span><span class="p">:</span>
+                <span class="n">sense</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">.</span><span class="n">value</span> <span class="o">==</span> <span class="s">'active'</span><span class="p">:</span>
+                    <span class="n">sense</span><span class="p">.</span><span class="n">show_message</span><span class="p">(</span><span class="s">"Alexa"</span><span class="p">,</span> <span class="n">text_colour</span><span class="o">=</span><span class="n">BLUE</span><span class="p">)</span>
+ 
+    <span class="k">def</span> <span class="nf">set_color_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="n">sense</span><span class="p">.</span><span class="n">set_pixels</span><span class="p">(([</span><span class="n">color</span><span class="p">]</span> <span class="o">*</span> <span class="mi">64</span><span class="p">))</span>
+ 
+    <span class="k">def</span> <span class="nf">on_custom_gonzalo123_setcolor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directive</span><span class="p">):</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">directive</span><span class="p">.</span><span class="n">payload</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">))</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s">'color'</span><span class="p">]</span>
+ 
+        <span class="k">if</span> <span class="n">color</span> <span class="o">==</span> <span class="s">'red'</span><span class="p">:</span>
+            <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">'turn on RED display'</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">set_color_to</span><span class="p">(</span><span class="n">RED</span><span class="p">)</span>
+ 
+        <span class="k">if</span> <span class="n">color</span> <span class="o">==</span> <span class="s">'green'</span><span class="p">:</span>
+            <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">'turn on GREEN display'</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">set_color_to</span><span class="p">(</span><span class="n">GREEN</span><span class="p">)</span>
+ 
+        <span class="k">if</span> <span class="n">color</span> <span class="o">==</span> <span class="s">'yellow'</span><span class="p">:</span>
+            <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">'turn on YELLOW display'</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">set_color_to</span><span class="p">(</span><span class="n">YELLOW</span><span class="p">)</span>
+ 
+        <span class="k">if</span> <span class="n">color</span> <span class="o">==</span> <span class="s">'black'</span><span class="p">:</span>
+            <span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">'turn on YELLOW display'</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">set_color_to</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+ 
+ 
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">Gadget</span><span class="p">().</span><span class="n">main</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>And here the ini file of our gadget</p>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[GadgetSettings]</span>
+<span class="py">amazonId</span> <span class="p">=</span> <span class="s">my_amazonId</span>
+<span class="py">alexaGadgetSecret</span> <span class="p">=</span> <span class="s">my_alexaGadgetSecret</span>
+ 
+<span class="nn">[GadgetCapabilities]</span>
+<span class="py">Alexa.Gadget.StateListener</span> <span class="p">=</span> <span class="s">1.0 - wakeword</span>
+<span class="py">Custom.gonzalo123</span> <span class="p">=</span> <span class="s">1.0</span>
+</code></pre></div></div>
+
+<p>Whit this ini file I’m saying that my gadget will trigger a function when wakeword has been said and with my custom event “Custom.gonzalo123”</p>
+
+<p>That’s the skill:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">Alexa</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">ask-sdk</span><span class="dl">'</span><span class="p">)</span>
+ 
+<span class="kd">const</span> <span class="nx">RequestInterceptor</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./interceptors/RequestInterceptor</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">ResponseInterceptor</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./interceptors/ResponseInterceptor</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">LocalizationInterceptor</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./interceptors/LocalizationInterceptor</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">GadgetInterceptor</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./interceptors/GadgetInterceptor</span><span class="dl">'</span><span class="p">)</span>
+ 
+<span class="kd">const</span> <span class="nx">LaunchRequestHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/LaunchRequestHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">ColorHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/ColorHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">HelpIntentHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/HelpIntentHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">CancelAndStopIntentHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/CancelAndStopIntentHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">SessionEndedRequestHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/SessionEndedRequestHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">FallbackHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/FallbackHandler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">ErrorHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./handlers/ErrorHandler</span><span class="dl">'</span><span class="p">)</span>
+ 
+<span class="kd">let</span> <span class="nx">skill</span>
+ 
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="k">async</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">skill</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">skill</span> <span class="o">=</span> <span class="nx">Alexa</span><span class="p">.</span><span class="nx">SkillBuilders</span><span class="p">.</span><span class="nx">custom</span><span class="p">().</span>
+      <span class="nx">addRequestInterceptors</span><span class="p">(</span>
+        <span class="nx">RequestInterceptor</span><span class="p">,</span>
+        <span class="nx">ResponseInterceptor</span><span class="p">,</span>
+        <span class="nx">LocalizationInterceptor</span><span class="p">,</span>
+        <span class="nx">GadgetInterceptor</span>
+      <span class="p">).</span>
+      <span class="nx">addRequestHandlers</span><span class="p">(</span>
+        <span class="nx">LaunchRequestHandler</span><span class="p">,</span>
+        <span class="nx">ColorHandler</span><span class="p">,</span>
+        <span class="nx">HelpIntentHandler</span><span class="p">,</span>
+        <span class="nx">CancelAndStopIntentHandler</span><span class="p">,</span>
+        <span class="nx">SessionEndedRequestHandler</span><span class="p">,</span>
+        <span class="nx">FallbackHandler</span><span class="p">).</span>
+      <span class="nx">addErrorHandlers</span><span class="p">(</span>
+        <span class="nx">ErrorHandler</span><span class="p">).</span>
+      <span class="nx">create</span><span class="p">()</span>
+  <span class="p">}</span>
+ 
+  <span class="k">return</span> <span class="k">await</span> <span class="nx">skill</span><span class="p">.</span><span class="nx">invoke</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>One important thing here is the GadgetInterceptor. This interceptor find the endpointId from the request and append it to the session. This endpoint exists because we’ve created our Product/Alexa gadget and also the python script is running on the device. If the endpoint isn’t present maybe our skill must say to the user something like “No gadgets found. Please try again after connecting your gadget.”.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">utils</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../lib/utils</span><span class="dl">'</span><span class="p">)</span>
+ 
+<span class="kd">const</span> <span class="nx">GadgetInterceptor</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="k">async</span> <span class="nx">process</span> <span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">endpointId</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">utils</span><span class="p">.</span><span class="nx">getEndpointIdFromConnectedEndpoints</span><span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">endpointId</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">utils</span><span class="p">.</span><span class="nx">appendToSession</span><span class="p">(</span><span class="nx">handlerInput</span><span class="p">,</span> <span class="dl">'</span><span class="s1">endpointId</span><span class="dl">'</span><span class="p">,</span> <span class="nx">endpointId</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">GadgetInterceptor</span>
+</code></pre></div></div>
+
+<p>And finally the handlers to trigger the custom event:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">log</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../lib/log</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">utils</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../lib/utils</span><span class="dl">'</span><span class="p">)</span>
+ 
+<span class="kd">const</span> <span class="nx">buildLEDDirective</span> <span class="o">=</span> <span class="p">(</span><span class="nx">endpointId</span><span class="p">,</span> <span class="nx">color</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">CustomInterfaceController.SendDirective</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">header</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">setColor</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">namespace</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Custom.gonzalo123</span><span class="dl">'</span>
+    <span class="p">},</span>
+    <span class="na">endpoint</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">endpointId</span><span class="p">:</span> <span class="nx">endpointId</span>
+    <span class="p">},</span>
+    <span class="na">payload</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">color</span><span class="p">:</span> <span class="nx">color</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kd">const</span> <span class="nx">ColorHandler</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">canHandle</span> <span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">requestEnvelope</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">IntentRequest</span><span class="dl">'</span>
+      <span class="o">&amp;&amp;</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">requestEnvelope</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">intent</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">ColorIntent</span><span class="dl">'</span>
+  <span class="p">},</span>
+  <span class="nx">handle</span> <span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">requestAttributes</span> <span class="o">=</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">attributesManager</span><span class="p">.</span><span class="nx">getRequestAttributes</span><span class="p">()</span>
+    <span class="kd">const</span> <span class="nx">cardTitle</span> <span class="o">=</span> <span class="nx">requestAttributes</span><span class="p">.</span><span class="nx">t</span><span class="p">(</span><span class="dl">'</span><span class="s1">SKILL_NAME</span><span class="dl">'</span><span class="p">)</span>
+ 
+    <span class="kd">const</span> <span class="nx">endpointId</span> <span class="o">=</span> <span class="nx">utils</span><span class="p">.</span><span class="nx">getEndpointIdFromSession</span><span class="p">(</span><span class="nx">handlerInput</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">endpointId</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">log</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">endpoint</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span>
+      <span class="k">return</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">responseBuilder</span><span class="p">.</span>
+        <span class="nx">speak</span><span class="p">(</span><span class="nx">error</span><span class="p">).</span>
+        <span class="nx">getResponse</span><span class="p">()</span>
+    <span class="p">}</span>
+ 
+    <span class="kd">const</span> <span class="nx">color</span> <span class="o">=</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">requestEnvelope</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">intent</span><span class="p">.</span><span class="nx">slots</span><span class="p">[</span><span class="dl">'</span><span class="s1">color</span><span class="dl">'</span><span class="p">].</span><span class="nx">value</span>
+    <span class="nx">log</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">color</span><span class="dl">'</span><span class="p">,</span> <span class="nx">color</span><span class="p">)</span>
+    <span class="nx">log</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="dl">'</span><span class="s1">endpointId</span><span class="dl">'</span><span class="p">,</span> <span class="nx">endpointId</span><span class="p">)</span>
+ 
+    <span class="k">return</span> <span class="nx">handlerInput</span><span class="p">.</span><span class="nx">responseBuilder</span><span class="p">.</span>
+      <span class="nx">speak</span><span class="p">(</span><span class="s2">`Ok. The selected color is </span><span class="p">${</span><span class="nx">color</span><span class="p">}</span><span class="s2">`</span><span class="p">).</span>
+      <span class="nx">withSimpleCard</span><span class="p">(</span><span class="nx">cardTitle</span><span class="p">,</span> <span class="nx">color</span><span class="p">).</span>
+      <span class="nx">addDirective</span><span class="p">(</span><span class="nx">buildLEDDirective</span><span class="p">(</span><span class="nx">endpointId</span><span class="p">,</span> <span class="nx">color</span><span class="p">)).</span>
+      <span class="nx">getResponse</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">ColorHandler</span>
+</code></pre></div></div>
+
+<p>Here one video with the working example:</p>
+
+<p><a href="https://www.youtube.com/watch?v=1dVQDsk4kWo"><img src="https://img.youtube.com/vi/1dVQDsk4kWo/0.jpg" alt="youtube" /></a></p>
+
+<p>Source code in my <a href="https://github.com/gonzalo123/alexa_rpi">github</a></p>
+
+
+
+  </section>
+  <p>
+    <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Alexa+and+Raspberry+Pi+demo%20%2F2019%2F12%2F16%2Falexa-and-raspberry-pi-demo%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2019%2F12%2F16%2Falexa-and-raspberry-pi-demo%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Alexa+and+Raspberry+Pi+demo&url=%2F2019%2F12%2F16%2Falexa-and-raspberry-pi-demo%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+  </p>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2019/12/16/alexa-and-raspberry-pi-demo/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2019/12/16/alexa-and-raspberry-pi-demo'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//gonzalo123-com.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617444526878584000"></script>
+
+
+    </div>
+  </body>
+</html>
