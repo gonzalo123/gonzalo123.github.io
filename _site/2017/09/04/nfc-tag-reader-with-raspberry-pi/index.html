@@ -1,63 +1,70 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width initial-scale=1" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
+    
 
-  <title>NFC tag reader with Raspberry Pi</title>
-  <meta name="description" content="In another post we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other.
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
 
-">
-  <meta name="author" content="Gonzalo Ayuso">
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="NFC tag reader with Raspberry Pi">
-  <meta name="twitter:description" content="In another post we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other.
+    <title>NFC tag reader with Raspberry Pi</title>
+    <meta name="description"
+          content="In another post we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other.
 
 ">
-  
-  <meta name="twitter:creator" content="gonzalo123">
-  
-  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="NFC tag reader with Raspberry Pi">
-  <meta property="og:description" content="In another post we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other.
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="NFC tag reader with Raspberry Pi">
+    <meta name="twitter:description"
+          content="In another post we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other.
 
 ">
-  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
 
-  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
-  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
-  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
-  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="/images/favicons/manifest.json">
-  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
-  <meta name="msapplication-TileColor" content="#ffc40d">
-  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
-  <meta name="theme-color" content="#ffffff">
-  
-  <link rel="stylesheet" href="/css/main.css?1617453467879020000">
-  <link rel="canonical" href="/2017/09/04/nfc-tag-reader-with-raspberry-pi/">
-  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
-  <!-- Begin Jekyll SEO tag v2.7.1 -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="NFC tag reader with Raspberry Pi">
+    <meta property="og:description"
+          content="In another post we spoke about NFC tag readers and Arduino. Today I’ll do the same but with a Raspberry Pi. Why? More or less everything we can do with an Arduino board we can do it also with a Raspberry Pi (and viceversa). Sometimes Arduino is to much low level for me. For example if we want to connect an Arduino to the LAN we need to set up mac address by hand. We can do it but this operation is trivial with Raspberry Pi and Python. We can connect our Arduino to a PostgreSQL Database, but it’s not pretty straightforward. Mi background is also better with Python than C++, so I feel more confortable working with Raspberry Pi. I’m not saying that RPi is better than Arduino. With Arduino for example we don’t need to worry about start proceses, reboots and those kind of thing stuff that we need to worry about with computers. Arduino a Raspberry Pi are different tools. Sometimes it will be better one and sometimes the other.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617453764168120000">
+    <link rel="canonical"
+          href="/2017/09/04/nfc-tag-reader-with-raspberry-pi/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
 <title>NFC tag reader with Raspberry Pi | Gonzalo Ayuso</title>
 <meta name="generator" content="Jekyll v3.9.0" />
 <meta property="og:title" content="NFC tag reader with Raspberry Pi" />
@@ -420,9 +427,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617453467879020000"></script>
-
-
+<script type="text/javascript" src="/js/main.js?1617453764168120000"></script>
 
     </div>
   </body>

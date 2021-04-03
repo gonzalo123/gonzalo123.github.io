@@ -1,63 +1,70 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width initial-scale=1" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
+    
 
-  <title>dojo.hitch</title>
-  <meta name="description" content="The first time I read about dojo.hitch I didn’t understand anything. I read in a book dojo.hitch is a very important function and widely used into dojo library but I didn’t understand why. I am using my learning of dojo to improve my skill in javascript. I remember the time when I hate javascript. I thought it was a very poor program language and everything I need to do with js was a nightmare. If browser was Netscape one way to to do one thing, if browser was IE other (of a other and a couple of hacks). But the times have changed. XHR and Ajax has reinvented the web. Web pages had became into Web Applications. Asynchronous request had opened our minds to a new generation of web applications, and all of it is thanks to javascript. Each day I spent learning js I see how much I was wrong.
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
 
-">
-  <meta name="author" content="Gonzalo Ayuso">
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="dojo.hitch">
-  <meta name="twitter:description" content="The first time I read about dojo.hitch I didn’t understand anything. I read in a book dojo.hitch is a very important function and widely used into dojo library but I didn’t understand why. I am using my learning of dojo to improve my skill in javascript. I remember the time when I hate javascript. I thought it was a very poor program language and everything I need to do with js was a nightmare. If browser was Netscape one way to to do one thing, if browser was IE other (of a other and a couple of hacks). But the times have changed. XHR and Ajax has reinvented the web. Web pages had became into Web Applications. Asynchronous request had opened our minds to a new generation of web applications, and all of it is thanks to javascript. Each day I spent learning js I see how much I was wrong.
+    <title>dojo.hitch</title>
+    <meta name="description"
+          content="The first time I read about dojo.hitch I didn’t understand anything. I read in a book dojo.hitch is a very important function and widely used into dojo library but I didn’t understand why. I am using my learning of dojo to improve my skill in javascript. I remember the time when I hate javascript. I thought it was a very poor program language and everything I need to do with js was a nightmare. If browser was Netscape one way to to do one thing, if browser was IE other (of a other and a couple of hacks). But the times have changed. XHR and Ajax has reinvented the web. Web pages had became into Web Applications. Asynchronous request had opened our minds to a new generation of web applications, and all of it is thanks to javascript. Each day I spent learning js I see how much I was wrong.
 
 ">
-  
-  <meta name="twitter:creator" content="gonzalo123">
-  
-  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="dojo.hitch">
-  <meta property="og:description" content="The first time I read about dojo.hitch I didn’t understand anything. I read in a book dojo.hitch is a very important function and widely used into dojo library but I didn’t understand why. I am using my learning of dojo to improve my skill in javascript. I remember the time when I hate javascript. I thought it was a very poor program language and everything I need to do with js was a nightmare. If browser was Netscape one way to to do one thing, if browser was IE other (of a other and a couple of hacks). But the times have changed. XHR and Ajax has reinvented the web. Web pages had became into Web Applications. Asynchronous request had opened our minds to a new generation of web applications, and all of it is thanks to javascript. Each day I spent learning js I see how much I was wrong.
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="dojo.hitch">
+    <meta name="twitter:description"
+          content="The first time I read about dojo.hitch I didn’t understand anything. I read in a book dojo.hitch is a very important function and widely used into dojo library but I didn’t understand why. I am using my learning of dojo to improve my skill in javascript. I remember the time when I hate javascript. I thought it was a very poor program language and everything I need to do with js was a nightmare. If browser was Netscape one way to to do one thing, if browser was IE other (of a other and a couple of hacks). But the times have changed. XHR and Ajax has reinvented the web. Web pages had became into Web Applications. Asynchronous request had opened our minds to a new generation of web applications, and all of it is thanks to javascript. Each day I spent learning js I see how much I was wrong.
 
 ">
-  <meta property="og:image" content="/images/favicons/favicon-194x194.png" />
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
 
-  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
-  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
-  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
-  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
-  <link rel="manifest" href="/images/favicons/manifest.json">
-  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
-  <meta name="msapplication-TileColor" content="#ffc40d">
-  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
-  <meta name="theme-color" content="#ffffff">
-  
-  <link rel="stylesheet" href="/css/main.css?1617453467879020000">
-  <link rel="canonical" href="/2009/03/15/dojohitch/">
-  <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
-  <!-- Begin Jekyll SEO tag v2.7.1 -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="dojo.hitch">
+    <meta property="og:description"
+          content="The first time I read about dojo.hitch I didn’t understand anything. I read in a book dojo.hitch is a very important function and widely used into dojo library but I didn’t understand why. I am using my learning of dojo to improve my skill in javascript. I remember the time when I hate javascript. I thought it was a very poor program language and everything I need to do with js was a nightmare. If browser was Netscape one way to to do one thing, if browser was IE other (of a other and a couple of hacks). But the times have changed. XHR and Ajax has reinvented the web. Web pages had became into Web Applications. Asynchronous request had opened our minds to a new generation of web applications, and all of it is thanks to javascript. Each day I spent learning js I see how much I was wrong.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617453764168120000">
+    <link rel="canonical"
+          href="/2009/03/15/dojohitch/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
 <title>dojo.hitch | Gonzalo Ayuso</title>
 <meta name="generator" content="Jekyll v3.9.0" />
 <meta property="og:title" content="dojo.hitch" />
@@ -315,9 +322,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617453467879020000"></script>
-
-
+<script type="text/javascript" src="/js/main.js?1617453764168120000"></script>
 
     </div>
   </body>
