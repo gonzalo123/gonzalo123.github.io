@@ -93,4 +93,4 @@ Then I only need to pair my virtual device (in this case "my device") to my comp
 
 Here a small video showing the working example: 
 
-[![youtube](https://img.youtube.com/vi/6XXFPe\_Fxlw/0.jpg)](https://www.youtube.com/watch?v=6XXFPe\_Fxlw)
+[![youtube](https://img.youtube.com/vi/6XXFPe_Fxlw/0.jpg)](https://www.youtube.com/watch?v=6XXFPe_Fxlw)
