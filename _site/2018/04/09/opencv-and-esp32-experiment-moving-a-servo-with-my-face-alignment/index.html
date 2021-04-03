@@ -54,8 +54,8 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="theme-color" content="#ffffff">
   
-  <link rel="stylesheet" href="/css/main.css?1617451199289224000">
-  <link rel="canonical" href="/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/">
+  <link rel="stylesheet" href="/css/main.css?1617453037860382000">
+  <link rel="canonical" href="http://localhost:4000/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/">
   <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
   <!-- Begin Jekyll SEO tag v2.7.1 -->
 <title>Opencv and esp32 experiment. Moving a servo with my face alignment | Gonzalo Ayuso</title>
@@ -65,15 +65,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="One saturday morning I was having a breakfast and I discovered face_recognition project. I started to play with the opencv example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position." />
 <meta property="og:description" content="One saturday morning I was having a breakfast and I discovered face_recognition project. I started to play with the opencv example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position." />
-<link rel="canonical" href="/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/" />
-<meta property="og:url" content="/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/" />
+<link rel="canonical" href="http://localhost:4000/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/" />
+<meta property="og:url" content="http://localhost:4000/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/" />
 <meta property="og:site_name" content="Gonzalo Ayuso" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2018-04-09T00:00:00+02:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Opencv and esp32 experiment. Moving a servo with my face alignment" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/"},"url":"/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"One saturday morning I was having a breakfast and I discovered face_recognition project. I started to play with the opencv example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position.","dateModified":"2018-04-09T00:00:00+02:00","datePublished":"2018-04-09T00:00:00+02:00","headline":"Opencv and esp32 experiment. Moving a servo with my face alignment","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"headline":"Opencv and esp32 experiment. Moving a servo with my face alignment","dateModified":"2018-04-09T00:00:00+02:00","datePublished":"2018-04-09T00:00:00+02:00","url":"http://localhost:4000/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/"},"author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"One saturday morning I was having a breakfast and I discovered face_recognition project. I started to play with the opencv example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position.","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -89,7 +89,6 @@
 <header class="panel-cover panel-cover--collapsed"
         style="background-image: url(/images/cover.jpg)">
     <div class="panel-main">
-
         <div class="panel-main__inner panel-inverted">
             <div class="panel-main__content">
                 <a href="/" title="link to home of Gonzalo Ayuso">
@@ -97,22 +96,23 @@
                     <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
                     <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
                 </a>
-                <hr class="panel-cover__divider">
-                <p class="panel-cover__description">Personal blog since 2008</p>
                 <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
                     <nav class="cover-navigation navigation--social">
                         <nav class="cover-navigation">
                             <ul class="navigation">
-                                <li class="navigation__item">
-                                    <a class="navigation__item" href="/about" title="about">
+                                <li>
+                                    <a href="/about" title="about">
                                         About Me
                                     </a>
                                 </li>
                                 <li class="navigation__item">
-                                    <a class="navigation__item" href="/search" title="about">
-                                        Search
+                                    <a href="/search" title="search">
+                                         <i class="icon icon-page-search"></i>
+                                        <span class="label">Search</span>
                                     </a>
                                 </li>
+
                             </ul>
                         </nav>
                         <hr class="panel-cover__divider">
@@ -198,18 +198,24 @@
     <div class="content-wrapper">
       <div class="content-wrapper__inner">
         <article class="post-container post-container--single">
-  <header class="post-header">
-    <div class="post-meta">
-      <time datetime="2018-04-09 00:00" class="post-meta__date date">9 Apr 2018</time>
-      
-      &#8226; <span class="post-meta__tags">on <a href="/tags/#arduino">arduino</a>, <a href="/tags/#esp32">esp32</a>, <a href="/tags/#iot">iot</a>, <a href="/tags/#mqtt">mqtt</a>, <a href="/tags/#opencv">opencv</a></span>
-      
-    </div>
-    <h1 class="post-title">Opencv and esp32 experiment. Moving a servo with my face alignment</h1>
-  </header>
+    <header class="post-header">
+        <div class="post-meta">
+            <time datetime=" 2018-04-09 00:00
+            " class="post-meta__date date">9 Apr 2018</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#arduino">arduino</a>, <a
+                href="/tags/#esp32">esp32</a>, <a
+                href="/tags/#iot">iot</a>, <a
+                href="/tags/#mqtt">mqtt</a>, <a
+                href="/tags/#opencv">opencv</a></span>
+            
+        </div>
+        <h1 class="post-title">Opencv and esp32 experiment. Moving a servo with my face alignment</h1>
+    </header>
 
-  <section class="post">
-    <p>One saturday morning I was having a breakfast and I discovered <a href="https://github.com/ageitgey/face_recognition">face_recognition</a> project. I started to play with the <a href="https://opencv.org/">opencv</a> example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position.</p>
+    <section class="post">
+        <p>One saturday morning I was having a breakfast and I discovered <a href="https://github.com/ageitgey/face_recognition">face_recognition</a> project. I started to play with the <a href="https://opencv.org/">opencv</a> example. I put my picture and, Wow! It works like a charm. It’s pretty straightforward to detect my face and also I can obtain the face landmarks. One of the landmark that I can get is the nose tip. Playing with this script I realized that with the nose tip I can determine the position of the face. I can see if my face is align to the center or if I move it to one side. As well as I have a new iot device (one ESP32) I wanted to do something with it. For example control a servo (SG90) and moving it from left to right depending on my face position.</p>
 
 <p>First we have the main python script. With this script I detect my face, the nose tip and the position of my face. With this position I will emit an event to a mqtt broker (a <a href="https://mosquitto.org/">mosquitto</a> server running on my laptop).</p>
 
@@ -482,21 +488,22 @@
 
 
 
-  </section>
-  <p>
-    <div class="page-share">
-  <a href="https://twitter.com/intent/tweet?text=Opencv+and+esp32+experiment.+Moving+a+servo+with+my+face+alignment%20%2F2018%2F04%2F09%2Fopencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2018%2F04%2F09%2Fopencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
-  <a href="https://reddit.com/submit?title=Opencv+and+esp32+experiment.+Moving+a+servo+with+my+face+alignment&url=%2F2018%2F04%2F09%2Fopencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Opencv+and+esp32+experiment.+Moving+a+servo+with+my+face+alignment%20http%3A%2F%2Flocalhost%3A4000%2F2018%2F04%2F09%2Fopencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2018%2F04%2F09%2Fopencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Opencv+and+esp32+experiment.+Moving+a+servo+with+my+face+alignment&url=http%3A%2F%2Flocalhost%3A4000%2F2018%2F04%2F09%2Fopencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
 </div>
 
-  </p>
-  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
 </article>
 
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = '/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.url = 'http://localhost:4000/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/';  // Replace PAGE_URL with your page's canonical URL variable
         this.page.identifier = '/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
       };
 
@@ -512,6 +519,32 @@
 
 
 
+
+<div class="related">
+    <h2>Related Posts</h2>
+    <ul>
+        
+        <a href="/2021/03/08/playing-with-go-and-file-system-watchers/">
+            <li>
+                <h3>Playing with Go and file system watchers&nbsp;&nbsp;08 Mar 2021</h3>
+            </li>
+        </a>
+        
+        <a href="/2021/02/15/database-utils-for-psycopg2/">
+            <li>
+                <h3>Database utils for psycopg2&nbsp;&nbsp;15 Feb 2021</h3>
+            </li>
+        </a>
+        
+        <a href="/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/">
+            <li>
+                <h3>Playing with RabbitMQ, Python and Docker. From Exchanges to Queues&nbsp;&nbsp;11 Jan 2021</h3>
+            </li>
+        </a>
+        
+    </ul>
+</div>
+
       </div>
 
       <footer class="footer">
@@ -519,7 +552,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617451199289224000"></script>
+<script type="text/javascript" src="/js/main.js?1617453037860382000"></script>
 
 
     </div>

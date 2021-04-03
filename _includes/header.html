@@ -6,7 +6,6 @@
 <header class="panel-cover {% if site.disable_landing_page %}panel-cover--collapsed{% endif %}"
         style="background-image: url({{ site.baseurl }}/images/cover.jpg)">
     <div class="panel-main">
-
         <div class="panel-main__inner panel-inverted">
             <div class="panel-main__content">
                 <a href="{{ site.baseurl }}/" title="link to home of {{ site.title }}">
@@ -14,22 +13,23 @@
                     <h1 class="panel-cover__title panel-title">{{ site.title }}</h1>
                     <h3 class="panel-cover__title panel-title"><i>{{ site.tagline }}</i></h3>
                 </a>
-                <hr class="panel-cover__divider">
-                <p class="panel-cover__description">{{ site.description }}</p>
                 <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>{{ site.description }}</i></h3>
                     <nav class="cover-navigation navigation--social">
                         <nav class="cover-navigation">
                             <ul class="navigation">
-                                <li class="navigation__item">
-                                    <a class="navigation__item" href="/about" title="about">
+                                <li>
+                                    <a href="/about" title="about">
                                         About Me
                                     </a>
                                 </li>
                                 <li class="navigation__item">
-                                    <a class="navigation__item" href="/search" title="about">
-                                        Search
+                                    <a href="/search" title="search">
+                                         <i class="icon icon-page-search"></i>
+                                        <span class="label">Search</span>
                                     </a>
                                 </li>
+
                             </ul>
                         </nav>
                         <hr class="panel-cover__divider">

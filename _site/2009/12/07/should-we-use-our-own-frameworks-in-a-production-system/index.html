@@ -54,8 +54,8 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="theme-color" content="#ffffff">
   
-  <link rel="stylesheet" href="/css/main.css?1617451199289224000">
-  <link rel="canonical" href="/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/">
+  <link rel="stylesheet" href="/css/main.css?1617453037860382000">
+  <link rel="canonical" href="http://localhost:4000/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/">
   <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
   <!-- Begin Jekyll SEO tag v2.7.1 -->
 <title>Should we use our own frameworks in a production system? | Gonzalo Ayuso</title>
@@ -65,15 +65,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Some days ago I read an article called why every developer should write their own framework. It’s an interesting post and everybody are agree with the author. Build a framework is a good way to learn other frameworks. You face problems and you give solutions to those problems similar than other framework’s ones. It’s also good see the code of other frameworks to see the differences. Definitely I am fully agree with Brandon." />
 <meta property="og:description" content="Some days ago I read an article called why every developer should write their own framework. It’s an interesting post and everybody are agree with the author. Build a framework is a good way to learn other frameworks. You face problems and you give solutions to those problems similar than other framework’s ones. It’s also good see the code of other frameworks to see the differences. Definitely I am fully agree with Brandon." />
-<link rel="canonical" href="/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/" />
-<meta property="og:url" content="/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/" />
+<link rel="canonical" href="http://localhost:4000/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/" />
+<meta property="og:url" content="http://localhost:4000/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/" />
 <meta property="og:site_name" content="Gonzalo Ayuso" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2009-12-07T00:00:00+01:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Should we use our own frameworks in a production system?" />
 <script type="application/ld+json">
-{"mainEntityOfPage":{"@type":"WebPage","@id":"/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/"},"url":"/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Some days ago I read an article called why every developer should write their own framework. It’s an interesting post and everybody are agree with the author. Build a framework is a good way to learn other frameworks. You face problems and you give solutions to those problems similar than other framework’s ones. It’s also good see the code of other frameworks to see the differences. Definitely I am fully agree with Brandon.","dateModified":"2009-12-07T00:00:00+01:00","datePublished":"2009-12-07T00:00:00+01:00","headline":"Should we use our own frameworks in a production system?","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"headline":"Should we use our own frameworks in a production system?","dateModified":"2009-12-07T00:00:00+01:00","datePublished":"2009-12-07T00:00:00+01:00","url":"http://localhost:4000/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/"},"author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Some days ago I read an article called why every developer should write their own framework. It’s an interesting post and everybody are agree with the author. Build a framework is a good way to learn other frameworks. You face problems and you give solutions to those problems similar than other framework’s ones. It’s also good see the code of other frameworks to see the differences. Definitely I am fully agree with Brandon.","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -89,7 +89,6 @@
 <header class="panel-cover panel-cover--collapsed"
         style="background-image: url(/images/cover.jpg)">
     <div class="panel-main">
-
         <div class="panel-main__inner panel-inverted">
             <div class="panel-main__content">
                 <a href="/" title="link to home of Gonzalo Ayuso">
@@ -97,22 +96,23 @@
                     <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
                     <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
                 </a>
-                <hr class="panel-cover__divider">
-                <p class="panel-cover__description">Personal blog since 2008</p>
                 <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
                     <nav class="cover-navigation navigation--social">
                         <nav class="cover-navigation">
                             <ul class="navigation">
-                                <li class="navigation__item">
-                                    <a class="navigation__item" href="/about" title="about">
+                                <li>
+                                    <a href="/about" title="about">
                                         About Me
                                     </a>
                                 </li>
                                 <li class="navigation__item">
-                                    <a class="navigation__item" href="/search" title="about">
-                                        Search
+                                    <a href="/search" title="search">
+                                         <i class="icon icon-page-search"></i>
+                                        <span class="label">Search</span>
                                     </a>
                                 </li>
+
                             </ul>
                         </nav>
                         <hr class="panel-cover__divider">
@@ -198,18 +198,21 @@
     <div class="content-wrapper">
       <div class="content-wrapper__inner">
         <article class="post-container post-container--single">
-  <header class="post-header">
-    <div class="post-meta">
-      <time datetime="2009-12-07 00:00" class="post-meta__date date">7 Dec 2009</time>
-      
-      &#8226; <span class="post-meta__tags">on <a href="/tags/#php">php</a>, <a href="/tags/#web-development">web-development</a></span>
-      
-    </div>
-    <h1 class="post-title">Should we use our own frameworks in a production system?</h1>
-  </header>
+    <header class="post-header">
+        <div class="post-meta">
+            <time datetime=" 2009-12-07 00:00
+            " class="post-meta__date date">7 Dec 2009</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#web-development">web-development</a></span>
+            
+        </div>
+        <h1 class="post-title">Should we use our own frameworks in a production system?</h1>
+    </header>
 
-  <section class="post">
-    <p>Some days ago I read an article called <a href="http://www.brandonsavage.net/why-every-developer-should-write-their-own-framework/" title="why every developer should write their own framework">why every developer should write their own framework</a>. It’s an interesting post and everybody are agree with the author. Build a framework is a good way to learn other frameworks. You face problems and you give solutions to those problems similar than other framework’s ones. It’s also good see the code of other frameworks to see the differences. Definitely I am fully agree with Brandon.</p>
+    <section class="post">
+        <p>Some days ago I read an article called <a href="http://www.brandonsavage.net/why-every-developer-should-write-their-own-framework/" title="why every developer should write their own framework">why every developer should write their own framework</a>. It’s an interesting post and everybody are agree with the author. Build a framework is a good way to learn other frameworks. You face problems and you give solutions to those problems similar than other framework’s ones. It’s also good see the code of other frameworks to see the differences. Definitely I am fully agree with Brandon.</p>
 
 <p>But my question is more complicated. Should we use our own frameworks in a production system? I think the answer is not as clear as the fact of building or own framework. I will try to answer (or at least give my answer) in two scenarios. One as a developer and another one as an IT Manager.</p>
 
@@ -233,21 +236,22 @@
 
 
 
-  </section>
-  <p>
-    <div class="page-share">
-  <a href="https://twitter.com/intent/tweet?text=Should+we+use+our+own+frameworks+in+a+production+system%3F%20%2F2009%2F12%2F07%2Fshould-we-use-our-own-frameworks-in-a-production-system%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2009%2F12%2F07%2Fshould-we-use-our-own-frameworks-in-a-production-system%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
-  <a href="https://reddit.com/submit?title=Should+we+use+our+own+frameworks+in+a+production+system%3F&url=%2F2009%2F12%2F07%2Fshould-we-use-our-own-frameworks-in-a-production-system%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Should+we+use+our+own+frameworks+in+a+production+system%3F%20http%3A%2F%2Flocalhost%3A4000%2F2009%2F12%2F07%2Fshould-we-use-our-own-frameworks-in-a-production-system%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2009%2F12%2F07%2Fshould-we-use-our-own-frameworks-in-a-production-system%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Should+we+use+our+own+frameworks+in+a+production+system%3F&url=http%3A%2F%2Flocalhost%3A4000%2F2009%2F12%2F07%2Fshould-we-use-our-own-frameworks-in-a-production-system%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
 </div>
 
-  </p>
-  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
 </article>
 
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = '/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.url = 'http://localhost:4000/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/';  // Replace PAGE_URL with your page's canonical URL variable
         this.page.identifier = '/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
       };
 
@@ -263,6 +267,32 @@
 
 
 
+
+<div class="related">
+    <h2>Related Posts</h2>
+    <ul>
+        
+        <a href="/2021/03/08/playing-with-go-and-file-system-watchers/">
+            <li>
+                <h3>Playing with Go and file system watchers&nbsp;&nbsp;08 Mar 2021</h3>
+            </li>
+        </a>
+        
+        <a href="/2021/02/15/database-utils-for-psycopg2/">
+            <li>
+                <h3>Database utils for psycopg2&nbsp;&nbsp;15 Feb 2021</h3>
+            </li>
+        </a>
+        
+        <a href="/2021/01/11/playing-with-rabbitmq-python-and-docker-from-exchanges-to-queues/">
+            <li>
+                <h3>Playing with RabbitMQ, Python and Docker. From Exchanges to Queues&nbsp;&nbsp;11 Jan 2021</h3>
+            </li>
+        </a>
+        
+    </ul>
+</div>
+
       </div>
 
       <footer class="footer">
@@ -270,7 +300,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617451199289224000"></script>
+<script type="text/javascript" src="/js/main.js?1617453037860382000"></script>
 
 
     </div>
