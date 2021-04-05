@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Upgrading Cordova-Android apps outside Google Play Store with angularjs</title>
+    <meta name="description"
+          content="Recent months I’ve working with enterprise mobile applications. This apps are’t distributed using any marketplace, so I need to handle the distributions process. With Android you can compile your apps, create your APK files and distribute them. You can send the files by email, use a download link, send the file with bluetooth, or whatever. With iOS is a bit different. You need to purchase one Enterprise license, compile the app and distribute your IPA files using Apple’s standards.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Upgrading Cordova-Android apps outside Google Play Store with angularjs">
+    <meta name="twitter:description"
+          content="Recent months I’ve working with enterprise mobile applications. This apps are’t distributed using any marketplace, so I need to handle the distributions process. With Android you can compile your apps, create your APK files and distribute them. You can send the files by email, use a download link, send the file with bluetooth, or whatever. With iOS is a bit different. You need to purchase one Enterprise license, compile the app and distribute your IPA files using Apple’s standards.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Upgrading Cordova-Android apps outside Google Play Store with angularjs">
+    <meta property="og:description"
+          content="Recent months I’ve working with enterprise mobile applications. This apps are’t distributed using any marketplace, so I need to handle the distributions process. With Android you can compile your apps, create your APK files and distribute them. You can send the files by email, use a download link, send the file with bluetooth, or whatever. With iOS is a bit different. You need to purchase one Enterprise license, compile the app and distribute your IPA files using Apple’s standards.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2014/07/28/upgrading-android-apps-outside-google-play-store-with-angularjs/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Upgrading Cordova-Android apps outside Google Play Store with angularjs | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Upgrading Cordova-Android apps outside Google Play Store with angularjs" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Recent months I’ve working with enterprise mobile applications. This apps are’t distributed using any marketplace, so I need to handle the distributions process. With Android you can compile your apps, create your APK files and distribute them. You can send the files by email, use a download link, send the file with bluetooth, or whatever. With iOS is a bit different. You need to purchase one Enterprise license, compile the app and distribute your IPA files using Apple’s standards." />
+<meta property="og:description" content="Recent months I’ve working with enterprise mobile applications. This apps are’t distributed using any marketplace, so I need to handle the distributions process. With Android you can compile your apps, create your APK files and distribute them. You can send the files by email, use a download link, send the file with bluetooth, or whatever. With iOS is a bit different. You need to purchase one Enterprise license, compile the app and distribute your IPA files using Apple’s standards." />
+<link rel="canonical" href="/2014/07/28/upgrading-android-apps-outside-google-play-store-with-angularjs/" />
+<meta property="og:url" content="/2014/07/28/upgrading-android-apps-outside-google-play-store-with-angularjs/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-07-28T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Upgrading Cordova-Android apps outside Google Play Store with angularjs" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2014/07/28/upgrading-android-apps-outside-google-play-store-with-angularjs/"},"url":"/2014/07/28/upgrading-android-apps-outside-google-play-store-with-angularjs/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Recent months I’ve working with enterprise mobile applications. This apps are’t distributed using any marketplace, so I need to handle the distributions process. With Android you can compile your apps, create your APK files and distribute them. You can send the files by email, use a download link, send the file with bluetooth, or whatever. With iOS is a bit different. You need to purchase one Enterprise license, compile the app and distribute your IPA files using Apple’s standards.","dateModified":"2014-07-28T00:00:00+02:00","datePublished":"2014-07-28T00:00:00+02:00","headline":"Upgrading Cordova-Android apps outside Google Play Store with angularjs","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2014-07-28 00:00
+            " class="post-meta__date date">28 Jul 2014</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#android">android</a>, <a
+                href="/tags/#angularjs">angularjs</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#cordova">cordova</a>, <a
+                href="/tags/#js">js</a>, <a
+                href="/tags/#phonegap">phonegap</a>, <a
+                href="/tags/#silex">silex</a></span>
+            
+        </div>
+        <h1 class="post-title">Upgrading Cordova-Android apps outside Google Play Store with angularjs</h1>
+    </header>
+
+    <section class="post">
+        <p>Recent months I’ve working with enterprise mobile applications. This apps are’t distributed using any marketplace, so I need to handle the distributions process. With Android you can compile your apps, create your APK files and distribute them. You can send the files by email, use a download link, send the file with bluetooth, or whatever. With iOS is a bit different. You need to purchase one Enterprise license, compile the app and distribute your IPA files using Apple’s standards.</p>
+
+<p>OK, but this post is not about how to distribute apps outside the markets. This post is about one big problem that appears when we need to upgrade our apps. How do the user knows that there’s a new version of the application and he needs to upgrade? When we work inside Google Play Store we don’t need to worry about it, but if we distribute our apps manually we need do something. We can send push notifications or email to the user to inform about the new version. Let me show you how I’m doing it.</p>
+
+<p>My problem isn’t only to let know to the user about a new version. Sometimes I also need to ensure that the user runs the last version of the app. Imagine a critical bug (solved in the last release) but the user don’t upgrade.</p>
+
+<p>First we need to create a static html page where the user can download the APK file. Imagine that this is the url where the user can download the last version of the app:</p>
+
+<pre><code class="language-commandline">http://192.168.1.1:8888/app.apk
+</code></pre>
+
+<p>We can check the version of the app against the server each time the user opens the application, but this check means network communication and it’s slow. We need to reduce the communication between client and server to the smallest expression and only when it’s strictly necessary. Check the version each time can be good in a desktop application, but it reduces the user experience with mobile apps. My approach is slightly different. Normally we use <a href="http://gonzalo123.com/2014/06/09/token-based-authentication-with-silex-and-angularjs/" title="Token based authentication with Silex and AngularJS">token based authentication</a> <a href="http://gonzalo123.com/2014/05/05/token-based-authentication-with-silex-applications/" title="Token based authentication with Silex Applications">within</a> mobile apps. That’s means we need to send our token with all request. If we send the token, we also can send the version.</p>
+
+<p>In a angular app we can define the version and the path of our apk using a key-value store.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="dl">'</span><span class="s1">config</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">version</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="na">androidAPK</span><span class="p">:</span> <span class="dl">"</span><span class="s2">http://192.168.1.1:8888/app.apk</span><span class="dl">"</span>
+    <span class="p">})</span>
+</code></pre></div></div>
+
+<p>Now we need to add version parameter to each request (we can easily create a custom http service to append this parameter to each request automatically, indeed)</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">$http</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">http://192.168.1.1:8888/api/doSomething</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span><span class="na">params</span><span class="p">:</span> <span class="p">{</span><span class="na">_version</span><span class="p">:</span> <span class="nx">config</span><span class="p">.</span><span class="nx">version</span><span class="p">}})</span>
+    <span class="p">.</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">OK</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="mi">410</span><span class="p">:</span>
+                <span class="nx">$state</span><span class="p">.</span><span class="nx">go</span><span class="p">(</span><span class="dl">'</span><span class="s1">upgrade</span><span class="dl">'</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+</code></pre></div></div>
+
+<p>We can create a simple backend to take care of the version and throws an HTTP exception (one 410 HTTP error for example) if versions doesn’t match. Here you can see a simple Silex example:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+ 
+<span class="k">include</span> <span class="k">__DIR__</span> <span class="mf">.</span> <span class="s2">"/../vendor/autoload.php"</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpKernel\Exception\HttpException</span><span class="p">;</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">([</span>
+    <span class="s1">'debug'</span>   <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s1">'version'</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
+<span class="p">]);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">after</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="kt">Request</span> <span class="nv">$request</span><span class="p">,</span> <span class="kt">Response</span> <span class="nv">$response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$response</span><span class="o">-&gt;</span><span class="n">headers</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s1">'Access-Control-Allow-Origin'</span><span class="p">,</span> <span class="s1">'*'</span><span class="p">);</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'/api/doSomething'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Request</span> <span class="nv">$request</span><span class="p">,</span> <span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'_version'</span><span class="p">)</span> <span class="o">!=</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">'version'</span><span class="p">])</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nc">HttpException</span><span class="p">(</span><span class="mi">410</span><span class="p">,</span> <span class="s2">"Wrong version"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>As you can see we need to take care about <a href="http://gonzalo123.com/2013/12/16/enabling-cors-in-a-restfull-silex-server-working-with-a-phonegapcordova-application/" title="Enabling CORS in a RESTFull Silex server, working with a phonegap/cordova applications">CORS</a></p>
+
+<p>With this simple example we can realize if user has a wrong version within each server request. If version don’t match we can, for example redirect to an specific route to inform that the user needs to upgrade the app and provide a link to perform the action.</p>
+
+<p>With Android we cannot create a link to APK file. It doesn’t work. We need to download the APK (using <a href="https://github.com/apache/cordova-plugin-file-transfer/blob/master/doc/index.md">FileTransfer</a> plugin) and open the file using <a href="https://github.com/Initsogar/cordova-webintent">webintent</a> plugin.</p>
+
+<p>The code is very simple:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">fileTransfer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileTransfer</span><span class="p">();</span>
+<span class="nx">fileTransfer</span><span class="p">.</span><span class="nx">download</span><span class="p">(</span><span class="nb">encodeURI</span><span class="p">(</span><span class="nx">androidUrl</span><span class="p">),</span> 
+    <span class="dl">"</span><span class="s2">cdvfile://localhost/temporary/app.apk</span><span class="dl">"</span><span class="p">,</span>
+    <span class="kd">function</span> <span class="p">(</span><span class="nx">entry</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">plugins</span><span class="p">.</span><span class="nx">webintent</span><span class="p">.</span><span class="nx">startActivity</span><span class="p">({</span>
+            <span class="na">action</span><span class="p">:</span> <span class="nb">window</span><span class="p">.</span><span class="nx">plugins</span><span class="p">.</span><span class="nx">webintent</span><span class="p">.</span><span class="nx">ACTION_VIEW</span><span class="p">,</span>
+            <span class="na">url</span><span class="p">:</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">toURL</span><span class="p">(),</span>
+            <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/vnd.android.package-archive</span><span class="dl">'</span>
+        <span class="p">},</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="p">},</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Failed to open URL via Android Intent.</span><span class="dl">'</span><span class="p">);</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Failed to open URL via Android Intent. URL: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">fullPath</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">download error source </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">error</span><span class="p">.</span><span class="nx">source</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">download error target </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">error</span><span class="p">.</span><span class="nx">target</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">upload error code</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">error</span><span class="p">.</span><span class="nx">code</span><span class="p">);</span>
+    <span class="p">},</span> <span class="kc">true</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>And basically that’s all. When user self-upgrade the app it closes automatically and he needs to open it again, but now with the correct version.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Upgrading+Cordova-Android+apps+outside+Google+Play+Store+with+angularjs%20%2F2014%2F07%2F28%2Fupgrading-android-apps-outside-google-play-store-with-angularjs%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2014%2F07%2F28%2Fupgrading-android-apps-outside-google-play-store-with-angularjs%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Upgrading+Cordova-Android+apps+outside+Google+Play+Store+with+angularjs&url=%2F2014%2F07%2F28%2Fupgrading-android-apps-outside-google-play-store-with-angularjs%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2014/07/28/upgrading-android-apps-outside-google-play-store-with-angularjs/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2014/07/28/upgrading-android-apps-outside-google-play-store-with-angularjs'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/01/14/using-cache-buster-with-openui5-outside-scp/">Using cache buster with OpenUI5 outside SCP <span class="label label-default">technology</span>  <span class="label label-default">js</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2018/10/08/working-with-sapui5-locally-part-3-adding-more-services-in-docker/">Working with SAPUI5 locally (part 3). Adding more services in Docker <span class="label label-default">php</span>  <span class="label label-default">js</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/12/12/playing-with-arduino-iot-crossbar-and-websockets/">Playing with arduino, IoT, crossbar and websockets <span class="label label-default">js</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

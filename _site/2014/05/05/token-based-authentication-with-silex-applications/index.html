@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Token based authentication with Silex Applications</title>
+    <meta name="description"
+          content="Imagine this simple Silex application:
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Token based authentication with Silex Applications">
+    <meta name="twitter:description"
+          content="Imagine this simple Silex application:
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Token based authentication with Silex Applications">
+    <meta property="og:description"
+          content="Imagine this simple Silex application:
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2014/05/05/token-based-authentication-with-silex-applications/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Token based authentication with Silex Applications | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Token based authentication with Silex Applications" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Imagine this simple Silex application:" />
+<meta property="og:description" content="Imagine this simple Silex application:" />
+<link rel="canonical" href="/2014/05/05/token-based-authentication-with-silex-applications/" />
+<meta property="og:url" content="/2014/05/05/token-based-authentication-with-silex-applications/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-05-05T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Token based authentication with Silex Applications" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2014/05/05/token-based-authentication-with-silex-applications/"},"url":"/2014/05/05/token-based-authentication-with-silex-applications/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Imagine this simple Silex application:","dateModified":"2014-05-05T00:00:00+02:00","datePublished":"2014-05-05T00:00:00+02:00","headline":"Token based authentication with Silex Applications","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2014-05-05 00:00
+            " class="post-meta__date date">5 May 2014</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#authentication">authentication</a>, <a
+                href="/tags/#silex">silex</a>, <a
+                href="/tags/#token">token</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#symfony">symfony</a>, <a
+                href="/tags/#technology">technology</a></span>
+            
+        </div>
+        <h1 class="post-title">Token based authentication with Silex Applications</h1>
+    </header>
+
+    <section class="post">
+        <p>Imagine this simple Silex application:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">();</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'/api/info'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">([</span>
+        <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">'info'</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'name'</span>    <span class="o">=&gt;</span> <span class="s1">'Gonzalo'</span><span class="p">,</span>
+            <span class="s1">'surname'</span> <span class="o">=&gt;</span> <span class="s1">'Ayuso'</span>
+        <span class="p">]]);</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>What happens if we want to use a security layer? We can use <a href="http://silex.sensiolabs.org/doc/providers/session.html">sessions</a>. Sessions are the “standard” way to perform authentication in web applications, but when our application is a PhoneGap/Cordova application that uses a Silex server as API server, sessions aren’t the best way. The best way now is a token based authentication. The idea is simple. First we need a valid token. Our API server will give us a valid token if we send valid credentials in a login form. Then we need to send the token with each request (the same way than we send the session cookie with each request).</p>
+
+<p>With Silex we can check this token and validate.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">();</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'/api/info'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$token</span> <span class="o">=</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'_token'</span><span class="p">);</span>
+     
+    <span class="c1">// here we need to validate the token ...</span>
+ 
+    <span class="k">return</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">([</span>
+        <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">'info'</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'name'</span>    <span class="o">=&gt;</span> <span class="s1">'Gonzalo'</span><span class="p">,</span>
+            <span class="s1">'surname'</span> <span class="o">=&gt;</span> <span class="s1">'Ayuso'</span>
+        <span class="p">]]);</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>It isn’t an elegant solution. We need to validate the token within all routes and that’s bored. We also can use <a href="http://silex.sensiolabs.org/doc/middlewares.html">middlewares</a> and validates the token with $app-&gt;before(). We’re going to build something like this, but with a few variations. First I want to keep the main application as clean as possible. Validation logic must be separated from application logic, so we will extend Silex\Application. Our main application will be like this:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">G\Silex\Application</span><span class="p">;</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">();</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'/api/info'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">([</span>
+        <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="s1">'info'</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">'name'</span>    <span class="o">=&gt;</span> <span class="s1">'Gonzalo'</span><span class="p">,</span>
+            <span class="s1">'surname'</span> <span class="o">=&gt;</span> <span class="s1">'Ayuso'</span>
+        <span class="p">]]);</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Instead of Silex\Application we’ll use G\Silex\Application.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">namespace</span> <span class="nn">G\Silex</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Silex\Application</span> <span class="k">as</span> <span class="nc">SilexApplication</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">G\Silex\Provider\Login\LoginBuilder</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">Application</span> <span class="kd">extends</span> <span class="nc">SilexApplication</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">array</span> <span class="nv">$values</span> <span class="o">=</span> <span class="p">[])</span>
+    <span class="p">{</span>
+        <span class="k">parent</span><span class="o">::</span><span class="nf">__construct</span><span class="p">(</span><span class="nv">$values</span><span class="p">);</span>
+ 
+        <span class="nc">LoginBuilder</span><span class="o">::</span><span class="nf">mountProviderIntoApplication</span><span class="p">(</span><span class="s1">'/auth'</span><span class="p">,</span> <span class="nv">$this</span><span class="p">);</span>
+ 
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">after</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="kt">Request</span> <span class="nv">$request</span><span class="p">,</span> <span class="kt">Response</span> <span class="nv">$response</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$response</span><span class="o">-&gt;</span><span class="n">headers</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s1">'Access-Control-Allow-Origin'</span><span class="p">,</span> <span class="s1">'*'</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Our new G\Silex\Application is a Silex\Application <a href="http://gonzalo123.com/2013/12/16/enabling-cors-in-a-restfull-silex-server-working-with-a-phonegapcordova-application/http://">enabling CORS</a>. We also mount a Service provider.</p>
+
+<p>The responsibility of our API server will be check the token of every request and to provide one way to get a new token. To get a new token we will create a route “/auth/validateCredentials”. If a valid credentials are given, new token will be send to client.</p>
+
+<p>Our Service provider has two parts: a <a href="http://silex.sensiolabs.org/doc/providers.html#service-providers">service provider</a> and a <a href="http://silex.sensiolabs.org/doc/providers.html#controller-providers">controller provider</a>.</p>
+
+<p>To mount both providers we will use a LoginBuilder class:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">namespace</span> <span class="nn">G\Silex\Provider\Login</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">LoginBuilder</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="n">mountProviderIntoApplication</span><span class="p">(</span><span class="nv">$route</span><span class="p">,</span> <span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">register</span><span class="p">(</span><span class="k">new</span> <span class="nc">LoginServiceProvider</span><span class="p">());</span>
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">mount</span><span class="p">(</span><span class="nv">$route</span><span class="p">,</span> <span class="p">(</span><span class="k">new</span> <span class="nc">LoginControllerProvider</span><span class="p">())</span><span class="o">-&gt;</span><span class="nf">setBaseRoute</span><span class="p">(</span><span class="nv">$route</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Our Controller provider:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">namespace</span> <span class="nn">G\Silex\Provider\Login</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Silex\ControllerProviderInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">LoginControllerProvider</span> <span class="kd">implements</span> <span class="nc">ControllerProviderInterface</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="no">VALIDATE_CREDENTIALS</span> <span class="o">=</span> <span class="s1">'/validateCredentials'</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">TOKEN_HEADER_KEY</span>     <span class="o">=</span> <span class="s1">'X-Token'</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">TOKEN_REQUEST_KEY</span>    <span class="o">=</span> <span class="s1">'_token'</span><span class="p">;</span>
+ 
+    <span class="k">private</span> <span class="nv">$baseRoute</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">setBaseRoute</span><span class="p">(</span><span class="nv">$baseRoute</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">baseRoute</span> <span class="o">=</span> <span class="nv">$baseRoute</span><span class="p">;</span>
+ 
+        <span class="k">return</span> <span class="nv">$this</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">connect</span><span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">setUpMiddlewares</span><span class="p">(</span><span class="nv">$app</span><span class="p">);</span>
+ 
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">extractControllers</span><span class="p">(</span><span class="nv">$app</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">extractControllers</span><span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$controllers</span> <span class="o">=</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">'controllers_factory'</span><span class="p">];</span>
+ 
+        <span class="nv">$controllers</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="k">self</span><span class="o">::</span><span class="no">VALIDATE_CREDENTIALS</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Request</span> <span class="nv">$request</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$user</span>   <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'user'</span><span class="p">);</span>
+            <span class="nv">$pass</span>   <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'pass'</span><span class="p">);</span>
+            <span class="nv">$status</span> <span class="o">=</span> <span class="nv">$app</span><span class="p">[</span><span class="nc">LoginServiceProvider</span><span class="o">::</span><span class="no">AUTH_VALIDATE_CREDENTIALS</span><span class="p">](</span><span class="nv">$user</span><span class="p">,</span> <span class="nv">$pass</span><span class="p">);</span>
+ 
+            <span class="k">return</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">([</span>
+                <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="nv">$status</span><span class="p">,</span>
+                <span class="s1">'info'</span>   <span class="o">=&gt;</span> <span class="nv">$status</span> <span class="o">?</span> <span class="p">[</span><span class="s1">'token'</span> <span class="o">=&gt;</span> <span class="nv">$app</span><span class="p">[</span><span class="nc">LoginServiceProvider</span><span class="o">::</span><span class="no">AUTH_NEW_TOKEN</span><span class="p">](</span><span class="nv">$user</span><span class="p">)]</span> <span class="o">:</span> <span class="p">[]</span>
+            <span class="p">]);</span>
+        <span class="p">});</span>
+ 
+        <span class="k">return</span> <span class="nv">$controllers</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">setUpMiddlewares</span><span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">before</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="kt">Request</span> <span class="nv">$request</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">isAuthRequiredForPath</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">getPathInfo</span><span class="p">()))</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">isValidTokenForApplication</span><span class="p">(</span><span class="nv">$app</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getTokenFromRequest</span><span class="p">(</span><span class="nv">$request</span><span class="p">)))</span> <span class="p">{</span>
+                    <span class="k">throw</span> <span class="k">new</span> <span class="nc">AccessDeniedHttpException</span><span class="p">(</span><span class="s1">'Access Denied'</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">getTokenFromRequest</span><span class="p">(</span><span class="kt">Request</span> <span class="nv">$request</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="n">headers</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="k">self</span><span class="o">::</span><span class="no">TOKEN_HEADER_KEY</span><span class="p">,</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="k">self</span><span class="o">::</span><span class="no">TOKEN_REQUEST_KEY</span><span class="p">));</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">isAuthRequiredForPath</span><span class="p">(</span><span class="nv">$path</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">in_array</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="p">[</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">baseRoute</span> <span class="mf">.</span> <span class="k">self</span><span class="o">::</span><span class="no">VALIDATE_CREDENTIALS</span><span class="p">]);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">isValidTokenForApplication</span><span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">,</span> <span class="nv">$token</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$app</span><span class="p">[</span><span class="nc">LoginServiceProvider</span><span class="o">::</span><span class="no">AUTH_VALIDATE_TOKEN</span><span class="p">](</span><span class="nv">$token</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>And our Service provider:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">namespace</span> <span class="nn">G\Silex\Provider\Login</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Silex\ServiceProviderInterface</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">LoginServiceProvider</span> <span class="kd">implements</span> <span class="nc">ServiceProviderInterface</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="no">AUTH_VALIDATE_CREDENTIALS</span> <span class="o">=</span> <span class="s1">'auth.validate.credentials'</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">AUTH_VALIDATE_TOKEN</span>       <span class="o">=</span> <span class="s1">'auth.validate.token'</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">AUTH_NEW_TOKEN</span>            <span class="o">=</span> <span class="s1">'auth.new.token'</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">register</span><span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$app</span><span class="p">[</span><span class="k">self</span><span class="o">::</span><span class="no">AUTH_VALIDATE_CREDENTIALS</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">protect</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$user</span><span class="p">,</span> <span class="nv">$pass</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">validateCredentials</span><span class="p">(</span><span class="nv">$user</span><span class="p">,</span> <span class="nv">$pass</span><span class="p">);</span>
+        <span class="p">});</span>
+ 
+        <span class="nv">$app</span><span class="p">[</span><span class="k">self</span><span class="o">::</span><span class="no">AUTH_VALIDATE_TOKEN</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">protect</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$token</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">validateToken</span><span class="p">(</span><span class="nv">$token</span><span class="p">);</span>
+        <span class="p">});</span>
+ 
+        <span class="nv">$app</span><span class="p">[</span><span class="k">self</span><span class="o">::</span><span class="no">AUTH_NEW_TOKEN</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">protect</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$user</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getNewTokenForUser</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">boot</span><span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">validateCredentials</span><span class="p">(</span><span class="nv">$user</span><span class="p">,</span> <span class="nv">$pass</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$user</span> <span class="o">==</span> <span class="nv">$pass</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">validateToken</span><span class="p">(</span><span class="nv">$token</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$token</span> <span class="o">==</span> <span class="s1">'a'</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">getNewTokenForUser</span><span class="p">(</span><span class="nv">$user</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">'a'</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Our Service provider will have the logic to validate credentials, token and it must be able to generate a new token:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">function</span> <span class="n">validateCredentials</span><span class="p">(</span><span class="nv">$user</span><span class="p">,</span> <span class="nv">$pass</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$user</span> <span class="o">==</span> <span class="nv">$pass</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="k">private</span> <span class="k">function</span> <span class="n">validateToken</span><span class="p">(</span><span class="nv">$token</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$token</span> <span class="o">==</span> <span class="s1">'a'</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="k">private</span> <span class="k">function</span> <span class="n">getNewTokenForUser</span><span class="p">(</span><span class="nv">$user</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="s1">'a'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>As we can see the logic of the example is very simple. It’s just an example and here we must to perform our logic. Probably we need to check credentials with our database, and our token must be stored somewhere to be validated later.</p>
+
+<p>You can see the example in my <a href="https://github.com/gonzalo123/token">github</a> account. In another post we will see how to build a client application with angularJs to use this API server.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Token+based+authentication+with+Silex+Applications%20%2F2014%2F05%2F05%2Ftoken-based-authentication-with-silex-applications%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2014%2F05%2F05%2Ftoken-based-authentication-with-silex-applications%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Token+based+authentication+with+Silex+Applications&url=%2F2014%2F05%2F05%2Ftoken-based-authentication-with-silex-applications%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2014/05/05/token-based-authentication-with-silex-applications/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2014/05/05/token-based-authentication-with-silex-applications'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2017/12/11/authenticate-openui5-applications-and-lumen-backends-with-amazon-cognito-and-jwt/">Authenticate OpenUI5 applications and Lumen backends with Amazon Cognito and JWT <span class="label label-default">php</span>  <span class="label label-default">symfony</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span>  <span class="label label-default">silex</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

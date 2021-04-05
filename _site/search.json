@@ -552,6 +552,716 @@
   
     {
 
+      "title"    : "Playing with arduino, IoT, crossbar and websockets",
+      "url"      : "/2016/12/12/playing-with-arduino-iot-crossbar-and-websockets/",
+      "category" : "",
+      "tags"     : "arduino, html5, js, node-js, python, technology, iot, websockets",
+      "date"     : "2016-12-12 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Smart bulb controlled from a Raspberry Pi with Python. My RGB alarm clock",
+      "url"      : "/2016/11/07/smart-bulb-controlled-from-a-raspberry-pi-with-python-my-rgb-alarm-clock/",
+      "category" : "",
+      "tags"     : "python, technology, telegram, bot, cron, iot, raspberry-pi, smart-bulb",
+      "date"     : "2016-11-07 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Silex service provider for a Gearman wrapper",
+      "url"      : "/2016/10/19/silex-service-provider-for-a-gearman-wrapper/",
+      "category" : "",
+      "tags"     : "php, technology, gearman, queues, serviceprovider, silex",
+      "date"     : "2016-10-19 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Performing UPSERT (Update or Insert) with PostgreSQL and PHP",
+      "url"      : "/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/",
+      "category" : "",
+      "tags"     : "dbal, pdo, php, postgresql, technology, sql",
+      "date"     : "2016-10-10 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Encrypt Websocket (socket.io) communications",
+      "url"      : "/2016/09/26/encrypt-websocket-socket-io-communications/",
+      "category" : "",
+      "tags"     : "node-js, npm, socket-io, technology, crypt, js, nodejs, websockets",
+      "date"     : "2016-09-26 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots",
+      "url"      : "/2016/08/29/home-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots/",
+      "category" : "",
+      "tags"     : "js, node-js, python, technology, automation, iot, node, raspberry-pi",
+      "date"     : "2016-08-29 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "i18n angular2 service",
+      "url"      : "/2016/08/01/i18n-angular2-service/",
+      "category" : "",
+      "tags"     : "angular2, technology, i18n, ionic2, typescript",
+      "date"     : "2016-08-01 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Notify events from PostgreSQL to external listeners",
+      "url"      : "/2016/07/04/notify-events-from-postgresql-to-external-listeners/",
+      "category" : "",
+      "tags"     : "js, node-js, technology, listen, nodejs, notify, postgresql",
+      "date"     : "2016-07-04 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens)",
+      "url"      : "/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/",
+      "category" : "",
+      "tags"     : "node-js, php, socket-io, technology, twig, websockets, jwt, silex, websockets",
+      "date"     : "2016-06-06 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Sharing authentication between socket.io and a PHP frontend",
+      "url"      : "/2016/05/16/sharing-authentication-between-socket-io-and-a-php-frontend/",
+      "category" : "",
+      "tags"     : "node-js, php, technology, websockets, js, nodejs, sessions, silex, socket-io",
+      "date"     : "2016-05-16 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "PHP Gearman Wrapper",
+      "url"      : "/2016/04/19/php-gearman-wrapper/",
+      "category" : "",
+      "tags"     : "php, technology, gearman, queues",
+      "date"     : "2016-04-19 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Reading Modbus devices with Python from a PHP/Silex Application via Gearman worker",
+      "url"      : "/2016/04/18/reading-modbus-devices-with-python-from-a-phpsilex-application-via-gearman-worker/",
+      "category" : "",
+      "tags"     : "industrial-automation, php, python, technology, twig, automation, gearman, modbus, silex",
+      "date"     : "2016-04-18 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Sending logs to a remote server using RabbitMQ",
+      "url"      : "/2016/03/14/sending-logs-to-a-remote-server-using-rabbitmq/",
+      "category" : "",
+      "tags"     : "queue, rabbitmq, silex",
+      "date"     : "2016-03-14 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Foreign Data Wrappers with PostgreSQL and PHP",
+      "url"      : "/2016/02/22/foreign-data-wrappers-with-postgresql-and-php/",
+      "category" : "",
+      "tags"     : "php, postgresql, technology, postgresql-database, silex",
+      "date"     : "2016-02-22 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Calling Silex backend from command line. Creating SAAS command line tools",
+      "url"      : "/2016/01/25/calling-silex-backend-from-command-line-creating-saas-command-line-tools/",
+      "category" : "",
+      "tags"     : "php, technology, cli, curl, silex",
+      "date"     : "2016-01-25 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Working with Ionic and PHP Backends. Remote debugging with PHP7 and Xdebug working with real devices",
+      "url"      : "/2015/12/14/working-with-ionic-and-php-backends-remote-debugging-with-php7-and-xdebug-working-with-real-devices/",
+      "category" : "",
+      "tags"     : "angularjs, cordova, ionic, js, phonegap, phpstorm, xdebug, angularjs, php, technology",
+      "date"     : "2015-12-14 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "POST Request logger using websockets",
+      "url"      : "/2015/11/16/post-request-logger-using-websockets/",
+      "category" : "",
+      "tags"     : "gps, silex, cordova, phonegap, php, technology",
+      "date"     : "2015-11-16 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Book review: Socket.IO Cookbook",
+      "url"      : "/2015/11/09/book-review-socket-io-cookbook/",
+      "category" : "",
+      "tags"     : "book, javascript, js, review, websockets, book, html5, socket-io, technology",
+      "date"     : "2015-11-09 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Alternative way to inject providers in a Silex application",
+      "url"      : "/2015/10/19/alternative-way-to-inject-providers-in-a-silex-application/",
+      "category" : "",
+      "tags"     : "dic, pimple, service, silex, dependency-injection, php, technology",
+      "date"     : "2015-10-19 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building one HTTP client in PostgreSQL with PL/Python",
+      "url"      : "/2015/09/21/building-one-http-client-in-postgresql-with-plpython/",
+      "category" : "",
+      "tags"     : "pl-python, postgresql, postgresql-database, silex, databases, php, postgresql, python, technology",
+      "date"     : "2015-09-21 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Generating push notifications with Pushbullet and Silex",
+      "url"      : "/2015/08/24/generating-push-notifications-with-pushbullet-and-silex/",
+      "category" : "",
+      "tags"     : "api, push-notifications, pushbullet, silex, php, technology",
+      "date"     : "2015-08-24 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "i18n AngularJS provider",
+      "url"      : "/2015/07/20/i8n-angularjs-provider/",
+      "category" : "",
+      "tags"     : "angular, bower, i8n, ionic, js, angularjs, angularjs, technology",
+      "date"     : "2015-07-20 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Microservice container with Guzzle",
+      "url"      : "/2015/06/29/microservice-container-with-guzzle/",
+      "category" : "",
+      "tags"     : "flask, microservices, silex, slim, php, python, symfony, technology",
+      "date"     : "2015-06-29 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "PHP Dumper using Websockets",
+      "url"      : "/2015/05/11/php-dumper-using-websockets/",
+      "category" : "",
+      "tags"     : "js, silex, socket-io, node-js, npm, php, technology, websockets",
+      "date"     : "2015-05-11 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building TCP server daemond with PHP and Ratchet",
+      "url"      : "/2015/04/13/building-tcp-server-daemon-with-php-and-rachet/",
+      "category" : "",
+      "tags"     : "php, silex, technology, ratchet, socket, tcp, xinet-d",
+      "date"     : "2015-04-13 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Handling private states within AngularJS applications",
+      "url"      : "/2015/03/19/handling-private-states-within-angularjs-applications/",
+      "category" : "",
+      "tags"     : "technology, angularjs, ionic, javascript, js",
+      "date"     : "2015-03-19 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a AngularJS provider for hello.js library",
+      "url"      : "/2015/03/02/building-a-angularjs-provider-for-hello-js-library/",
+      "category" : "",
+      "tags"     : "angularjs, technology, angularjs, hello-js, javascript, js, oaut2",
+      "date"     : "2015-03-02 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Handling AngularJs POST requests with a Silex Backend",
+      "url"      : "/2015/02/02/handling-angularjs-post-requests-with-a-silex-backend/",
+      "category" : "",
+      "tags"     : "angularjs, technology, angular, php, silex, symfony",
+      "date"     : "2015-02-02 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Using OpenUI5 table and Angularjs",
+      "url"      : "/2015/01/12/using-openui5-table-within-angularjs/",
+      "category" : "",
+      "tags"     : "angularjs, html5, php, silex, symfony2, technology, angular, html5, javascrip, js, openui5, sap",
+      "date"     : "2015-01-12 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Why did this year has passed so swiftly? My 2014 Retrospective.",
+      "url"      : "/2014/12/29/why-did-this-year-has-passed-so-swiftly-my-2014-retrospective/",
+      "category" : "",
+      "tags"     : "android, angularjs, cordova, personal, php, silex, symfony, technology, 2014, javascript, js, retrospective",
+      "date"     : "2014-12-29 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Enclosing socket.io Websocket connection inside a HTML5 SharedWorker",
+      "url"      : "/2014/12/01/enclosing-socket-io-websocket-connection-inside-a-html5-sharedworker/",
+      "category" : "",
+      "tags"     : "html5, node-js, socket-io, technology, js, nodejs, websockets",
+      "date"     : "2014-12-01 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Yet Another example of WebSockets, socket.io and AngularJs working with a Silex backend",
+      "url"      : "/2014/10/27/yet-another-example-of-websockets-socket-io-and-angularjs/",
+      "category" : "",
+      "tags"     : "angularjs, node-js, socket-io, express, html5, js, php, silex, symfony, websockets",
+      "date"     : "2014-10-27 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Upgrading Cordova-iOS apps outside Apple Store",
+      "url"      : "/2014/10/13/upgrading-cordova-ios-apps-outside-apple-store/",
+      "category" : "",
+      "tags"     : "android, angularjs, cordova, ios, technology, apple, apple-store, ionic, ios, ios-applications",
+      "date"     : "2014-10-13 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a Pimple/Container from a YAML file",
+      "url"      : "/2014/09/29/building-a-pimplecontainer-from-a-yaml-file/",
+      "category" : "",
+      "tags"     : "php, symfony, technology, config, container, dic, pimple, solid, yaml",
+      "date"     : "2014-09-29 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Sharing $scope between controllers with AngularJs",
+      "url"      : "/2014/09/08/sharing-scope-between-controllers-with-angularjs/",
+      "category" : "",
+      "tags"     : "angularjs, technology, js",
+      "date"     : "2014-09-08 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with websockets, angularjs and socket.io",
+      "url"      : "/2014/08/25/playing-with-websockets-angularjs-and-socket-io/",
+      "category" : "",
+      "tags"     : "angularjs, node-js, php, socket-io, technology, js, silex, websockets",
+      "date"     : "2014-08-25 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Debugging android cordova/phonegap apps with Chrome",
+      "url"      : "/2014/08/04/debugging-android-cordovaphonegap-apps-with-chrome/",
+      "category" : "",
+      "tags"     : "angularjs, cordova, phonegap, technology, chrome, js, tip",
+      "date"     : "2014-08-04 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Upgrading Cordova-Android apps outside Google Play Store with angularjs",
+      "url"      : "/2014/07/28/upgrading-android-apps-outside-google-play-store-with-angularjs/",
+      "category" : "",
+      "tags"     : "android, angularjs, php, technology, cordova, js, phonegap, silex",
+      "date"     : "2014-07-28 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Testing Phonegap/Cordova applications fast as hell in the device (with ionic framework)",
+      "url"      : "/2014/07/21/testing-phonegapcordova-applications-fast-as-hell-in-the-device-with-ionic-framework/",
+      "category" : "",
+      "tags"     : "angularjs, cordova, phonegap, technology, andoid, ionic, ios, js",
+      "date"     : "2014-07-21 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Setting up states from a json file in angularjs applications",
+      "url"      : "/2014/06/30/setting-up-states-from-a-json-file-in-angularjs-applications/",
+      "category" : "",
+      "tags"     : "angularjs, technology, angular, js, routeprovider",
+      "date"     : "2014-06-30 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Token based authentication with Silex and AngularJS",
+      "url"      : "/2014/06/09/token-based-authentication-with-silex-and-angularjs/",
+      "category" : "",
+      "tags"     : "js, php, silex, topcoat, angularjs, cordova, phonegap, symfony",
+      "date"     : "2014-06-09 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Talk about SOLID and Symfony at the deSymfony 2014 conference.",
+      "url"      : "/2014/06/01/talk-about-solid-and-symfony-at-the-desymfony-2014-conference/",
+      "category" : "",
+      "tags"     : "barcelona, conference, desymfony, solid, talk, php, symfony, technology",
+      "date"     : "2014-06-01 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Token based authentication with Silex Applications",
+      "url"      : "/2014/05/05/token-based-authentication-with-silex-applications/",
+      "category" : "",
+      "tags"     : "authentication, silex, token, php, symfony, technology",
+      "date"     : "2014-05-05 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Yet another Database Abstraction layer with PHP and DBAL",
+      "url"      : "/2014/04/07/yet-another-database-abstraction-layer-with-php-and-dbal/",
+      "category" : "",
+      "tags"     : "dbal, pdo, sql, databases, dbal, php, technology",
+      "date"     : "2014-04-07 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Auto injecting dependencies in PHP objects",
+      "url"      : "/2014/03/03/auto-injecting-dependencies-in-php-objects/",
+      "category" : "",
+      "tags"     : "dic, pimple, dependency-injection, php, symfony",
+      "date"     : "2014-03-03 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Integrating WebSockets with PHP applications. Silex and socket.io playing together.",
+      "url"      : "/2013/12/24/integrating-websockets-with-php-applications-silex-and-socket-io-playing-together/",
+      "category" : "",
+      "tags"     : "html5, symfony, symfony2, technology, html5, php, silex, websockets",
+      "date"     : "2013-12-24 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with HTML5. Building a simple pool of WebWokers",
+      "url"      : "/2013/12/22/playing-with-html5-building-a-simple-pool-of-webwokers/",
+      "category" : "",
+      "tags"     : "html5, js, php, html5, pool, silex, webworker",
+      "date"     : "2013-12-22 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Enabling CORS in a RESTFull Silex server, working with a phonegap/cordova applications",
+      "url"      : "/2013/12/16/enabling-cors-in-a-restfull-silex-server-working-with-a-phonegapcordova-application/",
+      "category" : "",
+      "tags"     : "cordova, phonegap, symfony, cors, php, silex",
+      "date"     : "2013-12-16 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "How to run a Web Server from a PHP application",
+      "url"      : "/2013/11/11/how-to-run-a-web-server-from-a-php-application/",
+      "category" : "",
+      "tags"     : "php, symfony, symfony2, technology, web-development, webdev, reactor-pattern, silex, web-server",
+      "date"     : "2013-11-11 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Taking photos with a phonegap/cordova application and uploading them to the server.",
+      "url"      : "/2013/10/28/taking-photos-with-a-phonegapcordova-application-and-uploading-them-to-the-server/",
+      "category" : "",
+      "tags"     : "android, cordova, phonegap, technology, camera, filetransfer, php, upload",
+      "date"     : "2013-10-28 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with event dispatcher and Silex. Sending logs to a remote server.",
+      "url"      : "/2013/10/21/playing-with-event-dispatcher-and-silex-sending-logs-to-a-remote-server/",
+      "category" : "",
+      "tags"     : "php, symfony, technology, silex",
+      "date"     : "2013-10-21 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Using the event dispatcher in a Silex application",
+      "url"      : "/2013/10/14/using-the-event-dispatcher-in-a-silex-application/",
+      "category" : "",
+      "tags"     : "symfony, symfony2, technology, php, silex",
+      "date"     : "2013-10-14 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Multiple Phonegap Push Notifications in the Android&#39;s status bar",
+      "url"      : "/2013/09/30/multiple-phonegap-push-notifications-in-the-androids-status-bar/",
+      "category" : "",
+      "tags"     : "push-notifications",
+      "date"     : "2013-09-30 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Sending automated emails with PHP, Swiftmailer and Twig",
+      "url"      : "/2013/09/23/sending-automated-emails-with-php-swiftmailer-and-twig/",
+      "category" : "",
+      "tags"     : "dependency-injection, php, phpunit, symfony, tdd, technology, twig, coding-dojo, gmail, mediator, swiftmailer, tdd",
+      "date"     : "2013-09-23 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Releasing unmanaged resources (a PHP port from C#&#39;s &quot;using&quot; statement)",
+      "url"      : "/2013/09/09/releasing-unmanaged-resources-a-php-port-from-cs-using-statement/",
+      "category" : "",
+      "tags"     : "php, technology, c#",
+      "date"     : "2013-09-09 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Creating QR codes with PHP and Silex",
+      "url"      : "/2013/09/02/creating-qr-codes-with-php-and-silex/",
+      "category" : "",
+      "tags"     : "php, symfony, technology, qr, qr-code-generator, silex",
+      "date"     : "2013-09-02 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a BDD framework with PHP",
+      "url"      : "/2013/08/19/building-a-bdd-framework-with-php/",
+      "category" : "",
+      "tags"     : "php, phpunit, symfony, technology, bdd, jasmine, language-php, tdd",
+      "date"     : "2013-08-19 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Sending Android Push Notifications from PHP to phonegap applications",
+      "url"      : "/2013/08/05/sending-android-push-notifications-from-php-to-phonegap-applications/",
+      "category" : "",
+      "tags"     : "android, phonegap, php, technology, push",
+      "date"     : "2013-08-05 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Bundles in Silex using Stack",
+      "url"      : "/2013/07/15/bundles-in-silex-using-stack/",
+      "category" : "",
+      "tags"     : "php, symfony, symfony2, technology, silex, stack, technology",
+      "date"     : "2013-07-15 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Dynamic routes with AngularJS and Silex",
+      "url"      : "/2013/07/08/dynamic-routes-with-angularjs-and-silex/",
+      "category" : "",
+      "tags"     : "angularjs, silex, technology, language-php",
+      "date"     : "2013-07-08 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Talk about Dependency Injection and Dependency Injection Containers at the deSymfony 2013 conference",
+      "url"      : "/2013/06/24/talk-about-dependency-injection-and-dependency-injection-containers-at-the-desymfony-2013-conference/",
+      "category" : "",
+      "tags"     : "php, symfony, technology, dependency-injection, desymfony, talks",
+      "date"     : "2013-06-24 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Working with jQuery and Silex as RestFull Resource provider",
+      "url"      : "/2013/06/10/working-with-jquery-and-silex-as-restfull-resource-provider/",
+      "category" : "",
+      "tags"     : "jquery, js, php, symfony, technology, silex, technology",
+      "date"     : "2013-06-10 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Working with AngularJS and Silex as Resource provider",
+      "url"      : "/2013/06/03/working-with-angularjs-and-silex-as-resource-provider/",
+      "category" : "",
+      "tags"     : "angularjs, php, symfony, symfony2, technology, rest, silex",
+      "date"     : "2013-06-03 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Google App Engine, PHP and Silex. Setting up a Login Provider",
+      "url"      : "/2013/05/20/google-app-engine-php-and-silex-setting-up-a-login-provider/",
+      "category" : "",
+      "tags"     : "google-app-engine, symfony, technology, gae, silex",
+      "date"     : "2013-05-20 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Enqueue Symfony&#39;s process components with PHP and ZeroMQ",
+      "url"      : "/2013/04/08/building-a-zeromq-enqueue-with-php/",
+      "category" : "",
+      "tags"     : "php, technology, process, reactor-pattern, sysfony, zeromq",
+      "date"     : "2013-04-08 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Sign-in with Twitter in a Silex application.",
+      "url"      : "/2013/03/18/sign-in-with-twitter-in-a-silex-application/",
+      "category" : "",
+      "tags"     : "php, technology, guzzle, oauth, silex, twitter",
+      "date"     : "2013-03-18 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Scaling Silex applications (part II). Using RouteCollection",
+      "url"      : "/2013/03/04/scaling-silex-applications-part-ii-using-routecollection/",
+      "category" : "",
+      "tags"     : "php, symfony, technology, silex",
+      "date"     : "2013-03-04 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Scaling Silex applications",
+      "url"      : "/2013/02/11/scaling-silex-applications/",
+      "category" : "",
+      "tags"     : "dependency-injection, php, symfony, technology, dic, language-php, silex",
+      "date"     : "2013-02-11 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "How to configure Symfony&#39;s Service Container to use Twitter API",
+      "url"      : "/2013/02/04/how-to-configure-symfonys-service-container-to-use-twitter-api/",
+      "category" : "",
+      "tags"     : "dic, guzzle, software, dependency-injection, php, symfony2, technology, technology, twitter",
+      "date"     : "2013-02-04 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Handling several DBAL Database connections in Symfony2 through the Dependency Injection Container with PHP",
+      "url"      : "/2013/01/14/handling-several-dbal-database-connections-in-symfony2-through-the-dependency-injection-container-with-php/",
+      "category" : "",
+      "tags"     : "databases, dbal, pdo, php, symfony2, technology, dic, pdo, symfony",
+      "date"     : "2013-01-14 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Handling several PDO Database connections in Symfony2 through the Dependency Injection Container with PHP",
+      "url"      : "/2013/01/07/handling-several-pdo-database-connections-in-symfony2-through-the-dependency-injection-container-with-php/",
+      "category" : "",
+      "tags"     : "dic, pdo, php, symfony2, technology, php-project, symfony",
+      "date"     : "2013-01-07 00:00:00 +0100"
+
+    } ,
+  
+    {
+
       "title"    : "Pivot tables in PHP",
       "url"      : "/2010/01/24/pivot-tables-in-php/",
       "category" : "",

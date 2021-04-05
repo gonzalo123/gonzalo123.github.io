@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots</title>
+    <meta name="description"
+          content="Summer holidays are over. Besides my bush walks I’ve been also hacking a little bit with one idea that I had in mind. Summer means high temperatures and I wanted to control my fan. For example turn on the fan when temperature is over a threshold. I can do it using an Arduino board and a temperature sensor, but I don’t have the one Arduino board. I have several devices. For example a Wemo switch. With this device connected to my Wifi network I can switch on and off my fan remotely from my mobile phone (using its android app) or even from my Pebble watch using the API. I also have a BeeWi temperature/humidity sensor. It’s a BTLE device. It comes with its own app for android, but there’s also a API. Yes. I known that one Arduino board with a couple of sensors can be cheaper than one of this devices, but when I’m a shop and I’ve got one of this devices in my hands I cannot resist.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots">
+    <meta name="twitter:description"
+          content="Summer holidays are over. Besides my bush walks I’ve been also hacking a little bit with one idea that I had in mind. Summer means high temperatures and I wanted to control my fan. For example turn on the fan when temperature is over a threshold. I can do it using an Arduino board and a temperature sensor, but I don’t have the one Arduino board. I have several devices. For example a Wemo switch. With this device connected to my Wifi network I can switch on and off my fan remotely from my mobile phone (using its android app) or even from my Pebble watch using the API. I also have a BeeWi temperature/humidity sensor. It’s a BTLE device. It comes with its own app for android, but there’s also a API. Yes. I known that one Arduino board with a couple of sensors can be cheaper than one of this devices, but when I’m a shop and I’ve got one of this devices in my hands I cannot resist.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots">
+    <meta property="og:description"
+          content="Summer holidays are over. Besides my bush walks I’ve been also hacking a little bit with one idea that I had in mind. Summer means high temperatures and I wanted to control my fan. For example turn on the fan when temperature is over a threshold. I can do it using an Arduino board and a temperature sensor, but I don’t have the one Arduino board. I have several devices. For example a Wemo switch. With this device connected to my Wifi network I can switch on and off my fan remotely from my mobile phone (using its android app) or even from my Pebble watch using the API. I also have a BeeWi temperature/humidity sensor. It’s a BTLE device. It comes with its own app for android, but there’s also a API. Yes. I known that one Arduino board with a couple of sensors can be cheaper than one of this devices, but when I’m a shop and I’ve got one of this devices in my hands I cannot resist.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2016/08/29/home-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Summer holidays are over. Besides my bush walks I’ve been also hacking a little bit with one idea that I had in mind. Summer means high temperatures and I wanted to control my fan. For example turn on the fan when temperature is over a threshold. I can do it using an Arduino board and a temperature sensor, but I don’t have the one Arduino board. I have several devices. For example a Wemo switch. With this device connected to my Wifi network I can switch on and off my fan remotely from my mobile phone (using its android app) or even from my Pebble watch using the API. I also have a BeeWi temperature/humidity sensor. It’s a BTLE device. It comes with its own app for android, but there’s also a API. Yes. I known that one Arduino board with a couple of sensors can be cheaper than one of this devices, but when I’m a shop and I’ve got one of this devices in my hands I cannot resist." />
+<meta property="og:description" content="Summer holidays are over. Besides my bush walks I’ve been also hacking a little bit with one idea that I had in mind. Summer means high temperatures and I wanted to control my fan. For example turn on the fan when temperature is over a threshold. I can do it using an Arduino board and a temperature sensor, but I don’t have the one Arduino board. I have several devices. For example a Wemo switch. With this device connected to my Wifi network I can switch on and off my fan remotely from my mobile phone (using its android app) or even from my Pebble watch using the API. I also have a BeeWi temperature/humidity sensor. It’s a BTLE device. It comes with its own app for android, but there’s also a API. Yes. I known that one Arduino board with a couple of sensors can be cheaper than one of this devices, but when I’m a shop and I’ve got one of this devices in my hands I cannot resist." />
+<link rel="canonical" href="/2016/08/29/home-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots/" />
+<meta property="og:url" content="/2016/08/29/home-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-08-29T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2016/08/29/home-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots/"},"url":"/2016/08/29/home-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Summer holidays are over. Besides my bush walks I’ve been also hacking a little bit with one idea that I had in mind. Summer means high temperatures and I wanted to control my fan. For example turn on the fan when temperature is over a threshold. I can do it using an Arduino board and a temperature sensor, but I don’t have the one Arduino board. I have several devices. For example a Wemo switch. With this device connected to my Wifi network I can switch on and off my fan remotely from my mobile phone (using its android app) or even from my Pebble watch using the API. I also have a BeeWi temperature/humidity sensor. It’s a BTLE device. It comes with its own app for android, but there’s also a API. Yes. I known that one Arduino board with a couple of sensors can be cheaper than one of this devices, but when I’m a shop and I’ve got one of this devices in my hands I cannot resist.","dateModified":"2016-08-29T00:00:00+02:00","datePublished":"2016-08-29T00:00:00+02:00","headline":"Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2016-08-29 00:00
+            " class="post-meta__date date">29 Aug 2016</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#js">js</a>, <a
+                href="/tags/#node-js">node-js</a>, <a
+                href="/tags/#python">python</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#automation">automation</a>, <a
+                href="/tags/#iot">iot</a>, <a
+                href="/tags/#node">node</a>, <a
+                href="/tags/#raspberry-pi">raspberry-pi</a></span>
+            
+        </div>
+        <h1 class="post-title">Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots</h1>
+    </header>
+
+    <section class="post">
+        <p>Summer holidays are over. Besides my bush walks I’ve been also hacking a little bit with one idea that I had in mind. Summer means high temperatures and I wanted to control my fan. For example turn on the fan when temperature is over a threshold. I can do it using an Arduino board and a temperature sensor, but I don’t have the one Arduino board. I have several devices. For example a <a href="http://www.belkin.com/es/F7C029-Belkin/p/P-F7C029/">Wemo switch</a>. With this device connected to my Wifi network I can switch on and off my fan remotely from my mobile phone (using its android app) or even from my Pebble watch using the <a href="https://pypi.python.org/pypi/ouimeaux">API</a>. I also have a <a href="http://www.bee-wi.com/bbw200,us,4,BBW200-A1.cfm">BeeWi</a> temperature/humidity sensor. It’s a BTLE device. It comes with its own app for android, but there’s also a API. Yes. I known that one Arduino board with a couple of sensors can be cheaper than one of this devices, but when I’m a shop and I’ve got one of this devices in my hands I cannot resist.</p>
+
+<p>I also have a new Raspberry pi 3. I’ve recently upgraded my home multimedia server from a rpi2 to the new rpi3. Basically I use it as <a href="https://www.plex.tv/">multimedia</a> server and now also as <a href="https://retropie.org.uk/">retro console</a>. This new rpi3 has Bluetooth so I wanted to do something with it. Read temperature from the Bluetooth sensor sounds good so I started to hack a little bit.</p>
+
+<p>I found this <a href="https://www.raspberrypi.org/forums/viewtopic.php?f=37&amp;t=139848">post</a>. I started working with Python. The script almost works but it uses Bluetooth connection and as someone said in the comments it uses a lot of battery. So I switched to a BTLE version. I found a simple node library to connect BTLE devices called <a href="https://github.com/sandeepmistry/noble">noble</a>, really simple to use. In one afternoon I had one small script ready. The idea was put this script in my RP3’s crontab, and scan the temperature each minute (via noble) and if the temperature was over a threshold switch on the wemo device (via ouimeaux). I also wanted to be informed when my fan is switch on and off. The most easier way to do it was via Telegram (I already knew <a href="https://github.com/kosmodrey/telebot">telebot</a> library).</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">noble</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">noble</span><span class="dl">'</span><span class="p">),</span>
+    <span class="nx">Wemo</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">wemo-client</span><span class="dl">'</span><span class="p">),</span>
+    <span class="nx">TeleBot</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">telebot</span><span class="dl">'</span><span class="p">),</span>
+    <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">fs</span><span class="dl">'</span><span class="p">),</span>
+    <span class="nx">beeWiData</span><span class="p">,</span>
+    <span class="nx">wemo</span><span class="p">,</span>
+    <span class="nx">threshold</span><span class="p">,</span>
+    <span class="nx">address</span><span class="p">,</span>
+    <span class="nx">bot</span><span class="p">,</span>
+    <span class="nx">chatId</span><span class="p">,</span>
+    <span class="nx">wemoDevice</span><span class="p">,</span>
+    <span class="nx">configuration</span><span class="p">,</span>
+    <span class="nx">confPath</span><span class="p">;</span>
+ 
+<span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Usage: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">__filename</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> conf.json</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="nx">confPath</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="nx">configuration</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span>
+        <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="p">);</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">configuration file not valid</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="nx">bot</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TeleBot</span><span class="p">(</span><span class="nx">configuration</span><span class="p">.</span><span class="nx">telegramBotAPIKey</span><span class="p">);</span>
+<span class="nx">address</span> <span class="o">=</span> <span class="nx">configuration</span><span class="p">.</span><span class="nx">beeWiAddress</span><span class="p">;</span>
+<span class="nx">threshold</span> <span class="o">=</span> <span class="nx">configuration</span><span class="p">.</span><span class="nx">threshold</span><span class="p">;</span>
+<span class="nx">wemoDevice</span> <span class="o">=</span> <span class="nx">configuration</span><span class="p">.</span><span class="nx">wemoDevice</span><span class="p">;</span>
+<span class="nx">chatId</span> <span class="o">=</span> <span class="nx">configuration</span><span class="p">.</span><span class="nx">telegramChatId</span><span class="p">;</span>
+ 
+<span class="kd">function</span> <span class="nx">persists</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">configuration</span><span class="p">.</span><span class="nx">beeWiData</span> <span class="o">=</span> <span class="nx">beeWiData</span><span class="p">;</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="nx">confPath</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">configuration</span><span class="p">));</span>
+<span class="p">}</span>
+ 
+<span class="kd">function</span> <span class="nx">setSwitchState</span><span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">wemo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Wemo</span><span class="p">();</span>
+    <span class="nx">wemo</span><span class="p">.</span><span class="nx">discover</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">deviceInfo</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">deviceInfo</span><span class="p">.</span><span class="nx">friendlyName</span> <span class="o">==</span> <span class="nx">wemoDevice</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">device found:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">deviceInfo</span><span class="p">.</span><span class="nx">friendlyName</span><span class="p">,</span> <span class="dl">"</span><span class="s2">setting the state to</span><span class="dl">"</span><span class="p">,</span> <span class="nx">state</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">wemo</span><span class="p">.</span><span class="nx">client</span><span class="p">(</span><span class="nx">deviceInfo</span><span class="p">);</span>
+            <span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">binaryState</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">callback</span><span class="p">();</span>
+            <span class="p">});</span>
+ 
+            <span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">statusChange</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">statusChange</span><span class="dl">"</span><span class="p">,</span> <span class="nx">a</span><span class="p">);</span>
+            <span class="p">});</span>
+            <span class="nx">client</span><span class="p">.</span><span class="nx">setBinaryState</span><span class="p">(</span><span class="nx">state</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+ 
+<span class="nx">beeWiData</span> <span class="o">=</span> <span class="p">{</span><span class="na">temperature</span><span class="p">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="na">humidity</span><span class="p">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="na">batery</span><span class="p">:</span> <span class="kc">undefined</span><span class="p">};</span>
+ 
+<span class="kd">function</span> <span class="nx">hexToInt</span><span class="p">(</span><span class="nx">hex</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">hex</span><span class="p">.</span><span class="nx">length</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">hex</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">0</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">hex</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">num</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">hex</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">maxVal</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nx">hex</span><span class="p">.</span><span class="nx">length</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">8</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">num</span> <span class="o">&gt;</span> <span class="nx">maxVal</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">num</span> <span class="o">=</span> <span class="nx">num</span> <span class="o">-</span> <span class="nx">maxVal</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">num</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="nx">noble</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">stateChange</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">state</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">poweredOn</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">noble</span><span class="p">.</span><span class="nx">stopScanning</span><span class="p">();</span>
+        <span class="nx">noble</span><span class="p">.</span><span class="nx">startScanning</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">noble</span><span class="p">.</span><span class="nx">stopScanning</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+ 
+<span class="nx">noble</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">scanStop</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">state</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">beeWiData</span><span class="p">.</span><span class="nx">temperature</span> <span class="o">&gt;</span> <span class="nx">threshold</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">state</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="nx">message</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">temperature (</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">beeWiData</span><span class="p">.</span><span class="nx">temperature</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">) over threshold (</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">threshold</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">). Fan ON. Humidity: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">beeWiData</span><span class="p">.</span><span class="nx">humidity</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">message</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">temperature (</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">beeWiData</span><span class="p">.</span><span class="nx">temperature</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">) under threshold (</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">threshold</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">). Fan OFF. Humidity: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">beeWiData</span><span class="p">.</span><span class="nx">humidity</span><span class="p">;</span>
+        <span class="nx">state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">setSwitchState</span><span class="p">(</span><span class="nx">state</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">configuration</span><span class="p">.</span><span class="nx">beeWiData</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="dl">'</span><span class="s1">temperature</span><span class="dl">'</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">configuration</span><span class="p">.</span><span class="nx">beeWiData</span><span class="p">.</span><span class="nx">temperature</span> <span class="o">&lt;</span> <span class="nx">threshold</span> <span class="o">&amp;&amp;</span> <span class="nx">state</span> <span class="o">===</span> <span class="mi">1</span> <span class="o">||</span> <span class="nx">configuration</span><span class="p">.</span><span class="nx">beeWiData</span><span class="p">.</span><span class="nx">temperature</span> <span class="o">&gt;</span> <span class="nx">threshold</span> <span class="o">&amp;&amp;</span> <span class="nx">state</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Notify to telegram bot</span><span class="dl">"</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+            <span class="nx">bot</span><span class="p">.</span><span class="nx">sendMessage</span><span class="p">(</span><span class="nx">chatId</span><span class="p">,</span> <span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+            <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+                <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+            <span class="p">});</span>
+            <span class="nx">persists</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+            <span class="nx">persists</span><span class="p">();</span>
+            <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+ 
+<span class="nx">noble</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">discover</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">peripheral</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">peripheral</span><span class="p">.</span><span class="nx">address</span> <span class="o">==</span> <span class="nx">address</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">peripheral</span><span class="p">.</span><span class="nx">advertisement</span><span class="p">.</span><span class="nx">manufacturerData</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="dl">'</span><span class="s1">hex</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">beeWiData</span><span class="p">.</span><span class="nx">temperature</span> <span class="o">=</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">hexToInt</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="nx">data</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span><span class="o">/</span><span class="mi">10</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="nx">beeWiData</span><span class="p">.</span><span class="nx">humidity</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span><span class="mi">16</span><span class="p">));</span>
+        <span class="nx">beeWiData</span><span class="p">.</span><span class="nx">batery</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span><span class="mi">16</span><span class="p">);</span>
+        <span class="nx">beeWiData</span><span class="p">.</span><span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+        <span class="nx">noble</span><span class="p">.</span><span class="nx">stopScanning</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+ 
+<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">"</span><span class="s2">timeout exceded!</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">},</span> <span class="mi">5000</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The script is <a href="https://github.com/gonzalo123/fan/">here</a>.</p>
+
+<p>It works but I wanted to keep on hacking. One Sunday morning I read this <a href="https://medium.com/@edwardbenson/how-i-hacked-amazon-s-5-wifi-button-to-track-baby-data-794214b0bdd8#.brqlow60y">post</a>. I don’t have an amazon button, but I wanted to do something similar. I started to play with <a href="https://github.com/secdev/scapy">scapy</a> library sniffing ARP packets in my home network. I realize that I can detect when my Kindle connects to the network, my tv, or even my mobile phone. Then I had one I idea: Detect when my mobile phone connects to my wifi. My mobile phone connects to my wifi before I enter in my house so my idea was simple: Detect when I’m close to my home’s door and send me a telegram message saying “Wellcome home” in addition to the temperature inside my house at this moment.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+</span> 
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">scapy.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">telebot</span>
+<span class="kn">import</span> <span class="nn">gearman</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+ 
+<span class="n">BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">1024</span>
+ 
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">as</span> <span class="n">data_file</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+        <span class="n">myPhone</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'myPhone'</span><span class="p">]</span>
+        <span class="n">routerIP</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'routerIP'</span><span class="p">]</span>
+        <span class="n">TOKEN</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'telegramBotAPIKey'</span><span class="p">]</span>
+        <span class="n">chatID</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'telegramChatId'</span><span class="p">]</span>
+        <span class="n">gearmanServer</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'gearmanServer'</span><span class="p">]</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Unexpected error:"</span><span class="p">,</span> <span class="n">sys</span><span class="p">.</span><span class="n">exc_info</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">raise</span>
+ 
+<span class="k">def</span> <span class="nf">getSensorData</span><span class="p">():</span>
+    <span class="n">gm_client</span> <span class="o">=</span> <span class="n">gearman</span><span class="p">.</span><span class="n">GearmanClient</span><span class="p">([</span><span class="n">gearmanServer</span><span class="p">])</span>
+    <span class="n">completed_job_request</span> <span class="o">=</span> <span class="n">gm_client</span><span class="p">.</span><span class="n">submit_job</span><span class="p">(</span><span class="s">"temp"</span><span class="p">,</span> <span class="s">''</span><span class="p">)</span>
+    <span class="n">io</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">completed_job_request</span><span class="p">.</span><span class="n">result</span><span class="p">)</span>
+ 
+    <span class="k">return</span> <span class="n">json</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
+ 
+<span class="n">tb</span> <span class="o">=</span> <span class="n">telebot</span><span class="p">.</span><span class="n">TeleBot</span><span class="p">(</span><span class="n">TOKEN</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">arp_display</span><span class="p">(</span><span class="n">pkt</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">pkt</span><span class="p">[</span><span class="n">ARP</span><span class="p">].</span><span class="n">op</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">pkt</span><span class="p">[</span><span class="n">ARP</span><span class="p">].</span><span class="n">hwsrc</span> <span class="o">==</span> <span class="n">myPhone</span> <span class="ow">and</span> <span class="n">pkt</span><span class="p">[</span><span class="n">ARP</span><span class="p">].</span><span class="n">pdst</span> <span class="o">==</span> <span class="n">routerIP</span><span class="p">:</span>
+        <span class="n">sensorData</span> <span class="o">=</span> <span class="n">getSensorData</span><span class="p">()</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s">"Wellcome home Gonzalo! Temperature: %s humidity: %s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">sensorData</span><span class="p">[</span><span class="s">'temperature'</span><span class="p">],</span> <span class="n">sensorData</span><span class="p">[</span><span class="s">'humidity'</span><span class="p">])</span>
+        <span class="n">tb</span><span class="p">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">chatID</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">message</span>
+ 
+<span class="k">print</span> <span class="n">sniff</span><span class="p">(</span><span class="n">prn</span><span class="o">=</span><span class="n">arp_display</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s">'arp'</span><span class="p">,</span> <span class="n">store</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>I have one node script to read temperature and one Python script to sniff my network. I can find how to read temperature from Python and use only one script but I was lazy (remember that I was on holiday) so I turned the node script that reads temperature into a <a href="http://gearman.org/">gearman</a> worker.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">noble</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">noble</span><span class="dl">'</span><span class="p">),</span>
+    <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">fs</span><span class="dl">'</span><span class="p">),</span>
+    <span class="nx">Gearman</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">node-gearman</span><span class="dl">'</span><span class="p">),</span>
+    <span class="nx">beeWiData</span><span class="p">,</span>
+    <span class="nx">address</span><span class="p">,</span>
+    <span class="nx">bot</span><span class="p">,</span>
+    <span class="nx">configuration</span><span class="p">,</span>
+    <span class="nx">confPath</span><span class="p">,</span>
+    <span class="nx">status</span><span class="p">,</span>
+    <span class="nx">callback</span><span class="p">;</span>
+ 
+<span class="kd">var</span> <span class="nx">gearman</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Gearman</span><span class="p">();</span>
+ 
+<span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Usage: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">__filename</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> conf.json</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="nx">confPath</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="nx">configuration</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span>
+        <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="p">);</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">configuration file not valid</span><span class="dl">"</span><span class="p">,</span> <span class="nx">e</span><span class="p">);</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="nx">address</span> <span class="o">=</span> <span class="nx">configuration</span><span class="p">.</span><span class="nx">beeWiAddress</span><span class="p">;</span>
+<span class="nx">delay</span> <span class="o">=</span> <span class="nx">configuration</span><span class="p">.</span><span class="nx">tempServerDelayMinutes</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">;</span>
+<span class="nx">tcpPort</span> <span class="o">=</span> <span class="nx">configuration</span><span class="p">.</span><span class="nx">tempServerPort</span><span class="p">;</span>
+ 
+<span class="nx">beeWiData</span> <span class="o">=</span> <span class="p">{};</span>
+ 
+<span class="kd">function</span> <span class="nx">hexToInt</span><span class="p">(</span><span class="nx">hex</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">hex</span><span class="p">.</span><span class="nx">length</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">hex</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">0</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">hex</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">num</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">hex</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">maxVal</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nx">hex</span><span class="p">.</span><span class="nx">length</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">8</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">num</span> <span class="o">&gt;</span> <span class="nx">maxVal</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">num</span> <span class="o">=</span> <span class="nx">num</span> <span class="o">-</span> <span class="nx">maxVal</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">num</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="nx">noble</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">stateChange</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">state</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">poweredOn</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">stateChange:poweredOn</span><span class="dl">"</span><span class="p">);</span>
+        <span class="nx">status</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">status</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+ 
+<span class="nx">noble</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">discover</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">peripheral</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">peripheral</span><span class="p">.</span><span class="nx">address</span> <span class="o">==</span> <span class="nx">address</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">peripheral</span><span class="p">.</span><span class="nx">advertisement</span><span class="p">.</span><span class="nx">manufacturerData</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="dl">'</span><span class="s1">hex</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">beeWiData</span><span class="p">.</span><span class="nx">temperature</span> <span class="o">=</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">hexToInt</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="nx">data</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span><span class="o">/</span><span class="mi">10</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="nx">beeWiData</span><span class="p">.</span><span class="nx">humidity</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span><span class="mi">16</span><span class="p">));</span>
+        <span class="nx">beeWiData</span><span class="p">.</span><span class="nx">batery</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span><span class="mi">16</span><span class="p">);</span>
+        <span class="nx">beeWiData</span><span class="p">.</span><span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+        <span class="nx">noble</span><span class="p">.</span><span class="nx">stopScanning</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+ 
+<span class="nx">noble</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">scanStop</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">beeWiData</span><span class="p">);</span>
+    <span class="nx">noble</span><span class="p">.</span><span class="nx">stopScanning</span><span class="p">();</span>
+    <span class="nx">callback</span><span class="p">();</span>
+<span class="p">});</span>
+ 
+<span class="kd">var</span> <span class="nx">worker</span><span class="p">;</span>
+ 
+<span class="kd">function</span> <span class="nx">workerCallback</span><span class="p">(</span><span class="nx">payload</span><span class="p">,</span> <span class="nx">worker</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">callback</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">worker</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">beeWiData</span><span class="p">));</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">beeWiData</span> <span class="o">=</span> <span class="p">{</span><span class="na">temperature</span><span class="p">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="na">humidity</span><span class="p">:</span> <span class="kc">undefined</span><span class="p">,</span> <span class="na">batery</span><span class="p">:</span> <span class="kc">undefined</span><span class="p">};</span>
+ 
+    <span class="k">if</span> <span class="p">(</span><span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">noble</span><span class="p">.</span><span class="nx">stopScanning</span><span class="p">();</span>
+        <span class="nx">noble</span><span class="p">.</span><span class="nx">startScanning</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">workerCallback</span><span class="p">(</span><span class="nx">payload</span><span class="p">,</span> <span class="nx">worker</span><span class="p">);</span>
+        <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="nx">gearman</span><span class="p">.</span><span class="nx">registerWorker</span><span class="p">(</span><span class="dl">"</span><span class="s2">temp</span><span class="dl">"</span><span class="p">,</span> <span class="nx">workerCallback</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Now I only need to call this worker from my Python sniffer and thats all.</p>
+
+<p>I wanted to play a little bit. I also wanted to ask the temperature on demand. Since I was using Telegram I had an idea. Create a Telegram bot running in my RP3. And that’s my summer pet project. Basically it has three parts:</p>
+
+<p><strong>worker.js</strong> 
+It’s a gearman worker. It reads temperature and humidity from my BeeWi sensor via BTLE</p>
+
+<p><strong>bot.py</strong> 
+It’s a Telegram bot with the following commands available:</p>
+
+<blockquote>
+  <p>/switchInfo: get switch info /switchOFF: switch OFF the switch /help: Gives you information about the available commands /temp: Get temperature /switchON: switch ON the switch</p>
+</blockquote>
+
+<p><strong>sniff.py</strong> 
+It’s just a ARP sniffer. It detects when I’m close to my home and sends me a message via Telegram with the temperature. It detects when my mobile phone sends a ARP package to my router (aka when I connect to my Wifi). It happens before I enter in my house, so the Telegram message arrives before I put the key in the door :)</p>
+
+<p>I run al my scripts in my Raspberry Pi3. To ensure all scripts are up an running I use <a href="http://supervisord.org/">supervisor</a></p>
+
+<p>All the scripts are available in my github <a href="https://github.com/gonzalo123/home-automation">account</a></p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Home+automation+pet+project.+Playing+with+IoT%2C+temperature+sensors%2C+fans+and+Telegram+bots%20%2F2016%2F08%2F29%2Fhome-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2016%2F08%2F29%2Fhome-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Home+automation+pet+project.+Playing+with+IoT%2C+temperature+sensors%2C+fans+and+Telegram+bots&url=%2F2016%2F08%2F29%2Fhome-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2016/08/29/home-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2016/08/29/home-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2020/01/13/alexa-and-raspberry-pi-demo-part-2-listening-to-external-events/">Alexa and Raspberry Pi demo (Part 2). Listening to external events <span class="label label-default">iot</span>  <span class="label label-default">raspberry-pi</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/12/16/alexa-and-raspberry-pi-demo/">Alexa and Raspberry Pi demo <span class="label label-default">iot</span>  <span class="label label-default">python</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/10/07/playing-with-threads-and-python-part-2/">Playing with threads and Python. Part 2 <span class="label label-default">python</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/08/19/playing-with-threads-and-python/">Playing with threads and Python <span class="label label-default">python</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

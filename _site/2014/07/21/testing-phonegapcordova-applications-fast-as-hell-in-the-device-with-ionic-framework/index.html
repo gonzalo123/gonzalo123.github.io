@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Testing Phonegap/Cordova applications fast as hell in the device (with ionic framework)</title>
+    <meta name="description"
+          content="Normally when we work with Phonegap/Cordova applications we work in two phases. First we develop the application locally using our browser. That’s “fast” phase. We change something within our code, then we reload our browser and we see the outcome. It isn’t different from a “traditional” web developing process. Normally I use the ionic framework. Ionic is great and it also provides us a good tool to run a local server. We just type:
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Testing Phonegap/Cordova applications fast as hell in the device (with ionic framework)">
+    <meta name="twitter:description"
+          content="Normally when we work with Phonegap/Cordova applications we work in two phases. First we develop the application locally using our browser. That’s “fast” phase. We change something within our code, then we reload our browser and we see the outcome. It isn’t different from a “traditional” web developing process. Normally I use the ionic framework. Ionic is great and it also provides us a good tool to run a local server. We just type:
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Testing Phonegap/Cordova applications fast as hell in the device (with ionic framework)">
+    <meta property="og:description"
+          content="Normally when we work with Phonegap/Cordova applications we work in two phases. First we develop the application locally using our browser. That’s “fast” phase. We change something within our code, then we reload our browser and we see the outcome. It isn’t different from a “traditional” web developing process. Normally I use the ionic framework. Ionic is great and it also provides us a good tool to run a local server. We just type:
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2014/07/21/testing-phonegapcordova-applications-fast-as-hell-in-the-device-with-ionic-framework/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Testing Phonegap/Cordova applications fast as hell in the device (with ionic framework) | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Testing Phonegap/Cordova applications fast as hell in the device (with ionic framework)" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Normally when we work with Phonegap/Cordova applications we work in two phases. First we develop the application locally using our browser. That’s “fast” phase. We change something within our code, then we reload our browser and we see the outcome. It isn’t different from a “traditional” web developing process. Normally I use the ionic framework. Ionic is great and it also provides us a good tool to run a local server. We just type:" />
+<meta property="og:description" content="Normally when we work with Phonegap/Cordova applications we work in two phases. First we develop the application locally using our browser. That’s “fast” phase. We change something within our code, then we reload our browser and we see the outcome. It isn’t different from a “traditional” web developing process. Normally I use the ionic framework. Ionic is great and it also provides us a good tool to run a local server. We just type:" />
+<link rel="canonical" href="/2014/07/21/testing-phonegapcordova-applications-fast-as-hell-in-the-device-with-ionic-framework/" />
+<meta property="og:url" content="/2014/07/21/testing-phonegapcordova-applications-fast-as-hell-in-the-device-with-ionic-framework/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-07-21T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Testing Phonegap/Cordova applications fast as hell in the device (with ionic framework)" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2014/07/21/testing-phonegapcordova-applications-fast-as-hell-in-the-device-with-ionic-framework/"},"url":"/2014/07/21/testing-phonegapcordova-applications-fast-as-hell-in-the-device-with-ionic-framework/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Normally when we work with Phonegap/Cordova applications we work in two phases. First we develop the application locally using our browser. That’s “fast” phase. We change something within our code, then we reload our browser and we see the outcome. It isn’t different from a “traditional” web developing process. Normally I use the ionic framework. Ionic is great and it also provides us a good tool to run a local server. We just type:","dateModified":"2014-07-21T00:00:00+02:00","datePublished":"2014-07-21T00:00:00+02:00","headline":"Testing Phonegap/Cordova applications fast as hell in the device (with ionic framework)","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2014-07-21 00:00
+            " class="post-meta__date date">21 Jul 2014</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#angularjs">angularjs</a>, <a
+                href="/tags/#cordova">cordova</a>, <a
+                href="/tags/#phonegap">phonegap</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#andoid">andoid</a>, <a
+                href="/tags/#ionic">ionic</a>, <a
+                href="/tags/#ios">ios</a>, <a
+                href="/tags/#js">js</a></span>
+            
+        </div>
+        <h1 class="post-title">Testing Phonegap/Cordova applications fast as hell in the device (with ionic framework)</h1>
+    </header>
+
+    <section class="post">
+        <p>Normally when we work with Phonegap/<a href="http://cordova.apache.org/">Cordova</a> applications we work in two phases. First we develop the application locally using our browser. That’s “fast” phase. We change something within our code, then we reload our browser and we see the outcome. It isn’t different from a “traditional” web developing process. Normally I use the <a href="http://ionicframework.com/">ionic framework</a>. Ionic is great and it also provides us a good tool to run a local server. We just type:</p>
+
+<pre><code class="language-commandline">ionic serve
+</code></pre>
+
+<p>And ionic starts a local server on port 8100 with our Cordova application, ready to test with the browser (it also opens the browser). That’s not the cool part. Ionic also starts a live reload server at http://0.0.0.0:35729 and adds the following snippet at the end of our index.html</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span><span class="c1">//</span><span class="o">&lt;!</span><span class="p">[</span><span class="nx">CDATA</span><span class="p">[</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;script src="</span><span class="dl">'</span> <span class="o">+</span> <span class="p">(</span><span class="nx">location</span><span class="p">.</span><span class="nx">protocol</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">http:</span><span class="dl">'</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">//</span><span class="dl">'</span> <span class="o">+</span> <span class="p">(</span><span class="nx">location</span><span class="p">.</span><span class="nx">hostname</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">localhost</span><span class="dl">'</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">:35729/livereload.js?snipver=1" type="text/javascript"&gt;&lt;</span><span class="se">\</span><span class="s1">/script&gt;</span><span class="dl">'</span><span class="p">)</span>
+<span class="c1">//]]&gt;</span><span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>With this snippet our application will be reloaded when we add/remove something in our file tree (it runs a filesystem watcher in background).</p>
+
+<p>But as I said before it’s the “fast” phase and sooner or later we will need to run the application in the real device. OK we’ve got emulators, but they are horrible. Android emulator is incredible slow. IOS one is faster but we need to redeploy the application again and again with each change. For example when we correct a silly bug we need to run the following command to see the application running on the device:</p>
+
+<pre><code class="language-commandline">cordova run android --device
+</code></pre>
+
+<p>And it takes time (around 10 seconds). We’ve gone from the “fast” phase to the “slooooow” one. That means that I tried to avoid this phase until no remedy.</p>
+
+<p>If you don’t use plugins you can let this “slow” phase to the end, only to see the behaviour in the device and fix customizations, but ir we use plugins (camera plugin, push notifications or things like that) we really need to test on the real device. Those kind of things doesn’t work in the browser or even with the emulator.</p>
+
+<p>This “slow” phase droves me crazy, so I started to think a little bit about it. One Cordova app has two parts. The native one (java code in android and objective-c in ios) and the html/js part. We need to tell to our Cordova application where is the initial index.html. We usually do it in config.xml</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;content</span> <span class="na">src=</span><span class="s">"index.html"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>But we can change this initial file and use a remote one. That’s the way to create a “native” app from and existing web application.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;content</span> <span class="na">src=</span><span class="s">"http://gonzalo123.com"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>According to this we can start a local server in our host and use this local web server. Even in our LAN (if our android/ios device is the LAN of course)</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;content</span> <span class="na">src=</span><span class="s">"http://192.168.1.1:8100/index.html"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>But, what happens with the plugins? Plugins needs cordova.js file and this file isn’t in www folder. This file is generated when we build the application to a specific platform</p>
+
+<pre><code class="language-commandline">platforms/android/assets/www/cordova.js
+</code></pre>
+
+<p>So, what’s the idea. The idea is:</p>
+
+<ul>
+  <li>Run a local server with (inoic serve for example)</li>
+  <li>Enable the fs watcher to restart the application when we change one file in the filesystem (inonic serve do it by default)</li>
+  <li>Build the application and install it in the real device</li>
+  <li>Use our local server to serve static files instead of build again and again the application with each change.</li>
+</ul>
+
+<p>With this approach we only need to deploy the application to the real device when we want to add/remove one plugin. If we change anything in the static files (html, js, css) our app will be reloaded automatically. The “slow” phase turns into a “fast” phase.</p>
+
+<p>How can we do it? It’s easy. In this example I suppose that we’re using one android device. If we use on iPhone we only need to change “adroid” to “ios”.</p>
+
+<p>First of all we need to prepare our index.html to enable auto-reload. “ionic serve” do it automatically but it thinks that we’re going to use it with your host browser. Not with the “real” device. We can change it manually adding to our index.html (this snippet suppose that your host is 192.168.1.1 if it’s a different one use your local IP address):</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span><span class="c1">//</span><span class="o">&lt;!</span><span class="p">[</span><span class="nx">CDATA</span><span class="p">[</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;script src="http://192.168.1.1:35729/livereload.js?snipver=1" type="text/javascript"&gt;&lt;</span><span class="se">\</span><span class="s1">/script&gt;</span><span class="dl">'</span><span class="p">)</span>
+<span class="c1">//]]&gt;</span><span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>Now we change our config.xml to use our local server instead of device’s files:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--&lt;content src="index.html" /&gt;--&gt;</span>
+<span class="nt">&lt;content</span> <span class="na">src=</span><span class="s">"http://192.168.1.105:8100/index.html"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>Now we need to deploy the application to our device:</p>
+
+<pre><code class="language-commandline">cordova run android --device
+</code></pre>
+
+<p>Each time we add/remove one plugin we need to redeploy to the device. But we need to keep in mind that our device will use the cordova.js from our local server, and not from its filesystem. “cordova run android –device” will generate the file to the platform and deploy them to the real device, but as well as we’re going to use this file from our local server (in www), we need to create a set of symlinks in our www folder.</p>
+
+<p>(I’ve got one setUp.sh file with this commands)</p>
+
+<pre><code class="language-commandline">cd www
+ln -s ../platforms/android/assets/www/cordova.js
+ln -s ../platforms/android/assets/www/cordova_plugins.js
+ln -s ../platforms/android/assets/www/plugins
+cd ..
+</code></pre>
+
+<p>Now can start the application’s server in our host with:</p>
+
+<pre><code class="language-commandline">ionic serve --nobrowser
+</code></pre>
+
+<p>notice that we’re using –nobrowser. We’re using this parameter to not to open our local browser. We’re going to use de device’s Cordova’s Webkit one, and also if we open our browser it will crash because cordova.js is present now and our local host isn’t a real device.</p>
+
+<p>Each time we need to redeploy the application to the device (new plugin for example) we need to remember to quit the symlinks, and redeploy.</p>
+
+<p>(I’ve got one tearDown.sh file with this commands)</p>
+
+<pre><code class="language-commandline">rm www/cordova.js
+rm www/cordova_plugins.js
+rm -Rf www/plugins
+</code></pre>
+
+<p>And that’s all. I now that this little hack may looks like something difficult but we need less than a minute to set up the environment and we will save thousand of seconds in the development process. I we work a little bit we can automate this process and turn it into a trivial operation, but at least now I feel very comfortable.</p>
+
+<p>Of course you need to remember to clean the project when you finish and use the device’s files. So we need to remove the auto-reload snippet in the index.html, remove symlinks and restore config.xml.</p>
+
+<p>UPDATE:</p>
+
+<p>ionic framework comes now with this feature out-of-the box. Just follow the instructions explained here: <a href="http://ionicframework.com/blog/live-reload-all-things-ionic-cli/">link</a></p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Testing+Phonegap%2FCordova+applications+fast+as+hell+in+the+device+%28with+ionic+framework%29%20%2F2014%2F07%2F21%2Ftesting-phonegapcordova-applications-fast-as-hell-in-the-device-with-ionic-framework%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2014%2F07%2F21%2Ftesting-phonegapcordova-applications-fast-as-hell-in-the-device-with-ionic-framework%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Testing+Phonegap%2FCordova+applications+fast+as+hell+in+the+device+%28with+ionic+framework%29&url=%2F2014%2F07%2F21%2Ftesting-phonegapcordova-applications-fast-as-hell-in-the-device-with-ionic-framework%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2014/07/21/testing-phonegapcordova-applications-fast-as-hell-in-the-device-with-ionic-framework/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2014/07/21/testing-phonegapcordova-applications-fast-as-hell-in-the-device-with-ionic-framework'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/07/22/playing-with-totp-2fa-and-mobile-applications-with-ionic/">Playing with TOTP (2FA) and mobile applications with ionic <span class="label label-default">technology</span>  <span class="label label-default">ionic</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/01/14/using-cache-buster-with-openui5-outside-scp/">Using cache buster with OpenUI5 outside SCP <span class="label label-default">technology</span>  <span class="label label-default">js</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/12/12/playing-with-arduino-iot-crossbar-and-websockets/">Playing with arduino, IoT, crossbar and websockets <span class="label label-default">js</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/09/26/encrypt-websocket-socket-io-communications/">Encrypt Websocket (socket.io) communications <span class="label label-default">technology</span>  <span class="label label-default">js</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

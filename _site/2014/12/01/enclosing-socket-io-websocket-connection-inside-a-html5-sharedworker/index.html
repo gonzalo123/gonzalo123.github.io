@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Enclosing socket.io Websocket connection inside a HTML5 SharedWorker</title>
+    <meta name="description"
+          content="I really like WebSockets. I’ve written several posts about them. Today we’re going to speak about something related to WebSockets. Let me explain it a little bit.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Enclosing socket.io Websocket connection inside a HTML5 SharedWorker">
+    <meta name="twitter:description"
+          content="I really like WebSockets. I’ve written several posts about them. Today we’re going to speak about something related to WebSockets. Let me explain it a little bit.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Enclosing socket.io Websocket connection inside a HTML5 SharedWorker">
+    <meta property="og:description"
+          content="I really like WebSockets. I’ve written several posts about them. Today we’re going to speak about something related to WebSockets. Let me explain it a little bit.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2014/12/01/enclosing-socket-io-websocket-connection-inside-a-html5-sharedworker/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Enclosing socket.io Websocket connection inside a HTML5 SharedWorker | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Enclosing socket.io Websocket connection inside a HTML5 SharedWorker" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I really like WebSockets. I’ve written several posts about them. Today we’re going to speak about something related to WebSockets. Let me explain it a little bit." />
+<meta property="og:description" content="I really like WebSockets. I’ve written several posts about them. Today we’re going to speak about something related to WebSockets. Let me explain it a little bit." />
+<link rel="canonical" href="/2014/12/01/enclosing-socket-io-websocket-connection-inside-a-html5-sharedworker/" />
+<meta property="og:url" content="/2014/12/01/enclosing-socket-io-websocket-connection-inside-a-html5-sharedworker/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-12-01T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Enclosing socket.io Websocket connection inside a HTML5 SharedWorker" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2014/12/01/enclosing-socket-io-websocket-connection-inside-a-html5-sharedworker/"},"url":"/2014/12/01/enclosing-socket-io-websocket-connection-inside-a-html5-sharedworker/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"I really like WebSockets. I’ve written several posts about them. Today we’re going to speak about something related to WebSockets. Let me explain it a little bit.","dateModified":"2014-12-01T00:00:00+01:00","datePublished":"2014-12-01T00:00:00+01:00","headline":"Enclosing socket.io Websocket connection inside a HTML5 SharedWorker","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2014-12-01 00:00
+            " class="post-meta__date date">1 Dec 2014</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#html5">html5</a>, <a
+                href="/tags/#node-js">node-js</a>, <a
+                href="/tags/#socket-io">socket-io</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#js">js</a>, <a
+                href="/tags/#nodejs">nodejs</a>, <a
+                href="/tags/#websockets">websockets</a></span>
+            
+        </div>
+        <h1 class="post-title">Enclosing socket.io Websocket connection inside a HTML5 SharedWorker</h1>
+    </header>
+
+    <section class="post">
+        <p>I really like WebSockets. I’ve written several posts about <a href="http://gonzalo123.com/category/technology/websockets/">them</a>. Today we’re going to speak about something related to WebSockets. Let me explain it a little bit.</p>
+
+<p>Imagine that we build a Web Application with WebSockets. That’s means that when we start the application, we need to connect to the WebSockets server. If our application is a Single-page application, we’ll create one socket per application, but: What happens if we open three tabs with the application within the browser? The answer is simple, we’ll create three sockets. Also, if we reload one tab (a full refresh) we’ll disconnect our socket and reconnect again. Maybe we can handle this situation, but we can easily bypass this disconnect-connect situation with a HTML5 feature called <a href="http://www.w3.org/TR/workers/#shared-workers-introduction">SharedWorkers</a>.</p>
+
+<p>Web Workers allows us to run JavaScript process in background. We also can create Shared Workers. SharedWorkers can be shared within our browser session. That’s means that we can enclose our WebSocket server inside s SharedWorker, and if we open various tabs with our browser we only need one Socket (one socket per session instead one socket per tab).</p>
+
+<p>I’ve written a simple library called gio to perform this operation. gio uses socket.io to create WebSockets. WebWorker is a new HTML5 feature and it needs a modern browser. Socket.io works also with old browsers. It checks if WebWorkers are available and if they isn’t, then gio creates a WebSocket connection instead of using a WebWorker to enclose the WebSockets.</p>
+
+<p>We can see one simple video to see how it works. In the video we can see how sockets are created. Only one socket is created even if we open more than one tab in our browser. But if we open a new session (one incognito session for example), a new socket is created</p>
+
+<p><a href="https://www.youtube.com/watch?v=hirV-ZXHaHc"><img src="https://img.youtube.com/vi/hirV-ZXHaHc/0.jpg" alt="youtube" /></a></p>
+
+<p>Here we can see the SharedWorker code:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">"</span><span class="s2">use strict</span><span class="dl">"</span><span class="p">;</span>
+ 
+<span class="nx">importScripts</span><span class="p">(</span><span class="dl">'</span><span class="s1">socket.io.js</span><span class="dl">'</span><span class="p">);</span>
+ 
+<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nx">name</span><span class="p">),</span>
+    <span class="nx">ports</span> <span class="o">=</span> <span class="p">[];</span>
+ 
+<span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">connect</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">port</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">ports</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="nx">ports</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">port</span><span class="p">);</span>
+    <span class="nx">port</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+ 
+    <span class="nx">port</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">message</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">eventName</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">events</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+ 
+            <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">events</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">port</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span><span class="na">type</span><span class="p">:</span> <span class="nx">eventName</span><span class="p">,</span> <span class="na">message</span><span class="p">:</span> <span class="nx">e</span><span class="p">});</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+ 
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">connect</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">ports</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ports</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">postMessage</span><span class="p">({</span><span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">_connect</span><span class="dl">'</span><span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+ 
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">disconnect</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">ports</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ports</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">postMessage</span><span class="p">({</span><span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">_disconnect</span><span class="dl">'</span><span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>And here we can see the gio source code:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">gio</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">uri</span><span class="p">,</span> <span class="nx">onConnect</span><span class="p">,</span> <span class="nx">onDisConnect</span><span class="p">)</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">use strict</span><span class="dl">"</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">worker</span><span class="p">,</span> <span class="nx">onError</span><span class="p">,</span> <span class="nx">workerUri</span><span class="p">,</span> <span class="nx">events</span> <span class="o">=</span> <span class="p">{};</span>
+ 
+    <span class="kd">function</span> <span class="nx">getKeys</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">keys</span> <span class="o">=</span> <span class="p">[];</span>
+ 
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">i</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nx">keys</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+ 
+        <span class="k">return</span> <span class="nx">keys</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="kd">function</span> <span class="nx">onMessage</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="dl">'</span><span class="s1">_connect</span><span class="dl">'</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">onConnect</span><span class="p">)</span> <span class="nx">onConnect</span><span class="p">();</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="dl">'</span><span class="s1">_disconnect</span><span class="dl">'</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">onDisConnect</span><span class="p">)</span> <span class="nx">onDisConnect</span><span class="p">();</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="nl">default</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">events</span><span class="p">[</span><span class="nx">type</span><span class="p">])</span> <span class="nx">events</span><span class="p">[</span><span class="nx">type</span><span class="p">](</span><span class="nx">message</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="kd">function</span> <span class="nx">startWorker</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">worker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SharedWorker</span><span class="p">(</span><span class="nx">workerUri</span><span class="p">,</span> <span class="nx">uri</span><span class="p">);</span>
+        <span class="nx">worker</span><span class="p">.</span><span class="nx">port</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">message</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">onMessage</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+ 
+        <span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+ 
+        <span class="nx">worker</span><span class="p">.</span><span class="nx">onerror</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">onError</span><span class="p">)</span> <span class="nx">onError</span><span class="p">(</span><span class="nx">evt</span><span class="p">);</span>
+        <span class="p">};</span>
+ 
+        <span class="nx">worker</span><span class="p">.</span><span class="nx">port</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+        <span class="nx">worker</span><span class="p">.</span><span class="nx">port</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span><span class="na">events</span><span class="p">:</span> <span class="nx">getKeys</span><span class="p">(</span><span class="nx">events</span><span class="p">)});</span>
+    <span class="p">}</span>
+ 
+    <span class="kd">function</span> <span class="nx">startSocketIo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">(</span><span class="nx">uri</span><span class="p">);</span>
+        <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">connect</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">onConnect</span><span class="p">)</span> <span class="nx">onConnect</span><span class="p">();</span>
+        <span class="p">});</span>
+ 
+        <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">disconnect</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">onDisConnect</span><span class="p">)</span> <span class="nx">onDisConnect</span><span class="p">();</span>
+        <span class="p">});</span>
+ 
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">eventName</span> <span class="k">in</span> <span class="nx">events</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">events</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">eventName</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="nx">eventName</span><span class="p">,</span> <span class="nx">socketOnEventHandler</span><span class="p">(</span><span class="nx">eventName</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="kd">function</span> <span class="nx">socketOnEventHandler</span><span class="p">(</span><span class="nx">eventName</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">onMessage</span><span class="p">(</span><span class="nx">eventName</span><span class="p">,</span> <span class="nx">e</span><span class="p">);</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+ 
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="na">registerEvent</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">eventName</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">events</span><span class="p">[</span><span class="nx">eventName</span><span class="p">]</span> <span class="o">=</span> <span class="nx">callback</span><span class="p">;</span>
+        <span class="p">},</span>
+ 
+        <span class="na">start</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">SharedWorker</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">startSocketIo</span><span class="p">();</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">startWorker</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+ 
+        <span class="na">onError</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">cbk</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">onError</span> <span class="o">=</span> <span class="nx">cbk</span><span class="p">;</span>
+        <span class="p">},</span>
+ 
+        <span class="na">setWorker</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">uri</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">workerUri</span> <span class="o">=</span> <span class="nx">uri</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>And here the application code:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">gio</span><span class="p">)</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">use strict</span><span class="dl">"</span><span class="p">;</span>
+ 
+    <span class="kd">var</span> <span class="nx">onConnect</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">connected!</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">};</span>
+ 
+    <span class="kd">var</span> <span class="nx">onDisConnect</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">disconnect!</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">};</span>
+ 
+    <span class="kd">var</span> <span class="nx">ws</span> <span class="o">=</span> <span class="nx">gio</span><span class="p">(</span><span class="dl">"</span><span class="s2">http://localhost:8080</span><span class="dl">"</span><span class="p">,</span> <span class="nx">onConnect</span><span class="p">,</span> <span class="nx">onDisConnect</span><span class="p">);</span>
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">setWorker</span><span class="p">(</span><span class="dl">"</span><span class="s2">sharedWorker.js</span><span class="dl">"</span><span class="p">);</span>
+ 
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">registerEvent</span><span class="p">(</span><span class="dl">"</span><span class="s2">message</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">message</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+    <span class="p">});</span>
+ 
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">onError</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+    <span class="p">});</span>
+ 
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+<span class="p">}(</span><span class="nx">gio</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>I’ve also created a simple webSocket server with socket.io. In this small server there’s a setInterval function broadcasting one message to all clients per second to see the application working</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">io</span><span class="p">,</span> <span class="nx">connectedSockets</span><span class="p">;</span>
+ 
+<span class="nx">io</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">socket.io</span><span class="dl">'</span><span class="p">).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8080</span><span class="p">);</span>
+<span class="nx">connectedSockets</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ 
+<span class="nx">io</span><span class="p">.</span><span class="nx">sockets</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">connection</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">socket</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">connectedSockets</span><span class="o">++</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Socket connected! Conected sockets:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">connectedSockets</span><span class="p">);</span>
+ 
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">disconnect</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">connectedSockets</span><span class="o">--</span><span class="p">;</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Socket disconnect! Conected sockets:</span><span class="dl">"</span><span class="p">,</span> <span class="nx">connectedSockets</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+ 
+<span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">io</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">"</span><span class="s2">message</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Hola </span><span class="dl">"</span> <span class="o">+</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">());</span>
+<span class="p">},</span> <span class="mi">1000</span><span class="p">);</span> 
+</code></pre></div></div>
+
+<p>Source code is available in my <a href="https://github.com/gonzalo123/wsww">github account</a>.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Enclosing+socket.io+Websocket+connection+inside+a+HTML5+SharedWorker%20%2F2014%2F12%2F01%2Fenclosing-socket-io-websocket-connection-inside-a-html5-sharedworker%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2014%2F12%2F01%2Fenclosing-socket-io-websocket-connection-inside-a-html5-sharedworker%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Enclosing+socket.io+Websocket+connection+inside+a+HTML5+SharedWorker&url=%2F2014%2F12%2F01%2Fenclosing-socket-io-websocket-connection-inside-a-html5-sharedworker%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2014/12/01/enclosing-socket-io-websocket-connection-inside-a-html5-sharedworker/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2014/12/01/enclosing-socket-io-websocket-connection-inside-a-html5-sharedworker'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/09/02/alexa-skill-example-with-serverless-framework/">Alexa skill example with Serverless framework <span class="label label-default">technology</span>  <span class="label label-default">nodejs</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/01/14/using-cache-buster-with-openui5-outside-scp/">Using cache buster with OpenUI5 outside SCP <span class="label label-default">technology</span>  <span class="label label-default">js</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2018/10/08/working-with-sapui5-locally-part-3-adding-more-services-in-docker/">Working with SAPUI5 locally (part 3). Adding more services in Docker <span class="label label-default">js</span>  <span class="label label-default">socket-io</span>  <span class="label label-default">websockets</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2018/05/07/happy-logins-only-the-happy-user-will-pass/">Happy logins. Only the happy user will pass <span class="label label-default">html5</span>  <span class="label label-default">websockets</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

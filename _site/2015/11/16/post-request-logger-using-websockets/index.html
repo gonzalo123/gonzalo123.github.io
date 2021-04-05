@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>POST Request logger using websockets</title>
+    <meta name="description"
+          content="Last days I’ve been working with background geolocation with an ionic application. There’s a cool plugin to do that. The free version of the plugin works fine. But there’s a also a premium version with improvements, especially in battery consumption with Android devices.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="POST Request logger using websockets">
+    <meta name="twitter:description"
+          content="Last days I’ve been working with background geolocation with an ionic application. There’s a cool plugin to do that. The free version of the plugin works fine. But there’s a also a premium version with improvements, especially in battery consumption with Android devices.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="POST Request logger using websockets">
+    <meta property="og:description"
+          content="Last days I’ve been working with background geolocation with an ionic application. There’s a cool plugin to do that. The free version of the plugin works fine. But there’s a also a premium version with improvements, especially in battery consumption with Android devices.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2015/11/16/post-request-logger-using-websockets/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>POST Request logger using websockets | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="POST Request logger using websockets" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Last days I’ve been working with background geolocation with an ionic application. There’s a cool plugin to do that. The free version of the plugin works fine. But there’s a also a premium version with improvements, especially in battery consumption with Android devices." />
+<meta property="og:description" content="Last days I’ve been working with background geolocation with an ionic application. There’s a cool plugin to do that. The free version of the plugin works fine. But there’s a also a premium version with improvements, especially in battery consumption with Android devices." />
+<link rel="canonical" href="/2015/11/16/post-request-logger-using-websockets/" />
+<meta property="og:url" content="/2015/11/16/post-request-logger-using-websockets/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-11-16T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="POST Request logger using websockets" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2015/11/16/post-request-logger-using-websockets/"},"url":"/2015/11/16/post-request-logger-using-websockets/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Last days I’ve been working with background geolocation with an ionic application. There’s a cool plugin to do that. The free version of the plugin works fine. But there’s a also a premium version with improvements, especially in battery consumption with Android devices.","dateModified":"2015-11-16T00:00:00+01:00","datePublished":"2015-11-16T00:00:00+01:00","headline":"POST Request logger using websockets","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2015-11-16 00:00
+            " class="post-meta__date date">16 Nov 2015</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#gps">gps</a>, <a
+                href="/tags/#silex">silex</a>, <a
+                href="/tags/#cordova">cordova</a>, <a
+                href="/tags/#phonegap">phonegap</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#technology">technology</a></span>
+            
+        </div>
+        <h1 class="post-title">POST Request logger using websockets</h1>
+    </header>
+
+    <section class="post">
+        <p>Last days I’ve been working with background geolocation with an ionic application. There’s a cool <a href="https://github.com/transistorsoft/cordova-background-geolocation-lt">plugin</a> to do that. The free version of the plugin works fine. But there’s a also a premium version with improvements, especially in battery consumption with Android devices.</p>
+
+<p>Basically this plugin performs a POST request to the server with the GPS data. When I was developing my application I needed a simple HTTP server to see the POST requests. Later I’ll code the backend to handle those requests. I can develop a simple Silex application with a POST route and log the request in a file or flush those request to the console. This’d have been easy but as far as I’m a big fan of WebSockets (yes I must admit that I want to use WebSockets everywere :) I had one idea in my mind. The idea was create a simple HTTP server to handle my GPS POST requests but instead of logging the request I will emit a WebSocket. Then I can create one site that connects to the WebSocket server and register on screen the POST request. Ok today I’m a bit lazy to fight with the Frontend so my log will be on the browser’s console.</p>
+
+<p>To build the application I’ll reuse one of my projects in github: The <a href="http://gonzalo123.com/2015/05/11/php-dumper-using-websockets/">PHP dumper</a>. The idea is almost the same. I’ll create a simple HTTP server with Silex with two routes. One to handle POST requests (the GPS ones) and another GET to allow me to connect to the WebSocket</p>
+
+<p>That’s the server. Silex, a bit of Twig, another bit of Guzzle and that’s all</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">GuzzleHttp\Client</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Silex\Provider\TwigServiceProvider</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">([</span>
+    <span class="s1">'debug'</span>       <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s1">'ioServer'</span>    <span class="o">=&gt;</span> <span class="s1">'//localhost:8888'</span><span class="p">,</span>
+    <span class="s1">'wsConnector'</span> <span class="o">=&gt;</span> <span class="s1">'http://127.0.0.1:26300'</span>
+<span class="p">]);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">register</span><span class="p">(</span><span class="k">new</span> <span class="nc">TwigServiceProvider</span><span class="p">(),</span> <span class="p">[</span>
+    <span class="s1">'twig.path'</span> <span class="o">=&gt;</span> <span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/../views'</span><span class="p">,</span>
+<span class="p">]);</span>
+ 
+<span class="nv">$app</span><span class="p">[</span><span class="s1">'http.client'</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Client</span><span class="p">();</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/</span><span class="si">{</span><span class="nv">channel</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">,</span> <span class="nv">$channel</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">'twig'</span><span class="p">]</span><span class="o">-&gt;</span><span class="nf">render</span><span class="p">(</span><span class="s1">'index.twig'</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s1">'channel'</span>  <span class="o">=&gt;</span> <span class="nv">$channel</span><span class="p">,</span>
+        <span class="s1">'ioServer'</span> <span class="o">=&gt;</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">'ioServer'</span><span class="p">]</span>
+    <span class="p">]);</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">post</span><span class="p">(</span><span class="s2">"/</span><span class="si">{</span><span class="nv">channel</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">,</span> <span class="nv">$channel</span><span class="p">,</span> <span class="kt">Request</span> <span class="nv">$request</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$app</span><span class="p">[</span><span class="s1">'http.client'</span><span class="p">]</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="nv">$app</span><span class="p">[</span><span class="s1">'wsConnector'</span><span class="p">]</span> <span class="mf">.</span> <span class="s2">"/info/</span><span class="si">{</span><span class="nv">$channel</span><span class="si">}</span><span class="s2">/"</span> <span class="mf">.</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">getContent</span><span class="p">()));</span>
+ 
+    <span class="k">return</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">(</span><span class="s1">'OK'</span><span class="p">);</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>That’s the Twig template. Nothing especial: A bit of Bootstrap and one socket.io client. Each time user access to one “channel”’s url (GET /mychannel). It connects to websocket server</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">CONF</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">IO</span><span class="p">:</span> <span class="p">{</span><span class="na">HOST</span><span class="p">:</span> <span class="dl">'</span><span class="s1">0.0.0.0</span><span class="dl">'</span><span class="p">,</span> <span class="na">PORT</span><span class="p">:</span> <span class="mi">8888</span><span class="p">},</span>
+        <span class="na">EXPRESS</span><span class="p">:</span> <span class="p">{</span><span class="na">HOST</span><span class="p">:</span> <span class="dl">'</span><span class="s1">0.0.0.0</span><span class="dl">'</span><span class="p">,</span> <span class="na">PORT</span><span class="p">:</span> <span class="mi">26300</span><span class="p">}</span>
+    <span class="p">},</span>
+    <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">),</span>
+    <span class="nx">expressApp</span> <span class="o">=</span> <span class="nx">express</span><span class="p">(),</span>
+    <span class="nx">server</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">http</span><span class="dl">'</span><span class="p">).</span><span class="nx">Server</span><span class="p">(</span><span class="nx">expressApp</span><span class="p">),</span>
+    <span class="nx">io</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">socket.io</span><span class="dl">'</span><span class="p">)(</span><span class="nx">server</span><span class="p">,</span> <span class="p">{</span><span class="na">origins</span><span class="p">:</span> <span class="dl">'</span><span class="s1">localhost:*</span><span class="dl">'</span><span class="p">})</span>
+    <span class="p">;</span>
+ 
+<span class="nx">expressApp</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/:type/:session/:message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">session</span><span class="p">,</span>
+        <span class="nx">type</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span>
+        <span class="nx">message</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
+ 
+    <span class="nx">io</span><span class="p">.</span><span class="nx">sockets</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">dumper.</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">session</span><span class="p">,</span> <span class="p">{</span><span class="na">title</span><span class="p">:</span> <span class="nx">type</span><span class="p">,</span> <span class="na">data</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">message</span><span class="p">)});</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="dl">'</span><span class="s1">OK</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span>
+ 
+<span class="nx">io</span><span class="p">.</span><span class="nx">sockets</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">connection</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">socket</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Socket connected!</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">});</span>
+ 
+<span class="nx">expressApp</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">CONF</span><span class="p">.</span><span class="nx">EXPRESS</span><span class="p">.</span><span class="nx">PORT</span><span class="p">,</span> <span class="nx">CONF</span><span class="p">.</span><span class="nx">EXPRESS</span><span class="p">.</span><span class="nx">HOST</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Express started</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span>
+ 
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="nx">CONF</span><span class="p">.</span><span class="nx">IO</span><span class="p">.</span><span class="nx">PORT</span><span class="p">,</span> <span class="nx">CONF</span><span class="p">.</span><span class="nx">IO</span><span class="p">.</span><span class="nx">HOST</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">IO started</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>And each time background geolocation plugin POSTs GPS data Silex POST route will emit a WebSocket to the desired channel. Our WebSocket client just logs the GPS data using console.log. Is hard to explain but very simple process.</p>
+
+<p>We also can emulate POST requests with this simple node script:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
+ 
+<span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">http://localhost:8080/Hello</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span><span class="na">form</span><span class="p">:</span> <span class="p">{</span><span class="na">key</span><span class="p">:</span> <span class="dl">'</span><span class="s1">value</span><span class="dl">'</span><span class="p">}},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>And that’s all. You can see the whole code within my <a href="https://github.com/gonzalo123/POSTlogger">github</a> account.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=POST+Request+logger+using+websockets%20%2F2015%2F11%2F16%2Fpost-request-logger-using-websockets%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2015%2F11%2F16%2Fpost-request-logger-using-websockets%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=POST+Request+logger+using+websockets&url=%2F2015%2F11%2F16%2Fpost-request-logger-using-websockets%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2015/11/16/post-request-logger-using-websockets/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2015/11/16/post-request-logger-using-websockets'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span>  <span class="label label-default">silex</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">php</span>  <span class="label label-default">technology</span>  <span class="label label-default">silex</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

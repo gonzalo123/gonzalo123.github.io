@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Dynamic routes with AngularJS and Silex</title>
+    <meta name="description"
+          content="These days I’m playing with AngularJS. Today I want to experiment with dynamic routes. Let me show your an example. Imagine a simple route configuration:
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Dynamic routes with AngularJS and Silex">
+    <meta name="twitter:description"
+          content="These days I’m playing with AngularJS. Today I want to experiment with dynamic routes. Let me show your an example. Imagine a simple route configuration:
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Dynamic routes with AngularJS and Silex">
+    <meta property="og:description"
+          content="These days I’m playing with AngularJS. Today I want to experiment with dynamic routes. Let me show your an example. Imagine a simple route configuration:
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2013/07/08/dynamic-routes-with-angularjs-and-silex/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Dynamic routes with AngularJS and Silex | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Dynamic routes with AngularJS and Silex" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="These days I’m playing with AngularJS. Today I want to experiment with dynamic routes. Let me show your an example. Imagine a simple route configuration:" />
+<meta property="og:description" content="These days I’m playing with AngularJS. Today I want to experiment with dynamic routes. Let me show your an example. Imagine a simple route configuration:" />
+<link rel="canonical" href="/2013/07/08/dynamic-routes-with-angularjs-and-silex/" />
+<meta property="og:url" content="/2013/07/08/dynamic-routes-with-angularjs-and-silex/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-07-08T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Dynamic routes with AngularJS and Silex" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2013/07/08/dynamic-routes-with-angularjs-and-silex/"},"url":"/2013/07/08/dynamic-routes-with-angularjs-and-silex/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"These days I’m playing with AngularJS. Today I want to experiment with dynamic routes. Let me show your an example. Imagine a simple route configuration:","dateModified":"2013-07-08T00:00:00+02:00","datePublished":"2013-07-08T00:00:00+02:00","headline":"Dynamic routes with AngularJS and Silex","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2013-07-08 00:00
+            " class="post-meta__date date">8 Jul 2013</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#angularjs">angularjs</a>, <a
+                href="/tags/#silex">silex</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#language-php">language-php</a></span>
+            
+        </div>
+        <h1 class="post-title">Dynamic routes with AngularJS and Silex</h1>
+    </header>
+
+    <section class="post">
+        <p>These days I’m playing with AngularJS. Today I want to experiment with dynamic routes. Let me show your an example. Imagine a simple route configuration:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$routeProvider</span><span class="mf">.</span><span class="nf">when</span><span class="p">(</span><span class="s1">'/page/page1'</span><span class="p">,</span> <span class="p">{</span><span class="n">templateUrl</span><span class="o">:</span> <span class="s1">'partials/page1.html'</span><span class="p">,</span> <span class="n">controller</span><span class="o">:</span> <span class="nc">Controller1</span><span class="p">});</span>
+<span class="nv">$routeProvider</span><span class="mf">.</span><span class="nf">when</span><span class="p">(</span><span class="s1">'/page/page2'</span><span class="p">,</span> <span class="p">{</span><span class="n">templateUrl</span><span class="o">:</span> <span class="s1">'partials/page2.html'</span><span class="p">,</span> <span class="n">controller</span><span class="o">:</span> <span class="nc">Controller2</span><span class="p">});</span>
+<span class="nv">$routeProvider</span><span class="mf">.</span><span class="nf">when</span><span class="p">(</span><span class="s1">'/page/page3'</span><span class="p">,</span> <span class="p">{</span><span class="n">templateUrl</span><span class="o">:</span> <span class="s1">'partials/page3.html'</span><span class="p">,</span> <span class="n">controller</span><span class="o">:</span> <span class="nc">Controller3</span><span class="p">});</span>
+</code></pre></div></div>
+
+<p>It’s very simple but: What happens if our application is big and it grows fast? We need to add new lines and reload the browser. With AngularJS we can add paramenters to the routes:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">$routeProvider</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="dl">'</span><span class="s1">/page/:page</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span><span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">partials/page.html</span><span class="dl">'</span><span class="p">,</span> <span class="na">controller</span><span class="p">:</span> <span class="nx">Controller</span><span class="p">});</span>
+</code></pre></div></div>
+
+<p>Now we don’t need to add new routes but what can we do with the partials? After browse the web and stack overflow finally I found this solution:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="dl">'</span><span class="s1">/page/:page</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span><span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;div ng-include="templateUrl"&gt;Loading...&lt;/div&gt;</span><span class="dl">'</span><span class="p">,</span> <span class="na">controller</span><span class="p">:</span> <span class="nx">DynamicController</span><span class="p">})</span>
+</code></pre></div></div>
+
+<p>And now we need to define our DynamicController and load there our needed partial:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">DynamicController</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$routeParams</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">unique</span> <span class="o">=</span> <span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">()).</span><span class="nx">getTime</span><span class="p">();</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">templateUrl</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">/api/pages/</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">$routeParams</span><span class="p">.</span><span class="nx">page</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">?unique=</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">unique</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We can load our partial as a static file but in this example I’m using a Silex backend to provide my partials.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="k">require_once</span> <span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/../../vendor/autoload.php'</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
+<span class="nv">$app</span>          <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">();</span>
+<span class="nv">$app</span><span class="p">[</span><span class="s1">'debug'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">register</span><span class="p">(</span><span class="k">new</span> <span class="nc">Silex\Provider\TwigServiceProvider</span><span class="p">(),</span> <span class="p">[</span>
+    <span class="s1">'twig.path'</span>    <span class="o">=&gt;</span>  <span class="k">__DIR__</span><span class="mf">.</span><span class="s1">'/../../views'</span><span class="p">,</span>
+    <span class="s1">'twig.options'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+       <span class="s1">'cache'</span>       <span class="o">=&gt;</span> <span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/../../cache'</span><span class="p">,</span>
+       <span class="s1">'auto_reload'</span> <span class="o">=&gt;</span> <span class="kc">true</span>
+    <span class="p">]</span>
+<span class="p">]);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">before</span><span class="p">(</span><span class="k">function</span><span class="p">()</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">){</span>
+    <span class="nv">$app</span><span class="p">[</span><span class="s1">'twig'</span><span class="p">]</span><span class="o">-&gt;</span><span class="nf">setLexer</span><span class="p">(</span> <span class="k">new</span> <span class="nc">Twig_Lexer</span><span class="p">(</span><span class="nv">$app</span><span class="p">[</span><span class="s1">'twig'</span><span class="p">],</span> <span class="p">[</span>
+        <span class="s1">'tag_comment'</span>   <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'[#'</span><span class="p">,</span> <span class="s1">'#]'</span><span class="p">],</span>
+        <span class="s1">'tag_block'</span>     <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'[%'</span><span class="p">,</span> <span class="s1">'%]'</span><span class="p">],</span>
+        <span class="s1">'tag_variable'</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'[['</span><span class="p">,</span> <span class="s1">']]'</span><span class="p">],</span>
+        <span class="s1">'interpolation'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'#['</span><span class="p">,</span> <span class="s1">']'</span><span class="p">],</span>
+    <span class="p">]));</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'/pages/{name}'</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nv">$app</span><span class="p">[</span><span class="s1">'twig'</span><span class="p">]</span><span class="o">-&gt;</span><span class="nf">render</span><span class="p">(</span><span class="s1">'hello.html.twig'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">]);</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'/pages/js/{name}'</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">){</span>
+    <span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Response</span><span class="p">(</span><span class="nv">$app</span><span class="p">[</span><span class="s1">'twig'</span><span class="p">]</span><span class="o">-&gt;</span><span class="nf">render</span><span class="p">(</span><span class="s1">'hello.js'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">]));</span>
+    <span class="nv">$response</span><span class="o">-&gt;</span><span class="n">headers</span><span class="o">-&gt;</span><span class="nf">set</span><span class="p">(</span><span class="s2">"Content-Type"</span><span class="p">,</span> <span class="s1">'application/javascript'</span><span class="p">);</span>
+ 
+    <span class="k">return</span> <span class="nv">$response</span><span class="p">;</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>As you can see we need to use one small hack to use twig and AngularJS together. They aren’t good friends with the default configuration. Both uses the same syntax ‘’. Because of that we will change Twig’s default behaviour within a middleware.</p>
+
+<p>And basically that’s all. You can see a working example in my <a href="https://github.com/gonzalo123/angularRemoteRoutes">github account</a> using <a href="http://twitter.github.io/bootstrap/">Booststrap</a> and <a href="http://angular-ui.github.io/bootstrap/">UI Booststrap</a></p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Dynamic+routes+with+AngularJS+and+Silex%20%2F2013%2F07%2F08%2Fdynamic-routes-with-angularjs-and-silex%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2013%2F07%2F08%2Fdynamic-routes-with-angularjs-and-silex%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Dynamic+routes+with+AngularJS+and+Silex&url=%2F2013%2F07%2F08%2Fdynamic-routes-with-angularjs-and-silex%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2013/07/08/dynamic-routes-with-angularjs-and-silex/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2013/07/08/dynamic-routes-with-angularjs-and-silex'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">technology</span>  <span class="label label-default">silex</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">technology</span>  <span class="label label-default">silex</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/05/16/sharing-authentication-between-socket-io-and-a-php-frontend/">Sharing authentication between socket.io and a PHP frontend <span class="label label-default">technology</span>  <span class="label label-default">silex</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/04/18/reading-modbus-devices-with-python-from-a-phpsilex-application-via-gearman-worker/">Reading Modbus devices with Python from a PHP/Silex Application via Gearman worker <span class="label label-default">technology</span>  <span class="label label-default">silex</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

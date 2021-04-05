@@ -10,7 +10,7 @@ tags:
   - "flask"
   - "ionic"
   - "totp"
-coverImage: "118669.png"
+coverImage: "/assets/images/118669.png"
 ---
 
 Today I want to play with Two Factor Authentication. When we speak about 2FA, TOTP come to our mind. There're a lot of TOTP clients, for example Google Authenticator.

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Smart bulb controlled from a Raspberry Pi with Python. My RGB alarm clock</title>
+    <meta name="description"
+          content="I’ve got a BeeWi Smart LED Color Bulb. I must admit I cannot resist to buy those kind of devices :).
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Smart bulb controlled from a Raspberry Pi with Python. My RGB alarm clock">
+    <meta name="twitter:description"
+          content="I’ve got a BeeWi Smart LED Color Bulb. I must admit I cannot resist to buy those kind of devices :).
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Smart bulb controlled from a Raspberry Pi with Python. My RGB alarm clock">
+    <meta property="og:description"
+          content="I’ve got a BeeWi Smart LED Color Bulb. I must admit I cannot resist to buy those kind of devices :).
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2016/11/07/smart-bulb-controlled-from-a-raspberry-pi-with-python-my-rgb-alarm-clock/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Smart bulb controlled from a Raspberry Pi with Python. My RGB alarm clock | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Smart bulb controlled from a Raspberry Pi with Python. My RGB alarm clock" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I’ve got a BeeWi Smart LED Color Bulb. I must admit I cannot resist to buy those kind of devices :)." />
+<meta property="og:description" content="I’ve got a BeeWi Smart LED Color Bulb. I must admit I cannot resist to buy those kind of devices :)." />
+<link rel="canonical" href="/2016/11/07/smart-bulb-controlled-from-a-raspberry-pi-with-python-my-rgb-alarm-clock/" />
+<meta property="og:url" content="/2016/11/07/smart-bulb-controlled-from-a-raspberry-pi-with-python-my-rgb-alarm-clock/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-11-07T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Smart bulb controlled from a Raspberry Pi with Python. My RGB alarm clock" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2016/11/07/smart-bulb-controlled-from-a-raspberry-pi-with-python-my-rgb-alarm-clock/"},"url":"/2016/11/07/smart-bulb-controlled-from-a-raspberry-pi-with-python-my-rgb-alarm-clock/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"I’ve got a BeeWi Smart LED Color Bulb. I must admit I cannot resist to buy those kind of devices :).","dateModified":"2016-11-07T00:00:00+01:00","datePublished":"2016-11-07T00:00:00+01:00","headline":"Smart bulb controlled from a Raspberry Pi with Python. My RGB alarm clock","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2016-11-07 00:00
+            " class="post-meta__date date">7 Nov 2016</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#python">python</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#telegram">telegram</a>, <a
+                href="/tags/#bot">bot</a>, <a
+                href="/tags/#cron">cron</a>, <a
+                href="/tags/#iot">iot</a>, <a
+                href="/tags/#raspberry-pi">raspberry-pi</a>, <a
+                href="/tags/#smart-bulb">smart-bulb</a></span>
+            
+        </div>
+        <h1 class="post-title">Smart bulb controlled from a Raspberry Pi with Python. My RGB alarm clock</h1>
+    </header>
+
+    <section class="post">
+        <p>I’ve got a BeeWi Smart LED Color <a href="http://www.bee-wi.com/bbl207,us,4,BBL207-A1.cfm">Bulb</a>. I must admit I cannot resist to buy those kind of devices :).</p>
+
+<p>I can switch on/off the bulb and change the color using its Mobile App, but it’s not fun. I want to play a little bit with the bulb. My idea is the following one: First switch on the bulb in the mornint and set up the bulb color (Blue for example). Then change bulb color depending on my morning routine. And finally switch the bulb off. Now with this bulb’s color I know if my morning routine is on-time, just looking at the bulb’s color. For example if the bulb is red and I’m still having breakfast probably I’m late.</p>
+
+<p>The prototype is very simple. The bulb has a bluetooth interface and I’ve found a <a href="https://www.raspberrypi.org/forums/viewtopic.php?f=37&amp;t=117729">python script</a> to control the bulb. I’ve changed a little bit this script to adapt it to my <a href="https://github.com/gonzalo123/home-automation/blob/master/bulb.py">needs</a>.</p>
+
+<p>Now I only need to set up the crontab within my Raspberry Pi to trigger the script and switch on/off the bulb and change the RGB color.</p>
+
+<p>for example:</p>
+
+<pre><code class="language-commandline"># switch on the bulb
+/usr/bin/python /mnt/media/projects/iot/bulb.py /mnt/media/projects/iot/conf.json on
+# set bulb's color to green
+/usr/bin/python /mnt/media/projects/iot/bulb.py /mnt/media/projects/iot/conf.json colour 999900
+
+</code></pre>
+
+<p>In another post we play with Telegram bots to read <a href="https://gonzalo123.com/2016/08/29/home-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots/">temperature</a>. Now I’ve adapted also my bot to switch on/off and change color of the <a href="https://github.com/gonzalo123/home-automation">bulb</a>.</p>
+
+<p>Now I’ve got another toy in my desk. One arduino board. I’m sure I will enjoy a lot :)</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Smart+bulb+controlled+from+a+Raspberry+Pi+with+Python.+My+RGB+alarm+clock%20%2F2016%2F11%2F07%2Fsmart-bulb-controlled-from-a-raspberry-pi-with-python-my-rgb-alarm-clock%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2016%2F11%2F07%2Fsmart-bulb-controlled-from-a-raspberry-pi-with-python-my-rgb-alarm-clock%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Smart+bulb+controlled+from+a+Raspberry+Pi+with+Python.+My+RGB+alarm+clock&url=%2F2016%2F11%2F07%2Fsmart-bulb-controlled-from-a-raspberry-pi-with-python-my-rgb-alarm-clock%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2016/11/07/smart-bulb-controlled-from-a-raspberry-pi-with-python-my-rgb-alarm-clock/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2016/11/07/smart-bulb-controlled-from-a-raspberry-pi-with-python-my-rgb-alarm-clock'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2020/01/13/alexa-and-raspberry-pi-demo-part-2-listening-to-external-events/">Alexa and Raspberry Pi demo (Part 2). Listening to external events <span class="label label-default">iot</span>  <span class="label label-default">raspberry-pi</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/12/16/alexa-and-raspberry-pi-demo/">Alexa and Raspberry Pi demo <span class="label label-default">iot</span>  <span class="label label-default">python</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/10/07/playing-with-threads-and-python-part-2/">Playing with threads and Python. Part 2 <span class="label label-default">python</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/08/19/playing-with-threads-and-python/">Playing with threads and Python <span class="label label-default">python</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

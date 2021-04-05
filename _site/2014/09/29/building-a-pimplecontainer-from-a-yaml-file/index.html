@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Building a Pimple/Container from a YAML file</title>
+    <meta name="description"
+          content="The last May I attended to the great deSymfony day conference in Barcelona. At speaker’s dinner I had a great conversation with Máximo Cuadros about Dependency Injection Containers. We discuss about the customisation of containers. I said that I prefer Symfony´s DIC instead of Pimple, mainly because its configuration with YAML (or even xml) files. But In fact we can customise Pimple/Containers with YAML files in a similar way than we do it with Symfony’s DIC. In this example we’re going to see one way to do it.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Building a Pimple/Container from a YAML file">
+    <meta name="twitter:description"
+          content="The last May I attended to the great deSymfony day conference in Barcelona. At speaker’s dinner I had a great conversation with Máximo Cuadros about Dependency Injection Containers. We discuss about the customisation of containers. I said that I prefer Symfony´s DIC instead of Pimple, mainly because its configuration with YAML (or even xml) files. But In fact we can customise Pimple/Containers with YAML files in a similar way than we do it with Symfony’s DIC. In this example we’re going to see one way to do it.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Building a Pimple/Container from a YAML file">
+    <meta property="og:description"
+          content="The last May I attended to the great deSymfony day conference in Barcelona. At speaker’s dinner I had a great conversation with Máximo Cuadros about Dependency Injection Containers. We discuss about the customisation of containers. I said that I prefer Symfony´s DIC instead of Pimple, mainly because its configuration with YAML (or even xml) files. But In fact we can customise Pimple/Containers with YAML files in a similar way than we do it with Symfony’s DIC. In this example we’re going to see one way to do it.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2014/09/29/building-a-pimplecontainer-from-a-yaml-file/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Building a Pimple/Container from a YAML file | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Building a Pimple/Container from a YAML file" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The last May I attended to the great deSymfony day conference in Barcelona. At speaker’s dinner I had a great conversation with Máximo Cuadros about Dependency Injection Containers. We discuss about the customisation of containers. I said that I prefer Symfony´s DIC instead of Pimple, mainly because its configuration with YAML (or even xml) files. But In fact we can customise Pimple/Containers with YAML files in a similar way than we do it with Symfony’s DIC. In this example we’re going to see one way to do it." />
+<meta property="og:description" content="The last May I attended to the great deSymfony day conference in Barcelona. At speaker’s dinner I had a great conversation with Máximo Cuadros about Dependency Injection Containers. We discuss about the customisation of containers. I said that I prefer Symfony´s DIC instead of Pimple, mainly because its configuration with YAML (or even xml) files. But In fact we can customise Pimple/Containers with YAML files in a similar way than we do it with Symfony’s DIC. In this example we’re going to see one way to do it." />
+<link rel="canonical" href="/2014/09/29/building-a-pimplecontainer-from-a-yaml-file/" />
+<meta property="og:url" content="/2014/09/29/building-a-pimplecontainer-from-a-yaml-file/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-09-29T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Building a Pimple/Container from a YAML file" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2014/09/29/building-a-pimplecontainer-from-a-yaml-file/"},"url":"/2014/09/29/building-a-pimplecontainer-from-a-yaml-file/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"The last May I attended to the great deSymfony day conference in Barcelona. At speaker’s dinner I had a great conversation with Máximo Cuadros about Dependency Injection Containers. We discuss about the customisation of containers. I said that I prefer Symfony´s DIC instead of Pimple, mainly because its configuration with YAML (or even xml) files. But In fact we can customise Pimple/Containers with YAML files in a similar way than we do it with Symfony’s DIC. In this example we’re going to see one way to do it.","dateModified":"2014-09-29T00:00:00+02:00","datePublished":"2014-09-29T00:00:00+02:00","headline":"Building a Pimple/Container from a YAML file","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2014-09-29 00:00
+            " class="post-meta__date date">29 Sep 2014</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#symfony">symfony</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#config">config</a>, <a
+                href="/tags/#container">container</a>, <a
+                href="/tags/#dic">dic</a>, <a
+                href="/tags/#pimple">pimple</a>, <a
+                href="/tags/#solid">solid</a>, <a
+                href="/tags/#yaml">yaml</a></span>
+            
+        </div>
+        <h1 class="post-title">Building a Pimple/Container from a YAML file</h1>
+    </header>
+
+    <section class="post">
+        <p>The last May I attended to the great <a href="http://day.desymfony.com/">deSymfony day</a> conference in Barcelona. At speaker’s dinner I had a great conversation with <a href="https://twitter.com/mcuadros_">Máximo Cuadros</a> about Dependency Injection Containers. We discuss about the customisation of containers. I said that I prefer Symfony´s DIC instead of Pimple, mainly because its configuration with YAML (or even xml) files. But In fact we can customise <a href="http://pimple.sensiolabs.org/">Pimple/Containers</a> with YAML files in a similar way than we do it with Symfony’s DIC. In this example we’re going to see one way to do it.</p>
+
+<p>We can easily extend the Pimple/Container and add a function to load a YAML files, parse them and build the container. But doing this we’re violating various SOLID principles. First we’re violating the Open-Close principle, because to extend our Pimple/Container with the new functionality we are adding new code within an existing class. We’re also violating the Dependency Inversion Principle and our new Pimple/Container is going to be harder to maintain. And finally we’re obviously violating the Single Responsibility Principle, because our new Pimple/Container is not only a DIC, it’s also a YAML parser.</p>
+
+<p>There’s another way to perform this operation without upsetting SOLID principles. We can use the Symfony’s Config <a href="http://blog.servergrove.com/2014/02/21/symfony2-components-overview-config/">component</a></p>
+
+<p>The idea is simple. Imagine this simple application:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Pimple\Container</span><span class="p">;</span>
+ 
+<span class="nv">$container</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Container</span><span class="p">();</span>
+<span class="nv">$container</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Gonzalo'</span><span class="p">;</span>
+ 
+<span class="nv">$container</span><span class="p">[</span><span class="s1">'Curl'</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nc">Curl</span><span class="p">();</span>
+<span class="p">};</span>
+<span class="nv">$container</span><span class="p">[</span><span class="s1">'Proxy'</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$c</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nc">Proxy</span><span class="p">(</span><span class="nv">$c</span><span class="p">[</span><span class="s1">'Curl'</span><span class="p">]);</span>
+<span class="p">};</span>
+ 
+<span class="nv">$container</span><span class="p">[</span><span class="s1">'App'</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$c</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nc">App</span><span class="p">(</span><span class="nv">$c</span><span class="p">[</span><span class="s1">'Proxy'</span><span class="p">],</span> <span class="nv">$c</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]);</span>
+<span class="p">};</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="nv">$container</span><span class="p">[</span><span class="s1">'App'</span><span class="p">];</span>
+<span class="k">echo</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">hello</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>We define the dependencies with code. But we want to define dependencies using a yml file for example:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">parameters</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">Gonzalo</span>
+ 
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">App</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span>     <span class="s">App</span>
+    <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[</span><span class="err">@</span><span class="nv">Proxy</span><span class="pi">,</span> <span class="err">%</span><span class="nv">name%</span><span class="pi">]</span>
+  <span class="na">Proxy</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span>     <span class="s">Proxy</span>
+    <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[</span><span class="err">@</span><span class="nv">Curl</span><span class="pi">]</span>
+  <span class="na">Curl</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span>     <span class="s">Curl</span>
+</code></pre></div></div>
+
+<p>As we can see we’re using a similar syntax than Symfony’s DIC YAML files. Now, with our new library we can use the following code:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Pimple\Container</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">G\Yaml2Pimple\ContainerBuilder</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">G\Yaml2Pimple\YamlFileLoader</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Config\FileLocator</span><span class="p">;</span>
+ 
+<span class="nv">$container</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Container</span><span class="p">();</span>
+ 
+<span class="nv">$builder</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ContainerBuilder</span><span class="p">(</span><span class="nv">$container</span><span class="p">);</span>
+<span class="nv">$locator</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileLocator</span><span class="p">(</span><span class="k">__DIR__</span><span class="p">);</span>
+<span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">YamlFileLoader</span><span class="p">(</span><span class="nv">$builder</span><span class="p">,</span> <span class="nv">$locator</span><span class="p">);</span>
+<span class="nv">$loader</span><span class="o">-&gt;</span><span class="nf">load</span><span class="p">(</span><span class="s1">'services.yml'</span><span class="p">);</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="nv">$container</span><span class="p">[</span><span class="s1">'App'</span><span class="p">];</span>
+<span class="k">echo</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">hello</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Now our Pimple/Container is just a Pimple/Container nothing more. It doesn’t know anything about yaml, parsers and thing like that. It’s doesn’t have any extra responsibility. The responsibility of the parser falls on YamlFileLoader You can see the library in my <a href="https://github.com/gonzalo123/yml2pimple">github</a> account. It’s but one usage example of Symfony’s Config component. It only allows Yaml files, but it can be extended with Xml files adding a XmlFileLoader.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Building+a+Pimple%2FContainer+from+a+YAML+file%20%2F2014%2F09%2F29%2Fbuilding-a-pimplecontainer-from-a-yaml-file%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2014%2F09%2F29%2Fbuilding-a-pimplecontainer-from-a-yaml-file%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Building+a+Pimple%2FContainer+from+a+YAML+file&url=%2F2014%2F09%2F29%2Fbuilding-a-pimplecontainer-from-a-yaml-file%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2014/09/29/building-a-pimplecontainer-from-a-yaml-file/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2014/09/29/building-a-pimplecontainer-from-a-yaml-file'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2017/12/11/authenticate-openui5-applications-and-lumen-backends-with-amazon-cognito-and-jwt/">Authenticate OpenUI5 applications and Lumen backends with Amazon Cognito and JWT <span class="label label-default">php</span>  <span class="label label-default">symfony</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

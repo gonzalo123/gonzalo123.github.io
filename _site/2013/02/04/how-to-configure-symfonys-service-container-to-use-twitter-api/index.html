@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>How to configure Symfony's Service Container to use Twitter API</title>
+    <meta name="description"
+          content="Keeping on with the series about Symfony’s Services container (another posts here and here), now we will use the service container to use Twitter API from a service.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="How to configure Symfony's Service Container to use Twitter API">
+    <meta name="twitter:description"
+          content="Keeping on with the series about Symfony’s Services container (another posts here and here), now we will use the service container to use Twitter API from a service.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to configure Symfony's Service Container to use Twitter API">
+    <meta property="og:description"
+          content="Keeping on with the series about Symfony’s Services container (another posts here and here), now we will use the service container to use Twitter API from a service.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2013/02/04/how-to-configure-symfonys-service-container-to-use-twitter-api/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>How to configure Symfony’s Service Container to use Twitter API | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="How to configure Symfony’s Service Container to use Twitter API" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Keeping on with the series about Symfony’s Services container (another posts here and here), now we will use the service container to use Twitter API from a service." />
+<meta property="og:description" content="Keeping on with the series about Symfony’s Services container (another posts here and here), now we will use the service container to use Twitter API from a service." />
+<link rel="canonical" href="/2013/02/04/how-to-configure-symfonys-service-container-to-use-twitter-api/" />
+<meta property="og:url" content="/2013/02/04/how-to-configure-symfonys-service-container-to-use-twitter-api/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-02-04T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to configure Symfony’s Service Container to use Twitter API" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2013/02/04/how-to-configure-symfonys-service-container-to-use-twitter-api/"},"url":"/2013/02/04/how-to-configure-symfonys-service-container-to-use-twitter-api/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Keeping on with the series about Symfony’s Services container (another posts here and here), now we will use the service container to use Twitter API from a service.","dateModified":"2013-02-04T00:00:00+01:00","datePublished":"2013-02-04T00:00:00+01:00","headline":"How to configure Symfony’s Service Container to use Twitter API","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2013-02-04 00:00
+            " class="post-meta__date date">4 Feb 2013</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#dic">dic</a>, <a
+                href="/tags/#guzzle">guzzle</a>, <a
+                href="/tags/#software">software</a>, <a
+                href="/tags/#dependency-injection">dependency-injection</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#symfony2">symfony2</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#twitter">twitter</a></span>
+            
+        </div>
+        <h1 class="post-title">How to configure Symfony's Service Container to use Twitter API</h1>
+    </header>
+
+    <section class="post">
+        <p>Keeping on with the series about Symfony’s Services container (another posts <a href="http://gonzalo123.com/2012/09/03/dependency-injection-containers-with-php-when-pimple-is-not-enough/">here</a> and <a href="http://gonzalo123.com/2013/01/14/handling-several-dbal-database-connections-in-symfony2-through-the-dependency-injection-container-with-php/">here</a>), now we will use the service container to use Twitter API from a service.</p>
+
+<p>To use Twitter API we need to handle http requests. I’ve written several post about http request with PHP (<a href="http://gonzalo123.com/2011/08/01/building-a-client-for-a-rest-api-with-php/" title="Building a client for a REST API with PHP.">example1</a>, <a href="http://gonzalo123.com/2010/02/06/building-a-rest-client-with-asynchronous-calls-using-php-and-curl/" title="Building a REST client with asynchronous calls using PHP and curl">example2</a>), but today we will use one amazing library to build clients: <a href="http://guzzlephp.org/" title="Guzzle">Guzzle</a>. Guzzle is amazing. We can easily build a Twitter client with it. There’s one example is its landing page:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Client</span><span class="p">(</span><span class="s1">'https://api.twitter.com/{version}'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'version'</span> <span class="o">=&gt;</span> <span class="s1">'1.1'</span><span class="p">));</span>
+<span class="nv">$oauth</span>  <span class="o">=</span> <span class="k">new</span> <span class="nc">OauthPlugin</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+    <span class="s1">'consumer_key'</span>    <span class="o">=&gt;</span> <span class="s1">'***'</span><span class="p">,</span>
+    <span class="s1">'consumer_secret'</span> <span class="o">=&gt;</span> <span class="s1">'***'</span><span class="p">,</span>
+    <span class="s1">'token'</span>           <span class="o">=&gt;</span> <span class="s1">'***'</span><span class="p">,</span>
+    <span class="s1">'token_secret'</span>    <span class="o">=&gt;</span> <span class="s1">'***'</span>
+<span class="p">));</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">addSubscriber</span><span class="p">(</span><span class="nv">$oauth</span><span class="p">);</span>
+ 
+<span class="k">echo</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'/statuses/user_timeline.json'</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">send</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">getBody</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>If we are working within a Symfony2 application or a PHP application that uses the Symfony’s Dependency injection container component you can easily integrate this simple script in the service container. I will show you the way that I use to do it. Let’s start:</p>
+
+<p>The idea is simple. First we include guzzle within our composer.json and execute composer update:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"guzzle/guzzle"</span><span class="p">:</span><span class="s2">"dev-master"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Then we will create two files, one to store our Twitter credentials and another one to configure the service container:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># twitter.conf.yml</span>
+<span class="na">parameters</span><span class="pi">:</span>
+  <span class="s">twitter.baseurl</span><span class="pi">:</span> <span class="s">https://api.twitter.com/1.1</span>
+ 
+  <span class="s">twitter.config</span><span class="pi">:</span>
+    <span class="na">consumer_key</span><span class="pi">:</span> <span class="err">***</span>
+    <span class="na">consumer_secret</span><span class="pi">:</span> <span class="err">***</span>
+    <span class="na">token</span><span class="pi">:</span> <span class="err">***</span>
+    <span class="na">token_secret</span><span class="pi">:</span> <span class="err">***</span>
+</code></pre></div></div>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># twitter.yml</span>
+<span class="na">parameters</span><span class="pi">:</span>
+  <span class="s">class.guzzle.response</span><span class="pi">:</span> <span class="s">Guzzle\Http\Message\Response</span>
+  <span class="s">class.guzzle.client</span><span class="pi">:</span> <span class="s">Guzzle\Http\Client</span>
+  <span class="s">class.guzzle.oauthplugin</span><span class="pi">:</span> <span class="s">Guzzle\Plugin\Oauth\OauthPlugin</span>
+ 
+<span class="na">services</span><span class="pi">:</span>
+  <span class="s">guzzle.twitter.client</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="err">%</span><span class="s">class.guzzle.client%</span>
+    <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[</span><span class="err">%</span><span class="nv">twitter.baseurl%</span><span class="pi">]</span>
+    <span class="na">calls</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="pi">[</span><span class="nv">addSubscriber</span><span class="pi">,</span> <span class="pi">[</span><span class="err">@</span><span class="nv">guzzle.twitter.oauthplugin</span><span class="pi">]]</span>
+ 
+  <span class="s">guzzle.twitter.oauthplugin</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="err">%</span><span class="s">class.guzzle.oauthplu</span>
+</code></pre></div></div>
+
+<p>And finally we include those files in our services.yml:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># services.yml</span>
+<span class="na">imports</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="pi">{</span> <span class="nv">resource</span><span class="pi">:</span> <span class="nv">twitter.conf.yml</span> <span class="pi">}</span>
+<span class="pi">-</span> <span class="pi">{</span> <span class="nv">resource</span><span class="pi">:</span> <span class="nv">twitter.yml</span> <span class="pi">}</span>
+</code></pre></div></div>
+
+<p>And that’s all. Now we can use the service without problems:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+ 
+<span class="kn">namespace</span> <span class="nn">Gonzalo123\AppBundle\Controller</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Symfony\Bundle\FrameworkBundle\Controller\Controller</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">DefaultController</span> <span class="kd">extends</span> <span class="nc">Controller</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">indexAction</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$twitterClient</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">container</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'guzzle.twitter.client'</span><span class="p">);</span>
+        <span class="nv">$status</span> <span class="o">=</span> <span class="nv">$twitterClient</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'statuses/user_timeline.json'</span><span class="p">)</span>
+             <span class="o">-&gt;</span><span class="nf">send</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">getBody</span><span class="p">();</span>
+ 
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">render</span><span class="p">(</span><span class="s1">'AppBundle:Default:index.html.twig'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="nv">$status</span>
+        <span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=How+to+configure+Symfony%27s+Service+Container+to+use+Twitter+API%20%2F2013%2F02%2F04%2Fhow-to-configure-symfonys-service-container-to-use-twitter-api%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2013%2F02%2F04%2Fhow-to-configure-symfonys-service-container-to-use-twitter-api%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=How+to+configure+Symfony%27s+Service+Container+to+use+Twitter+API&url=%2F2013%2F02%2F04%2Fhow-to-configure-symfonys-service-container-to-use-twitter-api%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2013/02/04/how-to-configure-symfonys-service-container-to-use-twitter-api/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2013/02/04/how-to-configure-symfonys-service-container-to-use-twitter-api'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

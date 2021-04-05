@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Playing with event dispatcher and Silex. Sending logs to a remote server.</title>
+    <meta name="description"
+          content="Today I continue playing with event dispatcher and Silex. Now I want to send a detailed log of our Kernel events to a remote server. We can do it something similar with Monolog, but I want to implement one working example hacking a little bit the event dispatcher. Basically we’re going to create one Logger class (implementing PSR-3 of course)
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Playing with event dispatcher and Silex. Sending logs to a remote server.">
+    <meta name="twitter:description"
+          content="Today I continue playing with event dispatcher and Silex. Now I want to send a detailed log of our Kernel events to a remote server. We can do it something similar with Monolog, but I want to implement one working example hacking a little bit the event dispatcher. Basically we’re going to create one Logger class (implementing PSR-3 of course)
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Playing with event dispatcher and Silex. Sending logs to a remote server.">
+    <meta property="og:description"
+          content="Today I continue playing with event dispatcher and Silex. Now I want to send a detailed log of our Kernel events to a remote server. We can do it something similar with Monolog, but I want to implement one working example hacking a little bit the event dispatcher. Basically we’re going to create one Logger class (implementing PSR-3 of course)
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2013/10/21/playing-with-event-dispatcher-and-silex-sending-logs-to-a-remote-server/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Playing with event dispatcher and Silex. Sending logs to a remote server. | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Playing with event dispatcher and Silex. Sending logs to a remote server." />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Today I continue playing with event dispatcher and Silex. Now I want to send a detailed log of our Kernel events to a remote server. We can do it something similar with Monolog, but I want to implement one working example hacking a little bit the event dispatcher. Basically we’re going to create one Logger class (implementing PSR-3 of course)" />
+<meta property="og:description" content="Today I continue playing with event dispatcher and Silex. Now I want to send a detailed log of our Kernel events to a remote server. We can do it something similar with Monolog, but I want to implement one working example hacking a little bit the event dispatcher. Basically we’re going to create one Logger class (implementing PSR-3 of course)" />
+<link rel="canonical" href="/2013/10/21/playing-with-event-dispatcher-and-silex-sending-logs-to-a-remote-server/" />
+<meta property="og:url" content="/2013/10/21/playing-with-event-dispatcher-and-silex-sending-logs-to-a-remote-server/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-10-21T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Playing with event dispatcher and Silex. Sending logs to a remote server." />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2013/10/21/playing-with-event-dispatcher-and-silex-sending-logs-to-a-remote-server/"},"url":"/2013/10/21/playing-with-event-dispatcher-and-silex-sending-logs-to-a-remote-server/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Today I continue playing with event dispatcher and Silex. Now I want to send a detailed log of our Kernel events to a remote server. We can do it something similar with Monolog, but I want to implement one working example hacking a little bit the event dispatcher. Basically we’re going to create one Logger class (implementing PSR-3 of course)","dateModified":"2013-10-21T00:00:00+02:00","datePublished":"2013-10-21T00:00:00+02:00","headline":"Playing with event dispatcher and Silex. Sending logs to a remote server.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2013-10-21 00:00
+            " class="post-meta__date date">21 Oct 2013</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#symfony">symfony</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#silex">silex</a></span>
+            
+        </div>
+        <h1 class="post-title">Playing with event dispatcher and Silex. Sending logs to a remote server.</h1>
+    </header>
+
+    <section class="post">
+        <p>Today I <a href="http://gonzalo123.com/2013/10/14/using-the-event-dispatcher-in-a-silex-application/" title="Using the event dispatcher in a Silex application">continue</a> playing with event dispatcher and Silex. Now I want to send a detailed log of our Kernel events to a remote server. We can do it something similar with <a href="https://github.com/Seldaek/monolog">Monolog</a>, but I want to implement one working example hacking a little bit the event dispatcher. Basically we’re going to create one Logger class (implementing <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md">PSR-3</a> of course)</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">namespace</span> <span class="nn">G</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Psr\Log\LoggerInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Psr\Log\LogLevel</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">Logger</span> <span class="kd">implements</span> <span class="nc">LoggerInterface</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$socket</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="nv">$socket</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">socket</span> <span class="o">=</span> <span class="nv">$socket</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">function</span> <span class="n">__destruct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="o">@</span><span class="nb">fclose</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">socket</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">emergency</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="kt">array</span> <span class="nv">$context</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">sendLog</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="nc">LogLevel</span><span class="o">::</span><span class="no">EMERGENCY</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">alert</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="kt">array</span> <span class="nv">$context</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">sendLog</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="nc">LogLevel</span><span class="o">::</span><span class="no">ALERT</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">critical</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="kt">array</span> <span class="nv">$context</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">sendLog</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="nc">LogLevel</span><span class="o">::</span><span class="no">CRITICAL</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">error</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="kt">array</span> <span class="nv">$context</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">sendLog</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="nc">LogLevel</span><span class="o">::</span><span class="no">ERROR</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">warning</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="kt">array</span> <span class="nv">$context</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">sendLog</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="nc">LogLevel</span><span class="o">::</span><span class="no">WARNING</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">notice</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="kt">array</span> <span class="nv">$context</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">sendLog</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="nc">LogLevel</span><span class="o">::</span><span class="no">NOTICE</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">info</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="kt">array</span> <span class="nv">$context</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">sendLog</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="nc">LogLevel</span><span class="o">::</span><span class="no">INFO</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">debug</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="kt">array</span> <span class="nv">$context</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">sendLog</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="nc">LogLevel</span><span class="o">::</span><span class="no">DEBUG</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">log</span><span class="p">(</span><span class="nv">$level</span><span class="p">,</span> <span class="nv">$message</span><span class="p">,</span> <span class="kt">array</span> <span class="nv">$context</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">sendLog</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="nv">$level</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">sendLog</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="kt">array</span> <span class="nv">$context</span> <span class="o">=</span> <span class="k">array</span><span class="p">(),</span> <span class="nv">$level</span> <span class="o">=</span> <span class="nc">LogLevel</span><span class="o">::</span><span class="no">INFO</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="nb">serialize</span><span class="p">([</span><span class="nv">$message</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="nv">$level</span><span class="p">]);</span>
+        <span class="o">@</span><span class="nb">fwrite</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">socket</span><span class="p">,</span> <span class="s2">"</span><span class="si">{</span><span class="nv">$data</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>As you can see our Logger class send logs to a remote server, with a socket passed within the constructor. We also need one Service Provider called LoggerServiceProvider to integrate our Logger instance into our Silex application.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">namespace</span> <span class="nn">G</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Silex\ServiceProviderInterface</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">LoggerServiceProvider</span> <span class="kd">implements</span> <span class="nc">ServiceProviderInterface</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$socket</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="nv">$socket</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">socket</span> <span class="o">=</span> <span class="nv">$socket</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">register</span><span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$app</span><span class="p">[</span><span class="s1">'remoteLogger'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">share</span><span class="p">(</span>
+            <span class="k">function</span> <span class="p">()</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="nc">Logger</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">socket</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">boot</span><span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>And now the last part is our Silex application:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">G\LoggerServiceProvider</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">G\Silex\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpKernel</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpKernel\Event</span><span class="p">;</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">();</span>
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">register</span><span class="p">(</span><span class="k">new</span> <span class="nc">LoggerServiceProvider</span><span class="p">(</span><span class="nb">stream_socket_client</span><span class="p">(</span><span class="s1">'tcp://localhost:4000'</span><span class="p">)));</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">on</span><span class="p">(</span><span class="nc">HttpKernel\KernelEvents</span><span class="o">::</span><span class="no">REQUEST</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Event</span><span class="err">\</span><span class="nc">GetResponseEvent</span> <span class="nv">$event</span><span class="p">)</span> <span class="nf">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">getLogger</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">info</span><span class="p">(</span><span class="nv">$event</span><span class="o">-&gt;</span><span class="nf">getName</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">on</span><span class="p">(</span><span class="nc">HttpKernel\KernelEvents</span><span class="o">::</span><span class="no">CONTROLLER</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Event</span><span class="err">\</span><span class="nc">FilterControllerEvent</span> <span class="nv">$event</span><span class="p">)</span> <span class="nf">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">getLogger</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">info</span><span class="p">(</span><span class="nv">$event</span><span class="o">-&gt;</span><span class="nf">getName</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">on</span><span class="p">(</span><span class="nc">HttpKernel\KernelEvents</span><span class="o">::</span><span class="no">TERMINATE</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Event</span><span class="err">\</span><span class="nc">PostResponseEvent</span> <span class="nv">$event</span><span class="p">)</span> <span class="nf">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">getLogger</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">info</span><span class="p">(</span><span class="nv">$event</span><span class="o">-&gt;</span><span class="nf">getName</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">on</span><span class="p">(</span><span class="nc">HttpKernel\KernelEvents</span><span class="o">::</span><span class="no">EXCEPTION</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Event</span><span class="err">\</span><span class="nc">GetResponseForExceptionEvent</span> <span class="nv">$event</span><span class="p">)</span> <span class="nf">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">getLogger</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">critical</span><span class="p">(</span><span class="nv">$event</span><span class="o">-&gt;</span><span class="nf">getException</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s1">'Hello'</span><span class="p">;</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>As we can see the event dispacher send each event to a remote server (in this example: tcp://localhost:4000). Now we only need a tcp server to handle those sockets. We can use different tools and libraries to do that. In this example we’re going to use <a href="http://reactphp.org/">React</a>.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">React\EventLoop\Factory</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">React\Socket\Server</span><span class="p">;</span>
+ 
+<span class="nv">$loop</span>   <span class="o">=</span> <span class="nc">Factory</span><span class="o">::</span><span class="nf">create</span><span class="p">();</span>
+<span class="nv">$socket</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Server</span><span class="p">(</span><span class="nv">$loop</span><span class="p">);</span>
+ 
+<span class="nv">$socket</span><span class="o">-&gt;</span><span class="nf">on</span><span class="p">(</span><span class="s1">'connection'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="err">\</span><span class="nc">React\Socket\Connection</span> <span class="nv">$conn</span><span class="p">){</span>
+    <span class="nv">$unique</span> <span class="o">=</span> <span class="nb">uniqid</span><span class="p">();</span>
+    <span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">on</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$unique</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">list</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="nv">$context</span><span class="p">,</span> <span class="nv">$level</span><span class="p">)</span> <span class="o">=</span> <span class="err">\</span><span class="nb">unserialize</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+            <span class="k">echo</span> <span class="nb">date</span><span class="p">(</span><span class="s2">"d/m/Y H:i:s"</span><span class="p">)</span><span class="mf">.</span><span class="s2">"::</span><span class="si">{</span><span class="nv">$level</span><span class="si">}</span><span class="s2">::</span><span class="si">{</span><span class="nv">$unique</span><span class="si">}</span><span class="s2">::</span><span class="si">{</span><span class="nv">$message</span><span class="si">}</span><span class="s2">"</span> <span class="mf">.</span> <span class="kc">PHP_EOL</span><span class="p">;</span>
+        <span class="p">});</span>
+<span class="p">});</span>
+ 
+<span class="k">echo</span> <span class="s2">"Socket server listening on port 4000."</span> <span class="mf">.</span><span class="kc">PHP_EOL</span><span class="p">;</span>
+<span class="k">echo</span> <span class="s2">"You can connect to it by running: telnet localhost 4000"</span> <span class="mf">.</span> <span class="kc">PHP_EOL</span><span class="p">;</span>
+ 
+<span class="nv">$socket</span><span class="o">-&gt;</span><span class="nf">listen</span><span class="p">(</span><span class="mi">4000</span><span class="p">);</span>
+<span class="nv">$loop</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Now we only need to start our servers: our silex one</p>
+
+<pre><code class="language-commandline">php -S 0.0.0.0:8080 -t www
+</code></pre>
+
+<p>and the tcp server</p>
+
+<pre><code class="language-commandline">php app/server.php
+</code></pre>
+
+<p>One screencast showing the prototype in action:
+<a href="https://www.youtube.com/watch?v=4Dr3Yz4OcpI"><img src="https://img.youtube.com/vi/4Dr3Yz4OcpI/0.jpg" alt="youtube" /></a></p>
+
+<p>You can see the full code in my <a href="https://github.com/gonzalo123/silexlisteners">github</a> account.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Playing+with+event+dispatcher+and+Silex.+Sending+logs+to+a+remote+server.%20%2F2013%2F10%2F21%2Fplaying-with-event-dispatcher-and-silex-sending-logs-to-a-remote-server%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2013%2F10%2F21%2Fplaying-with-event-dispatcher-and-silex-sending-logs-to-a-remote-server%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Playing+with+event+dispatcher+and+Silex.+Sending+logs+to+a+remote+server.&url=%2F2013%2F10%2F21%2Fplaying-with-event-dispatcher-and-silex-sending-logs-to-a-remote-server%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2013/10/21/playing-with-event-dispatcher-and-silex-sending-logs-to-a-remote-server/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2013/10/21/playing-with-event-dispatcher-and-silex-sending-logs-to-a-remote-server'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2017/12/11/authenticate-openui5-applications-and-lumen-backends-with-amazon-cognito-and-jwt/">Authenticate OpenUI5 applications and Lumen backends with Amazon Cognito and JWT <span class="label label-default">php</span>  <span class="label label-default">symfony</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span>  <span class="label label-default">silex</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

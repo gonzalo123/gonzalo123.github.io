@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>i18n angular2 service</title>
+    <meta name="description"
+          content="This days I’m learning angular2 and ionic2. My first impression was bad. Too many new things: angular2, typescript, new project architecture, … but after passing those bad moments I started to like angular2. One of the first things that I want to work with is internationalization. There’re several i18n providers for angular2. For example ng2-translate, but I want to build something similar to a angular i18n provider that I’d created time ago.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="i18n angular2 service">
+    <meta name="twitter:description"
+          content="This days I’m learning angular2 and ionic2. My first impression was bad. Too many new things: angular2, typescript, new project architecture, … but after passing those bad moments I started to like angular2. One of the first things that I want to work with is internationalization. There’re several i18n providers for angular2. For example ng2-translate, but I want to build something similar to a angular i18n provider that I’d created time ago.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="i18n angular2 service">
+    <meta property="og:description"
+          content="This days I’m learning angular2 and ionic2. My first impression was bad. Too many new things: angular2, typescript, new project architecture, … but after passing those bad moments I started to like angular2. One of the first things that I want to work with is internationalization. There’re several i18n providers for angular2. For example ng2-translate, but I want to build something similar to a angular i18n provider that I’d created time ago.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2016/08/01/i18n-angular2-service/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>i18n angular2 service | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="i18n angular2 service" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This days I’m learning angular2 and ionic2. My first impression was bad. Too many new things: angular2, typescript, new project architecture, … but after passing those bad moments I started to like angular2. One of the first things that I want to work with is internationalization. There’re several i18n providers for angular2. For example ng2-translate, but I want to build something similar to a angular i18n provider that I’d created time ago." />
+<meta property="og:description" content="This days I’m learning angular2 and ionic2. My first impression was bad. Too many new things: angular2, typescript, new project architecture, … but after passing those bad moments I started to like angular2. One of the first things that I want to work with is internationalization. There’re several i18n providers for angular2. For example ng2-translate, but I want to build something similar to a angular i18n provider that I’d created time ago." />
+<link rel="canonical" href="/2016/08/01/i18n-angular2-service/" />
+<meta property="og:url" content="/2016/08/01/i18n-angular2-service/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-08-01T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="i18n angular2 service" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2016/08/01/i18n-angular2-service/"},"url":"/2016/08/01/i18n-angular2-service/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"This days I’m learning angular2 and ionic2. My first impression was bad. Too many new things: angular2, typescript, new project architecture, … but after passing those bad moments I started to like angular2. One of the first things that I want to work with is internationalization. There’re several i18n providers for angular2. For example ng2-translate, but I want to build something similar to a angular i18n provider that I’d created time ago.","dateModified":"2016-08-01T00:00:00+02:00","datePublished":"2016-08-01T00:00:00+02:00","headline":"i18n angular2 service","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2016-08-01 00:00
+            " class="post-meta__date date">1 Aug 2016</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#angular2">angular2</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#i18n">i18n</a>, <a
+                href="/tags/#ionic2">ionic2</a>, <a
+                href="/tags/#typescript">typescript</a></span>
+            
+        </div>
+        <h1 class="post-title">i18n angular2 service</h1>
+    </header>
+
+    <section class="post">
+        <p>This days I’m learning <a href="https://angular.io/">angular2</a> and <a href="http://ionic.io/2">ionic2</a>. My first impression was bad. Too many new things: angular2, typescript, new project architecture, … but after passing those bad moments I started to like angular2. One of the first things that I want to work with is internationalization. There’re several i18n providers for angular2. For example <a href="https://github.com/ocombe/ng2-translate">ng2-translate</a>, but I want to build something similar to a angular i18n provider that I’d created <a href="https://gonzalo123.com/2015/07/20/i8n-angularjs-provider/">time ago</a>.</p>
+
+<p>The idea is first configure the service</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@angular/core</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">Platform</span><span class="p">,</span> <span class="nx">ionicBootstrap</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">ionic-angular</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">StatusBar</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">ionic-native</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">HomePage</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./pages/home/home</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">I18nService</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./services/i18n/I18nService</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">lang</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./conf/conf</span><span class="dl">"</span><span class="p">;</span>
+ 
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+    <span class="na">template</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;ion-nav [root]="rootPage"&gt;&lt;/ion-nav&gt;</span><span class="dl">'</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">MyApp</span> <span class="p">{</span>
+    <span class="nl">rootPage</span><span class="p">:</span><span class="kr">any</span> <span class="o">=</span> <span class="nx">HomePage</span><span class="p">;</span>
+ 
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">platform</span><span class="p">:</span><span class="nx">Platform</span><span class="p">,</span> <span class="nx">i18n</span><span class="p">:</span><span class="nx">I18nService</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">platform</span><span class="p">.</span><span class="nx">ready</span><span class="p">().</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="nx">i18n</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">lang</span><span class="p">);</span>
+            <span class="nx">StatusBar</span><span class="p">.</span><span class="nx">styleDefault</span><span class="p">();</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="nx">ionicBootstrap</span><span class="p">(</span><span class="nx">MyApp</span><span class="p">,</span> <span class="p">[</span><span class="nx">I18nService</span><span class="p">]);</span>
+</code></pre></div></div>
+
+<p>We can see that we’re using one configuration from conf/conf.ts</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">lang</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">availableLangs</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">en</span><span class="p">:</span> <span class="dl">'</span><span class="s1">English</span><span class="dl">'</span>
+    <span class="p">},</span>
+    <span class="na">defaultLang</span><span class="p">:</span> <span class="dl">'</span><span class="s1">en</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">lang</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">"</span><span class="s2">true</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">en</span><span class="p">:</span> <span class="dl">"</span><span class="s2">True</span><span class="dl">"</span><span class="p">,</span>
+            <span class="na">es</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Verdadero</span><span class="dl">"</span>
+        <span class="p">},</span>
+        <span class="dl">"</span><span class="s2">false</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">en</span><span class="p">:</span> <span class="dl">"</span><span class="s2">False</span><span class="dl">"</span><span class="p">,</span>
+            <span class="na">es</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Falso</span><span class="dl">"</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+ 
+<span class="k">export</span> <span class="p">{</span><span class="nx">lang</span><span class="p">};</span>
+</code></pre></div></div>
+
+<p>Now we can translate texts using:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span><span class="nx">Component</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@angular/core</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">I18nService</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">../../services/i18n/I18nService</span><span class="dl">"</span><span class="p">;</span>
+ 
+<span class="p">@</span><span class="nd">Component</span><span class="p">({</span>
+    <span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">build/pages/home/home.html</span><span class="dl">'</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">HomePage</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">i18n</span><span class="p">:</span><span class="nx">I18nService</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+ 
+    <span class="nl">label1</span><span class="p">:</span><span class="kr">string</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">i18n</span><span class="p">.</span><span class="nx">translate</span><span class="p">(</span><span class="dl">'</span><span class="s1">true</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nl">label2</span><span class="p">:</span><span class="kr">string</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">true</span><span class="dl">'</span><span class="p">;</span>
+     
+    <span class="nx">ngOnInit</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">setInterval</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">label2</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">i18n</span><span class="p">.</span><span class="nx">translate</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">label2</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">false</span><span class="dl">'</span> <span class="p">?</span> <span class="dl">'</span><span class="s1">true</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">false</span><span class="dl">'</span><span class="p">);</span>
+        <span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We also need a Pipe to use i18n within templates:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kc">true</span>
+</code></pre></div></div>
+
+<p>This is the service:</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span><span class="nx">Injectable</span><span class="p">,</span> <span class="nx">Pipe</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@angular/core</span><span class="dl">"</span><span class="p">;</span>
+ 
+<span class="p">@</span><span class="nd">Injectable</span><span class="p">()</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">I18nService</span> <span class="p">{</span>
+ 
+    <span class="k">private</span> <span class="nx">conf</span><span class="p">:</span><span class="kr">any</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nx">userLang</span><span class="p">:</span><span class="kr">string</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nx">lang</span><span class="p">:</span><span class="kr">any</span><span class="p">;</span>
+ 
+    <span class="nx">setUserLang</span><span class="p">(</span><span class="nx">lang</span><span class="p">:</span><span class="kr">string</span><span class="p">):</span><span class="k">void</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">userLang</span> <span class="o">=</span> <span class="nx">lang</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">init</span><span class="p">(</span><span class="nx">lang</span><span class="p">:</span><span class="kr">any</span><span class="p">):</span><span class="k">void</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">conf</span> <span class="o">=</span> <span class="nx">lang</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">setUserLang</span><span class="p">(</span><span class="nx">lang</span><span class="p">.</span><span class="nx">defaultLang</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">translate</span><span class="p">(</span><span class="nx">key</span><span class="p">:</span><span class="kr">string</span><span class="p">):</span><span class="kr">string</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="k">this</span><span class="p">.</span><span class="nx">conf</span><span class="p">.</span><span class="nx">lang</span> <span class="o">!==</span> <span class="dl">'</span><span class="s1">undefined</span><span class="dl">'</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">conf</span><span class="p">.</span><span class="nx">lang</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">conf</span><span class="p">.</span><span class="nx">lang</span><span class="p">[</span><span class="nx">key</span><span class="p">][</span><span class="k">this</span><span class="p">.</span><span class="nx">userLang</span><span class="p">]</span> <span class="o">||</span> <span class="nx">key</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">key</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="p">@</span><span class="nd">Pipe</span><span class="p">({</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">i18n</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">pure</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">})</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">I18nPipe</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">i18n</span><span class="p">:</span><span class="nx">I18nService</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">transform</span><span class="p">(</span><span class="nx">key</span><span class="p">:</span><span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">i18n</span><span class="p">.</span><span class="nx">translate</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The code is in my <a href="https://github.com/gonzalo123/angular2-i18n">github</a> account. I also have tried to created a npm package and install it using</p>
+
+<p>The code is in my github account. I also have tried to created a npm package and install it using</p>
+
+<pre><code class="language-commandline">npm install angular2-i18n --save
+</code></pre>
+
+<p>I don’t know why it doesn’t work when I use the npm installed package and I works like a charm when I use the code in my project directory</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span><span class="nx">I18nService</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./services/i18n/I18nService</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// works</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">I18nService</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">angular2-i18n/src/I18nService</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// don't work</span>
+</code></pre></div></div>
+
+<p>I also have problems with unit tests. It works when I run the tests locally (it works on my machine :) ) but it doesn’t work when I run them in <a href="https://travis-ci.org/gonzalo123/angular2-i18n">travis</a>. Any help with those two problems would be appreciated.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=i18n+angular2+service%20%2F2016%2F08%2F01%2Fi18n-angular2-service%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2016%2F08%2F01%2Fi18n-angular2-service%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=i18n+angular2+service&url=%2F2016%2F08%2F01%2Fi18n-angular2-service%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2016/08/01/i18n-angular2-service/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2016/08/01/i18n-angular2-service'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2013/07/15/bundles-in-silex-using-stack/">Bundles in Silex using Stack <span class="label label-default">technology</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2013/06/10/working-with-jquery-and-silex-as-restfull-resource-provider/">Working with jQuery and Silex as RestFull Resource provider <span class="label label-default">technology</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2013/02/04/how-to-configure-symfonys-service-container-to-use-twitter-api/">How to configure Symfony's Service Container to use Twitter API <span class="label label-default">technology</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

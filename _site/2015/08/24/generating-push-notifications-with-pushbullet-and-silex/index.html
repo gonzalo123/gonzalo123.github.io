@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Generating push notifications with Pushbullet and Silex</title>
+    <meta name="description"
+          content="Sometimes I need to send push notifications to mobile apps (Android or IOS). It’s not difficult. Maybe it’s a bit nightmare the first times, but when you understand the process, it’s straightforward. Last days I discover a cool service called PushBullet. It allows us to install one client in our Android/IOS or even desktop computer, and send push notifications between them.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Generating push notifications with Pushbullet and Silex">
+    <meta name="twitter:description"
+          content="Sometimes I need to send push notifications to mobile apps (Android or IOS). It’s not difficult. Maybe it’s a bit nightmare the first times, but when you understand the process, it’s straightforward. Last days I discover a cool service called PushBullet. It allows us to install one client in our Android/IOS or even desktop computer, and send push notifications between them.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Generating push notifications with Pushbullet and Silex">
+    <meta property="og:description"
+          content="Sometimes I need to send push notifications to mobile apps (Android or IOS). It’s not difficult. Maybe it’s a bit nightmare the first times, but when you understand the process, it’s straightforward. Last days I discover a cool service called PushBullet. It allows us to install one client in our Android/IOS or even desktop computer, and send push notifications between them.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2015/08/24/generating-push-notifications-with-pushbullet-and-silex/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Generating push notifications with Pushbullet and Silex | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Generating push notifications with Pushbullet and Silex" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Sometimes I need to send push notifications to mobile apps (Android or IOS). It’s not difficult. Maybe it’s a bit nightmare the first times, but when you understand the process, it’s straightforward. Last days I discover a cool service called PushBullet. It allows us to install one client in our Android/IOS or even desktop computer, and send push notifications between them." />
+<meta property="og:description" content="Sometimes I need to send push notifications to mobile apps (Android or IOS). It’s not difficult. Maybe it’s a bit nightmare the first times, but when you understand the process, it’s straightforward. Last days I discover a cool service called PushBullet. It allows us to install one client in our Android/IOS or even desktop computer, and send push notifications between them." />
+<link rel="canonical" href="/2015/08/24/generating-push-notifications-with-pushbullet-and-silex/" />
+<meta property="og:url" content="/2015/08/24/generating-push-notifications-with-pushbullet-and-silex/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-08-24T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Generating push notifications with Pushbullet and Silex" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2015/08/24/generating-push-notifications-with-pushbullet-and-silex/"},"url":"/2015/08/24/generating-push-notifications-with-pushbullet-and-silex/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Sometimes I need to send push notifications to mobile apps (Android or IOS). It’s not difficult. Maybe it’s a bit nightmare the first times, but when you understand the process, it’s straightforward. Last days I discover a cool service called PushBullet. It allows us to install one client in our Android/IOS or even desktop computer, and send push notifications between them.","dateModified":"2015-08-24T00:00:00+02:00","datePublished":"2015-08-24T00:00:00+02:00","headline":"Generating push notifications with Pushbullet and Silex","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2015-08-24 00:00
+            " class="post-meta__date date">24 Aug 2015</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#api">api</a>, <a
+                href="/tags/#push-notifications">push-notifications</a>, <a
+                href="/tags/#pushbullet">pushbullet</a>, <a
+                href="/tags/#silex">silex</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#technology">technology</a></span>
+            
+        </div>
+        <h1 class="post-title">Generating push notifications with Pushbullet and Silex</h1>
+    </header>
+
+    <section class="post">
+        <p>Sometimes I need to send push notifications to mobile apps (<a href="http://gonzalo123.com/2013/08/05/sending-android-push-notifications-from-php-to-phonegap-applications/">Android</a> or IOS). It’s not difficult. Maybe it’s a bit nightmare the first times, but when you understand the process, it’s straightforward. Last days I discover a cool service called <a href="https://www.pushbullet.com/">PushBullet</a>. It allows us to install one client in our Android/IOS or even desktop computer, and send push notifications between them.</p>
+
+<p>Pushbullet also has a good <a href="https://docs.pushbullet.com/">API</a>, and it allows us to automate our push notifications. I’ve play a little bit with the API and my Raspberry Pi - home server. It’s really simple to integrate the API with our Silex backend and send push notifications to our registered devices.</p>
+
+<p>I’ve created one small service provider to enclose the API. The idea is to use one Silex application like this</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">PushSilex\Silex\Provider\PushbulletServiceProvider</span><span class="p">;</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">([</span><span class="s1">'debug'</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">]);</span>
+ 
+<span class="nv">$myToken</span> <span class="o">=</span> <span class="k">include</span><span class="p">(</span><span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/../conf/token.php'</span><span class="p">);</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">register</span><span class="p">(</span><span class="k">new</span> <span class="nc">PushbulletServiceProvider</span><span class="p">(</span><span class="nv">$myToken</span><span class="p">));</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/"</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">"Usage: GET /note/</span><span class="si">{</span><span class="nv">title}/{body</span><span class="si">}</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s2">"/note/</span><span class="si">{</span><span class="nv">title}/{body</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">,</span> <span class="nv">$title</span><span class="p">,</span> <span class="nv">$body</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">json</span><span class="p">(</span><span class="nv">$app</span><span class="p">[</span><span class="s1">'pushbullet.note'</span><span class="p">](</span><span class="nv">$title</span><span class="p">,</span> <span class="nv">$body</span><span class="p">));</span>
+<span class="p">});</span>
+ 
+<span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>As we can see we’re using one service providers called PushbulletServiceProvider. This service provides us ‘pushbullet.note’ and allows to send push notifications. We only need to configure our Service Provider with our Pushbulled’s token and that’s all.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="kn">namespace</span> <span class="nn">PushSilex\Silex\Provider</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Silex\ServiceProviderInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Silex\Application</span><span class="p">;</span>
+<span class="kd">class</span> <span class="nc">PushbulletServiceProvider</span> <span class="kd">implements</span> <span class="nc">ServiceProviderInterface</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$accessToken</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">URI</span> <span class="o">=</span> <span class="s1">'https://api.pushbullet.com/v2/pushes'</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">NOTE</span> <span class="o">=</span> <span class="s1">'note'</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="nv">$accessToken</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">accessToken</span> <span class="o">=</span> <span class="nv">$accessToken</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">register</span><span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$app</span><span class="p">[</span><span class="s1">'pushbullet.note'</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">protect</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="nv">$body</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">push</span><span class="p">(</span><span class="k">self</span><span class="o">::</span><span class="no">NOTE</span><span class="p">,</span> <span class="nv">$title</span><span class="p">,</span> <span class="nv">$body</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="k">private</span> <span class="k">function</span> <span class="n">push</span><span class="p">(</span><span class="nv">$type</span><span class="p">,</span> <span class="nv">$title</span><span class="p">,</span> <span class="nv">$body</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">'type'</span>  <span class="o">=&gt;</span> <span class="nv">$type</span><span class="p">,</span>
+            <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
+            <span class="s1">'body'</span>  <span class="o">=&gt;</span> <span class="nv">$body</span><span class="p">,</span>
+        <span class="p">];</span>
+        <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+        <span class="nb">curl_setopt_array</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="p">[</span>
+            <span class="no">CURLOPT_URL</span>            <span class="o">=&gt;</span> <span class="k">self</span><span class="o">::</span><span class="no">URI</span><span class="p">,</span>
+            <span class="no">CURLOPT_HTTPHEADER</span>     <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">],</span>
+            <span class="no">CURLOPT_CUSTOMREQUEST</span>  <span class="o">=&gt;</span> <span class="s1">'POST'</span><span class="p">,</span>
+            <span class="no">CURLOPT_POSTFIELDS</span>     <span class="o">=&gt;</span> <span class="nv">$data</span><span class="p">,</span>
+            <span class="no">CURLOPT_HTTPAUTH</span>       <span class="o">=&gt;</span> <span class="no">CURLAUTH_BASIC</span><span class="p">,</span>
+            <span class="no">CURLOPT_USERPWD</span>        <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">accessToken</span> <span class="mf">.</span> <span class="s1">':'</span><span class="p">,</span>
+            <span class="no">CURLOPT_RETURNTRANSFER</span> <span class="o">=&gt;</span> <span class="kc">true</span>
+        <span class="p">]);</span>
+        <span class="nv">$out</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+        <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+ 
+        <span class="k">return</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$out</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">boot</span><span class="p">(</span><span class="kt">Application</span> <span class="nv">$app</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Normally I use <a href="guzzle.readthedocs.org">Guzzle</a> to handle HTTP clients, but in this example I’ve created a raw curl connection.</p>
+
+<p>You can see the project in my <a href="https://github.com/gonzalo123/pushsilex">github</a> account</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Generating+push+notifications+with+Pushbullet+and+Silex%20%2F2015%2F08%2F24%2Fgenerating-push-notifications-with-pushbullet-and-silex%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2015%2F08%2F24%2Fgenerating-push-notifications-with-pushbullet-and-silex%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Generating+push+notifications+with+Pushbullet+and+Silex&url=%2F2015%2F08%2F24%2Fgenerating-push-notifications-with-pushbullet-and-silex%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2015/08/24/generating-push-notifications-with-pushbullet-and-silex/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2015/08/24/generating-push-notifications-with-pushbullet-and-silex'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span>  <span class="label label-default">silex</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">php</span>  <span class="label label-default">technology</span>  <span class="label label-default">silex</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

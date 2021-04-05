@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Token based authentication with Silex and AngularJS</title>
+    <meta name="description"
+          content="According to my last post today we’re going to create a AngularJS application that uses the Silex Backend that we create previously. The idea of this application is to use it within a Phonegap/Cordova application running in a mobile device.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Token based authentication with Silex and AngularJS">
+    <meta name="twitter:description"
+          content="According to my last post today we’re going to create a AngularJS application that uses the Silex Backend that we create previously. The idea of this application is to use it within a Phonegap/Cordova application running in a mobile device.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Token based authentication with Silex and AngularJS">
+    <meta property="og:description"
+          content="According to my last post today we’re going to create a AngularJS application that uses the Silex Backend that we create previously. The idea of this application is to use it within a Phonegap/Cordova application running in a mobile device.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2014/06/09/token-based-authentication-with-silex-and-angularjs/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Token based authentication with Silex and AngularJS | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Token based authentication with Silex and AngularJS" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="According to my last post today we’re going to create a AngularJS application that uses the Silex Backend that we create previously. The idea of this application is to use it within a Phonegap/Cordova application running in a mobile device." />
+<meta property="og:description" content="According to my last post today we’re going to create a AngularJS application that uses the Silex Backend that we create previously. The idea of this application is to use it within a Phonegap/Cordova application running in a mobile device." />
+<link rel="canonical" href="/2014/06/09/token-based-authentication-with-silex-and-angularjs/" />
+<meta property="og:url" content="/2014/06/09/token-based-authentication-with-silex-and-angularjs/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-06-09T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Token based authentication with Silex and AngularJS" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2014/06/09/token-based-authentication-with-silex-and-angularjs/"},"url":"/2014/06/09/token-based-authentication-with-silex-and-angularjs/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"According to my last post today we’re going to create a AngularJS application that uses the Silex Backend that we create previously. The idea of this application is to use it within a Phonegap/Cordova application running in a mobile device.","dateModified":"2014-06-09T00:00:00+02:00","datePublished":"2014-06-09T00:00:00+02:00","headline":"Token based authentication with Silex and AngularJS","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2014-06-09 00:00
+            " class="post-meta__date date">9 Jun 2014</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#js">js</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#silex">silex</a>, <a
+                href="/tags/#topcoat">topcoat</a>, <a
+                href="/tags/#angularjs">angularjs</a>, <a
+                href="/tags/#cordova">cordova</a>, <a
+                href="/tags/#phonegap">phonegap</a>, <a
+                href="/tags/#symfony">symfony</a></span>
+            
+        </div>
+        <h1 class="post-title">Token based authentication with Silex and AngularJS</h1>
+    </header>
+
+    <section class="post">
+        <p>According to my last <a href="http://gonzalo123.com/2014/05/05/token-based-authentication-with-silex-applications/" title="Token based authentication with Silex Applications">post</a> today we’re going to create a AngularJS application that uses the Silex Backend that we create previously. The idea of this application is to use it within a Phonegap/Cordova application running in a mobile device.</p>
+
+<p>The application will be show a login form if device haven’t a correct token.</p>
+
+<p><img src="/assets/images/gonzalo_login_example_and_loginserviceprovider_php_-_token_-____work_projects_token_.jpg" alt="" /></p>
+
+<p>And with a correct token:</p>
+
+<p><img src="/assets/images/gonzalo_login_example.jpg" alt="" /></p>
+
+<p>Nothing new under the sun, isn’t it?</p>
+
+<p>Our front-end application will use <a href="https://angularjs.org/">AngularJS</a> and <a href="http://topcoat.io/">Topcoat</a>.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns:ng=</span><span class="s">"http://angularjs.org"</span> <span class="na">lang=</span><span class="s">"es"</span> <span class="na">ng-app=</span><span class="s">"G"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"format-detection"</span> <span class="na">content=</span><span class="s">"telephone=no"</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 --&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span>
+          <span class="na">content=</span><span class="s">"user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"/bower_components/topcoat/css/topcoat-mobile-light.min.css"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Gonzalo Login Example<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body</span> <span class="na">ng-controller=</span><span class="s">"MainController"</span><span class="nt">&gt;</span>
+ 
+<span class="nt">&lt;div</span> <span class="na">ng-view</span> <span class="na">class=</span><span class="s">"main-content"</span><span class="nt">&gt;&lt;/div&gt;</span>
+ 
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/bower_components/angular/angular.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/bower_components/angular-route/angular-route.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+ 
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"js/app.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"js/services.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+ 
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>And our AngularJS application:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">appControllers</span><span class="p">,</span> <span class="nx">G</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">host</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">http://localhost:8080</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// server API url</span>
+ 
+<span class="nx">appControllers</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="dl">'</span><span class="s1">appControllers</span><span class="dl">'</span><span class="p">,</span> <span class="p">[]);</span>
+<span class="nx">G</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="dl">'</span><span class="s1">G</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">ngRoute</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">appControllers</span><span class="dl">'</span><span class="p">]);</span>
+ 
+<span class="nx">G</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">httpG</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">httpG</span><span class="p">.</span><span class="nx">setHost</span><span class="p">(</span><span class="nx">host</span><span class="p">);</span>
+<span class="p">});</span>
+ 
+<span class="nx">G</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="dl">'</span><span class="s1">$routeProvider</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$routeProvider</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$routeProvider</span><span class="p">.</span>
+        <span class="nx">when</span><span class="p">(</span><span class="dl">'</span><span class="s1">/login</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span><span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">partials/login.html</span><span class="dl">'</span><span class="p">,</span> <span class="na">controller</span><span class="p">:</span> <span class="dl">'</span><span class="s1">LoginController</span><span class="dl">'</span><span class="p">}).</span>
+        <span class="nx">when</span><span class="p">(</span><span class="dl">'</span><span class="s1">/home</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span><span class="na">templateUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">partials/home.html</span><span class="dl">'</span><span class="p">,</span> <span class="na">controller</span><span class="p">:</span> <span class="dl">'</span><span class="s1">HomeController</span><span class="dl">'</span><span class="p">});</span>
+<span class="p">}]);</span>
+ 
+<span class="nx">appControllers</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="dl">'</span><span class="s1">HomeController</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">$scope</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">httpG</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">$location</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">httpG</span><span class="p">,</span> <span class="nx">$location</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">hello</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">httpG</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/api/info</span><span class="dl">'</span><span class="p">).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Hello </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">info</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">info</span><span class="p">.</span><span class="nx">surname</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">};</span>
+ 
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">logOut</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Good bye!</span><span class="dl">"</span><span class="p">);</span>
+        <span class="nx">httpG</span><span class="p">.</span><span class="nx">removeToken</span><span class="p">();</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">isAuthenticated</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span><span class="dl">'</span><span class="s1">login</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">};</span>
+<span class="p">}]);</span>
+ 
+<span class="nx">appControllers</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="dl">'</span><span class="s1">MainController</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">$scope</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">$location</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">httpG</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$location</span><span class="p">,</span> <span class="nx">httpG</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">isAuthenticated</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+ 
+    <span class="k">if</span> <span class="p">(</span><span class="nx">httpG</span><span class="p">.</span><span class="nx">getToken</span><span class="p">())</span> <span class="p">{</span>
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">isAuthenticated</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span><span class="dl">'</span><span class="s1">home</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span><span class="dl">'</span><span class="s1">login</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}]);</span>
+ 
+ 
+<span class="nx">appControllers</span><span class="p">.</span><span class="nx">controller</span><span class="p">(</span><span class="dl">'</span><span class="s1">LoginController</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">$scope</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">$location</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">httpG</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$location</span><span class="p">,</span> <span class="nx">httpG</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span> <span class="o">=</span> <span class="p">{};</span>
+ 
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">doLogIn</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">httpG</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/auth/validateCredentials</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span><span class="na">user</span><span class="p">:</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="na">pass</span><span class="p">:</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">password</span><span class="p">}).</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">httpG</span><span class="p">.</span><span class="nx">setToken</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">info</span><span class="p">.</span><span class="nx">token</span><span class="p">);</span>
+                <span class="nx">$scope</span><span class="p">.</span><span class="nx">isAuthenticated</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+                <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span><span class="dl">'</span><span class="s1">home</span><span class="dl">'</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">login error</span><span class="dl">"</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}).</span><span class="nx">error</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Login Error!</span><span class="dl">"</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">};</span>
+ 
+    <span class="nx">$scope</span><span class="p">.</span><span class="nx">doLogOut</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">httpG</span><span class="p">.</span><span class="nx">removeToken</span><span class="p">();</span>
+    <span class="p">};</span>
+<span class="p">}]);</span>
+</code></pre></div></div>
+
+<p>In this example I’m using angular-route to handle the application’s routes. Nowadays I’m swaping to angular-ui-router, but this example I’m still using “old-style” routes. We define two partials:</p>
+
+<p>partial/home.html</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"topcoat-button-bar full"</span> <span class="na">style=</span><span class="s">"position: fixed; bottom: 0px;"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">class=</span><span class="s">"topcoat-button-bar__item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"topcoat-button full"</span> <span class="na">ng-click=</span><span class="s">"logOut()"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">""</span><span class="nt">&gt;</span>Logout<span class="nt">&lt;/span&gt;</span>
+        <span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">class=</span><span class="s">"topcoat-button-bar__item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"topcoat-button--cta full"</span> <span class="na">ng-click=</span><span class="s">"hello()"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">""</span><span class="nt">&gt;</span>Hello<span class="nt">&lt;/span&gt;</span>
+        <span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/label&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>partial/login.html</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"topcoat-navigation-bar"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"topcoat-navigation-bar__item center full"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">"topcoat-navigation-bar__title"</span><span class="nt">&gt;</span>Login<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+ 
+<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"topcoat-list__container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"topcoat-list__item center"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">ng-model=</span><span class="s">"user.username"</span> <span class="na">class=</span><span class="s">"topcoat-text-input--large"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"user"</span>
+               <span class="na">placeholder=</span><span class="s">"Username"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"topcoat-list__item center"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">ng-model=</span><span class="s">"user.password"</span> <span class="na">class=</span><span class="s">"topcoat-text-input--large"</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"pass"</span>
+               <span class="na">placeholder=</span><span class="s">"Password"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+<span class="nt">&lt;/ul&gt;</span>
+ 
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"topcoat-button-bar full"</span> <span class="na">style=</span><span class="s">"position: fixed; bottom: 0px;"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">class=</span><span class="s">"topcoat-button-bar__item"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"topcoat-button--cta full"</span> <span class="na">ng-click=</span><span class="s">"doLogIn()"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">""</span><span class="nt">&gt;</span>Login<span class="nt">&lt;/span&gt;</span>
+        <span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/label&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>As we can see in the application we’re using a service to handle Http connections with the token information.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+ 
+<span class="nx">G</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="dl">'</span><span class="s1">httpG</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">$http</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">$window</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$http</span><span class="p">,</span> <span class="nx">$window</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">serviceToken</span><span class="p">,</span> <span class="nx">serviceHost</span><span class="p">,</span> <span class="nx">tokenKey</span><span class="p">;</span>
+    <span class="nx">tokenKey</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">token</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="nx">tokenKey</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">serviceToken</span> <span class="o">=</span> <span class="nx">$window</span><span class="p">.</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="nx">tokenKey</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">$http</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">post</span><span class="p">[</span><span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">application/x-www-form-urlencoded</span><span class="dl">"</span><span class="p">;</span>
+ 
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="na">setHost</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">host</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">serviceHost</span> <span class="o">=</span> <span class="nx">host</span><span class="p">;</span>
+        <span class="p">},</span>
+ 
+        <span class="na">setToken</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">serviceToken</span> <span class="o">=</span> <span class="nx">token</span><span class="p">;</span>
+            <span class="nx">$window</span><span class="p">.</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="nx">tokenKey</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+        <span class="p">},</span>
+ 
+        <span class="na">getToken</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">serviceToken</span><span class="p">;</span>
+        <span class="p">},</span>
+ 
+        <span class="na">removeToken</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">serviceToken</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+            <span class="nx">$window</span><span class="p">.</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">removeItem</span><span class="p">(</span><span class="nx">tokenKey</span><span class="p">);</span>
+        <span class="p">},</span>
+ 
+        <span class="na">get</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">uri</span><span class="p">,</span> <span class="nx">params</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">params</span> <span class="o">=</span> <span class="nx">params</span> <span class="o">||</span> <span class="p">{};</span>
+            <span class="nx">params</span><span class="p">[</span><span class="dl">'</span><span class="s1">_token</span><span class="dl">'</span><span class="p">]</span> <span class="o">=</span> <span class="nx">serviceToken</span><span class="p">;</span>
+            <span class="k">return</span> <span class="nx">$http</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">serviceHost</span> <span class="o">+</span> <span class="nx">uri</span><span class="p">,</span> <span class="p">{</span><span class="na">params</span><span class="p">:</span> <span class="nx">params</span><span class="p">});</span>
+        <span class="p">},</span>
+ 
+        <span class="na">post</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">uri</span><span class="p">,</span> <span class="nx">params</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">params</span> <span class="o">=</span> <span class="nx">params</span> <span class="o">||</span> <span class="p">{};</span>
+            <span class="nx">params</span><span class="p">[</span><span class="dl">'</span><span class="s1">_token</span><span class="dl">'</span><span class="p">]</span> <span class="o">=</span> <span class="nx">serviceToken</span><span class="p">;</span>
+ 
+            <span class="k">return</span> <span class="nx">$http</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">serviceHost</span> <span class="o">+</span> <span class="nx">uri</span><span class="p">,</span> <span class="nx">params</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+<span class="p">}]);</span>
+</code></pre></div></div>
+
+<p>And that’s all. You can see the full example in my <a href="https://github.com/gonzalo123/token">github</a> account.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Token+based+authentication+with+Silex+and+AngularJS%20%2F2014%2F06%2F09%2Ftoken-based-authentication-with-silex-and-angularjs%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2014%2F06%2F09%2Ftoken-based-authentication-with-silex-and-angularjs%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Token+based+authentication+with+Silex+and+AngularJS&url=%2F2014%2F06%2F09%2Ftoken-based-authentication-with-silex-and-angularjs%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2014/06/09/token-based-authentication-with-silex-and-angularjs/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2014/06/09/token-based-authentication-with-silex-and-angularjs'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2018/10/08/working-with-sapui5-locally-part-3-adding-more-services-in-docker/">Working with SAPUI5 locally (part 3). Adding more services in Docker <span class="label label-default">php</span>  <span class="label label-default">js</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2017/12/11/authenticate-openui5-applications-and-lumen-backends-with-amazon-cognito-and-jwt/">Authenticate OpenUI5 applications and Lumen backends with Amazon Cognito and JWT <span class="label label-default">php</span>  <span class="label label-default">symfony</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">silex</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">php</span>  <span class="label label-default">silex</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

@@ -9,7 +9,7 @@ tags:
   - "fswatcher"
   - "go"
   - "rabbitmq"
-coverImage: "download-2.png"
+coverImage: "/assets/images/download-2.png"
 ---
 
 Let me explain the idea. I want to emit one RabbitMQ message each time new file is generated in a folder. The problem is that I cannot modify the code of the software that generate the files. The idea is generate a filesystem watcher that emits the message. Let's start.

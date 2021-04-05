@@ -2,7 +2,13 @@
 layout: default
 ---
 <article class="post-container post-container--single">
-    <header class="post-header">
+    <header
+            class="post-header"
+            {% if page.coverImage %}
+        class="cover-banner"
+        style="background-image: url({{ page.coverImage }});"
+        {% endif %}
+    >
         <div class="post-meta">
             <time datetime="{{ page.date | date: " %Y-%m-%d %H:%M
             " }}" class="post-meta__date date">{{ page.date | date: "%-d %b %Y" }}</time>

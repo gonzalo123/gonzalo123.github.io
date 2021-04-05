@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Sending automated emails with PHP, Swiftmailer and Twig</title>
+    <meta name="description"
+          content="I’m the one of hosts of a Coding Dojo in my city called Katayunos. Katayunos is the mix of the word Kata (coding kata) and “Desayuno” (breakfast in Spanish). A group of brave programmers meet together one Saturday morning and after having breakfast we pick one coding kata and we practise TDD and pair programming. It’s something difficult to explain to non-geek people (why the hell we wake up early one Saturday morning to do this) but if you are reading this post probably it sounds good:).
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Sending automated emails with PHP, Swiftmailer and Twig">
+    <meta name="twitter:description"
+          content="I’m the one of hosts of a Coding Dojo in my city called Katayunos. Katayunos is the mix of the word Kata (coding kata) and “Desayuno” (breakfast in Spanish). A group of brave programmers meet together one Saturday morning and after having breakfast we pick one coding kata and we practise TDD and pair programming. It’s something difficult to explain to non-geek people (why the hell we wake up early one Saturday morning to do this) but if you are reading this post probably it sounds good:).
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Sending automated emails with PHP, Swiftmailer and Twig">
+    <meta property="og:description"
+          content="I’m the one of hosts of a Coding Dojo in my city called Katayunos. Katayunos is the mix of the word Kata (coding kata) and “Desayuno” (breakfast in Spanish). A group of brave programmers meet together one Saturday morning and after having breakfast we pick one coding kata and we practise TDD and pair programming. It’s something difficult to explain to non-geek people (why the hell we wake up early one Saturday morning to do this) but if you are reading this post probably it sounds good:).
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2013/09/23/sending-automated-emails-with-php-swiftmailer-and-twig/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Sending automated emails with PHP, Swiftmailer and Twig | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Sending automated emails with PHP, Swiftmailer and Twig" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I’m the one of hosts of a Coding Dojo in my city called Katayunos. Katayunos is the mix of the word Kata (coding kata) and “Desayuno” (breakfast in Spanish). A group of brave programmers meet together one Saturday morning and after having breakfast we pick one coding kata and we practise TDD and pair programming. It’s something difficult to explain to non-geek people (why the hell we wake up early one Saturday morning to do this) but if you are reading this post probably it sounds good:)." />
+<meta property="og:description" content="I’m the one of hosts of a Coding Dojo in my city called Katayunos. Katayunos is the mix of the word Kata (coding kata) and “Desayuno” (breakfast in Spanish). A group of brave programmers meet together one Saturday morning and after having breakfast we pick one coding kata and we practise TDD and pair programming. It’s something difficult to explain to non-geek people (why the hell we wake up early one Saturday morning to do this) but if you are reading this post probably it sounds good:)." />
+<link rel="canonical" href="/2013/09/23/sending-automated-emails-with-php-swiftmailer-and-twig/" />
+<meta property="og:url" content="/2013/09/23/sending-automated-emails-with-php-swiftmailer-and-twig/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-09-23T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Sending automated emails with PHP, Swiftmailer and Twig" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2013/09/23/sending-automated-emails-with-php-swiftmailer-and-twig/"},"url":"/2013/09/23/sending-automated-emails-with-php-swiftmailer-and-twig/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"I’m the one of hosts of a Coding Dojo in my city called Katayunos. Katayunos is the mix of the word Kata (coding kata) and “Desayuno” (breakfast in Spanish). A group of brave programmers meet together one Saturday morning and after having breakfast we pick one coding kata and we practise TDD and pair programming. It’s something difficult to explain to non-geek people (why the hell we wake up early one Saturday morning to do this) but if you are reading this post probably it sounds good:).","dateModified":"2013-09-23T00:00:00+02:00","datePublished":"2013-09-23T00:00:00+02:00","headline":"Sending automated emails with PHP, Swiftmailer and Twig","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2013-09-23 00:00
+            " class="post-meta__date date">23 Sep 2013</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#dependency-injection">dependency-injection</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#phpunit">phpunit</a>, <a
+                href="/tags/#symfony">symfony</a>, <a
+                href="/tags/#tdd">tdd</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#twig">twig</a>, <a
+                href="/tags/#coding-dojo">coding-dojo</a>, <a
+                href="/tags/#gmail">gmail</a>, <a
+                href="/tags/#mediator">mediator</a>, <a
+                href="/tags/#swiftmailer">swiftmailer</a>, <a
+                href="/tags/#tdd">tdd</a></span>
+            
+        </div>
+        <h1 class="post-title">Sending automated emails with PHP, Swiftmailer and Twig</h1>
+    </header>
+
+    <section class="post">
+        <p>I’m the one of hosts of a <strong>Coding Dojo</strong> in my city called <strong>Katayunos</strong>. <a href="http://katayunos.com/">Katayunos</a> is the mix of the word Kata (coding kata) and “Desayuno” (breakfast in Spanish). A group of brave programmers meet together one Saturday morning and after having breakfast we pick one coding kata and we practise <strong>TDD</strong> and <strong>pair programming</strong>. It’s something difficult to explain to non-geek people (why the hell we wake up early one Saturday morning to do this) but if you are reading this post probably it sounds good:).</p>
+
+<p>My work as host is basically pick the place and encourage people to join to the <strong>Coding Dojo</strong>. One way of doing this (besides twitter buzz) is take my address book and send one bulk email to all of them inviting to join us. I don’t like this kind of mails. They look like spam, so I prefer to send a personalized email. This email has a common part (the place location, the hour, the event description, …) and the personalized part. I can do it manually, the list isn’t so huge, but definitely that’s not cool. Because of that I have done a little script to perform this operation. I can do a simple PHP script but we are speaking about announcing a event about <strong>TDD</strong>, <a href="http://en.wikipedia.org/wiki/SOLID_(object-oriented_design)">SOLID</a> and things like that, so I must use the “right way”. Let’s start.</p>
+
+<p>I manage my list of contacts within a spreadsheet. In this spreadsheet I have the name, the email and a one paragraph with the personalized part to each one of my contact. I can easily export this spreadsheet to a csv document like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Peter Parker, spiderman@gmail.com, "Lorem ipsum dolor sit amet, ..."
+Clark Kent, superman@gmail.com, "consectetur adipisicing elit, ..."
+Juan López Fernández, superlopez@gmail.com, "sed do eiusmod tempor incididunt .."
+</code></pre></div></div>
+
+<p>So first of all I need to parse this file.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Parser</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$data</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">createFromCsvFile</span><span class="p">(</span><span class="nv">$path</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$handle</span> <span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">((</span><span class="nv">$data</span> <span class="o">=</span> <span class="nb">fgetcsv</span><span class="p">(</span><span class="nv">$handle</span><span class="p">))</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="s1">'body'</span>  <span class="o">=&gt;</span> <span class="k">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">?</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getData</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Easy. Now I want to send this parsed array by email. Because of that I will include <a href="http://swiftmailer.org/">Swiftmailer</a> in my composer.json file.</p>
+
+<p>My email will also be one template and one personalized part. We will use <a href="http://twig.sensiolabs.org/">Twig</a> to manage the template.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"swiftmailer/swiftmailer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v5.0.2"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"twig/twig"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v1.13.2"</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Now we will create a class to wrap the needed code to send emails</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Mailer</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$swiftMailer</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$swiftMessage</span><span class="p">;</span>
+ 
+    <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">Swift_Mailer</span> <span class="nv">$swiftMailer</span><span class="p">,</span> <span class="kt">Swift_Message</span> <span class="nv">$swiftMessage</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">swiftMailer</span>  <span class="o">=</span> <span class="nv">$swiftMailer</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">swiftMessage</span> <span class="o">=</span> <span class="nv">$swiftMessage</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">sendMessage</span><span class="p">(</span><span class="nv">$to</span><span class="p">,</span> <span class="nv">$body</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">swiftMessage</span><span class="o">-&gt;</span><span class="nf">setTo</span><span class="p">(</span><span class="nv">$to</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">swiftMessage</span><span class="o">-&gt;</span><span class="nf">setBody</span><span class="p">(</span><span class="nb">strip_tags</span><span class="p">(</span><span class="nv">$body</span><span class="p">));</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">swiftMessage</span><span class="o">-&gt;</span><span class="nf">addPart</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span> <span class="s1">'text/html'</span><span class="p">);</span>
+ 
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">swiftMailer</span><span class="o">-&gt;</span><span class="nf">send</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">swiftMessage</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Our Mailer class sends mails. Our Parser class parses one csv file. Now we need something to join those two classes: the Spammer class. Spammer class will take one parsed array and it will send one by one the mails using Mailer class.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Spammer</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$twig</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$mailer</span><span class="p">;</span>
+ 
+    <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">Twig_Environment</span> <span class="nv">$twig</span><span class="p">,</span> <span class="kt">Mailer</span> <span class="nv">$mailer</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">twig</span>       <span class="o">=</span> <span class="nv">$twig</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">mailer</span>     <span class="o">=</span> <span class="nv">$mailer</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">sendEmails</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$data</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$to</span> <span class="o">=</span> <span class="nv">$item</span><span class="p">[</span><span class="s1">'email'</span><span class="p">];</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">mailer</span><span class="o">-&gt;</span><span class="nf">sendMessage</span><span class="p">(</span><span class="nv">$to</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">twig</span><span class="o">-&gt;</span><span class="nf">render</span><span class="p">(</span><span class="s1">'mail.twig'</span><span class="p">,</span> <span class="nv">$item</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Ok with this three classes I can easily send my emails. This script is a console script and we also want pretty console colours and this kind of stuff. <a href="http://symfony.com/doc/current/components/console/introduction.html">symfony/console</a> to the rescue. But I’ve a problem now. I want to write one message when one mail is sent and another one when something wrong happens. If I want to do that I need to change my Spammer class. But my Spammer class does’t know anything about my console Command. If I inject the console command into my Spammer class I will violate the <a href="http://en.wikipedia.org/wiki/Law_of_Demeter">Demeter law</a>, and that’s a sin. What can we do? Easy: The <a href="http://en.wikipedia.org/wiki/Mediator_pattern">mediator pattern</a>. We can write one implementation of mediator pattern but we also can use <a href="http://symfony.com/doc/current/components/event_dispatcher/introduction.html">symfony/event-dispatcher</a>, a well done implementation of this pattern. We change our Spammer class to:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Symfony\Component\EventDispatcher\EventDispatcher</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">Spammer</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$twig</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$mailer</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$dispatcher</span><span class="p">;</span>
+ 
+    <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">Twig_Environment</span> <span class="nv">$twig</span><span class="p">,</span> <span class="kt">Mailer</span> <span class="nv">$mailer</span><span class="p">,</span> <span class="kt">EventDispatcher</span> <span class="nv">$dispatcher</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">twig</span>       <span class="o">=</span> <span class="nv">$twig</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">mailer</span>     <span class="o">=</span> <span class="nv">$mailer</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">dispatcher</span> <span class="o">=</span> <span class="nv">$dispatcher</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">sendEmails</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$data</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$to</span> <span class="o">=</span> <span class="nv">$item</span><span class="p">[</span><span class="s1">'email'</span><span class="p">];</span>
+            <span class="k">try</span> <span class="p">{</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">mailer</span><span class="o">-&gt;</span><span class="nf">sendMessage</span><span class="p">(</span><span class="nv">$to</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">twig</span><span class="o">-&gt;</span><span class="nf">render</span><span class="p">(</span><span class="s1">'mail.twig'</span><span class="p">,</span> <span class="nv">$item</span><span class="p">));</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">dispatcher</span><span class="o">-&gt;</span><span class="nf">dispatch</span><span class="p">(</span><span class="nc">MailEvent</span><span class="o">::</span><span class="no">EVENT_MAIL_SENT</span><span class="p">,</span> <span class="k">new</span> <span class="nc">MailEvent\Sent</span><span class="p">(</span><span class="nv">$to</span><span class="p">));</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="err">\</span><span class="nc">Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">dispatcher</span><span class="o">-&gt;</span><span class="nf">dispatch</span><span class="p">(</span><span class="nc">MailEvent</span><span class="o">::</span><span class="no">EVENT_SENT_ERROR</span><span class="p">,</span> <span class="k">new</span> <span class="nc">MailEvent\Error</span><span class="p">(</span><span class="nv">$to</span><span class="p">,</span> <span class="nv">$e</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now can easily build of console command class:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Symfony\Component\Console\Command\Command</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Console\Input\InputArgument</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Console\Input\InputInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Console\Input\InputOption</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Console\Output\OutputInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\EventDispatcher\EventDispatcher</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">SpamCommand</span> <span class="kd">extends</span> <span class="nc">Command</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$parser</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$dispatcher</span><span class="p">;</span>
+ 
+    <span class="k">protected</span> <span class="k">function</span> <span class="n">configure</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">setName</span><span class="p">(</span><span class="s1">'spam:run'</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="nf">setDescription</span><span class="p">(</span><span class="s1">'Send Emails'</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">protected</span> <span class="k">function</span> <span class="n">execute</span><span class="p">(</span><span class="kt">InputInterface</span> <span class="nv">$input</span><span class="p">,</span> <span class="kt">OutputInterface</span> <span class="nv">$output</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$output</span><span class="o">-&gt;</span><span class="nf">writeln</span><span class="p">(</span><span class="s2">"Sending mails ..."</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">dispatcher</span><span class="o">-&gt;</span><span class="nf">addListener</span><span class="p">(</span><span class="nc">MailEvent</span><span class="o">::</span><span class="no">EVENT_MAIL_SENT</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">MailEvent</span><span class="err">\</span><span class="nc">Sent</span> <span class="nv">$event</span><span class="p">)</span> <span class="nf">use</span> <span class="p">(</span><span class="nv">$output</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nv">$output</span><span class="o">-&gt;</span><span class="nf">writeln</span><span class="p">(</span><span class="s2">"&lt;info&gt;Mail sent to&lt;/info&gt;: &lt;fg=black;bg=cyan&gt;</span><span class="si">{</span><span class="nv">$event</span><span class="o">-&gt;</span><span class="nf">getTo</span><span class="p">()</span><span class="si">}</span><span class="s2">&lt;/fg=black;bg=cyan&gt;"</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">);</span>
+ 
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">dispatcher</span><span class="o">-&gt;</span><span class="nf">addListener</span><span class="p">(</span><span class="nc">MailEvent</span><span class="o">::</span><span class="no">EVENT_SENT_ERROR</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="kt">MailEvent</span><span class="err">\</span><span class="nc">Error</span> <span class="nv">$event</span><span class="p">)</span> <span class="nf">use</span> <span class="p">(</span><span class="nv">$output</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nv">$output</span><span class="o">-&gt;</span><span class="nf">writeln</span><span class="p">(</span><span class="s2">"&lt;error&gt;Error sending mail to&lt;/error&gt;: &lt;fg=black;bg=cyan&gt;</span><span class="si">{</span><span class="nv">$event</span><span class="o">-&gt;</span><span class="nf">getTo</span><span class="p">()</span><span class="si">}</span><span class="s2">&lt;/fg=black;bg=cyan&gt; Error: "</span> <span class="mf">.</span> <span class="nv">$event</span><span class="o">-&gt;</span><span class="nf">getException</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">());</span>
+            <span class="p">}</span>
+        <span class="p">);</span>
+ 
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">spammer</span><span class="o">-&gt;</span><span class="nf">sendEmails</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">parser</span><span class="o">-&gt;</span><span class="nf">getData</span><span class="p">());</span>
+        <span class="nv">$output</span><span class="o">-&gt;</span><span class="nf">writeln</span><span class="p">(</span><span class="s2">"End"</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">setSpammer</span><span class="p">(</span><span class="kt">Spammer</span> <span class="nv">$spammer</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">spammer</span> <span class="o">=</span> <span class="nv">$spammer</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">setParser</span><span class="p">(</span><span class="kt">Parser</span> <span class="nv">$parser</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">parser</span> <span class="o">=</span> <span class="nv">$parser</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">setDispatcher</span><span class="p">(</span><span class="kt">EventDispatcher</span> <span class="nv">$dispatcher</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">dispatcher</span> <span class="o">=</span> <span class="nv">$dispatcher</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>With all this parts we can build our script. Our classes are decoupled. That’s good but setting up the dependencies properly can be hard. Because of that we will use <a href="http://symfony.com/doc/current/components/dependency_injection/introduction.html">symfony/dependency-injection</a>. With symfony DIC we can set up our dependency tree within a yaml file:</p>
+
+<p>Our main services.yml</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">imports</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">resource</span><span class="pi">:</span> <span class="s">conf.yml</span>
+  <span class="pi">-</span> <span class="na">resource</span><span class="pi">:</span> <span class="s">mail.yml</span>
+  <span class="pi">-</span> <span class="na">resource</span><span class="pi">:</span> <span class="s">twig.yml</span>
+ 
+<span class="na">parameters</span><span class="pi">:</span>
+  <span class="s">base.path</span><span class="pi">:</span> <span class="s">.</span>
+ 
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">parser</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="s">Parser</span>
+    <span class="na">calls</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="pi">[</span><span class="nv">createFromCsvFile</span><span class="pi">,</span> <span class="pi">[</span><span class="err">%</span><span class="nv">mail.list%</span><span class="pi">]]</span>
+ 
+  <span class="na">mailer</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="s">Mailer</span>
+    <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[</span><span class="err">@</span><span class="nv">swift.mailer</span><span class="pi">,</span> <span class="err">@</span><span class="nv">swift.message</span><span class="pi">]</span>
+ 
+  <span class="s">spam.command</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="s">SpamCommand</span>
+    <span class="na">calls</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="pi">[</span><span class="nv">setParser</span><span class="pi">,</span> <span class="pi">[</span><span class="err">@</span><span class="nv">parser</span><span class="pi">]]</span>
+      <span class="pi">-</span> <span class="pi">[</span><span class="nv">setDispatcher</span><span class="pi">,</span> <span class="pi">[</span><span class="err">@</span><span class="nv">dispatcher</span><span class="pi">]]</span>
+      <span class="pi">-</span> <span class="pi">[</span><span class="nv">setSpammer</span><span class="pi">,</span> <span class="pi">[</span><span class="err">@</span><span class="nv">spammer</span><span class="pi">]]</span>
+ 
+  <span class="na">spammer</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="s">Spammer</span>
+    <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[</span><span class="err">@</span><span class="nv">twig</span><span class="pi">,</span> <span class="err">@</span><span class="nv">mailer</span><span class="pi">,</span> <span class="err">@</span><span class="nv">dispatcher</span><span class="pi">]</span>
+ 
+  <span class="na">dispatcher</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="s">Symfony\Component\EventDispatcher\EventDispatcher</span>
+</code></pre></div></div>
+
+<p>I like to separate the configuration files to reuse those files between projects and to make them more readable.</p>
+
+<p>One for twig:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">parameters</span><span class="pi">:</span>
+  <span class="s">twig.path</span><span class="pi">:</span> <span class="err">%</span><span class="s">base.path%/templates</span>
+  <span class="s">twig.conf</span><span class="pi">:</span>
+    <span class="na">auto_reload</span><span class="pi">:</span> <span class="no">true</span>
+ 
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">twigLoader</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="s">Twig_Loader_Filesystem</span>
+    <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[</span><span class="err">%</span><span class="nv">twig.path%</span><span class="pi">]</span>
+ 
+  <span class="na">twig</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="s">Twig_Environment</span>
+    <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[</span><span class="err">@</span><span class="nv">twigLoader</span><span class="pi">,</span> <span class="err">%</span><span class="nv">twig.conf%</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>another one for swiftmailer:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="s">swift.message</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="s">Swift_Message</span>
+    <span class="na">calls</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="pi">[</span><span class="nv">setSubject</span><span class="pi">,</span> <span class="pi">[</span><span class="err">%</span><span class="nv">mail.subject%</span><span class="pi">]]</span>
+      <span class="pi">-</span> <span class="pi">[</span><span class="nv">setFrom</span><span class="pi">,</span> <span class="pi">[</span><span class="err">%</span><span class="nv">mail.from.mail%</span><span class="pi">:</span> <span class="err">%</span><span class="nv">mail.from.name%</span><span class="pi">]]</span>
+ 
+  <span class="s">swift.transport</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="s">Swift_SmtpTransport</span>
+    <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[</span><span class="err">%</span><span class="nv">mail.smtp.host%</span><span class="pi">,</span> <span class="err">%</span><span class="nv">mail.smtp.port%</span><span class="pi">,</span> <span class="err">%</span><span class="nv">mail.smtp.encryption%</span><span class="pi">]</span>
+    <span class="na">calls</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="pi">[</span><span class="nv">setUsername</span><span class="pi">,</span> <span class="pi">[</span><span class="err">%</span><span class="nv">mail.smtp.username%</span><span class="pi">]]</span>
+      <span class="pi">-</span> <span class="pi">[</span><span class="nv">setPassword</span><span class="pi">,</span> <span class="pi">[</span><span class="err">%</span><span class="nv">mail.smtp.password%</span><span class="pi">]]</span>
+ 
+  <span class="s">swift.mailer</span><span class="pi">:</span>
+    <span class="na">class</span><span class="pi">:</span> <span class="s">Swift_Mailer</span>
+    <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[</span><span class="err">@</span><span class="nv">swift.transport</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>and the last one for the configuration parameters:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">parameters</span><span class="pi">:</span>
+  <span class="s">mail.do.not.send.mails</span><span class="pi">:</span> <span class="no">false</span>
+ 
+  <span class="s">mail.list</span><span class="pi">:</span> <span class="err">%</span><span class="s">base.path%/mailList.csv</span>
+  <span class="s">mail.subject</span><span class="pi">:</span> <span class="s">mail subject</span>
+  <span class="s">mail.from.name</span><span class="pi">:</span> <span class="s">My Name</span>
+  <span class="s">mail.from.mail</span><span class="pi">:</span> <span class="s">my_email@mail.com</span>
+ 
+  <span class="s">mail.smtp.username</span><span class="pi">:</span> <span class="s">my_smtp_username</span>
+  <span class="s">mail.smtp.password</span><span class="pi">:</span> <span class="s">my_smtp_password</span>
+  <span class="s">mail.smtp.host</span><span class="pi">:</span> <span class="s">smtp.gmail.com</span>
+  <span class="s">mail.smtp.port</span><span class="pi">:</span> <span class="m">465</span>
+  <span class="s">mail.smtp.encryption</span><span class="pi">:</span> <span class="s">ssl</span>
+</code></pre></div></div>
+
+<p>Now we can build our script.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Symfony\Component\Console\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\DependencyInjection\ContainerBuilder</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Config\FileLocator</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\DependencyInjection\Loader\YamlFileLoader</span><span class="p">;</span>
+ 
+<span class="nv">$container</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ContainerBuilder</span><span class="p">();</span>
+<span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">YamlFileLoader</span><span class="p">(</span><span class="nv">$container</span><span class="p">,</span> <span class="k">new</span> <span class="nc">FileLocator</span><span class="p">(</span><span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/conf'</span><span class="p">));</span>
+<span class="nv">$loader</span><span class="o">-&gt;</span><span class="nf">load</span><span class="p">(</span><span class="s1">'services.yml'</span><span class="p">);</span>
+ 
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="nf">setParameter</span><span class="p">(</span><span class="s1">'base.path'</span><span class="p">,</span> <span class="k">__DIR__</span><span class="p">);</span>
+ 
+<span class="nv">$application</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">();</span>
+<span class="nv">$application</span><span class="o">-&gt;</span><span class="nf">add</span><span class="p">(</span><span class="nv">$container</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'spam.command'</span><span class="p">));</span>
+<span class="nv">$application</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>And that’s all. My colleagues of the next <strong>Katayuno</strong> will be invited in a “<strong>SOLID</strong>” way :). Source code is available in my <a href="https://github.com/gonzalo123/spam">github</a> account.</p>
+
+<blockquote>
+  <p>BTW: Do you want to organize one <strong>Katayuno</strong> in your city? It’s very easy. Feel free to <a href="http://gonzalo123.com/contact/">contact me</a> for further information.</p>
+</blockquote>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Sending+automated+emails+with+PHP%2C+Swiftmailer+and+Twig%20%2F2013%2F09%2F23%2Fsending-automated-emails-with-php-swiftmailer-and-twig%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2013%2F09%2F23%2Fsending-automated-emails-with-php-swiftmailer-and-twig%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Sending+automated+emails+with+PHP%2C+Swiftmailer+and+Twig&url=%2F2013%2F09%2F23%2Fsending-automated-emails-with-php-swiftmailer-and-twig%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2013/09/23/sending-automated-emails-with-php-swiftmailer-and-twig/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2013/09/23/sending-automated-emails-with-php-swiftmailer-and-twig'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2017/12/11/authenticate-openui5-applications-and-lumen-backends-with-amazon-cognito-and-jwt/">Authenticate OpenUI5 applications and Lumen backends with Amazon Cognito and JWT <span class="label label-default">php</span>  <span class="label label-default">symfony</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>

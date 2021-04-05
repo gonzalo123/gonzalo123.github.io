@@ -828,6 +828,1071 @@
   
     
     <url>
+      <loc>/2016/12/12/playing-with-arduino-iot-crossbar-and-websockets/</loc>
+      
+        <lastmod>2016-12-12T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/11/07/smart-bulb-controlled-from-a-raspberry-pi-with-python-my-rgb-alarm-clock/</loc>
+      
+        <lastmod>2016-11-07T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/10/19/silex-service-provider-for-a-gearman-wrapper/</loc>
+      
+        <lastmod>2016-10-19T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/</loc>
+      
+        <lastmod>2016-10-10T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/09/26/encrypt-websocket-socket-io-communications/</loc>
+      
+        <lastmod>2016-09-26T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/08/29/home-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots/</loc>
+      
+        <lastmod>2016-08-29T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/08/01/i18n-angular2-service/</loc>
+      
+        <lastmod>2016-08-01T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/07/04/notify-events-from-postgresql-to-external-listeners/</loc>
+      
+        <lastmod>2016-07-04T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/</loc>
+      
+        <lastmod>2016-06-06T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/05/16/sharing-authentication-between-socket-io-and-a-php-frontend/</loc>
+      
+        <lastmod>2016-05-16T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/04/19/php-gearman-wrapper/</loc>
+      
+        <lastmod>2016-04-19T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/04/18/reading-modbus-devices-with-python-from-a-phpsilex-application-via-gearman-worker/</loc>
+      
+        <lastmod>2016-04-18T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/03/14/sending-logs-to-a-remote-server-using-rabbitmq/</loc>
+      
+        <lastmod>2016-03-14T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/02/22/foreign-data-wrappers-with-postgresql-and-php/</loc>
+      
+        <lastmod>2016-02-22T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2016/01/25/calling-silex-backend-from-command-line-creating-saas-command-line-tools/</loc>
+      
+        <lastmod>2016-01-25T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/12/14/working-with-ionic-and-php-backends-remote-debugging-with-php7-and-xdebug-working-with-real-devices/</loc>
+      
+        <lastmod>2015-12-14T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/11/16/post-request-logger-using-websockets/</loc>
+      
+        <lastmod>2015-11-16T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/11/09/book-review-socket-io-cookbook/</loc>
+      
+        <lastmod>2015-11-09T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/10/19/alternative-way-to-inject-providers-in-a-silex-application/</loc>
+      
+        <lastmod>2015-10-19T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/09/21/building-one-http-client-in-postgresql-with-plpython/</loc>
+      
+        <lastmod>2015-09-21T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/08/24/generating-push-notifications-with-pushbullet-and-silex/</loc>
+      
+        <lastmod>2015-08-24T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/07/20/i8n-angularjs-provider/</loc>
+      
+        <lastmod>2015-07-20T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/06/29/microservice-container-with-guzzle/</loc>
+      
+        <lastmod>2015-06-29T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/05/11/php-dumper-using-websockets/</loc>
+      
+        <lastmod>2015-05-11T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/04/13/building-tcp-server-daemon-with-php-and-rachet/</loc>
+      
+        <lastmod>2015-04-13T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/03/19/handling-private-states-within-angularjs-applications/</loc>
+      
+        <lastmod>2015-03-19T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/03/02/building-a-angularjs-provider-for-hello-js-library/</loc>
+      
+        <lastmod>2015-03-02T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/02/02/handling-angularjs-post-requests-with-a-silex-backend/</loc>
+      
+        <lastmod>2015-02-02T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2015/01/12/using-openui5-table-within-angularjs/</loc>
+      
+        <lastmod>2015-01-12T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/12/29/why-did-this-year-has-passed-so-swiftly-my-2014-retrospective/</loc>
+      
+        <lastmod>2014-12-29T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/12/01/enclosing-socket-io-websocket-connection-inside-a-html5-sharedworker/</loc>
+      
+        <lastmod>2014-12-01T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/10/27/yet-another-example-of-websockets-socket-io-and-angularjs/</loc>
+      
+        <lastmod>2014-10-27T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/10/13/upgrading-cordova-ios-apps-outside-apple-store/</loc>
+      
+        <lastmod>2014-10-13T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/09/29/building-a-pimplecontainer-from-a-yaml-file/</loc>
+      
+        <lastmod>2014-09-29T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/09/08/sharing-scope-between-controllers-with-angularjs/</loc>
+      
+        <lastmod>2014-09-08T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/08/25/playing-with-websockets-angularjs-and-socket-io/</loc>
+      
+        <lastmod>2014-08-25T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/08/04/debugging-android-cordovaphonegap-apps-with-chrome/</loc>
+      
+        <lastmod>2014-08-04T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/07/28/upgrading-android-apps-outside-google-play-store-with-angularjs/</loc>
+      
+        <lastmod>2014-07-28T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/07/21/testing-phonegapcordova-applications-fast-as-hell-in-the-device-with-ionic-framework/</loc>
+      
+        <lastmod>2014-07-21T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/06/30/setting-up-states-from-a-json-file-in-angularjs-applications/</loc>
+      
+        <lastmod>2014-06-30T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/06/09/token-based-authentication-with-silex-and-angularjs/</loc>
+      
+        <lastmod>2014-06-09T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/06/01/talk-about-solid-and-symfony-at-the-desymfony-2014-conference/</loc>
+      
+        <lastmod>2014-06-01T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/05/05/token-based-authentication-with-silex-applications/</loc>
+      
+        <lastmod>2014-05-05T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/04/07/yet-another-database-abstraction-layer-with-php-and-dbal/</loc>
+      
+        <lastmod>2014-04-07T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2014/03/03/auto-injecting-dependencies-in-php-objects/</loc>
+      
+        <lastmod>2014-03-03T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/12/24/integrating-websockets-with-php-applications-silex-and-socket-io-playing-together/</loc>
+      
+        <lastmod>2013-12-24T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/12/22/playing-with-html5-building-a-simple-pool-of-webwokers/</loc>
+      
+        <lastmod>2013-12-22T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/12/16/enabling-cors-in-a-restfull-silex-server-working-with-a-phonegapcordova-application/</loc>
+      
+        <lastmod>2013-12-16T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/11/11/how-to-run-a-web-server-from-a-php-application/</loc>
+      
+        <lastmod>2013-11-11T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/10/28/taking-photos-with-a-phonegapcordova-application-and-uploading-them-to-the-server/</loc>
+      
+        <lastmod>2013-10-28T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/10/21/playing-with-event-dispatcher-and-silex-sending-logs-to-a-remote-server/</loc>
+      
+        <lastmod>2013-10-21T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/10/14/using-the-event-dispatcher-in-a-silex-application/</loc>
+      
+        <lastmod>2013-10-14T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/09/30/multiple-phonegap-push-notifications-in-the-androids-status-bar/</loc>
+      
+        <lastmod>2013-09-30T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/09/23/sending-automated-emails-with-php-swiftmailer-and-twig/</loc>
+      
+        <lastmod>2013-09-23T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/09/09/releasing-unmanaged-resources-a-php-port-from-cs-using-statement/</loc>
+      
+        <lastmod>2013-09-09T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/09/02/creating-qr-codes-with-php-and-silex/</loc>
+      
+        <lastmod>2013-09-02T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/08/19/building-a-bdd-framework-with-php/</loc>
+      
+        <lastmod>2013-08-19T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/08/05/sending-android-push-notifications-from-php-to-phonegap-applications/</loc>
+      
+        <lastmod>2013-08-05T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/07/15/bundles-in-silex-using-stack/</loc>
+      
+        <lastmod>2013-07-15T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/07/08/dynamic-routes-with-angularjs-and-silex/</loc>
+      
+        <lastmod>2013-07-08T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/06/24/talk-about-dependency-injection-and-dependency-injection-containers-at-the-desymfony-2013-conference/</loc>
+      
+        <lastmod>2013-06-24T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/06/10/working-with-jquery-and-silex-as-restfull-resource-provider/</loc>
+      
+        <lastmod>2013-06-10T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/06/03/working-with-angularjs-and-silex-as-resource-provider/</loc>
+      
+        <lastmod>2013-06-03T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/05/20/google-app-engine-php-and-silex-setting-up-a-login-provider/</loc>
+      
+        <lastmod>2013-05-20T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/04/08/building-a-zeromq-enqueue-with-php/</loc>
+      
+        <lastmod>2013-04-08T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/03/18/sign-in-with-twitter-in-a-silex-application/</loc>
+      
+        <lastmod>2013-03-18T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/03/04/scaling-silex-applications-part-ii-using-routecollection/</loc>
+      
+        <lastmod>2013-03-04T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/02/11/scaling-silex-applications/</loc>
+      
+        <lastmod>2013-02-11T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/02/04/how-to-configure-symfonys-service-container-to-use-twitter-api/</loc>
+      
+        <lastmod>2013-02-04T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/01/14/handling-several-dbal-database-connections-in-symfony2-through-the-dependency-injection-container-with-php/</loc>
+      
+        <lastmod>2013-01-14T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2013/01/07/handling-several-pdo-database-connections-in-symfony2-through-the-dependency-injection-container-with-php/</loc>
+      
+        <lastmod>2013-01-07T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>/2010/01/24/pivot-tables-in-php/</loc>
       
         <lastmod>2010-01-24T00:00:00+01:00</lastmod>
@@ -1221,7 +2286,7 @@
     <url>
       <loc>/about/</loc>
       
-        <lastmod>2021-04-03T20:40:32+02:00</lastmod>
+        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1236,7 +2301,7 @@
     <url>
       <loc>/book/</loc>
       
-        <lastmod>2021-04-03T20:40:32+02:00</lastmod>
+        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1253,7 +2318,7 @@
     <url>
       <loc>/feed.xml</loc>
       
-        <lastmod>2021-04-03T20:40:32+02:00</lastmod>
+        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1268,7 +2333,7 @@
     <url>
       <loc>/humans.txt</loc>
       
-        <lastmod>2021-04-03T20:40:32+02:00</lastmod>
+        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1285,7 +2350,7 @@
     <url>
       <loc>/js/main.js</loc>
       
-        <lastmod>2021-04-03T20:40:32+02:00</lastmod>
+        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1300,7 +2365,7 @@
     <url>
       <loc>/css/main.css</loc>
       
-        <lastmod>2021-04-03T20:40:32+02:00</lastmod>
+        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1315,7 +2380,7 @@
     <url>
       <loc>/search/</loc>
       
-        <lastmod>2021-04-03T20:40:32+02:00</lastmod>
+        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1330,7 +2395,7 @@
     <url>
       <loc>/search.json</loc>
       
-        <lastmod>2021-04-03T20:40:32+02:00</lastmod>
+        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1349,7 +2414,7 @@
     <url>
       <loc>/assets/css/style.css</loc>
       
-        <lastmod>2021-04-03T20:40:32+02:00</lastmod>
+        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -1358,6 +2423,12 @@
         <priority>0.3</priority>
       
     </url>
+    
+  
+    
+  
+    
+  
     
   
     

@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Talk about Dependency Injection and Dependency Injection Containers at the deSymfony 2013 conference</title>
+    <meta name="description"
+          content="The last week I attend to deSymfony conference. This year the conference was in Madrid and I collaborate as speaker with a talk about Dependency Injection and Dependency Injection Containers in PHP. It was a great experience. 400 attendees, two tracks, Fabien Potencier’s key-note and a brilliant organization could be one fast summary. We also could enjoy with good talks especially (in my humble opinion) one great talk about Advanced Silex with Javier Egiluz (please Javier write a book about Silex soon :) ). A good place to put the real face to colleagues and to know to the most important people at the PHP/Symfony community in Spain. Nice talks (and beers too) with people from Zaragoza, Extremadura, Valladolid, Valencia, Barcelona, with the people of Symfony-Madrid …
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Talk about Dependency Injection and Dependency Injection Containers at the deSymfony 2013 conference">
+    <meta name="twitter:description"
+          content="The last week I attend to deSymfony conference. This year the conference was in Madrid and I collaborate as speaker with a talk about Dependency Injection and Dependency Injection Containers in PHP. It was a great experience. 400 attendees, two tracks, Fabien Potencier’s key-note and a brilliant organization could be one fast summary. We also could enjoy with good talks especially (in my humble opinion) one great talk about Advanced Silex with Javier Egiluz (please Javier write a book about Silex soon :) ). A good place to put the real face to colleagues and to know to the most important people at the PHP/Symfony community in Spain. Nice talks (and beers too) with people from Zaragoza, Extremadura, Valladolid, Valencia, Barcelona, with the people of Symfony-Madrid …
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Talk about Dependency Injection and Dependency Injection Containers at the deSymfony 2013 conference">
+    <meta property="og:description"
+          content="The last week I attend to deSymfony conference. This year the conference was in Madrid and I collaborate as speaker with a talk about Dependency Injection and Dependency Injection Containers in PHP. It was a great experience. 400 attendees, two tracks, Fabien Potencier’s key-note and a brilliant organization could be one fast summary. We also could enjoy with good talks especially (in my humble opinion) one great talk about Advanced Silex with Javier Egiluz (please Javier write a book about Silex soon :) ). A good place to put the real face to colleagues and to know to the most important people at the PHP/Symfony community in Spain. Nice talks (and beers too) with people from Zaragoza, Extremadura, Valladolid, Valencia, Barcelona, with the people of Symfony-Madrid …
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="canonical"
+          href="/2013/06/24/talk-about-dependency-injection-and-dependency-injection-containers-at-the-desymfony-2013-conference/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Talk about Dependency Injection and Dependency Injection Containers at the deSymfony 2013 conference | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Talk about Dependency Injection and Dependency Injection Containers at the deSymfony 2013 conference" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The last week I attend to deSymfony conference. This year the conference was in Madrid and I collaborate as speaker with a talk about Dependency Injection and Dependency Injection Containers in PHP. It was a great experience. 400 attendees, two tracks, Fabien Potencier’s key-note and a brilliant organization could be one fast summary. We also could enjoy with good talks especially (in my humble opinion) one great talk about Advanced Silex with Javier Egiluz (please Javier write a book about Silex soon :) ). A good place to put the real face to colleagues and to know to the most important people at the PHP/Symfony community in Spain. Nice talks (and beers too) with people from Zaragoza, Extremadura, Valladolid, Valencia, Barcelona, with the people of Symfony-Madrid …" />
+<meta property="og:description" content="The last week I attend to deSymfony conference. This year the conference was in Madrid and I collaborate as speaker with a talk about Dependency Injection and Dependency Injection Containers in PHP. It was a great experience. 400 attendees, two tracks, Fabien Potencier’s key-note and a brilliant organization could be one fast summary. We also could enjoy with good talks especially (in my humble opinion) one great talk about Advanced Silex with Javier Egiluz (please Javier write a book about Silex soon :) ). A good place to put the real face to colleagues and to know to the most important people at the PHP/Symfony community in Spain. Nice talks (and beers too) with people from Zaragoza, Extremadura, Valladolid, Valencia, Barcelona, with the people of Symfony-Madrid …" />
+<link rel="canonical" href="/2013/06/24/talk-about-dependency-injection-and-dependency-injection-containers-at-the-desymfony-2013-conference/" />
+<meta property="og:url" content="/2013/06/24/talk-about-dependency-injection-and-dependency-injection-containers-at-the-desymfony-2013-conference/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-06-24T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Talk about Dependency Injection and Dependency Injection Containers at the deSymfony 2013 conference" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2013/06/24/talk-about-dependency-injection-and-dependency-injection-containers-at-the-desymfony-2013-conference/"},"url":"/2013/06/24/talk-about-dependency-injection-and-dependency-injection-containers-at-the-desymfony-2013-conference/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"The last week I attend to deSymfony conference. This year the conference was in Madrid and I collaborate as speaker with a talk about Dependency Injection and Dependency Injection Containers in PHP. It was a great experience. 400 attendees, two tracks, Fabien Potencier’s key-note and a brilliant organization could be one fast summary. We also could enjoy with good talks especially (in my humble opinion) one great talk about Advanced Silex with Javier Egiluz (please Javier write a book about Silex soon :) ). A good place to put the real face to colleagues and to know to the most important people at the PHP/Symfony community in Spain. Nice talks (and beers too) with people from Zaragoza, Extremadura, Valladolid, Valencia, Barcelona, with the people of Symfony-Madrid …","dateModified":"2013-06-24T00:00:00+02:00","datePublished":"2013-06-24T00:00:00+02:00","headline":"Talk about Dependency Injection and Dependency Injection Containers at the deSymfony 2013 conference","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2013-06-24 00:00
+            " class="post-meta__date date">24 Jun 2013</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#symfony">symfony</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#dependency-injection">dependency-injection</a>, <a
+                href="/tags/#desymfony">desymfony</a>, <a
+                href="/tags/#talks">talks</a></span>
+            
+        </div>
+        <h1 class="post-title">Talk about Dependency Injection and Dependency Injection Containers at the deSymfony 2013 conference</h1>
+    </header>
+
+    <section class="post">
+        <p>The last week I attend to <a href="http://desymfony.com/">deSymfony</a> conference. This year the conference was in Madrid and I collaborate as speaker with a talk about Dependency Injection and Dependency Injection Containers in PHP. It was a great experience. 400 attendees, two tracks, Fabien Potencier’s key-note and a brilliant organization could be one fast summary. We also could enjoy with good talks especially (in my humble opinion) one great talk about Advanced Silex with <a href="http://javiereguiluz.com/">Javier Egiluz</a> (please Javier write a book about Silex soon :) ). A good place to put the real face to colleagues and to know to the most important people at the PHP/Symfony <a href="http://symfony.es/">community</a> in Spain. Nice talks (and beers too) with people from Zaragoza, Extremadura, Valladolid, Valencia, Barcelona, with the people of Symfony-Madrid …</p>
+
+<p>As I said before I participated as speaker with one talk about Dependencies, Containers and SOLID principles. Here you can see the slides of the talk.</p>
+
+<p><a href="hhttps://www.slideshare.net/gonzaloayuso/desymfony2013gonzalo123?ref=https://gonzalo123.com/">community</a></p>
+
+<p>The organization will publish soon the video with the talk (in Spanish). And here a couple of pictures of the talk.</p>
+
+<p>[<img src="/assets/images/desymfony2013-gonzalo123.jpg" alt="desymfony2013.gonzalo123" />]</p>
+
+<p>[<img src="/assets/images/2013-06-23-17-20-40.jpg" alt="elephpant" />]</p>
+
+<p>And that’s all. Thanks to the organization, the sponsors and of course to all the people who choose to attend to my talk one saturday at 9:30 AM. Say cheese …</p>
+
+<p>[<img src="/assets/images/desymfony2013-gonzalo123-people.jpg" alt="desymfony2013.gonzalo123.people" />]</p>
+
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Talk+about+Dependency+Injection+and+Dependency+Injection+Containers+at+the+deSymfony+2013+conference%20%2F2013%2F06%2F24%2Ftalk-about-dependency-injection-and-dependency-injection-containers-at-the-desymfony-2013-conference%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2013%2F06%2F24%2Ftalk-about-dependency-injection-and-dependency-injection-containers-at-the-desymfony-2013-conference%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Talk+about+Dependency+Injection+and+Dependency+Injection+Containers+at+the+deSymfony+2013+conference&url=%2F2013%2F06%2F24%2Ftalk-about-dependency-injection-and-dependency-injection-containers-at-the-desymfony-2013-conference%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2013/06/24/talk-about-dependency-injection-and-dependency-injection-containers-at-the-desymfony-2013-conference/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2013/06/24/talk-about-dependency-injection-and-dependency-injection-containers-at-the-desymfony-2013-conference'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2017/12/11/authenticate-openui5-applications-and-lumen-backends-with-amazon-cognito-and-jwt/">Authenticate OpenUI5 applications and Lumen backends with Amazon Cognito and JWT <span class="label label-default">php</span>  <span class="label label-default">symfony</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+
+    </div>
+  </body>
+</html>
