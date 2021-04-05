@@ -56,7 +56,7 @@
     <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="/css/main.css?1617631636570122000">
+    <link rel="stylesheet" href="/css/main.css?1617632515543207000">
     <link rel="canonical"
           href="/page4/">
     <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
@@ -107,6 +107,11 @@
                                 <li class="navigation__item">
                                     <a href="/about" title="about">
                                         <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/posts" title="posts">
+                                        <span>All</span>
                                     </a>
                                 </li>
                                 <li class="navigation__item">
@@ -197,8 +202,10 @@
     <ol class="post-list">
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2016/08/29/home-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots/"
-                                                            title="Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots">Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2016/08/29/home-automation-pet-project-playing-with-iot-temperature-sensors-fans-and-telegram-bots/"
+                   title="Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots">Home automation pet project. Playing with IoT, temperature sensors, fans and Telegram bots</a>
+            </h2>
             <p class="excerpt">Summer holidays are over. Besides my bush walks I’ve been also hacking a little bit with one idea that I had in mind. Summer means high temperatures and I wanted to control my fan. For example turn on the fan when temperature is over a threshold. I can do it using an Arduino board and a temperature sensor, but I don’t have the one Arduino board. I have several devices. For example a Wemo switch. With this device connected to my Wifi network I can switch on and off my fan remotely from my mobile phone (using its android app) or even from my Pebble watch using the API. I also have a BeeWi temperature/humidity sensor. It’s a BTLE device. It comes with its own app for android, but there’s also a API. Yes. I known that one Arduino board with a couple of sensors can be cheaper than one of this devices, but when I’m a shop and I’ve got one of this devices in my hands I cannot resist.
 
 &hellip;</p>
@@ -221,8 +228,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2016/08/01/i18n-angular2-service/"
-                                                            title="i18n angular2 service">i18n angular2 service</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2016/08/01/i18n-angular2-service/"
+                   title="i18n angular2 service">i18n angular2 service</a>
+            </h2>
             <p class="excerpt">This days I’m learning angular2 and ionic2. My first impression was bad. Too many new things: angular2, typescript, new project architecture, … but after passing those bad moments I started to like angular2. One of the first things that I want to work with is internationalization. There’re several i18n providers for angular2. For example ng2-translate, but I want to build something similar to a angular i18n provider that I’d created time ago.
 
 &hellip;</p>
@@ -242,8 +251,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2016/07/04/notify-events-from-postgresql-to-external-listeners/"
-                                                            title="Notify events from PostgreSQL to external listeners">Notify events from PostgreSQL to external listeners</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2016/07/04/notify-events-from-postgresql-to-external-listeners/"
+                   title="Notify events from PostgreSQL to external listeners">Notify events from PostgreSQL to external listeners</a>
+            </h2>
             <p class="excerpt">Sometimes we need to call external programs from our PostgreSQL database. We can send sockets from SQL statements. I’ve written about it. The problem with this approach the following one. If user rollbacks the transaction the socket has been already emitted. That’s a problem (or not. Depending on our application). Nobody also guarantees that the process behind the socket server has access to the data of the transaction. If we’re very fast maybe the transaction isn’t commited yet. We can use one sleep function but sleep functions are always a bad idea. PostgreSQL gives us another tool to decouple processes: LISTEN and NOTIFY.
 
 &hellip;</p>
@@ -265,8 +276,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/"
-                                                            title="Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens)">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens)</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/"
+                   title="Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens)">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens)</a>
+            </h2>
             <p class="excerpt">I’ve written a previous post about Sharing authentication between socket.io and a PHP frontend but after publish the post a colleague (hi @mariotux) told me that I can use JSON Web Tokens (jwt) to do this. I had never used jwt before so I decided to study a little bit.
 
 &hellip;</p>
@@ -290,8 +303,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2016/05/16/sharing-authentication-between-socket-io-and-a-php-frontend/"
-                                                            title="Sharing authentication between socket.io and a PHP frontend">Sharing authentication between socket.io and a PHP frontend</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2016/05/16/sharing-authentication-between-socket-io-and-a-php-frontend/"
+                   title="Sharing authentication between socket.io and a PHP frontend">Sharing authentication between socket.io and a PHP frontend</a>
+            </h2>
             <p class="excerpt">Normally, when I work with websockets, my stack is a socket.io server and a Silex frontend. Protect a PHP frontend with one kind of authentication of another is pretty straightforward. But if we want to use websockets, we need to set up another server and if we protect our frontend we need to protect our websocket server too.
 
 &hellip;</p>
@@ -315,8 +330,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2016/04/19/php-gearman-wrapper/"
-                                                            title="PHP Gearman Wrapper">PHP Gearman Wrapper</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2016/04/19/php-gearman-wrapper/"
+                   title="PHP Gearman Wrapper">PHP Gearman Wrapper</a>
+            </h2>
             <p class="excerpt">I must admit that nowadays I’m using RabbitMQ more than Gearman but I’m still a big fan of gearman. PHP has a great api to connect to gearman work server but sometimes I miss another, how to say, “clean” way. Because of that I’ve creates a gearman wrapper. Let’s start.
 
 &hellip;</p>
@@ -335,8 +352,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2016/04/18/reading-modbus-devices-with-python-from-a-phpsilex-application-via-gearman-worker/"
-                                                            title="Reading Modbus devices with Python from a PHP/Silex Application via Gearman worker">Reading Modbus devices with Python from a PHP/Silex Application via Gearman worker</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2016/04/18/reading-modbus-devices-with-python-from-a-phpsilex-application-via-gearman-worker/"
+                   title="Reading Modbus devices with Python from a PHP/Silex Application via Gearman worker">Reading Modbus devices with Python from a PHP/Silex Application via Gearman worker</a>
+            </h2>
             <p class="excerpt">Yes. I know. I never know how to write a good tittle to my posts. Let me show one integration example that I’ve been working with this days. Let’s start.
 
 &hellip;</p>
@@ -360,8 +379,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2016/03/14/sending-logs-to-a-remote-server-using-rabbitmq/"
-                                                            title="Sending logs to a remote server using RabbitMQ">Sending logs to a remote server using RabbitMQ</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2016/03/14/sending-logs-to-a-remote-server-using-rabbitmq/"
+                   title="Sending logs to a remote server using RabbitMQ">Sending logs to a remote server using RabbitMQ</a>
+            </h2>
             <p class="excerpt">Time ago I wrote an article to show how to send Silex logs to a remote server. Today I want to use a messaging queue to do it. Normally, when I need queues, I use Gearman but today I want to play with RabbitMQ.
 
 &hellip;</p>
@@ -379,8 +400,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2016/02/22/foreign-data-wrappers-with-postgresql-and-php/"
-                                                            title="Foreign Data Wrappers with PostgreSQL and PHP">Foreign Data Wrappers with PostgreSQL and PHP</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2016/02/22/foreign-data-wrappers-with-postgresql-and-php/"
+                   title="Foreign Data Wrappers with PostgreSQL and PHP">Foreign Data Wrappers with PostgreSQL and PHP</a>
+            </h2>
             <p class="excerpt">PostgreSQL is more than a relational database. It has many cool features. Today we’re going to play with Foreign Data Wrappers (FDW). The idea is crate a virtual table from an external datasource and use it like we use a traditional table.
 
 &hellip;</p>
@@ -400,8 +423,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2016/01/25/calling-silex-backend-from-command-line-creating-saas-command-line-tools/"
-                                                            title="Calling Silex backend from command line. Creating SAAS command line tools">Calling Silex backend from command line. Creating SAAS command line tools</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2016/01/25/calling-silex-backend-from-command-line-creating-saas-command-line-tools/"
+                   title="Calling Silex backend from command line. Creating SAAS command line tools">Calling Silex backend from command line. Creating SAAS command line tools</a>
+            </h2>
             <p class="excerpt">Sometimes we need to create command line tools. We can build those tools using different technologies. In Symfony world there’s Symfony Console. I feel very confortable using it. But if we want to distribute our tool we will need to face with one “problem”. User’ll need to have PHP installed. It sounds trivial but it isn’t installed in every computer. We can use nodeJs to build our tool. Nowadays nodeJs is a de-facto standard but we still have the problem. Another “problem” is how to distribute new version of our tool. Problems everywhere.
 
 &hellip;</p>
@@ -421,8 +446,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2015/12/14/working-with-ionic-and-php-backends-remote-debugging-with-php7-and-xdebug-working-with-real-devices/"
-                                                            title="Working with Ionic and PHP Backends. Remote debugging with PHP7 and Xdebug working with real devices">Working with Ionic and PHP Backends. Remote debugging with PHP7 and Xdebug working with real devices</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2015/12/14/working-with-ionic-and-php-backends-remote-debugging-with-php7-and-xdebug-working-with-real-devices/"
+                   title="Working with Ionic and PHP Backends. Remote debugging with PHP7 and Xdebug working with real devices">Working with Ionic and PHP Backends. Remote debugging with PHP7 and Xdebug working with real devices</a>
+            </h2>
             <p class="excerpt">Sometimes I speak with PHP developers and they don’t use remote debugging in their development environments. Some people don’t like to use remote debugging. They prefer to use TDD and rely on the unit tests. That’s a good point of view, but sometimes they don’t use remote debugging only because they don’t know how to do it, and that’s inadmissible. Remote debugger is a powerful tool especially to handle with legacy applications. I’ve using xdebug for years with my linux workstation for years. This days I’m using Mac and it’s also very simple to set up xdebug here.
 
 &hellip;</p>
@@ -447,8 +474,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2015/11/16/post-request-logger-using-websockets/"
-                                                            title="POST Request logger using websockets">POST Request logger using websockets</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2015/11/16/post-request-logger-using-websockets/"
+                   title="POST Request logger using websockets">POST Request logger using websockets</a>
+            </h2>
             <p class="excerpt">Last days I’ve been working with background geolocation with an ionic application. There’s a cool plugin to do that. The free version of the plugin works fine. But there’s a also a premium version with improvements, especially in battery consumption with Android devices.
 
 &hellip;</p>
@@ -469,8 +498,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2015/11/09/book-review-socket-io-cookbook/"
-                                                            title="Book review: Socket.IO Cookbook">Book review: Socket.IO Cookbook</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2015/11/09/book-review-socket-io-cookbook/"
+                   title="Book review: Socket.IO Cookbook">Book review: Socket.IO Cookbook</a>
+            </h2>
             <p class="excerpt">Last summer I collaborated as a technical reviewer in the book “Socket.IO Cookbook” written by Tyson Cadenhead and finally I’ve got the book in my hands
 
 &hellip;</p>
@@ -494,8 +525,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2015/10/19/alternative-way-to-inject-providers-in-a-silex-application/"
-                                                            title="Alternative way to inject providers in a Silex application">Alternative way to inject providers in a Silex application</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2015/10/19/alternative-way-to-inject-providers-in-a-silex-application/"
+                   title="Alternative way to inject providers in a Silex application">Alternative way to inject providers in a Silex application</a>
+            </h2>
             <p class="excerpt">I normally use Silex when I need to build one Backend. It’s simple and straightforward to build one API endpoint using this micro framework. But there’s something that I don’t like it: The “array access” way to access to the dependency injection container. I need to remember what kind of object provides my service provider and also my IDE doesn’t help me with autocompletion. OK I can use PHPDoc comments or even create one class that inherits from Silex\Application and use Traits. Normally I’m lazy to do it. Because of that I’ve create this simple service provider to help me to do what I’m looking for. Let me explain it a little bit.
 
 &hellip;</p>
@@ -517,8 +550,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2015/09/21/building-one-http-client-in-postgresql-with-plpython/"
-                                                            title="Building one HTTP client in PostgreSQL with PL/Python">Building one HTTP client in PostgreSQL with PL/Python</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2015/09/21/building-one-http-client-in-postgresql-with-plpython/"
+                   title="Building one HTTP client in PostgreSQL with PL/Python">Building one HTTP client in PostgreSQL with PL/Python</a>
+            </h2>
             <p class="excerpt">Don’t ask me way, but I need to call to a HTTP server (one Silex application) from a PostgreSQL database.
 
 &hellip;</p>
@@ -542,8 +577,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2015/08/24/generating-push-notifications-with-pushbullet-and-silex/"
-                                                            title="Generating push notifications with Pushbullet and Silex">Generating push notifications with Pushbullet and Silex</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2015/08/24/generating-push-notifications-with-pushbullet-and-silex/"
+                   title="Generating push notifications with Pushbullet and Silex">Generating push notifications with Pushbullet and Silex</a>
+            </h2>
             <p class="excerpt">Sometimes I need to send push notifications to mobile apps (Android or IOS). It’s not difficult. Maybe it’s a bit nightmare the first times, but when you understand the process, it’s straightforward. Last days I discover a cool service called PushBullet. It allows us to install one client in our Android/IOS or even desktop computer, and send push notifications between them.
 
 &hellip;</p>
@@ -564,8 +601,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2015/07/20/i8n-angularjs-provider/"
-                                                            title="i18n AngularJS provider">i18n AngularJS provider</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2015/07/20/i8n-angularjs-provider/"
+                   title="i18n AngularJS provider">i18n AngularJS provider</a>
+            </h2>
             <p class="excerpt">There’s more than one way to perform i18n translations within our AngularJS projects. IMHO the best one is https://angular-translate.github.io/, but today I’m going to show you how I’m doing translations in my small AngularJS projects (normally Ionic projects).
 
 &hellip;</p>
@@ -588,8 +627,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2015/06/29/microservice-container-with-guzzle/"
-                                                            title="Microservice container with Guzzle">Microservice container with Guzzle</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2015/06/29/microservice-container-with-guzzle/"
+                   title="Microservice container with Guzzle">Microservice container with Guzzle</a>
+            </h2>
             <p class="excerpt">This days I’m reading about Microservices. The idea is great. Instead of building a monolithic script using one language/framowork. We create isolated services and we build our application using those services (speaking HTTP between services and application).
 
 &hellip;</p>
@@ -612,8 +653,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2015/05/11/php-dumper-using-websockets/"
-                                                            title="PHP Dumper using Websockets">PHP Dumper using Websockets</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2015/05/11/php-dumper-using-websockets/"
+                   title="PHP Dumper using Websockets">PHP Dumper using Websockets</a>
+            </h2>
             <p class="excerpt">Another crazy idea. I want to dump my backend output in the browser’s console. There’re several PHP dumpers. For example Raul Fraile’s LadyBug. There’re also libraries to do exactly what I want to do, such as Chrome Logger. But I wanted to use Websockets and dump values in real time, without waiting to the end of backend script. Why? The answer is simple: Because I wanted to it :)
 
 &hellip;</p>
@@ -636,8 +679,10 @@
         </li>
         
         <li>
-            <h2 class="post-list__post-title post-title"><a href="/2015/04/13/building-tcp-server-daemon-with-php-and-rachet/"
-                                                            title="Building TCP server daemond with PHP and Ratchet">Building TCP server daemond with PHP and Ratchet</a></h2>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2015/04/13/building-tcp-server-daemon-with-php-and-rachet/"
+                   title="Building TCP server daemond with PHP and Ratchet">Building TCP server daemond with PHP and Ratchet</a>
+            </h2>
             <p class="excerpt">In my daily work I normally play a lot with TCP servers, clients and things like that. I like to use Linux’s xinet.d daemon to handle the TCP ports.
 
 &hellip;</p>
@@ -688,7 +733,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617631636570122000"></script>
+<script type="text/javascript" src="/js/main.js?1617632515543207000"></script>
 
     </div>
   </body>

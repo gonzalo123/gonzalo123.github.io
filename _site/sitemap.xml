@@ -2286,7 +2286,7 @@
     <url>
       <loc>/about/</loc>
       
-        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
+        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2301,7 +2301,7 @@
     <url>
       <loc>/book/</loc>
       
-        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
+        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2318,7 +2318,7 @@
     <url>
       <loc>/feed.xml</loc>
       
-        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
+        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2333,7 +2333,7 @@
     <url>
       <loc>/humans.txt</loc>
       
-        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
+        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2350,7 +2350,7 @@
     <url>
       <loc>/js/main.js</loc>
       
-        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
+        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2365,7 +2365,22 @@
     <url>
       <loc>/css/main.css</loc>
       
-        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
+        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/posts/</loc>
+      
+        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2380,7 +2395,7 @@
     <url>
       <loc>/search/</loc>
       
-        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
+        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2395,7 +2410,7 @@
     <url>
       <loc>/search.json</loc>
       
-        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
+        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2414,7 +2429,7 @@
     <url>
       <loc>/assets/css/style.css</loc>
       
-        <lastmod>2021-04-05T16:07:16+02:00</lastmod>
+        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
