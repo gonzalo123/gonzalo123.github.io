@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>How to call shell programs as functions with PHP</title>
+    <meta name="description"
+          content="I’m a big fan of Symfony’s Process Component. I’ve used intensively this component within a project and I noticed that I needed a wrapper to avoid to write again and again the same code. Suddenly a cool python library came to my head: sh. With python’s sh we can call any program as if it were a function:
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="How to call shell programs as functions with PHP">
+    <meta name="twitter:description"
+          content="I’m a big fan of Symfony’s Process Component. I’ve used intensively this component within a project and I noticed that I needed a wrapper to avoid to write again and again the same code. Suddenly a cool python library came to my head: sh. With python’s sh we can call any program as if it were a function:
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to call shell programs as functions with PHP">
+    <meta property="og:description"
+          content="I’m a big fan of Symfony’s Process Component. I’ve used intensively this component within a project and I noticed that I needed a wrapper to avoid to write again and again the same code. Suddenly a cool python library came to my head: sh. With python’s sh we can call any program as if it were a function:
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617650803001959000">
+    <link rel="canonical"
+          href="/2012/11/19/allow-to-call-shell-programs-as-functions-with-php/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>How to call shell programs as functions with PHP | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="How to call shell programs as functions with PHP" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I’m a big fan of Symfony’s Process Component. I’ve used intensively this component within a project and I noticed that I needed a wrapper to avoid to write again and again the same code. Suddenly a cool python library came to my head: sh. With python’s sh we can call any program as if it were a function:" />
+<meta property="og:description" content="I’m a big fan of Symfony’s Process Component. I’ve used intensively this component within a project and I noticed that I needed a wrapper to avoid to write again and again the same code. Suddenly a cool python library came to my head: sh. With python’s sh we can call any program as if it were a function:" />
+<link rel="canonical" href="/2012/11/19/allow-to-call-shell-programs-as-functions-with-php/" />
+<meta property="og:url" content="/2012/11/19/allow-to-call-shell-programs-as-functions-with-php/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-11-19T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to call shell programs as functions with PHP" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2012/11/19/allow-to-call-shell-programs-as-functions-with-php/"},"url":"/2012/11/19/allow-to-call-shell-programs-as-functions-with-php/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"I’m a big fan of Symfony’s Process Component. I’ve used intensively this component within a project and I noticed that I needed a wrapper to avoid to write again and again the same code. Suddenly a cool python library came to my head: sh. With python’s sh we can call any program as if it were a function:","dateModified":"2012-11-19T00:00:00+01:00","datePublished":"2012-11-19T00:00:00+01:00","headline":"How to call shell programs as functions with PHP","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/posts" title="posts">
+                                        <span>All</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2012-11-19 00:00
+            " class="post-meta__date date">19 Nov 2012</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#symfony2">symfony2</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#symfony">symfony</a></span>
+            
+        </div>
+        <h1 class="post-title">How to call shell programs as functions with PHP</h1>
+    </header>
+
+    <section class="post">
+        <p>I’m a big fan of Symfony’s <a href="http://symfony.com/doc/2.0/components/process.html">Process</a> Component. I’ve used intensively this component within a project and I noticed that I needed a wrapper to avoid to write again and again the same code. Suddenly a cool python library came to my head: <a href="http://amoffat.github.com/sh/">sh</a>. With python’s sh we can call any program as if it were a function:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sh</span> <span class="kn">import</span> <span class="n">ifconfig</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ifconfig</span><span class="p">(</span><span class="s">"wlan0"</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Outputs:</p>
+
+<pre><code class="language-commandline">wlan0   Link encap:Ethernet  HWaddr 00:00:00:00:00:00
+        inet addr:192.168.1.100  Bcast:192.168.1.255  Mask:255.255.255.0
+        inet6 addr: ffff::ffff:ffff:ffff:fff/64 Scope:Link
+        UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+        RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:1000
+        RX bytes:0 (0 GB)  TX bytes:0 (0 GB)
+</code></pre>
+
+<p>So I decided to develop something similar in PHP. This library is not exactly the same than python one. Python’s sh allows more cool things such as non-blocking processes, baking, … not available in my PHP one’s, but at least I can call shell programs as functions in a simple way (and that’s was my scope). Let’s start.</p>
+
+<p>One simple example of Process:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Symfony\Component\Process\Process</span><span class="p">;</span>
+ 
+<span class="nv">$process</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Process</span><span class="p">(</span><span class="s1">'-latr ~'</span><span class="p">);</span>
+<span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">setTimeout</span><span class="p">(</span><span class="mi">3600</span><span class="p">);</span>
+<span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+ 
+<span class="k">echo</span> <span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">getOutput</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>With sh library we can do:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Sh</span><span class="o">/</span><span class="nc">Sh</span><span class="p">;</span>
+ 
+<span class="nv">$sh</span>  <span class="o">=</span> <span class="k">new</span> <span class="nc">Sh</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nv">$sh</span><span class="o">-&gt;</span><span class="nf">ls</span><span class="p">(</span><span class="s1">'-latr ~'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>You can check the source code in <a href="https://github.com/gonzalo123/sh">github</a>, but it’s very simple one. Basically it’s a <a href="https://github.com/gonzalo123/sh/blob/master/lib/Sh/Parser.php">parser</a> that creates the command line string, and another <a href="https://github.com/gonzalo123/sh/blob/master/lib/Sh/Sh.php">class</a> that calls to the parser and sends the output to Process component. Whit the magic function __call we can use shell commands as functions.</p>
+
+<p>The command’s arguments can be one string ‘-latr ~’ or one array [‘-latr’, ‘~’]. You can see more example in the unit tests <a href="https://github.com/gonzalo123/sh/blob/master/tests/ParserTest.php">here</a></p>
+
+<p>Symfony/Process also allows us to get feedback in real time:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Symfony\Component\Process\Process</span><span class="p">;</span>
+ 
+<span class="nv">$process</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Process</span><span class="p">(</span><span class="s1">'ls -lsa'</span><span class="p">);</span>
+<span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$type</span><span class="p">,</span> <span class="nv">$buffer</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s1">'err'</span> <span class="o">===</span> <span class="nv">$type</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s1">'ERR &gt; '</span><span class="mf">.</span><span class="nv">$buffer</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s1">'OUT &gt; '</span><span class="mf">.</span><span class="nv">$buffer</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><strong>Sh</strong> uses this feature, so we can do things like that:</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$sh</span><span class="o">-&gt;</span><span class="nf">tail</span><span class="p">(</span><span class="s1">'/var/log/messages'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$buffer</span><span class="p">)</span>  <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$buffer</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>We can see more examples here: \</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="nb">error_reporting</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">include</span> <span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/../vendor/autoload.php'</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Sh\Sh</span><span class="p">;</span>
+ 
+<span class="k">echo</span> <span class="nc">Sh</span><span class="o">::</span><span class="nf">factory</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">runCommnad</span><span class="p">(</span><span class="s1">'notify-send'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'-t'</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="s1">'title'</span><span class="p">,</span> <span class="s1">'HOLA'</span><span class="p">]);</span>
+<span class="nv">$sh</span>  <span class="o">=</span> <span class="k">new</span> <span class="nc">Sh</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nv">$sh</span><span class="o">-&gt;</span><span class="nf">ifconfig</span><span class="p">(</span><span class="s2">"eth0"</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$sh</span><span class="o">-&gt;</span><span class="nf">ls</span><span class="p">(</span><span class="s1">'-latr ~'</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$sh</span><span class="o">-&gt;</span><span class="nf">ls</span><span class="p">([</span><span class="s1">'-latr'</span><span class="p">,</span> <span class="s1">'~'</span><span class="p">]);</span>
+<span class="nv">$sh</span><span class="o">-&gt;</span><span class="nf">tail</span><span class="p">(</span><span class="s1">'-f /var/log/apache2/access.log'</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$buffer</span><span class="p">)</span>  <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$buffer</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>As I said before the library is in <a href="https://github.com/gonzalo123/sh">github</a> and also you can use with <a href="https://packagist.org/packages/gonzalo123/sh">composer</a>:</p>
+
+<pre><code class="language-commandline">require: "gonzalo123/sh": "dev-master"
+</code></pre>
+
+<p><strong>Updated!</strong></p>
+
+<p>Now Sh library supports chained arguments (baking)</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// chainable commands (baking)</span>
+<span class="nv">$sh</span><span class="o">-&gt;</span><span class="nf">ssh</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'myserver.com'</span><span class="p">,</span> <span class="s1">'-p'</span> <span class="o">=&gt;</span> <span class="mi">1393</span><span class="p">))</span><span class="o">-&gt;</span><span class="nf">whoami</span><span class="p">();</span>
+<span class="c1">// executes: ssh myserver.com -p 1393 whoami</span>
+ 
+<span class="nv">$sh</span><span class="o">-&gt;</span><span class="nf">ssh</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'myserver.com'</span><span class="p">,</span> <span class="s1">'-p'</span> <span class="o">=&gt;</span> <span class="mi">1393</span><span class="p">))</span><span class="o">-&gt;</span><span class="nf">tail</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s2">"/var/log/dumb_daemon.log"</span><span class="p">,</span> <span class="s1">'n'</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">));</span>
+<span class="c1">// executes: ssh myserver.com -p 1393 tail /var/log/dumb_daemon.log -n 100</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=How+to+call+shell+programs+as+functions+with+PHP%20%2F2012%2F11%2F19%2Fallow-to-call-shell-programs-as-functions-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2012%2F11%2F19%2Fallow-to-call-shell-programs-as-functions-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=How+to+call+shell+programs+as+functions+with+PHP&url=%2F2012%2F11%2F19%2Fallow-to-call-shell-programs-as-functions-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2012/11/19/allow-to-call-shell-programs-as-functions-with-php/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2012/11/19/allow-to-call-shell-programs-as-functions-with-php'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2017/12/11/authenticate-openui5-applications-and-lumen-backends-with-amazon-cognito-and-jwt/">Authenticate OpenUI5 applications and Lumen backends with Amazon Cognito and JWT <span class="label label-default">php</span>  <span class="label label-default">symfony</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617650803001959000"></script>
+
+    </div>
+  </body>
+</html>

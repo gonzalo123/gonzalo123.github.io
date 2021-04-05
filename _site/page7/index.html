@@ -56,12 +56,12 @@
     <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="/css/main.css?1617632515543207000">
+    <link rel="stylesheet" href="/css/main.css?1617650803001959000">
     <link rel="canonical"
           href="/page7/">
     <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
     <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Page 7 of 8 for Gonzalo Ayuso | Web Architect</title>
+<title>Page 7 of 10 for Gonzalo Ayuso | Web Architect</title>
 <meta name="generator" content="Jekyll v3.9.0" />
 <meta property="og:title" content="Gonzalo Ayuso" />
 <meta name="author" content="Gonzalo Ayuso" />
@@ -353,18 +353,90 @@
         
         <li>
             <h2 class="post-list__post-title post-title">
-                <a href="/2010/01/24/pivot-tables-in-php/"
-                   title="Pivot tables in PHP">Pivot tables in PHP</a>
+                <a href="/2012/12/17/multiple-inheritance-with-php-and-traits/"
+                   title="Multiple inheritance with PHP and Traits">Multiple inheritance with PHP and Traits</a>
             </h2>
-            <p class="excerpt">In my work as developer I normally need to transform data from one format to another. Typically our input data is a database and we need to show the database data into a report, datagrid or something similar. It’s very typical to use pivot tables. It’s not very dificult to handle pivot tables by hand but the work is always the same: groups by, totals, subtotals, totals per row …. Now I want to write a class to pivot tables in PHP with the most common requirements (at least for me). I know we can create pivot tables with SQL. Group by and some other database specific commands like oracle’s GROUP BY ROLLUP/CUBE can do the work, but I like clean SQL querys. The business logic must be in PHP and SQL must be as clean as we can.
+            <p class="excerpt">Multiple inheritance isn’t allowed in PHP. With Python we can do things like that:
 
 &hellip;</p>
             <div class="post-list__meta">
-                <time datetime=" 2010-01-24 00:00
-                " class="post-list__meta--date date">24 Jan 2010</time>
+                <time datetime=" 2012-12-17 00:00
+                " class="post-list__meta--date date">17 Dec 2012</time>
                 
                 &#8226; <span class="post-meta__tags">on <a
                     href="/tags/#php">php</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#multiple-inheritance">multiple-inheritance</a>, <a
+                    href="/tags/#traits">traits</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2012/11/26/sending-sockets-from-postgresql-triggers-with-python/"
+                   title="Sending sockets from PostgreSQL triggers with Python">Sending sockets from PostgreSQL triggers with Python</a>
+            </h2>
+            <p class="excerpt">Picture this: We want to notify to one external service each time that one record is inserted in the database. We can find the place where the insert statement is done and create a TCP client there, but: What happens if the application that inserts the data within the database is a legacy application?, or maybe it is too hard to do?. If your database is PostgreSQL it’s pretty straightforward. With the “default” procedural language of PostgreSQL (pgplsql) we cannot do it, but PostgreSQL allows us to use more procedural languages than plpgsql, for example Python. With plpython we can use sockets in the same way than we use it within Python scripts. It’s very simple. Let me show you how to do it.
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2012-11-26 00:00
+                " class="post-list__meta--date date">26 Nov 2012</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#node-js">node-js</a>, <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#postgresql">postgresql</a>, <a
+                    href="/tags/#python">python</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#nodejs">nodejs</a>, <a
+                    href="/tags/#postgresql">postgresql</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2012/11/19/allow-to-call-shell-programs-as-functions-with-php/"
+                   title="How to call shell programs as functions with PHP">How to call shell programs as functions with PHP</a>
+            </h2>
+            <p class="excerpt">I’m a big fan of Symfony’s Process Component. I’ve used intensively this component within a project and I noticed that I needed a wrapper to avoid to write again and again the same code. Suddenly a cool python library came to my head: sh. With python’s sh we can call any program as if it were a function:
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2012-11-19 00:00
+                " class="post-list__meta--date date">19 Nov 2012</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#symfony2">symfony2</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#symfony">symfony</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2012/11/12/building-a-ftp-client-library-with-php/"
+                   title="Building a FTP client library with PHP">Building a FTP client library with PHP</a>
+            </h2>
+            <p class="excerpt">In my daily work I need to connect very often to FTP servers. Put files, read, list and things like that. I normally use the standard PHP functions for Ftp it’s pretty straight forward to use them. Just enable it within our installation (--enable-ftp) and it’s ready to use them. But last Sunday it was raining again and I start with this simple library.
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2012-11-12 00:00
+                " class="post-list__meta--date date">12 Nov 2012</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#ftp">ftp</a>, <a
+                    href="/tags/#php-functions">php-functions</a>, <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#phpunit">phpunit</a>, <a
                     href="/tags/#technology">technology</a></span>
                 
             </div>
@@ -373,20 +445,47 @@
         
         <li>
             <h2 class="post-list__post-title post-title">
-                <a href="/2009/12/31/calling-to-multiple-xmlrpc-remote-servers-in-a-clean-way/"
-                   title="Clean way to call to multiple xmlrpc remote servers">Clean way to call to multiple xmlrpc remote servers</a>
+                <a href="/2012/11/05/live-changes-with-node-js-scripts-without-stopstart/"
+                   title="Live changes within node.js scripts without stop/start">Live changes within node.js scripts without stop/start</a>
             </h2>
-            <p class="excerpt">The problem:
+            <p class="excerpt">Imagine that you are working within a nodejs project. This simple script:
 
 &hellip;</p>
             <div class="post-list__meta">
-                <time datetime=" 2009-12-31 00:00
-                " class="post-list__meta--date date">31 Dec 2009</time>
+                <time datetime=" 2012-11-05 00:00
+                " class="post-list__meta--date date">5 Nov 2012</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#javascript">javascript</a>, <a
+                    href="/tags/#node-js">node-js</a>, <a
+                    href="/tags/#technology">technology</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2012/10/29/managing-windows-services-with-symfonyprocess-and-php/"
+                   title="Managing Windows services with Symfony/Process and PHP">Managing Windows services with Symfony/Process and PHP</a>
+            </h2>
+            <p class="excerpt">Sometimes I need to stop/start remote Windows services with PHP. It’s quite easy to do it with net commnand. This command is a tool for administration of Samba and remote CIFS servers. It’s pretty straightforward to handle them from Linux command line:
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2012-10-29 00:00
+                " class="post-list__meta--date date">29 Oct 2012</time>
                 
                 &#8226; <span class="post-meta__tags">on <a
                     href="/tags/#php">php</a>, <a
                     href="/tags/#technology">technology</a>, <a
-                    href="/tags/#web-development">web-development</a></span>
+                    href="/tags/#behat">behat</a>, <a
+                    href="/tags/#command-line-parser">command-line-parser</a>, <a
+                    href="/tags/#service-status">service-status</a>, <a
+                    href="/tags/#services">services</a>, <a
+                    href="/tags/#software">software</a>, <a
+                    href="/tags/#symfony">symfony</a>, <a
+                    href="/tags/#windows">windows</a></span>
                 
             </div>
             <hr class="post-list__divider">
@@ -394,59 +493,23 @@
         
         <li>
             <h2 class="post-list__post-title post-title">
-                <a href="/2009/12/30/jugando-con-friendfeed-y-appengine-tv-sms-appspot-com/"
-                   title="Jugando con FriendFeed y Appengine: tv-sms.appspot.com">Jugando con FriendFeed y Appengine: tv-sms.appspot.com</a>
+                <a href="/2012/10/22/building-a-silex-application-from-one-behatgherkin-feature-file/"
+                   title="Building a Silex application from one Behat/Gherkin feature file">Building a Silex application from one Behat/Gherkin feature file</a>
             </h2>
-            <p class="excerpt">INTRODUCCIÓN
+            <p class="excerpt">Last days I’ve playing with Behat. Behat is a behavior driven development (BDD) framework based on Ruby’s Cucumber. Basically with Behat we defenie features within one feature file. I’m not going to crate a Behat tutorial (you can read more about Behat here). Behat use Gherkin to write the features files. When I was playing with Behat I had one idea. The idea is simple: Can we use Gherking to build a Silex application?. It was a good excuse to study Gherking, indeed ;).
 
 &hellip;</p>
             <div class="post-list__meta">
-                <time datetime=" 2009-12-30 00:00
-                " class="post-list__meta--date date">30 Dec 2009</time>
-                
-                &#8226; <span class="post-meta__tags">on <a
-                    href="/tags/#appengine">appengine</a>, <a
-                    href="/tags/#web-development">web-development</a>, <a
-                    href="/tags/#webdev">webdev</a></span>
-                
-            </div>
-            <hr class="post-list__divider">
-        </li>
-        
-        <li>
-            <h2 class="post-list__post-title post-title">
-                <a href="/2009/12/09/things-i-miss-in-php-function-decorators/"
-                   title="Things I miss in PHP: Function decorators">Things I miss in PHP: Function decorators</a>
-            </h2>
-            <p class="excerpt">The problem:
-
-&hellip;</p>
-            <div class="post-list__meta">
-                <time datetime=" 2009-12-09 00:00
-                " class="post-list__meta--date date">9 Dec 2009</time>
-                
-                &#8226; <span class="post-meta__tags">on <a
-                    href="/tags/#php">php</a></span>
-                
-            </div>
-            <hr class="post-list__divider">
-        </li>
-        
-        <li>
-            <h2 class="post-list__post-title post-title">
-                <a href="/2009/12/08/an-idea-for-calling-postgresqls-stored-procedures-with-pdo/"
-                   title="An idea for calling PostgreSQL's stored procedures with PDO">An idea for calling PostgreSQL's stored procedures with PDO</a>
-            </h2>
-            <p class="excerpt">As far as I know PDO doesn’t allow to call directly the  PostgreSQL’s strored procedures. That’s not a problem. We can create a SQL and call a stored procedures as simple sql.
-
-&hellip;</p>
-            <div class="post-list__meta">
-                <time datetime=" 2009-12-08 00:00
-                " class="post-list__meta--date date">8 Dec 2009</time>
+                <time datetime=" 2012-10-22 00:00
+                " class="post-list__meta--date date">22 Oct 2012</time>
                 
                 &#8226; <span class="post-meta__tags">on <a
                     href="/tags/#php">php</a>, <a
-                    href="/tags/#web-development">web-development</a></span>
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#behat">behat</a>, <a
+                    href="/tags/#gherkin">gherkin</a>, <a
+                    href="/tags/#silex">silex</a>, <a
+                    href="/tags/#technology">technology</a></span>
                 
             </div>
             <hr class="post-list__divider">
@@ -454,19 +517,20 @@
         
         <li>
             <h2 class="post-list__post-title post-title">
-                <a href="/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/"
-                   title="Should we use our own frameworks in a production system?">Should we use our own frameworks in a production system?</a>
+                <a href="/2012/10/15/how-to-rewrite-urls-with-php-5-4s-built-in-web-server/"
+                   title="How to rewrite urls with PHP 5.4's built-in web server">How to rewrite urls with PHP 5.4's built-in web server</a>
             </h2>
-            <p class="excerpt">Some days ago I read an article called why every developer should write their own framework. It’s an interesting post and everybody are agree with the author. Build a framework is a good way to learn other frameworks. You face problems and you give solutions to those problems similar than other framework’s ones. It’s also good see the code of other frameworks to see the differences. Definitely I am fully agree with Brandon.
+            <p class="excerpt">PHP 5.4 comes with a flaming built-in web server. This server is (obviously) not suitable to use in production environments, but it’s great if we want to check one project quickly:
 
 &hellip;</p>
             <div class="post-list__meta">
-                <time datetime=" 2009-12-07 00:00
-                " class="post-list__meta--date date">7 Dec 2009</time>
+                <time datetime=" 2012-10-15 00:00
+                " class="post-list__meta--date date">15 Oct 2012</time>
                 
                 &#8226; <span class="post-meta__tags">on <a
                     href="/tags/#php">php</a>, <a
-                    href="/tags/#web-development">web-development</a></span>
+                    href="/tags/#php5-4">php5-4</a>, <a
+                    href="/tags/#technology">technology</a></span>
                 
             </div>
             <hr class="post-list__divider">
@@ -474,19 +538,43 @@
         
         <li>
             <h2 class="post-list__post-title post-title">
-                <a href="/2009/12/07/moving-singleton-and-factory-patterns-to-abstract-with-php-5-3/"
-                   title="Moving singleton and factory patterns to Abstract with php 5.3">Moving singleton and factory patterns to Abstract with php 5.3</a>
+                <a href="/2012/10/08/how-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io/"
+                   title="How to send the output of Symfony’s process Component to a node.js server in Real Time with Socket.io">How to send the output of Symfony’s process Component to a node.js server in Real Time with Socket.io</a>
             </h2>
-            <p class="excerpt">I have built a backend library. I have a tree of classes and i want to use singleton and factory patterns to my class set. Easy isn’t it?
+            <p class="excerpt">Today another crazy idea. Do you know Symfony Process Component? The Process Component is a simple component that executes commands in sub-processes. I like to use it when I need to execute commands in the operating system. The documentation is pretty straightforward. Normally when I want to collect the output of the script (imagine we run those scripts within a crontab) I save the output in a log file and I can check it even in real time with tail -f command.
 
 &hellip;</p>
             <div class="post-list__meta">
-                <time datetime=" 2009-12-07 00:00
-                " class="post-list__meta--date date">7 Dec 2009</time>
+                <time datetime=" 2012-10-08 00:00
+                " class="post-list__meta--date date">8 Oct 2012</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#node-js">node-js</a>, <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#socket-io">socket-io</a>, <a
+                    href="/tags/#technology">technology</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2012/10/01/handling-dates-with-php/"
+                   title="Handling dates with PHP">Handling dates with PHP</a>
+            </h2>
+            <p class="excerpt">I’ve seen a lot of newbies (and not newbies) having problems handling dates in PHP (and even with SQL and another languages). When I see someone having problems with dates, I always ask the same question. I type in a text editor “27/11/2012” and I ask him: What is it? If your answer is “This is a date” you should continue reading the post :)
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2012-10-01 00:00
+                " class="post-list__meta--date date">1 Oct 2012</time>
                 
                 &#8226; <span class="post-meta__tags">on <a
                     href="/tags/#php">php</a>, <a
-                    href="/tags/#web-development">web-development</a></span>
+                    href="/tags/#phpunit">phpunit</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#datetime">datetime</a></span>
                 
             </div>
             <hr class="post-list__divider">
@@ -494,57 +582,22 @@
         
         <li>
             <h2 class="post-list__post-title post-title">
-                <a href="/2009/09/09/soyrico/"
-                   title="Soy rico">Soy rico</a>
+                <a href="/2012/09/24/the-reason-why-singleton-is-a-problem-with-phpunit/"
+                   title="The reason why singleton is a "problem" with PHPUnit">The reason why singleton is a "problem" with PHPUnit</a>
             </h2>
-            <p class="excerpt">Lunes 7:00. Suena el despertador. Normalmente cuando suena el despertador es el peor momento del día. Hoy encima me ha sentado especialmente mal (lunes, vacaciones recientes, …). Llego a la oficina, miro el correo y me encuentro con esto:
+            <p class="excerpt">Singleton is a common design pattern. It’s easy to understand and we can easily implement it with PHP:
 
 &hellip;</p>
             <div class="post-list__meta">
-                <time datetime=" 2009-09-09 00:00
-                " class="post-list__meta--date date">9 Sep 2009</time>
-                
-                &#8226; <span class="post-meta__tags">on <a
-                    href="/tags/#personal">personal</a></span>
-                
-            </div>
-            <hr class="post-list__divider">
-        </li>
-        
-        <li>
-            <h2 class="post-list__post-title post-title">
-                <a href="/2009/07/30/antivirus/"
-                   title="antivirus">antivirus</a>
-            </h2>
-            <p class="excerpt">Acabo de recibir un correo con propaganda de un antivirus. Es una lástima que no use antivirus porque el producto tiene una pinta buenísima. Literal copiado del correo:
-
-&hellip;</p>
-            <div class="post-list__meta">
-                <time datetime=" 2009-07-30 00:00
-                " class="post-list__meta--date date">30 Jul 2009</time>
-                
-                &#8226; <span class="post-meta__tags">on <a
-                    href="/tags/#personal">personal</a></span>
-                
-            </div>
-            <hr class="post-list__divider">
-        </li>
-        
-        <li>
-            <h2 class="post-list__post-title post-title">
-                <a href="/2009/05/08/server-side-web-frameworks-are-dead/"
-                   title="Server side web frameworks are dead">Server side web frameworks are dead</a>
-            </h2>
-            <p class="excerpt">Server side web frameworks are dead. Long life to client side web frameworks. Struts, JSF, Spring, Ruby on Rails, Cake, Symfony … (even my framework in PHP ;) ) as full stack web framework are dead. Logic is moving to the client side. Javascript, the language used as deadly weapon in the browser wars nowadays is the key of the web. Server logic is getting thin. A thin server side framework serving JSON (Zend Framework is really cool for this) plus a good and strong client side framework such as Dojo or ExtJs with a good widget set with all the application logic can be the new parading of web develop.
-
-&hellip;</p>
-            <div class="post-list__meta">
-                <time datetime=" 2009-05-08 00:00
-                " class="post-list__meta--date date">8 May 2009</time>
+                <time datetime=" 2012-09-24 00:00
+                " class="post-list__meta--date date">24 Sep 2012</time>
                 
                 &#8226; <span class="post-meta__tags">on <a
                     href="/tags/#php">php</a>, <a
-                    href="/tags/#web-development">web-development</a></span>
+                    href="/tags/#phpunit">phpunit</a>, <a
+                    href="/tags/#tdd">tdd</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#tdd">tdd</a></span>
                 
             </div>
             <hr class="post-list__divider">
@@ -552,19 +605,22 @@
         
         <li>
             <h2 class="post-list__post-title post-title">
-                <a href="/2009/04/18/speed-up-page-load-with-asynchronous-javascript/"
-                   title="Speed up page load with asynchronous javascript">Speed up page load with asynchronous javascript</a>
+                <a href="/2012/09/17/building-a-simple-tcp-proxy-server-with-node-js/"
+                   title="Building a simple TCP proxy server with node.js">Building a simple TCP proxy server with node.js</a>
             </h2>
-            <p class="excerpt">JavaScript an important part of or web applications. Normally or web is not usable until js is full loaded. Almost all js framework implements an event to notice when the js is ready (dojo.addOnLoad(); $(function() {});) and the page is usable. The page is usable when js is loaded. Sometimes if you are working with dojo you need all js and maybe is better to create an splash screen until all is loaded. But sometimes your app don’t need all js to be usable. I give you a example: I’ve been working in a project with jQuery. I load jQuery library from google cdn
+            <p class="excerpt">Today we are going to build a simple TCP proxy server. The scenario is the following one. We have got one host (the client) that establishes a TCP connection to another one (the remote).
 
 &hellip;</p>
             <div class="post-list__meta">
-                <time datetime=" 2009-04-18 00:00
-                " class="post-list__meta--date date">18 Apr 2009</time>
+                <time datetime=" 2012-09-17 00:00
+                " class="post-list__meta--date date">17 Sep 2012</time>
                 
                 &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#node-js">node-js</a>, <a
                     href="/tags/#technology">technology</a>, <a
-                    href="/tags/#web-development">web-development</a></span>
+                    href="/tags/#node">node</a>, <a
+                    href="/tags/#nodejs">nodejs</a>, <a
+                    href="/tags/#tcp">tcp</a></span>
                 
             </div>
             <hr class="post-list__divider">
@@ -572,20 +628,21 @@
         
         <li>
             <h2 class="post-list__post-title post-title">
-                <a href="/2009/04/18/mixin-dojo-and-google-api-libraries/"
-                   title="mixin dojo and google api libraries">mixin dojo and google api libraries</a>
+                <a href="/2012/09/10/combining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects/"
+                   title="Combining Zend Framework2 and Symfony2 components with Composer to build PHP projects">Combining Zend Framework2 and Symfony2 components with Composer to build PHP projects</a>
             </h2>
-            <p class="excerpt">I’m working in a dojo application and I also need to use some goolge api like feeds, maps and books. Dojo is very versatile adding new components using dojo.require. when all dojo components are loaded dojo.addOnLoad callback is fired.
+            <p class="excerpt">Zend Framework 2 is finally stable. I must admit that I’m not a big fan of ZF (or even Symfony2) as a full stack framework. I normally prefer to use micro frameworks, but those two frameworks (ZF2 and SF2) are great as component libraries. Today we are going to build a simple console application (using symfony/console component) to list the database tables (using zendframework/zend-db’s Metadata). Let’s start.
 
 &hellip;</p>
             <div class="post-list__meta">
-                <time datetime=" 2009-04-18 00:00
-                " class="post-list__meta--date date">18 Apr 2009</time>
+                <time datetime=" 2012-09-10 00:00
+                " class="post-list__meta--date date">10 Sep 2012</time>
                 
                 &#8226; <span class="post-meta__tags">on <a
-                    href="/tags/#dojo">dojo</a>, <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#symfony2">symfony2</a>, <a
                     href="/tags/#technology">technology</a>, <a
-                    href="/tags/#web-development">web-development</a></span>
+                    href="/tags/#zend-framework">zend-framework</a></span>
                 
             </div>
             <hr class="post-list__divider">
@@ -593,41 +650,24 @@
         
         <li>
             <h2 class="post-list__post-title post-title">
-                <a href="/2009/04/10/fetching-book-cover-with-google-api-and-dojo/"
-                   title="fetching book cover with google API and dojo">fetching book cover with google API and dojo</a>
+                <a href="/2012/09/03/dependency-injection-containers-with-php-when-pimple-is-not-enough/"
+                   title="Dependency Injection Containers with PHP. When Pimple is not enough.">Dependency Injection Containers with PHP. When Pimple is not enough.</a>
             </h2>
-            <p class="excerpt">I want to put the cover of one book into my dojo application. I can use amazon Web service but google API has a nice JSONP interface and also google API uses ISBN instead ASIN to fetch book info and for me is easier to know the ISBN (it is in the first page of every book). I have a previous post explaining how to use use JSONP with javascript, but now I want to do the same in a dojo-way using dojo.io.script.get
+            <p class="excerpt">Two months ago I wrote an article about Dependency Injection with PHP and Pimple. After the post I was speaking about it with a group of colleagues and someone threw a question:
 
 &hellip;</p>
             <div class="post-list__meta">
-                <time datetime=" 2009-04-10 00:00
-                " class="post-list__meta--date date">10 Apr 2009</time>
+                <time datetime=" 2012-09-03 00:00
+                " class="post-list__meta--date date">3 Sep 2012</time>
                 
                 &#8226; <span class="post-meta__tags">on <a
-                    href="/tags/#dojo">dojo</a>, <a
+                    href="/tags/#dependency-injection">dependency-injection</a>, <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#symfony">symfony</a>, <a
                     href="/tags/#technology">technology</a>, <a
-                    href="/tags/#web-development">web-development</a></span>
-                
-            </div>
-            <hr class="post-list__divider">
-        </li>
-        
-        <li>
-            <h2 class="post-list__post-title post-title">
-                <a href="/2009/04/10/consuming-external-javascript-services-with-dojo/"
-                   title="Consuming external javascript services with Dojo">Consuming external javascript services with Dojo</a>
-            </h2>
-            <p class="excerpt">I want to include goggle’s GSbookBar in one dokjo application. Unfortunately this API doesn’t have a JSONP interface. I need to include one external js file and use GSbookBar object. It’s really simple but I want to so something different. The book bar appears only in one pop up of one tab in my application. It isn’t a main part so I don’t want to load the external script every time the user loads the application.
-
-&hellip;</p>
-            <div class="post-list__meta">
-                <time datetime=" 2009-04-10 00:00
-                " class="post-list__meta--date date">10 Apr 2009</time>
-                
-                &#8226; <span class="post-meta__tags">on <a
-                    href="/tags/#dojo">dojo</a>, <a
-                    href="/tags/#technology">technology</a>, <a
-                    href="/tags/#web-development">web-development</a></span>
+                    href="/tags/#component-library">component-library</a>, <a
+                    href="/tags/#di">di</a>, <a
+                    href="/tags/#language-php">language-php</a></span>
                 
             </div>
             <hr class="post-list__divider">
@@ -645,7 +685,7 @@
     
   
 
-  <span class="pagination__page-number">Page 7 of 8</span>
+  <span class="pagination__page-number">Page 7 of 10</span>
 
   
     <a rel="next" class="posts older btn small" href="/page8/">Older Posts →</a>
@@ -663,7 +703,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617632515543207000"></script>
+<script type="text/javascript" src="/js/main.js?1617650803001959000"></script>
 
     </div>
   </body>

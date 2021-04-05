@@ -1893,6 +1893,471 @@
   
     
     <url>
+      <loc>/2012/12/17/multiple-inheritance-with-php-and-traits/</loc>
+      
+        <lastmod>2012-12-17T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/11/26/sending-sockets-from-postgresql-triggers-with-python/</loc>
+      
+        <lastmod>2012-11-26T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/11/19/allow-to-call-shell-programs-as-functions-with-php/</loc>
+      
+        <lastmod>2012-11-19T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/11/12/building-a-ftp-client-library-with-php/</loc>
+      
+        <lastmod>2012-11-12T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/11/05/live-changes-with-node-js-scripts-without-stopstart/</loc>
+      
+        <lastmod>2012-11-05T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/10/29/managing-windows-services-with-symfonyprocess-and-php/</loc>
+      
+        <lastmod>2012-10-29T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/10/22/building-a-silex-application-from-one-behatgherkin-feature-file/</loc>
+      
+        <lastmod>2012-10-22T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/10/15/how-to-rewrite-urls-with-php-5-4s-built-in-web-server/</loc>
+      
+        <lastmod>2012-10-15T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/10/08/how-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io/</loc>
+      
+        <lastmod>2012-10-08T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/10/01/handling-dates-with-php/</loc>
+      
+        <lastmod>2012-10-01T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/09/24/the-reason-why-singleton-is-a-problem-with-phpunit/</loc>
+      
+        <lastmod>2012-09-24T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/09/17/building-a-simple-tcp-proxy-server-with-node-js/</loc>
+      
+        <lastmod>2012-09-17T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/09/10/combining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects/</loc>
+      
+        <lastmod>2012-09-10T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/09/03/dependency-injection-containers-with-php-when-pimple-is-not-enough/</loc>
+      
+        <lastmod>2012-09-03T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/08/27/deployment-tip-how-to-use-environ-variables-to-create-different-environments-with-php/</loc>
+      
+        <lastmod>2012-08-27T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/08/20/encode-or-php-code-into-spaces-and-new-line-characters/</loc>
+      
+        <lastmod>2012-08-20T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/08/13/building-a-simple-api-proxy-server-with-php/</loc>
+      
+        <lastmod>2012-08-13T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/08/07/book-review-couchdb-and-php-web-development/</loc>
+      
+        <lastmod>2012-08-07T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/07/16/scroll-desktops-web-pages-remotely-with-our-smartphone-using-node-js-and-websockets/</loc>
+      
+        <lastmod>2012-07-16T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/07/09/building-a-simple-dependency-injection-container-with-php/</loc>
+      
+        <lastmod>2012-07-09T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/06/18/building-a-simple-sql-wrapper-with-php-part-2/</loc>
+      
+        <lastmod>2012-06-18T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/05/28/strange-behaviour-in-php-with-method-visibility/</loc>
+      
+        <lastmod>2012-05-28T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/05/21/database-connection-pooling-with-php-and-react-node-php/</loc>
+      
+        <lastmod>2012-05-21T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/05/14/building-a-simple-sql-wrapper-with-php/</loc>
+      
+        <lastmod>2012-05-14T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/05/07/asynchronous-queries-to-relational-databases-from-browser-with-node-js-and-socket-io/</loc>
+      
+        <lastmod>2012-05-07T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/04/09/inject-dependencies-via-phpdoc/</loc>
+      
+        <lastmod>2012-04-09T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/03/12/how-to-use-eval-without-using-eval-in-php/</loc>
+      
+        <lastmod>2012-03-12T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/02/27/deploying-tips-for-web-applications/</loc>
+      
+        <lastmod>2012-02-27T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/02/06/how-to-protect-from-sql-injection-with-php/</loc>
+      
+        <lastmod>2012-02-06T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/01/16/checking-the-performance-of-php-exceptions/</loc>
+      
+        <lastmod>2012-01-16T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2012/01/02/working-with-clouds-multi-master-file-system-replication-with-couchdb/</loc>
+      
+        <lastmod>2012-01-02T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>/2010/01/24/pivot-tables-in-php/</loc>
       
         <lastmod>2010-01-24T00:00:00+01:00</lastmod>
@@ -2286,7 +2751,7 @@
     <url>
       <loc>/about/</loc>
       
-        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
+        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2301,7 +2766,7 @@
     <url>
       <loc>/book/</loc>
       
-        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
+        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2318,7 +2783,7 @@
     <url>
       <loc>/feed.xml</loc>
       
-        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
+        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2333,7 +2798,7 @@
     <url>
       <loc>/humans.txt</loc>
       
-        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
+        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2350,7 +2815,7 @@
     <url>
       <loc>/js/main.js</loc>
       
-        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
+        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2365,7 +2830,7 @@
     <url>
       <loc>/css/main.css</loc>
       
-        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
+        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2380,7 +2845,7 @@
     <url>
       <loc>/posts/</loc>
       
-        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
+        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2395,7 +2860,7 @@
     <url>
       <loc>/search/</loc>
       
-        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
+        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2410,7 +2875,7 @@
     <url>
       <loc>/search.json</loc>
       
-        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
+        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2429,7 +2894,7 @@
     <url>
       <loc>/assets/css/style.css</loc>
       
-        <lastmod>2021-04-05T16:21:55+02:00</lastmod>
+        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2438,6 +2903,10 @@
         <priority>0.3</priority>
       
     </url>
+    
+  
+    
+  
     
   
     

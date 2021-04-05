@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Working with clouds. Multi-master file-system replication with CouchDB</title>
+    <meta name="description"
+          content="When we want to work with a cloud/cluster one of the most common problems is the file-system. It’s mandatory to be able to scale horizontally (scale out). We need to share the same file-system between our nodes. We can do it with a file server (samba for example), but this solution inserts a huge bottleneck into our application. There’s different distributed filesystems such as Apache Hadoop (inspired by Google’s MapReduce and Google File System). In this post we’re going to build a really simple distributed storage system based on NoSql. Let’s start.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Working with clouds. Multi-master file-system replication with CouchDB">
+    <meta name="twitter:description"
+          content="When we want to work with a cloud/cluster one of the most common problems is the file-system. It’s mandatory to be able to scale horizontally (scale out). We need to share the same file-system between our nodes. We can do it with a file server (samba for example), but this solution inserts a huge bottleneck into our application. There’s different distributed filesystems such as Apache Hadoop (inspired by Google’s MapReduce and Google File System). In this post we’re going to build a really simple distributed storage system based on NoSql. Let’s start.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Working with clouds. Multi-master file-system replication with CouchDB">
+    <meta property="og:description"
+          content="When we want to work with a cloud/cluster one of the most common problems is the file-system. It’s mandatory to be able to scale horizontally (scale out). We need to share the same file-system between our nodes. We can do it with a file server (samba for example), but this solution inserts a huge bottleneck into our application. There’s different distributed filesystems such as Apache Hadoop (inspired by Google’s MapReduce and Google File System). In this post we’re going to build a really simple distributed storage system based on NoSql. Let’s start.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617650803001959000">
+    <link rel="canonical"
+          href="/2012/01/02/working-with-clouds-multi-master-file-system-replication-with-couchdb/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Working with clouds. Multi-master file-system replication with CouchDB | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Working with clouds. Multi-master file-system replication with CouchDB" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="When we want to work with a cloud/cluster one of the most common problems is the file-system. It’s mandatory to be able to scale horizontally (scale out). We need to share the same file-system between our nodes. We can do it with a file server (samba for example), but this solution inserts a huge bottleneck into our application. There’s different distributed filesystems such as Apache Hadoop (inspired by Google’s MapReduce and Google File System). In this post we’re going to build a really simple distributed storage system based on NoSql. Let’s start." />
+<meta property="og:description" content="When we want to work with a cloud/cluster one of the most common problems is the file-system. It’s mandatory to be able to scale horizontally (scale out). We need to share the same file-system between our nodes. We can do it with a file server (samba for example), but this solution inserts a huge bottleneck into our application. There’s different distributed filesystems such as Apache Hadoop (inspired by Google’s MapReduce and Google File System). In this post we’re going to build a really simple distributed storage system based on NoSql. Let’s start." />
+<link rel="canonical" href="/2012/01/02/working-with-clouds-multi-master-file-system-replication-with-couchdb/" />
+<meta property="og:url" content="/2012/01/02/working-with-clouds-multi-master-file-system-replication-with-couchdb/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-01-02T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Working with clouds. Multi-master file-system replication with CouchDB" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2012/01/02/working-with-clouds-multi-master-file-system-replication-with-couchdb/"},"url":"/2012/01/02/working-with-clouds-multi-master-file-system-replication-with-couchdb/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"When we want to work with a cloud/cluster one of the most common problems is the file-system. It’s mandatory to be able to scale horizontally (scale out). We need to share the same file-system between our nodes. We can do it with a file server (samba for example), but this solution inserts a huge bottleneck into our application. There’s different distributed filesystems such as Apache Hadoop (inspired by Google’s MapReduce and Google File System). In this post we’re going to build a really simple distributed storage system based on NoSql. Let’s start.","dateModified":"2012-01-02T00:00:00+01:00","datePublished":"2012-01-02T00:00:00+01:00","headline":"Working with clouds. Multi-master file-system replication with CouchDB","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/posts" title="posts">
+                                        <span>All</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2012-01-02 00:00
+            " class="post-meta__date date">2 Jan 2012</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#cloud">cloud</a>, <a
+                href="/tags/#couchdb">couchdb</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#technology">technology</a></span>
+            
+        </div>
+        <h1 class="post-title">Working with clouds. Multi-master file-system replication with CouchDB</h1>
+    </header>
+
+    <section class="post">
+        <p>When we want to work with a cloud/cluster one of the most common problems is the file-system. It’s mandatory to be able to scale horizontally (scale out). We need to share the same file-system between our nodes. We can do it with a file server (<a href="http://en.wikipedia.org/wiki/Samba_(software)">samba</a> for example), but this solution inserts a huge bottleneck into our application. There’s different distributed filesystems such as Apache <a href="http://hadoop.apache.org/">Hadoop</a> (inspired by Google’s MapReduce and Google File System). In this post we’re going to build a really simple distributed storage system based on NoSql. Let’s start.</p>
+
+<p>NoSql (aka one of our last hypes) databases normally allow to store large files. MongoDB for example has <a href="http://www.mongodb.org/display/DOCS/GridFS">GridFS</a>, But in this post we’re going to do it using <a href="http://couchdb.apache.org/">CouchDB</a>. With CouchDB we can attach documents within our database as simple attachments, just like email.</p>
+
+<p>The api of CouchDB to upload an attachment is very simple. It’s a pure REST <a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Attachments">api</a>.</p>
+
+<p>In order to create the http connections directly with curl commands we can use libraries to automate this process. For example we can use a simple library shown in a previous <a href="http://gonzalo123.wordpress.com/2010/08/30/using-couchdb-as-filesystem-with-php/">post</a>. If we inspect the <a href="https://github.com/gonzalo123/nov-couchdb/blob/master/Nov_Http.php#L260">code</a> we will see that we’re creating a PUT request to store the file in our couchDB database.</p>
+
+<p>Another cool thing we can do with PHP is to create a stream-wrapper to use standard filesystem functions for read/write/delete we can see a post about this <a href="http://gonzalo123.wordpress.com/2010/09/06/using-a-stream-wrapper-to-access-couchdb-attachments-with-php/">here</a>.</p>
+
+<p>As we can see is very easy to use couchdb as filesystem. but we also can replicate our couchDB databases. Imagine that we have tho couchDB servers (host1 and host2). Each host has one database called fs. If we run the following command:</p>
+
+<pre><code class="language-commandline">curl -X POST -H "Content-Type: application/json" http://host1:5984/_replicate -d '{"source":"cmr","target":"http://host2:5984/fs","continuous":true}'
+
+</code></pre>
+
+<p>Our database will be replicated from host1 to host2 in a continuous mode. That’s means everytime we create/delete anything in host1, couchDB will replicate it to host2. A simple master-slave replica.</p>
+
+<p>Now if we execute the same command in host2:</p>
+
+<pre><code class="language-commandline">curl -X POST -H "Content-Type: application/json" http://host2:5984/_replicate -d '{"source":"cmr","target":"http://host1:5984/fs","continuous":true}'
+</code></pre>
+
+<p>We have a multi-master replica system, cheap and easy to implement. As we can see we only need to install couchDB in each node, activate the replica and that’s all. Pretty straightforward, isn’t it?</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Working+with+clouds.+Multi-master+file-system+replication+with+CouchDB%20%2F2012%2F01%2F02%2Fworking-with-clouds-multi-master-file-system-replication-with-couchdb%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2012%2F01%2F02%2Fworking-with-clouds-multi-master-file-system-replication-with-couchdb%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Working+with+clouds.+Multi-master+file-system+replication+with+CouchDB&url=%2F2012%2F01%2F02%2Fworking-with-clouds-multi-master-file-system-replication-with-couchdb%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2012/01/02/working-with-clouds-multi-master-file-system-replication-with-couchdb/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2012/01/02/working-with-clouds-multi-master-file-system-replication-with-couchdb'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617650803001959000"></script>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Building a simple API proxy server with PHP</title>
+    <meta name="description"
+          content="This days I’m playing with Backbone and using public API as a source. The Web Browser has one horrible feature: It don’t allow to fetch any external resource to our host due to the cross-origin restriction. For example if we have a server at localhost we cannot perform one AJAX request to another host different than localhost. Nowadays there is a header to allow it: Access-Control-Allow-Origin. The problem is that the remote server must set up this header. For example I was playing with github’s API and github doesn’t have this header. If the server is my server, is pretty straightforward to put this header but obviously I’m not the sysadmin of github, so I cannot do it. What the solution? One possible solution is, for example, create a proxy server at localhost with PHP. With PHP we can use any remote API with curl (I wrote about it here and here for example). It’s not difficult, but I asked myself: Can we create a dummy proxy server with PHP to handle any request to localhost and redirects to the real server, Instead of create one proxy for each request?. Let’s start. Problably there is one open source solution (tell me if you know it) but I’m on holidays and I want to code a little bit (I now, it looks insane but that’s me :) ).
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Building a simple API proxy server with PHP">
+    <meta name="twitter:description"
+          content="This days I’m playing with Backbone and using public API as a source. The Web Browser has one horrible feature: It don’t allow to fetch any external resource to our host due to the cross-origin restriction. For example if we have a server at localhost we cannot perform one AJAX request to another host different than localhost. Nowadays there is a header to allow it: Access-Control-Allow-Origin. The problem is that the remote server must set up this header. For example I was playing with github’s API and github doesn’t have this header. If the server is my server, is pretty straightforward to put this header but obviously I’m not the sysadmin of github, so I cannot do it. What the solution? One possible solution is, for example, create a proxy server at localhost with PHP. With PHP we can use any remote API with curl (I wrote about it here and here for example). It’s not difficult, but I asked myself: Can we create a dummy proxy server with PHP to handle any request to localhost and redirects to the real server, Instead of create one proxy for each request?. Let’s start. Problably there is one open source solution (tell me if you know it) but I’m on holidays and I want to code a little bit (I now, it looks insane but that’s me :) ).
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Building a simple API proxy server with PHP">
+    <meta property="og:description"
+          content="This days I’m playing with Backbone and using public API as a source. The Web Browser has one horrible feature: It don’t allow to fetch any external resource to our host due to the cross-origin restriction. For example if we have a server at localhost we cannot perform one AJAX request to another host different than localhost. Nowadays there is a header to allow it: Access-Control-Allow-Origin. The problem is that the remote server must set up this header. For example I was playing with github’s API and github doesn’t have this header. If the server is my server, is pretty straightforward to put this header but obviously I’m not the sysadmin of github, so I cannot do it. What the solution? One possible solution is, for example, create a proxy server at localhost with PHP. With PHP we can use any remote API with curl (I wrote about it here and here for example). It’s not difficult, but I asked myself: Can we create a dummy proxy server with PHP to handle any request to localhost and redirects to the real server, Instead of create one proxy for each request?. Let’s start. Problably there is one open source solution (tell me if you know it) but I’m on holidays and I want to code a little bit (I now, it looks insane but that’s me :) ).
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617650803001959000">
+    <link rel="canonical"
+          href="/2012/08/13/building-a-simple-api-proxy-server-with-php/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Building a simple API proxy server with PHP | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Building a simple API proxy server with PHP" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This days I’m playing with Backbone and using public API as a source. The Web Browser has one horrible feature: It don’t allow to fetch any external resource to our host due to the cross-origin restriction. For example if we have a server at localhost we cannot perform one AJAX request to another host different than localhost. Nowadays there is a header to allow it: Access-Control-Allow-Origin. The problem is that the remote server must set up this header. For example I was playing with github’s API and github doesn’t have this header. If the server is my server, is pretty straightforward to put this header but obviously I’m not the sysadmin of github, so I cannot do it. What the solution? One possible solution is, for example, create a proxy server at localhost with PHP. With PHP we can use any remote API with curl (I wrote about it here and here for example). It’s not difficult, but I asked myself: Can we create a dummy proxy server with PHP to handle any request to localhost and redirects to the real server, Instead of create one proxy for each request?. Let’s start. Problably there is one open source solution (tell me if you know it) but I’m on holidays and I want to code a little bit (I now, it looks insane but that’s me :) )." />
+<meta property="og:description" content="This days I’m playing with Backbone and using public API as a source. The Web Browser has one horrible feature: It don’t allow to fetch any external resource to our host due to the cross-origin restriction. For example if we have a server at localhost we cannot perform one AJAX request to another host different than localhost. Nowadays there is a header to allow it: Access-Control-Allow-Origin. The problem is that the remote server must set up this header. For example I was playing with github’s API and github doesn’t have this header. If the server is my server, is pretty straightforward to put this header but obviously I’m not the sysadmin of github, so I cannot do it. What the solution? One possible solution is, for example, create a proxy server at localhost with PHP. With PHP we can use any remote API with curl (I wrote about it here and here for example). It’s not difficult, but I asked myself: Can we create a dummy proxy server with PHP to handle any request to localhost and redirects to the real server, Instead of create one proxy for each request?. Let’s start. Problably there is one open source solution (tell me if you know it) but I’m on holidays and I want to code a little bit (I now, it looks insane but that’s me :) )." />
+<link rel="canonical" href="/2012/08/13/building-a-simple-api-proxy-server-with-php/" />
+<meta property="og:url" content="/2012/08/13/building-a-simple-api-proxy-server-with-php/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-08-13T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Building a simple API proxy server with PHP" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2012/08/13/building-a-simple-api-proxy-server-with-php/"},"url":"/2012/08/13/building-a-simple-api-proxy-server-with-php/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"This days I’m playing with Backbone and using public API as a source. The Web Browser has one horrible feature: It don’t allow to fetch any external resource to our host due to the cross-origin restriction. For example if we have a server at localhost we cannot perform one AJAX request to another host different than localhost. Nowadays there is a header to allow it: Access-Control-Allow-Origin. The problem is that the remote server must set up this header. For example I was playing with github’s API and github doesn’t have this header. If the server is my server, is pretty straightforward to put this header but obviously I’m not the sysadmin of github, so I cannot do it. What the solution? One possible solution is, for example, create a proxy server at localhost with PHP. With PHP we can use any remote API with curl (I wrote about it here and here for example). It’s not difficult, but I asked myself: Can we create a dummy proxy server with PHP to handle any request to localhost and redirects to the real server, Instead of create one proxy for each request?. Let’s start. Problably there is one open source solution (tell me if you know it) but I’m on holidays and I want to code a little bit (I now, it looks insane but that’s me :) ).","dateModified":"2012-08-13T00:00:00+02:00","datePublished":"2012-08-13T00:00:00+02:00","headline":"Building a simple API proxy server with PHP","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/posts" title="posts">
+                                        <span>All</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2012-08-13 00:00
+            " class="post-meta__date date">13 Aug 2012</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#api">api</a>, <a
+                href="/tags/#github">github</a>, <a
+                href="/tags/#public-api">public-api</a>, <a
+                href="/tags/#rest">rest</a></span>
+            
+        </div>
+        <h1 class="post-title">Building a simple API proxy server with PHP</h1>
+    </header>
+
+    <section class="post">
+        <p>This days I’m playing with <a href="http://backbonejs.org/">Backbone</a> and using public API as a source. The Web Browser has one horrible feature: It don’t allow to fetch any external resource to our host due to the cross-origin restriction. For example if we have a server at localhost we cannot perform one AJAX request to another host different than localhost. Nowadays there is a header to allow it: <a href="https://developer.mozilla.org/en-US/docs/HTTP_access_control">Access-Control-Allow-Origin</a>. The problem is that the remote server must set up this header. For example I was playing with github’s API and github doesn’t have this header. If the server is my server, is pretty straightforward to put this header but obviously I’m not the sysadmin of github, so I cannot do it. What the solution? One possible solution is, for example, create a proxy server at localhost with PHP. With PHP we can use any remote API with curl (I wrote about it <a href="http://gonzalo123.wordpress.com/2011/08/01/building-a-client-for-a-rest-api-with-php/">here</a> and <a href="http://gonzalo123.wordpress.com/2010/02/06/building-a-rest-client-with-asynchronous-calls-using-php-and-curl/">here</a> for example). It’s not difficult, but I asked myself: Can we create a dummy proxy server with PHP to handle any request to localhost and redirects to the real server, Instead of create one proxy for each request?. Let’s start. Problably there is one open source solution (tell me if you know it) but I’m on holidays and I want to code a little bit (I now, it looks insane but that’s me :) ).</p>
+
+<p>The idea is:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mf">...</span>
+<span class="nv">$proxy</span><span class="o">-&gt;</span><span class="nf">register</span><span class="p">(</span><span class="s1">'github'</span><span class="p">,</span> <span class="s1">'https://api.github.com'</span><span class="p">);</span>
+<span class="mf">...</span>
+</code></pre></div></div>
+
+<p>And when I type:</p>
+
+<blockquote>
+  <p>http://localhost/github/users/gonzalo123</p>
+</blockquote>
+
+<p>and create a proxy to :</p>
+
+<blockquote>
+  <p>https://api.github.com/users/gonzalo123</p>
+</blockquote>
+
+<p>The request method is also important. If we create a POST request to localhost we want a POST request to github too.</p>
+
+<p>This time we’re not going to reinvent the wheel, so we will use symfony componets so we will use composer to start our project:</p>
+
+<p>We create a conposer.json file with the dependencies:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"symfony/class-loader"</span><span class="p">:</span><span class="s2">"dev-master"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"symfony/http-foundation"</span><span class="p">:</span><span class="s2">"dev-master"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Now</p>
+
+<pre><code class="language-commandline">php composer.phar install
+</code></pre>
+
+<p>And we can start coding. The script will look like this:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">register</span><span class="p">(</span><span class="s1">'github'</span><span class="p">,</span> <span class="s1">'https://api.github.com'</span><span class="p">);</span>
+<span class="nv">$proxy</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+ 
+<span class="k">foreach</span><span class="p">(</span><span class="nv">$proxy</span><span class="o">-&gt;</span><span class="nf">getHeaders</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$header</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">header</span><span class="p">(</span><span class="nv">$header</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">echo</span> <span class="nv">$proxy</span><span class="o">-&gt;</span><span class="nf">getContent</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>As we can see we can register as many servers as we want. In this example we only register github. The application only has two classes: <a href="https://github.com/gonzalo123/rest-proxy/blob/master/lib/RestProxy/RestProxy.php">RestProxy</a>, who extracts the information from the request object and calls to the real server through <a href="https://github.com/gonzalo123/rest-proxy/blob/master/lib/RestProxy/CurlWrapper.php">CurlWrapper</a>.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="kn">namespace</span> <span class="nn">RestProxy</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">RestProxy</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$request</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$curl</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$map</span><span class="p">;</span>
+ 
+    <span class="k">private</span> <span class="nv">$content</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$headers</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="err">\</span><span class="nc">Symfony\Component\HttpFoundation\Request</span> <span class="nv">$request</span><span class="p">,</span> <span class="nc">CurlWrapper</span> <span class="nv">$curl</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">request</span>  <span class="o">=</span> <span class="nv">$request</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span> <span class="o">=</span> <span class="nv">$curl</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">register</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$url</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">map</span><span class="p">[</span><span class="nv">$name</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$url</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">run</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">map</span> <span class="k">as</span> <span class="nv">$name</span> <span class="o">=&gt;</span> <span class="nv">$mapUrl</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">dispatch</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$mapUrl</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">dispatch</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$mapUrl</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$url</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">request</span><span class="o">-&gt;</span><span class="nf">getPathInfo</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$url</span>         <span class="o">=</span> <span class="nv">$mapUrl</span> <span class="mf">.</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s2">"/</span><span class="si">{</span><span class="nv">$name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="kc">NULL</span><span class="p">,</span> <span class="nv">$url</span><span class="p">);</span>
+            <span class="nv">$queryString</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">request</span><span class="o">-&gt;</span><span class="nf">getQueryString</span><span class="p">();</span>
+ 
+            <span class="k">switch</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">request</span><span class="o">-&gt;</span><span class="nf">getMethod</span><span class="p">())</span> <span class="p">{</span>
+                <span class="k">case</span> <span class="s1">'GET'</span><span class="o">:</span>
+                    <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">content</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span><span class="o">-&gt;</span><span class="nf">doGet</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$queryString</span><span class="p">);</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="s1">'POST'</span><span class="o">:</span>
+                    <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">content</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span><span class="o">-&gt;</span><span class="nf">doPost</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$queryString</span><span class="p">);</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="s1">'DELETE'</span><span class="o">:</span>
+                    <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">content</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span><span class="o">-&gt;</span><span class="nf">doDelete</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$queryString</span><span class="p">);</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="s1">'PUT'</span><span class="o">:</span>
+                    <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">content</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span><span class="o">-&gt;</span><span class="nf">doPut</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$queryString</span><span class="p">);</span>
+                    <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">headers</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span><span class="o">-&gt;</span><span class="nf">getHeaders</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getHeaders</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">headers</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getContent</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">content</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The RestProxy receive two instances in the constructor via dependency injection (CurlWrapper and Request). This architecture helps a lot in the <a href="https://github.com/gonzalo123/rest-proxy/blob/master/tests/SimpleTest.php">tests</a>, because we can mock both instances. Very helpfully when building RestProxy.</p>
+
+<p>The RestProxy is registerd within <a href="http://packagist.org/packages/gonzalo123/rest-proxy">packaist</a> so we can install it using composer installer:</p>
+
+<p>First install componser</p>
+
+<blockquote>
+  <table>
+    <tbody>
+      <tr>
+        <td>curl -s https://getcomposer.org/installer</td>
+        <td>php</td>
+      </tr>
+    </tbody>
+  </table>
+</blockquote>
+
+<p>and create a new project:</p>
+
+<blockquote>
+  <p>php composer.phar create-project gonzalo123/rest-proxy proxy</p>
+</blockquote>
+
+<p>If we are using PHP5.4 (if not, what are you waiting for?) we can run the build-in server</p>
+
+<pre><code class="language-commandline">cd proxy
+php -S localhost:8888 -t www/
+</code></pre>
+
+<p>Now we only need to open a web browser and type:</p>
+
+<blockquote>
+  <p>http://localhost:8888/github/users/gonzalo123</p>
+</blockquote>
+
+<p>The library is very minimal (it’s enough for my experiment) and it does’t allow authorization.</p>
+
+<p>Of course full code is available in <a href="https://github.com/gonzalo123/rest-proxy">github</a>.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Building+a+simple+API+proxy+server+with+PHP%20%2F2012%2F08%2F13%2Fbuilding-a-simple-api-proxy-server-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2012%2F08%2F13%2Fbuilding-a-simple-api-proxy-server-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Building+a+simple+API+proxy+server+with+PHP&url=%2F2012%2F08%2F13%2Fbuilding-a-simple-api-proxy-server-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2012/08/13/building-a-simple-api-proxy-server-with-php/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2012/08/13/building-a-simple-api-proxy-server-with-php'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2015/08/24/generating-push-notifications-with-pushbullet-and-silex/">Generating push notifications with Pushbullet and Silex <span class="label label-default">api</span>  <span class="label label-default">php</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2013/06/03/working-with-angularjs-and-silex-as-resource-provider/">Working with AngularJS and Silex as Resource provider <span class="label label-default">php</span>  <span class="label label-default">rest</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617650803001959000"></script>
+
+    </div>
+  </body>
+</html>

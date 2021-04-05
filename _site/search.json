@@ -1262,6 +1262,316 @@
   
     {
 
+      "title"    : "Multiple inheritance with PHP and Traits",
+      "url"      : "/2012/12/17/multiple-inheritance-with-php-and-traits/",
+      "category" : "",
+      "tags"     : "php, technology, multiple-inheritance, traits",
+      "date"     : "2012-12-17 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Sending sockets from PostgreSQL triggers with Python",
+      "url"      : "/2012/11/26/sending-sockets-from-postgresql-triggers-with-python/",
+      "category" : "",
+      "tags"     : "node-js, php, postgresql, python, technology, nodejs, postgresql",
+      "date"     : "2012-11-26 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "How to call shell programs as functions with PHP",
+      "url"      : "/2012/11/19/allow-to-call-shell-programs-as-functions-with-php/",
+      "category" : "",
+      "tags"     : "php, symfony2, technology, symfony",
+      "date"     : "2012-11-19 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a FTP client library with PHP",
+      "url"      : "/2012/11/12/building-a-ftp-client-library-with-php/",
+      "category" : "",
+      "tags"     : "ftp, php-functions, php, phpunit, technology",
+      "date"     : "2012-11-12 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Live changes within node.js scripts without stop/start",
+      "url"      : "/2012/11/05/live-changes-with-node-js-scripts-without-stopstart/",
+      "category" : "",
+      "tags"     : "javascript, node-js, technology",
+      "date"     : "2012-11-05 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Managing Windows services with Symfony/Process and PHP",
+      "url"      : "/2012/10/29/managing-windows-services-with-symfonyprocess-and-php/",
+      "category" : "",
+      "tags"     : "php, technology, behat, command-line-parser, service-status, services, software, symfony, windows",
+      "date"     : "2012-10-29 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a Silex application from one Behat/Gherkin feature file",
+      "url"      : "/2012/10/22/building-a-silex-application-from-one-behatgherkin-feature-file/",
+      "category" : "",
+      "tags"     : "php, technology, behat, gherkin, silex, technology",
+      "date"     : "2012-10-22 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "How to rewrite urls with PHP 5.4&#39;s built-in web server",
+      "url"      : "/2012/10/15/how-to-rewrite-urls-with-php-5-4s-built-in-web-server/",
+      "category" : "",
+      "tags"     : "php, php5-4, technology",
+      "date"     : "2012-10-15 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "How to send the output of Symfony’s process Component to a node.js server in Real Time with Socket.io",
+      "url"      : "/2012/10/08/how-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io/",
+      "category" : "",
+      "tags"     : "node-js, php, socket-io, technology",
+      "date"     : "2012-10-08 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Handling dates with PHP",
+      "url"      : "/2012/10/01/handling-dates-with-php/",
+      "category" : "",
+      "tags"     : "php, phpunit, technology, datetime",
+      "date"     : "2012-10-01 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "The reason why singleton is a &quot;problem&quot; with PHPUnit",
+      "url"      : "/2012/09/24/the-reason-why-singleton-is-a-problem-with-phpunit/",
+      "category" : "",
+      "tags"     : "php, phpunit, tdd, technology, tdd",
+      "date"     : "2012-09-24 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a simple TCP proxy server with node.js",
+      "url"      : "/2012/09/17/building-a-simple-tcp-proxy-server-with-node-js/",
+      "category" : "",
+      "tags"     : "node-js, technology, node, nodejs, tcp",
+      "date"     : "2012-09-17 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Combining Zend Framework2 and Symfony2 components with Composer to build PHP projects",
+      "url"      : "/2012/09/10/combining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects/",
+      "category" : "",
+      "tags"     : "php, symfony2, technology, zend-framework",
+      "date"     : "2012-09-10 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Dependency Injection Containers with PHP. When Pimple is not enough.",
+      "url"      : "/2012/09/03/dependency-injection-containers-with-php-when-pimple-is-not-enough/",
+      "category" : "",
+      "tags"     : "dependency-injection, php, symfony, technology, component-library, di, language-php",
+      "date"     : "2012-09-03 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Deployment tip: How to use environ variables to create different environments with PHP",
+      "url"      : "/2012/08/27/deployment-tip-how-to-use-environ-variables-to-create-different-environments-with-php/",
+      "category" : "",
+      "tags"     : "php, technology, apache",
+      "date"     : "2012-08-27 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Encode our PHP code into spaces and new line characters",
+      "url"      : "/2012/08/20/encode-or-php-code-into-spaces-and-new-line-characters/",
+      "category" : "",
+      "tags"     : "php, ascii-code, language-php",
+      "date"     : "2012-08-20 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a simple API proxy server with PHP",
+      "url"      : "/2012/08/13/building-a-simple-api-proxy-server-with-php/",
+      "category" : "",
+      "tags"     : "php, api, github, public-api, rest",
+      "date"     : "2012-08-13 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Book review: CouchDB and PHP Web Development",
+      "url"      : "/2012/08/07/book-review-couchdb-and-php-web-development/",
+      "category" : "",
+      "tags"     : "couchdb, php, technology",
+      "date"     : "2012-08-07 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Scroll desktop&#39;s Web pages remotely with our smartphone, using Node.js and WebSockets",
+      "url"      : "/2012/07/16/scroll-desktops-web-pages-remotely-with-our-smartphone-using-node-js-and-websockets/",
+      "category" : "",
+      "tags"     : "node-js, socket-io, technology, software, technology",
+      "date"     : "2012-07-16 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a simple Dependency Injection Container with PHP",
+      "url"      : "/2012/07/09/building-a-simple-dependency-injection-container-with-php/",
+      "category" : "",
+      "tags"     : "dependency-injection, php, technology, di",
+      "date"     : "2012-07-09 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a simple SQL wrapper with PHP. Part 2.",
+      "url"      : "/2012/06/18/building-a-simple-sql-wrapper-with-php-part-2/",
+      "category" : "",
+      "tags"     : "pdo, php, postgresql, technology",
+      "date"     : "2012-06-18 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Strange behavior in PHP with method visibility",
+      "url"      : "/2012/05/28/strange-behaviour-in-php-with-method-visibility/",
+      "category" : "",
+      "tags"     : "opinion, php, technology, language-php, oo, programming",
+      "date"     : "2012-05-28 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Database connection pooling with PHP and React (node.php)",
+      "url"      : "/2012/05/21/database-connection-pooling-with-php-and-react-node-php/",
+      "category" : "",
+      "tags"     : "databases, pdo, php, postgresql, technology, language-php, node-php, programming, react",
+      "date"     : "2012-05-21 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a simple SQL wrapper with PHP",
+      "url"      : "/2012/05/14/building-a-simple-sql-wrapper-with-php/",
+      "category" : "",
+      "tags"     : "databases, pdo, php, postgresql, technology",
+      "date"     : "2012-05-14 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Asynchronous queries to PostgreSql database from the browser with node.js and socket.io",
+      "url"      : "/2012/05/07/asynchronous-queries-to-relational-databases-from-browser-with-node-js-and-socket-io/",
+      "category" : "",
+      "tags"     : "node-js, postgresql, socket-io, technology",
+      "date"     : "2012-05-07 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Inject dependencies via PhpDoc",
+      "url"      : "/2012/04/09/inject-dependencies-via-phpdoc/",
+      "category" : "",
+      "tags"     : "pdo, php, di, pdo, php-class, phpdoc, programming",
+      "date"     : "2012-04-09 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "How to use eval() without using eval() in PHP",
+      "url"      : "/2012/03/12/how-to-use-eval-without-using-eval-in-php/",
+      "category" : "",
+      "tags"     : "php, technology",
+      "date"     : "2012-03-12 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Deploying tips for Web Applications",
+      "url"      : "/2012/02/27/deploying-tips-for-web-applications/",
+      "category" : "",
+      "tags"     : "opinion, technology, web-development, webdev, deploy, hg",
+      "date"     : "2012-02-27 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "How to protect from SQL Injection with PHP",
+      "url"      : "/2012/02/06/how-to-protect-from-sql-injection-with-php/",
+      "category" : "",
+      "tags"     : "databases, pdo, php, technology, pdo, postgresql, sqlinjection",
+      "date"     : "2012-02-06 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Checking the performance of PHP exceptions",
+      "url"      : "/2012/01/16/checking-the-performance-of-php-exceptions/",
+      "category" : "",
+      "tags"     : "micro-optimizations, php, technology, benchmark-test, exceptions, language-php, performance",
+      "date"     : "2012-01-16 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Working with clouds. Multi-master file-system replication with CouchDB",
+      "url"      : "/2012/01/02/working-with-clouds-multi-master-file-system-replication-with-couchdb/",
+      "category" : "",
+      "tags"     : "cloud, couchdb, php, technology",
+      "date"     : "2012-01-02 00:00:00 +0100"
+
+    } ,
+  
+    {
+
       "title"    : "Pivot tables in PHP",
       "url"      : "/2010/01/24/pivot-tables-in-php/",
       "category" : "",

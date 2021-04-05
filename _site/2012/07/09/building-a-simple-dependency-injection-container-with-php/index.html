@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Building a simple Dependency Injection Container with PHP</title>
+    <meta name="description"
+          content="If you are looking for a small Dependency Injection Container with PHP maybe you need have look to Pimple.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Building a simple Dependency Injection Container with PHP">
+    <meta name="twitter:description"
+          content="If you are looking for a small Dependency Injection Container with PHP maybe you need have look to Pimple.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Building a simple Dependency Injection Container with PHP">
+    <meta property="og:description"
+          content="If you are looking for a small Dependency Injection Container with PHP maybe you need have look to Pimple.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617650803001959000">
+    <link rel="canonical"
+          href="/2012/07/09/building-a-simple-dependency-injection-container-with-php/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Building a simple Dependency Injection Container with PHP | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Building a simple Dependency Injection Container with PHP" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="If you are looking for a small Dependency Injection Container with PHP maybe you need have look to Pimple." />
+<meta property="og:description" content="If you are looking for a small Dependency Injection Container with PHP maybe you need have look to Pimple." />
+<link rel="canonical" href="/2012/07/09/building-a-simple-dependency-injection-container-with-php/" />
+<meta property="og:url" content="/2012/07/09/building-a-simple-dependency-injection-container-with-php/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-07-09T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Building a simple Dependency Injection Container with PHP" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2012/07/09/building-a-simple-dependency-injection-container-with-php/"},"url":"/2012/07/09/building-a-simple-dependency-injection-container-with-php/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"If you are looking for a small Dependency Injection Container with PHP maybe you need have look to Pimple.","dateModified":"2012-07-09T00:00:00+02:00","datePublished":"2012-07-09T00:00:00+02:00","headline":"Building a simple Dependency Injection Container with PHP","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/posts" title="posts">
+                                        <span>All</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2012-07-09 00:00
+            " class="post-meta__date date">9 Jul 2012</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#dependency-injection">dependency-injection</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#di">di</a></span>
+            
+        </div>
+        <h1 class="post-title">Building a simple Dependency Injection Container with PHP</h1>
+    </header>
+
+    <section class="post">
+        <p>If you are looking for a small Dependency Injection Container with PHP maybe you need have look to <strong>Pimple</strong>.</p>
+
+<blockquote>
+  <p><a href="http://pimple.sensiolabs.org/">Pimple</a> is a small Dependency Injection Container for PHP 5.3 that consists of just one file and one class (about 50 lines of code).</p>
+</blockquote>
+
+<p>Now, keeping with my aim of reinvent the wheel, we will create a simple Dependency Injection Container basically to understand how does it work. Let’s start.</p>
+
+<p>First of all: Do we really need a Dependency Injection Container (DIC)? If you are asking yourself this question, maybe you need to have look to Fabien Poetencier’s <a href="http://fabien.potencier.org/article/12/do-you-need-a-dependency-injection-container">article</a>.</p>
+
+<p>We are going to work with a teorical problem like this:</p>
+
+<p>Imagine we are going to build a service that uses one external REST API. We define your application with three classes:</p>
+
+<ul>
+  <li><strong>App</strong>. The main application.</li>
+  <li><strong>Proxy</strong> The part of the application that speaks with the external API</li>
+  <li><strong>Curl</strong>. One curl wrapper to perform our http connections to the REST API</li>
+</ul>
+
+<p>Our first approach can be:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="kd">class</span> <span class="nc">App</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$proxy</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"App::__construct</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">proxy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Proxy</span><span class="p">();</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">hello</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">proxy</span><span class="o">-&gt;</span><span class="nf">hello</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kd">class</span> <span class="nc">Proxy</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$curl</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Curl</span><span class="p">();</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">hello</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Proxy::__construct</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span><span class="o">-&gt;</span><span class="nf">doGet</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kd">class</span> <span class="nc">Curl</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">doGet</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Curl::doGet</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s2">"Hello"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">App</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">hello</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>If we execute the script:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>php example1.php 
+ 
+App::__construct
+Proxy::__construct
+Curl::doGet
+Hello
+</code></pre></div></div>
+
+<p>It works but we have one problem. Our application is strongly coupled. As we can see App creates a new instance of Proxy within the constructor and Proxy creates a new instance of Curl. That’s a problem especially if we want to use TDD. What happens if we want to mock Curl requests to test the application without using the real external service?. <strong>Dependency injection</strong> can help us here. We can change our application to:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="kd">class</span> <span class="nc">App</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$proxy</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">Proxy</span> <span class="nv">$proxy</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"App::__construct</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">proxy</span> <span class="o">=</span> <span class="nv">$proxy</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">hello</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">proxy</span><span class="o">-&gt;</span><span class="nf">hello</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kd">class</span> <span class="nc">Proxy</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$curl</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">Curl</span> <span class="nv">$curl</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span> <span class="o">=</span> <span class="nv">$curl</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">hello</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Proxy::__construct</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span><span class="o">-&gt;</span><span class="nf">doGet</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kd">class</span> <span class="nc">Curl</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">doGet</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Curl::doGet</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s2">"Hello"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">App</span><span class="p">(</span><span class="k">new</span> <span class="nc">Proxy</span><span class="p">(</span><span class="k">new</span> <span class="nc">Curl</span><span class="p">()));</span>
+<span class="k">echo</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">hello</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>The outcome is exactly the same but now we can easily use mocks and use different configurations depending on the environment. Maybe your testing development does not have access to the real REST server.</p>
+
+<p>Now our application isn’t coupled but as we can see our Dependency Injection becomes a mess. That’s one problem with DI. It’s pretty straightforward to inject simple things but when we have dependencies over a set of classes that’s becomes a difficult task. Because of that we can use <strong>Dependency Injection Containers</strong>.</p>
+
+<p>If we choose <strong>Pimple</strong> as Dependency Injection Container we can refactor our application to:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="kd">class</span> <span class="nc">App</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$proxy</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">Pimple</span> <span class="nv">$container</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"App::__construct</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">proxy</span> <span class="o">=</span> <span class="nv">$container</span><span class="p">[</span><span class="s1">'Proxy'</span><span class="p">];</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">hello</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">proxy</span><span class="o">-&gt;</span><span class="nf">hello</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kd">class</span> <span class="nc">Proxy</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$curl</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">Pimple</span> <span class="nv">$container</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span> <span class="o">=</span> <span class="nv">$container</span><span class="p">[</span><span class="s1">'Curl'</span><span class="p">];</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">hello</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Proxy::__construct</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span><span class="o">-&gt;</span><span class="nf">doGet</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kd">class</span> <span class="nc">Curl</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">doGet</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Curl::doGet</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s2">"Hello"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="k">require_once</span> <span class="s1">'Pimple.php'</span><span class="p">;</span>
+ 
+<span class="nv">$container</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Pimple</span><span class="p">();</span>
+<span class="nv">$container</span><span class="p">[</span><span class="s1">'Curl'</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$c</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="k">new</span> <span class="nc">Curl</span><span class="p">();};</span>
+<span class="nv">$container</span><span class="p">[</span><span class="s1">'Proxy'</span><span class="p">]</span> <span class="o">=</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$c</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="k">new</span> <span class="nc">Proxy</span><span class="p">(</span><span class="nv">$c</span><span class="p">);};</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">App</span><span class="p">(</span><span class="nv">$container</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">hello</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>But what is my problem with Pimple? Basically my problem is that my IDE cannot autocomplete correctly $container is an instance of Pimple not the “real” instance. OK It instantiated on demand the classes but it’s done at runtime and the IDE don’t know about that. We can solve it using an extra PHPDoc to give hints to the IDE but we also can use a different approach. Instead of using Pimple we can use this script:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="kd">class</span> <span class="nc">App</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$proxy</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">Container</span> <span class="nv">$container</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"App::__construct</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">proxy</span> <span class="o">=</span> <span class="nv">$container</span><span class="o">-&gt;</span><span class="nf">getProxy</span><span class="p">();</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">hello</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"App::hello</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">proxy</span><span class="o">-&gt;</span><span class="nf">hello</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kd">class</span> <span class="nc">Proxy</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$curl</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">Container</span> <span class="nv">$container</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Proxy::__construct</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span> <span class="o">=</span> <span class="nv">$container</span><span class="o">-&gt;</span><span class="nf">getCurl</span><span class="p">();</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">hello</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">curl</span><span class="o">-&gt;</span><span class="nf">doGet</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kd">class</span> <span class="nc">Curl</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">doGet</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Curl::doGet</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s2">"Hello"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kd">class</span> <span class="nc">Container</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getProxy</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">Proxy</span><span class="p">(</span><span class="nv">$this</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getCurl</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">Curl</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">App</span><span class="p">(</span><span class="k">new</span> <span class="nc">Container</span><span class="p">());</span>
+<span class="k">echo</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="nf">hello</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>The idea is the same than Pimple but now we have created our custom Dependency Injection Container without extending any library and now our IDE will autocomplete the fucntion names without problems. If we want to share objects instead creating new ones each time we call the factory function of the container we can change a little bit our Container (the same way than Pimple::share) with a simple singleton pattern:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Container</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="nv">$proxy</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">shareProxy</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="kc">NULL</span> <span class="o">===</span> <span class="k">self</span><span class="o">::</span><span class="nv">$proxy</span><span class="p">)</span> <span class="k">self</span><span class="o">::</span><span class="nv">$proxy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Proxy</span><span class="p">(</span><span class="nv">$this</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">self</span><span class="o">::</span><span class="nv">$proxy</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getCurl</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nc">Curl</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>And that’s all. What do you think?</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Building+a+simple+Dependency+Injection+Container+with+PHP%20%2F2012%2F07%2F09%2Fbuilding-a-simple-dependency-injection-container-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2012%2F07%2F09%2Fbuilding-a-simple-dependency-injection-container-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Building+a+simple+Dependency+Injection+Container+with+PHP&url=%2F2012%2F07%2F09%2Fbuilding-a-simple-dependency-injection-container-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2012/07/09/building-a-simple-dependency-injection-container-with-php/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2012/07/09/building-a-simple-dependency-injection-container-with-php'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617650803001959000"></script>
+
+    </div>
+  </body>
+</html>

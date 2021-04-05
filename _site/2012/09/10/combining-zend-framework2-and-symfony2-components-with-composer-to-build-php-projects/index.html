@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Combining Zend Framework2 and Symfony2 components with Composer to build PHP projects</title>
+    <meta name="description"
+          content="Zend Framework 2 is finally stable. I must admit that I’m not a big fan of ZF (or even Symfony2) as a full stack framework. I normally prefer to use micro frameworks, but those two frameworks (ZF2 and SF2) are great as component libraries. Today we are going to build a simple console application (using symfony/console component) to list the database tables (using zendframework/zend-db’s Metadata). Let’s start.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Combining Zend Framework2 and Symfony2 components with Composer to build PHP projects">
+    <meta name="twitter:description"
+          content="Zend Framework 2 is finally stable. I must admit that I’m not a big fan of ZF (or even Symfony2) as a full stack framework. I normally prefer to use micro frameworks, but those two frameworks (ZF2 and SF2) are great as component libraries. Today we are going to build a simple console application (using symfony/console component) to list the database tables (using zendframework/zend-db’s Metadata). Let’s start.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Combining Zend Framework2 and Symfony2 components with Composer to build PHP projects">
+    <meta property="og:description"
+          content="Zend Framework 2 is finally stable. I must admit that I’m not a big fan of ZF (or even Symfony2) as a full stack framework. I normally prefer to use micro frameworks, but those two frameworks (ZF2 and SF2) are great as component libraries. Today we are going to build a simple console application (using symfony/console component) to list the database tables (using zendframework/zend-db’s Metadata). Let’s start.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617650803001959000">
+    <link rel="canonical"
+          href="/2012/09/10/combining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Combining Zend Framework2 and Symfony2 components with Composer to build PHP projects | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Combining Zend Framework2 and Symfony2 components with Composer to build PHP projects" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Zend Framework 2 is finally stable. I must admit that I’m not a big fan of ZF (or even Symfony2) as a full stack framework. I normally prefer to use micro frameworks, but those two frameworks (ZF2 and SF2) are great as component libraries. Today we are going to build a simple console application (using symfony/console component) to list the database tables (using zendframework/zend-db’s Metadata). Let’s start." />
+<meta property="og:description" content="Zend Framework 2 is finally stable. I must admit that I’m not a big fan of ZF (or even Symfony2) as a full stack framework. I normally prefer to use micro frameworks, but those two frameworks (ZF2 and SF2) are great as component libraries. Today we are going to build a simple console application (using symfony/console component) to list the database tables (using zendframework/zend-db’s Metadata). Let’s start." />
+<link rel="canonical" href="/2012/09/10/combining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects/" />
+<meta property="og:url" content="/2012/09/10/combining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-09-10T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Combining Zend Framework2 and Symfony2 components with Composer to build PHP projects" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2012/09/10/combining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects/"},"url":"/2012/09/10/combining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Zend Framework 2 is finally stable. I must admit that I’m not a big fan of ZF (or even Symfony2) as a full stack framework. I normally prefer to use micro frameworks, but those two frameworks (ZF2 and SF2) are great as component libraries. Today we are going to build a simple console application (using symfony/console component) to list the database tables (using zendframework/zend-db’s Metadata). Let’s start.","dateModified":"2012-09-10T00:00:00+02:00","datePublished":"2012-09-10T00:00:00+02:00","headline":"Combining Zend Framework2 and Symfony2 components with Composer to build PHP projects","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/posts" title="posts">
+                                        <span>All</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2012-09-10 00:00
+            " class="post-meta__date date">10 Sep 2012</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#symfony2">symfony2</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#zend-framework">zend-framework</a></span>
+            
+        </div>
+        <h1 class="post-title">Combining Zend Framework2 and Symfony2 components with Composer to build PHP projects</h1>
+    </header>
+
+    <section class="post">
+        <p>Zend Framework 2 is finally <a href="http://framework.zend.com/">stable</a>. I must admit that I’m not a big fan of ZF (or even Symfony2) as a full stack framework. I normally prefer to use micro frameworks, but those two frameworks (ZF2 and SF2) are great as component libraries. Today we are going to build a simple console application (using <a href="http://symfony.com/doc/2.0/cookbook/console/console_command.html">symfony/console</a> component) to list the database tables (using <a href="http://framework.zend.com/manual/2.0/en/index.html#zend-db">zendframework/zend-db</a>’s <a href="http://framework.zend.com/manual/2.0/en/modules/zend.db.metadata.html">Metadata</a>). Let’s start.</p>
+
+<p>First we need our composer.json file. We can find our Symfony components at <a href="http://packagist.org/packages/symfony/console">Packaist</a> (that’s means we don’t need to do anything special in the composer.json file), but Zend Framework2 has its own repository. No problem, it’s properly described in the <a href="http://framework.zend.com/downloads/composer">documentation</a>: \</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"repositories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"composer"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://packages.zendframework.com/"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"symfony/console"</span><span class="p">:</span><span class="s2">"dev-master"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-db"</span><span class="p">:</span><span class="s2">"2.0.*"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"autoload"</span><span class="p">:{</span><span class="w">
+        </span><span class="nl">"psr-0"</span><span class="p">:{</span><span class="w">
+            </span><span class="nl">""</span><span class="p">:</span><span class="s2">"lib/"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Now we run <em>composer install</em> (as always) and we already have our components in vendor <em>folder</em> and the autoloader will properly include the files on demand. So we can work in our console application without any problem.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="kn">namespace</span> <span class="nn">GonzaloDb</span><span class="p">;</span>
+ 
+<span class="c1">// file: lib/GonzaloDb/SchemeCommand.php</span>
+ 
+<span class="kn">use</span> <span class="nc">Symfony\Component\Console\Command\Command</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Console\Input\InputArgument</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Console\Input\InputOption</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Console\Input\InputInterface</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Console\Output\OutputInterface</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Zend\Db\Sql\Sql</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Zend\Db\Adapter\Adapter</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Zend\Db\Metadata\Metadata</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">SchemeCommand</span> <span class="kd">extends</span> <span class="nc">Command</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="n">configure</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$command</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">setName</span><span class="p">(</span><span class="s1">'GonzaloDb:listTables'</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">setDescription</span><span class="p">(</span><span class="s1">'list all tables'</span><span class="p">);</span>
+        <span class="nv">$command</span><span class="o">-&gt;</span><span class="nf">addArgument</span><span class="p">(</span><span class="s1">'host'</span><span class="p">,</span> <span class="nc">InputArgument</span><span class="o">::</span><span class="no">REQUIRED</span><span class="p">,</span> <span class="s1">'DB Host'</span><span class="p">);</span>
+        <span class="nv">$command</span><span class="o">-&gt;</span><span class="nf">addArgument</span><span class="p">(</span><span class="s1">'port'</span><span class="p">,</span> <span class="nc">InputArgument</span><span class="o">::</span><span class="no">REQUIRED</span><span class="p">,</span> <span class="s1">'DB Port'</span><span class="p">);</span>
+        <span class="nv">$command</span><span class="o">-&gt;</span><span class="nf">addArgument</span><span class="p">(</span><span class="s1">'database'</span><span class="p">,</span> <span class="nc">InputArgument</span><span class="o">::</span><span class="no">REQUIRED</span><span class="p">,</span> <span class="s1">'DB name'</span><span class="p">);</span>
+        <span class="nv">$command</span><span class="o">-&gt;</span><span class="nf">addArgument</span><span class="p">(</span><span class="s1">'username'</span><span class="p">,</span> <span class="nc">InputArgument</span><span class="o">::</span><span class="no">REQUIRED</span><span class="p">,</span> <span class="s1">'Username'</span><span class="p">);</span>
+        <span class="nv">$command</span><span class="o">-&gt;</span><span class="nf">addArgument</span><span class="p">(</span><span class="s1">'password'</span><span class="p">,</span> <span class="nc">InputArgument</span><span class="o">::</span><span class="no">REQUIRED</span><span class="p">,</span> <span class="s1">'Password'</span><span class="p">);</span>
+ 
+        <span class="nv">$command</span><span class="o">-&gt;</span><span class="nf">addOption</span><span class="p">(</span><span class="s1">'listFields'</span><span class="p">,</span> <span class="kc">NULL</span><span class="p">,</span> <span class="nc">InputOption</span><span class="o">::</span><span class="no">VALUE_NONE</span><span class="p">,</span> <span class="s1">'list table Fields'</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">protected</span> <span class="k">function</span> <span class="n">execute</span><span class="p">(</span><span class="kt">InputInterface</span> <span class="nv">$input</span><span class="p">,</span> <span class="kt">OutputInterface</span> <span class="nv">$output</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$adapterParameter</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">'driver'</span>   <span class="o">=&gt;</span> <span class="s1">'PDO_Pgsql'</span><span class="p">,</span>
+            <span class="s1">'host'</span>     <span class="o">=&gt;</span> <span class="nv">$input</span><span class="o">-&gt;</span><span class="nf">getArgument</span><span class="p">(</span><span class="s1">'host'</span><span class="p">),</span>
+            <span class="s1">'port'</span>     <span class="o">=&gt;</span> <span class="nv">$input</span><span class="o">-&gt;</span><span class="nf">getArgument</span><span class="p">(</span><span class="s1">'port'</span><span class="p">),</span>
+            <span class="s1">'database'</span> <span class="o">=&gt;</span> <span class="nv">$input</span><span class="o">-&gt;</span><span class="nf">getArgument</span><span class="p">(</span><span class="s1">'database'</span><span class="p">),</span>
+            <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="nv">$input</span><span class="o">-&gt;</span><span class="nf">getArgument</span><span class="p">(</span><span class="s1">'username'</span><span class="p">),</span>
+            <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="nv">$input</span><span class="o">-&gt;</span><span class="nf">getArgument</span><span class="p">(</span><span class="s1">'password'</span><span class="p">)</span>
+        <span class="p">);</span>
+ 
+        <span class="nv">$adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Adapter</span><span class="p">(</span><span class="nv">$adapterParameter</span><span class="p">);</span>
+ 
+        <span class="nv">$metadata</span>   <span class="o">=</span> <span class="k">new</span> <span class="nc">Metadata</span><span class="p">(</span><span class="nv">$adapter</span><span class="p">);</span>
+        <span class="nv">$tableNames</span> <span class="o">=</span> <span class="nv">$metadata</span><span class="o">-&gt;</span><span class="nf">getTableNames</span><span class="p">();</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$tableNames</span> <span class="k">as</span> <span class="nv">$tableName</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$output</span><span class="o">-&gt;</span><span class="nf">writeln</span><span class="p">(</span><span class="s2">"Table: &lt;info&gt;</span><span class="nv">$tableName</span><span class="s2">&lt;/info&gt;"</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$input</span><span class="o">-&gt;</span><span class="nf">getOption</span><span class="p">(</span><span class="s1">'listFields'</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nv">$table</span> <span class="o">=</span> <span class="nv">$metadata</span><span class="o">-&gt;</span><span class="nf">getTable</span><span class="p">(</span><span class="nv">$tableName</span><span class="p">);</span>
+ 
+                <span class="k">foreach</span> <span class="p">(</span><span class="nv">$table</span><span class="o">-&gt;</span><span class="nf">getColumns</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$column</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nv">$output</span><span class="o">-&gt;</span><span class="nf">writeln</span><span class="p">(</span><span class="s1">'  &lt;comment&gt;'</span> <span class="mf">.</span> <span class="nv">$column</span><span class="o">-&gt;</span><span class="nf">getName</span><span class="p">()</span> <span class="mf">.</span> <span class="s1">'&lt;/comment&gt; -&gt; '</span> <span class="mf">.</span> <span class="nv">$column</span><span class="o">-&gt;</span><span class="nf">getDataType</span><span class="p">());</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We also can use unit tests within console applications:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+ 
+<span class="c1">// file: tests/SchemeCommandTest.php</span>
+<span class="cm">/*
+CREATE TABLE users(
+  userid character varying(50),
+  name character varying(100),
+  email character varying(50),
+    CONSTRAINT users_pkey PRIMARY KEY (userid)
+);
+ */</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Console\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Console\Tester\CommandTester</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">GonzaloDb\SchemeCommand</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">SchemeCommandTest</span> <span class="k">extends</span> <span class="err">\</span><span class="n">PHPUnit_Framework_TestCase</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$command</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">setUp</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$application</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">();</span>
+        <span class="nv">$application</span><span class="o">-&gt;</span><span class="nf">add</span><span class="p">(</span><span class="k">new</span> <span class="nc">SchemeCommand</span><span class="p">());</span>
+ 
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">command</span> <span class="o">=</span> <span class="nv">$application</span><span class="o">-&gt;</span><span class="nf">find</span><span class="p">(</span><span class="s1">'GonzaloDb:listTables'</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">testListTables</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$commandTester</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CommandTester</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">command</span><span class="p">);</span>
+        <span class="nv">$commandTester</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">(</span>
+            <span class="k">array</span><span class="p">(</span>
+                 <span class="s1">'command'</span>  <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">command</span><span class="o">-&gt;</span><span class="nf">getName</span><span class="p">(),</span>
+                 <span class="s1">'host'</span>     <span class="o">=&gt;</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span>
+                 <span class="s1">'port'</span>     <span class="o">=&gt;</span> <span class="mi">5432</span><span class="p">,</span>
+                 <span class="s1">'database'</span> <span class="o">=&gt;</span> <span class="s1">'mydb'</span><span class="p">,</span>
+                 <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'username'</span><span class="p">,</span>
+                 <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="s1">'password'</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">assertRegExp</span><span class="p">(</span><span class="s1">'/Table: users/'</span><span class="p">,</span> <span class="nv">$commandTester</span><span class="o">-&gt;</span><span class="nf">getDisplay</span><span class="p">());</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">assertNotRegExp</span><span class="p">(</span><span class="s1">'/name -&gt; character varying/'</span><span class="p">,</span> <span class="nv">$commandTester</span><span class="o">-&gt;</span><span class="nf">getDisplay</span><span class="p">());</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">testListTablesAndFields</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$commandTester</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CommandTester</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">command</span><span class="p">);</span>
+        <span class="nv">$commandTester</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">(</span>
+            <span class="k">array</span><span class="p">(</span>
+                 <span class="s1">'command'</span>      <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">command</span><span class="o">-&gt;</span><span class="nf">getName</span><span class="p">(),</span>
+                 <span class="s1">'host'</span>         <span class="o">=&gt;</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span>
+                 <span class="s1">'port'</span>         <span class="o">=&gt;</span> <span class="mi">5432</span><span class="p">,</span>
+                 <span class="s1">'database'</span>     <span class="o">=&gt;</span> <span class="s1">'mydb'</span><span class="p">,</span>
+                 <span class="s1">'username'</span>     <span class="o">=&gt;</span> <span class="s1">'username'</span><span class="p">,</span>
+                 <span class="s1">'password'</span>     <span class="o">=&gt;</span> <span class="s1">'password'</span><span class="p">,</span>
+                 <span class="s1">'--listFields'</span> <span class="o">=&gt;</span> <span class="kc">TRUE</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">assertRegExp</span><span class="p">(</span><span class="s1">'/Table: users/'</span><span class="p">,</span> <span class="nv">$commandTester</span><span class="o">-&gt;</span><span class="nf">getDisplay</span><span class="p">());</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">assertRegExp</span><span class="p">(</span><span class="s1">'/name -&gt; character varying/'</span><span class="p">,</span> <span class="nv">$commandTester</span><span class="o">-&gt;</span><span class="nf">getDisplay</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>And that’s all. Zend Framework2 increases or toolbox as developers and with the power of Composer we can start building applications very fast. I like it :)</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Combining+Zend+Framework2+and+Symfony2+components+with+Composer+to+build+PHP+projects%20%2F2012%2F09%2F10%2Fcombining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2012%2F09%2F10%2Fcombining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Combining+Zend+Framework2+and+Symfony2+components+with+Composer+to+build+PHP+projects&url=%2F2012%2F09%2F10%2Fcombining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2012/09/10/combining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2012/09/10/combining-zend-framework2-and-symfony2-components-with-composer-to-build-php-projects'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617650803001959000"></script>
+
+    </div>
+  </body>
+</html>

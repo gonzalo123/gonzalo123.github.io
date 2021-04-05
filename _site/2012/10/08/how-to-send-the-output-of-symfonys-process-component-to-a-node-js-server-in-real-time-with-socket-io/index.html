@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>How to send the output of Symfony’s process Component to a node.js server in Real Time with Socket.io</title>
+    <meta name="description"
+          content="Today another crazy idea. Do you know Symfony Process Component? The Process Component is a simple component that executes commands in sub-processes. I like to use it when I need to execute commands in the operating system. The documentation is pretty straightforward. Normally when I want to collect the output of the script (imagine we run those scripts within a crontab) I save the output in a log file and I can check it even in real time with tail -f command.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="How to send the output of Symfony’s process Component to a node.js server in Real Time with Socket.io">
+    <meta name="twitter:description"
+          content="Today another crazy idea. Do you know Symfony Process Component? The Process Component is a simple component that executes commands in sub-processes. I like to use it when I need to execute commands in the operating system. The documentation is pretty straightforward. Normally when I want to collect the output of the script (imagine we run those scripts within a crontab) I save the output in a log file and I can check it even in real time with tail -f command.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="How to send the output of Symfony’s process Component to a node.js server in Real Time with Socket.io">
+    <meta property="og:description"
+          content="Today another crazy idea. Do you know Symfony Process Component? The Process Component is a simple component that executes commands in sub-processes. I like to use it when I need to execute commands in the operating system. The documentation is pretty straightforward. Normally when I want to collect the output of the script (imagine we run those scripts within a crontab) I save the output in a log file and I can check it even in real time with tail -f command.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617650803001959000">
+    <link rel="canonical"
+          href="/2012/10/08/how-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>How to send the output of Symfony’s process Component to a node.js server in Real Time with Socket.io | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="How to send the output of Symfony’s process Component to a node.js server in Real Time with Socket.io" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Today another crazy idea. Do you know Symfony Process Component? The Process Component is a simple component that executes commands in sub-processes. I like to use it when I need to execute commands in the operating system. The documentation is pretty straightforward. Normally when I want to collect the output of the script (imagine we run those scripts within a crontab) I save the output in a log file and I can check it even in real time with tail -f command." />
+<meta property="og:description" content="Today another crazy idea. Do you know Symfony Process Component? The Process Component is a simple component that executes commands in sub-processes. I like to use it when I need to execute commands in the operating system. The documentation is pretty straightforward. Normally when I want to collect the output of the script (imagine we run those scripts within a crontab) I save the output in a log file and I can check it even in real time with tail -f command." />
+<link rel="canonical" href="/2012/10/08/how-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io/" />
+<meta property="og:url" content="/2012/10/08/how-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-10-08T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to send the output of Symfony’s process Component to a node.js server in Real Time with Socket.io" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2012/10/08/how-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io/"},"url":"/2012/10/08/how-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Today another crazy idea. Do you know Symfony Process Component? The Process Component is a simple component that executes commands in sub-processes. I like to use it when I need to execute commands in the operating system. The documentation is pretty straightforward. Normally when I want to collect the output of the script (imagine we run those scripts within a crontab) I save the output in a log file and I can check it even in real time with tail -f command.","dateModified":"2012-10-08T00:00:00+02:00","datePublished":"2012-10-08T00:00:00+02:00","headline":"How to send the output of Symfony’s process Component to a node.js server in Real Time with Socket.io","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/posts" title="posts">
+                                        <span>All</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2012-10-08 00:00
+            " class="post-meta__date date">8 Oct 2012</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#node-js">node-js</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#socket-io">socket-io</a>, <a
+                href="/tags/#technology">technology</a></span>
+            
+        </div>
+        <h1 class="post-title">How to send the output of Symfony’s process Component to a node.js server in Real Time with Socket.io</h1>
+    </header>
+
+    <section class="post">
+        <p>Today another crazy idea. Do you know Symfony Process Component? The <a href="http://symfony.com/doc/2.0/components/process.html">Process</a> Component is a simple component that executes commands in sub-processes. I like to use it when I need to execute commands in the operating system. The documentation is pretty straightforward. Normally when I want to collect the output of the script (imagine we run those scripts within a crontab) I save the output in a log file and I can check it even in real time with <em>tail -f</em> command.</p>
+
+<p>This approach works, but I want to do it in a browser (call me crazy :)). I’ve written a <a href="http://gonzalo123.com/2011/05/09/real-time-monitoring-php-applications-with-websockets-and-node-js/">couple</a> of <a href="http://gonzalo123.com/2011/05/16/web-console-with-node-js/">posts</a> with something similar. What I want to do now? The idea is simple:</p>
+
+<p>First I want to execute custom commands with process. Just follow the process documentation:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Process\Process</span><span class="p">;</span>
+ 
+<span class="nv">$process</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Process</span><span class="p">(</span><span class="s1">'ls -lsa'</span><span class="p">);</span>
+<span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">setTimeout</span><span class="p">(</span><span class="mi">3600</span><span class="p">);</span>
+<span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">isSuccessful</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="err">\</span><span class="nf">RuntimeException</span><span class="p">(</span><span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">getErrorOutput</span><span class="p">());</span>
+<span class="p">}</span>
+ 
+<span class="k">print</span> <span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">getOutput</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Process has one cool feature, we can give feedback in real-time by passing an anonymous function to the run() method:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Process\Process</span><span class="p">;</span>
+ 
+<span class="nv">$process</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Process</span><span class="p">(</span><span class="s1">'ls -lsa'</span><span class="p">);</span>
+<span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$type</span><span class="p">,</span> <span class="nv">$buffer</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s1">'err'</span> <span class="o">===</span> <span class="nv">$type</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s1">'ERR &gt; '</span><span class="mf">.</span><span class="nv">$buffer</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s1">'OUT &gt; '</span><span class="mf">.</span><span class="nv">$buffer</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>The idea now is to use this callback to send a TCP socket to one server with node.js</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">LOCAL_PORT</span> <span class="o">=</span> <span class="mi">5600</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">net</span><span class="dl">'</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">socket</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">data</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="nx">LOCAL_PORT</span><span class="p">);</span>
+ 
+<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">listening</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">TCP server accepting connection on port: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">LOCAL_PORT</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>Now we change our php script to</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="k">include</span> <span class="k">__DIR__</span> <span class="mf">.</span> <span class="s2">"/../vendor/autoload.php"</span><span class="p">;</span>
+ 
+<span class="kn">use</span> <span class="nc">Symfony\Component\Process\Process</span><span class="p">;</span>
+ 
+<span class="k">function</span> <span class="n">runProcess</span><span class="p">(</span><span class="nv">$command</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$address</span> <span class="o">=</span> <span class="s1">'localhost'</span><span class="p">;</span>
+    <span class="nv">$port</span> <span class="o">=</span> <span class="mi">5600</span><span class="p">;</span>
+    <span class="nv">$socket</span> <span class="o">=</span> <span class="nb">socket_create</span><span class="p">(</span><span class="no">AF_INET</span><span class="p">,</span> <span class="no">SOCK_STREAM</span><span class="p">,</span> <span class="no">SOL_TCP</span><span class="p">);</span>
+    <span class="nb">socket_connect</span><span class="p">(</span><span class="nv">$socket</span><span class="p">,</span> <span class="nv">$address</span><span class="p">,</span> <span class="nv">$port</span><span class="p">);</span>
+ 
+    <span class="nv">$process</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Process</span><span class="p">(</span><span class="nv">$command</span><span class="p">);</span>
+    <span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">setTimeout</span><span class="p">(</span><span class="mi">3600</span><span class="p">);</span>
+    <span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">(</span>
+        <span class="k">function</span> <span class="p">(</span><span class="nv">$type</span><span class="p">,</span> <span class="nv">$buffer</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$socket</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="s1">'err'</span> <span class="o">===</span> <span class="nv">$type</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nb">socket_write</span><span class="p">(</span><span class="nv">$socket</span><span class="p">,</span> <span class="s2">"ERROR</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nb">strlen</span><span class="p">(</span><span class="s2">"ERROR</span><span class="se">\n</span><span class="s2">"</span><span class="p">));</span>
+                <span class="nb">socket_write</span><span class="p">(</span><span class="nv">$socket</span><span class="p">,</span> <span class="nv">$buffer</span><span class="p">,</span> <span class="nb">strlen</span><span class="p">(</span><span class="nv">$buffer</span><span class="p">));</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+ 
+                <span class="nb">socket_write</span><span class="p">(</span><span class="nv">$socket</span><span class="p">,</span> <span class="nv">$buffer</span><span class="p">,</span> <span class="nb">strlen</span><span class="p">(</span><span class="nv">$buffer</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">isSuccessful</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="err">\</span><span class="nf">RuntimeException</span><span class="p">(</span><span class="nv">$process</span><span class="o">-&gt;</span><span class="nf">getErrorOutput</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="nb">socket_close</span><span class="p">(</span><span class="nv">$socket</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="nf">runProcess</span><span class="p">(</span><span class="s1">'ls -latr /'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Now with the node.js started, if we run the php script, we will see the output of the process command in the node’s terminal. But we want to show it in a browser. What can we do? Of course, <a href="http://socket.io/">socket.io</a>. We change the node.js command to:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">LOCAL_PORT</span> <span class="o">=</span> <span class="mi">5600</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">SOKET_IO_PORT</span> <span class="o">=</span> <span class="mi">8000</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">ioClients</span> <span class="o">=</span> <span class="p">[];</span>
+ 
+<span class="kd">var</span> <span class="nx">io</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">socket.io</span><span class="dl">'</span><span class="p">).</span><span class="nx">listen</span><span class="p">(</span><span class="nx">SOKET_IO_PORT</span><span class="p">);</span>
+ 
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">net</span><span class="dl">'</span><span class="p">).</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">socket</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">data</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ioClients</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">ioClient</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">ioClient</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">log</span><span class="dl">'</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">trim</span><span class="p">());</span>
+        <span class="p">});</span>
+    <span class="p">});</span>
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="nx">LOCAL_PORT</span><span class="p">);</span>
+ 
+<span class="nx">io</span><span class="p">.</span><span class="nx">sockets</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">connection</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">socketIo</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ioClients</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">socketIo</span><span class="p">);</span>
+<span class="p">});</span>
+ 
+<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">listening</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">TCP server accepting connection on port: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">LOCAL_PORT</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>and finally we create a simple web client:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://localhost:8000/socket.io/socket.io.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+    <span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="dl">'</span><span class="s1">http://localhost:8000</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">log</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>Now if we start one browser we will see the output of our command line process within the console tab of the browser.</p>
+
+<p><img src="/assets/images/webconsole23.png" alt="" /></p>
+
+<p>If you want something like <a href="https://github.com/gonzalo123/webConsole">webConsole</a>, I also have created the example, With a Web UI enabling to send custom commands. You can see it in <a href="https://github.com/gonzalo123/webConsole2">github</a>.</p>
+
+<p>Obviously that’s only one experiment with a lot of security issues that we need to take into account if we want to use it in production. What do you think?</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=How+to+send+the+output+of+Symfony%E2%80%99s+process+Component+to+a+node.js+server+in+Real+Time+with+Socket.io%20%2F2012%2F10%2F08%2Fhow-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2012%2F10%2F08%2Fhow-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=How+to+send+the+output+of+Symfony%E2%80%99s+process+Component+to+a+node.js+server+in+Real+Time+with+Socket.io&url=%2F2012%2F10%2F08%2Fhow-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2012/10/08/how-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2012/10/08/how-to-send-the-output-of-symfonys-process-component-to-a-node-js-server-in-real-time-with-socket-io'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2018/10/08/working-with-sapui5-locally-part-3-adding-more-services-in-docker/">Working with SAPUI5 locally (part 3). Adding more services in Docker <span class="label label-default">php</span>  <span class="label label-default">socket-io</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/12/12/playing-with-arduino-iot-crossbar-and-websockets/">Playing with arduino, IoT, crossbar and websockets <span class="label label-default">node-js</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617650803001959000"></script>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Inject dependencies via PhpDoc</title>
+    <meta name="description"
+          content="Last month I attended to Codemotion conference. I was listening to a talk about Java and I saw the “@inject” decorator. I must admit I switched off my mind from the conference and I started to take notes in my notebook. The idea is to implement something similar in PHP. It’s a pity we don’t have real decorators in PHP. I really miss them. We need to use PhpDoc. It’s not the same than real decorators in other programming languages. That’s my prototype. Let’s go.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Inject dependencies via PhpDoc">
+    <meta name="twitter:description"
+          content="Last month I attended to Codemotion conference. I was listening to a talk about Java and I saw the “@inject” decorator. I must admit I switched off my mind from the conference and I started to take notes in my notebook. The idea is to implement something similar in PHP. It’s a pity we don’t have real decorators in PHP. I really miss them. We need to use PhpDoc. It’s not the same than real decorators in other programming languages. That’s my prototype. Let’s go.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Inject dependencies via PhpDoc">
+    <meta property="og:description"
+          content="Last month I attended to Codemotion conference. I was listening to a talk about Java and I saw the “@inject” decorator. I must admit I switched off my mind from the conference and I started to take notes in my notebook. The idea is to implement something similar in PHP. It’s a pity we don’t have real decorators in PHP. I really miss them. We need to use PhpDoc. It’s not the same than real decorators in other programming languages. That’s my prototype. Let’s go.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1617650803001959000">
+    <link rel="canonical"
+          href="/2012/04/09/inject-dependencies-via-phpdoc/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Inject dependencies via PhpDoc | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Inject dependencies via PhpDoc" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Last month I attended to Codemotion conference. I was listening to a talk about Java and I saw the “@inject” decorator. I must admit I switched off my mind from the conference and I started to take notes in my notebook. The idea is to implement something similar in PHP. It’s a pity we don’t have real decorators in PHP. I really miss them. We need to use PhpDoc. It’s not the same than real decorators in other programming languages. That’s my prototype. Let’s go." />
+<meta property="og:description" content="Last month I attended to Codemotion conference. I was listening to a talk about Java and I saw the “@inject” decorator. I must admit I switched off my mind from the conference and I started to take notes in my notebook. The idea is to implement something similar in PHP. It’s a pity we don’t have real decorators in PHP. I really miss them. We need to use PhpDoc. It’s not the same than real decorators in other programming languages. That’s my prototype. Let’s go." />
+<link rel="canonical" href="/2012/04/09/inject-dependencies-via-phpdoc/" />
+<meta property="og:url" content="/2012/04/09/inject-dependencies-via-phpdoc/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-04-09T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Inject dependencies via PhpDoc" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2012/04/09/inject-dependencies-via-phpdoc/"},"url":"/2012/04/09/inject-dependencies-via-phpdoc/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Last month I attended to Codemotion conference. I was listening to a talk about Java and I saw the “@inject” decorator. I must admit I switched off my mind from the conference and I started to take notes in my notebook. The idea is to implement something similar in PHP. It’s a pity we don’t have real decorators in PHP. I really miss them. We need to use PhpDoc. It’s not the same than real decorators in other programming languages. That’s my prototype. Let’s go.","dateModified":"2012-04-09T00:00:00+02:00","datePublished":"2012-04-09T00:00:00+02:00","headline":"Inject dependencies via PhpDoc","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <nav class="cover-navigation">
+                            <ul class="navigation">
+                                <li class="navigation__item">
+                                    <a href="/about" title="about">
+                                        <span>About Me</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/posts" title="posts">
+                                        <span>All</span>
+                                    </a>
+                                </li>
+                                <li class="navigation__item">
+                                    <a href="/search" title="search">
+                                        <span>Search</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2012-04-09 00:00
+            " class="post-meta__date date">9 Apr 2012</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#pdo">pdo</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#di">di</a>, <a
+                href="/tags/#pdo">pdo</a>, <a
+                href="/tags/#php-class">php-class</a>, <a
+                href="/tags/#phpdoc">phpdoc</a>, <a
+                href="/tags/#programming">programming</a></span>
+            
+        </div>
+        <h1 class="post-title">Inject dependencies via PhpDoc</h1>
+    </header>
+
+    <section class="post">
+        <p>Last month I attended to <a href="http://www.codemotion.es/">Codemotion</a> conference. I was listening to a talk about Java and I saw the “@inject” decorator. I must admit I switched off my mind from the conference and I started to take notes in my notebook. The idea is to implement something similar in PHP. It’s a pity we don’t have real decorators in PHP. I really <a href="http://gonzalo123.wordpress.com/2009/12/09/things-i-miss-in-php-function-decorators/" title="Things I miss in PHP: Function decorators">miss</a> them. We need to use <a href="http://gonzalo123.wordpress.com/2011/02/01/function-decorators-in-php-with-phpdoc-and-annotations/" title="Function decorators in PHP with PHPDoc and Annotations">PhpDoc</a>. It’s not the same than real decorators in other programming languages. That’s my prototype. Let’s go.</p>
+
+<p>Imagine this simple class:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">User</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$db</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getInfo</span><span class="p">(</span><span class="nv">$uid</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">"select * from users where uid=:UID"</span><span class="p">;</span>
+        <span class="nv">$stmp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">db</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+        <span class="nv">$stmp</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'UID'</span> <span class="o">=&gt;</span> <span class="nv">$uid</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nv">$stmp</span><span class="o">-&gt;</span><span class="nf">fetchAll</span><span class="p">();</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getDb</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">db</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>It doesn’t work. Private property $db must be an instance of PDO object. We can solve it with dependency injection:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">User</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$db</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="kt">PDO</span> <span class="nv">$db</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">db</span> <span class="o">=</span> <span class="nv">$db</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getInfo</span><span class="p">(</span><span class="nv">$uid</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">"select * from users where uid=:UID"</span><span class="p">;</span>
+        <span class="nv">$stmp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">db</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+        <span class="nv">$stmp</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'UID'</span> <span class="o">=&gt;</span> <span class="nv">$uid</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nv">$stmp</span><span class="o">-&gt;</span><span class="nf">fetchAll</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now it works but we are going to create a simple PDO Wrapper to obtain the PDO connection.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">DbConf</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="no">DB1</span> <span class="o">=</span> <span class="s1">'db1'</span><span class="p">;</span>
+ 
+    <span class="k">private</span> <span class="k">static</span> <span class="nv">$conf</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="k">self</span><span class="o">::</span><span class="no">DB1</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">'dsn'</span>  <span class="o">=&gt;</span> <span class="s1">'pgsql:dbname=db;host=localhost'</span><span class="p">,</span>
+            <span class="s1">'user'</span> <span class="o">=&gt;</span> <span class="s1">'gonzalo'</span><span class="p">,</span>
+            <span class="s1">'pass'</span> <span class="o">=&gt;</span> <span class="s1">'password'</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">);</span>
+ 
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="n">getConf</span><span class="p">(</span><span class="nv">$key</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">self</span><span class="o">::</span><span class="nv">$conf</span><span class="p">[</span><span class="nv">$key</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kd">class</span> <span class="nc">Db</span> <span class="kd">extends</span> <span class="nc">PDO</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="nv">$dbInstances</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+ 
+    <span class="cd">/**
+     * @static
+     * @param string $key
+     * @return PDO
+     */</span>
+    <span class="k">static</span> <span class="k">function</span> <span class="n">getDb</span><span class="p">(</span><span class="nv">$key</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">isset</span><span class="p">(</span><span class="nv">$dbInstances</span><span class="p">[</span><span class="nv">$key</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="nv">$dbConf</span> <span class="o">=</span> <span class="nc">DbConf</span><span class="o">::</span><span class="nf">getConf</span><span class="p">(</span><span class="nv">$key</span><span class="p">);</span>
+            <span class="nv">$dbInstances</span><span class="p">[</span><span class="nv">$key</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PDO</span><span class="p">(</span><span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'dsn'</span><span class="p">],</span> <span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'user'</span><span class="p">],</span> <span class="nv">$dbConf</span><span class="p">[</span><span class="s1">'pass'</span><span class="p">]);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nv">$dbInstances</span><span class="p">[</span><span class="nv">$key</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>I like to use this kind of classes because I normally work with different databases and I need to use different connection depending on the SQL. It helps me to mock the database connection within the different environments (development, production, QA). Now We can use our simple class:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">User</span><span class="p">(</span><span class="nc">Db</span><span class="o">::</span><span class="nf">getDb</span><span class="p">(</span><span class="nc">DbConf</span><span class="o">::</span><span class="no">DB1</span><span class="p">));</span>
+<span class="nb">print_r</span><span class="p">(</span><span class="nv">$user</span><span class="o">-&gt;</span><span class="nf">getInfo</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>The idea is to change the class into something like this:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">User</span> <span class="kd">extends</span> <span class="nc">DocInject</span>
+<span class="p">{</span>
+    <span class="cd">/**
+     * @inject Db::getDb(DbConf::DB1)
+     * @var PDO
+     */</span>
+    <span class="k">private</span> <span class="nv">$db</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getInfo</span><span class="p">(</span><span class="nv">$uid</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">"select * from users where uid=:UID"</span><span class="p">;</span>
+        <span class="nv">$stmp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">db</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+        <span class="nv">$stmp</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'UID'</span> <span class="o">=&gt;</span> <span class="nv">$uid</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nv">$stmp</span><span class="o">-&gt;</span><span class="nf">fetchAll</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now we are going to inject the PDO connection to $db private property in the constructor:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">DocInject</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$reflection</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ReflectionClass</span><span class="p">(</span><span class="nv">$this</span><span class="p">);</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$reflection</span><span class="o">-&gt;</span><span class="nf">getProperties</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$property</span><span class="p">)</span> <span class="p">{</span>
+            <span class="cd">/** @var ReflectionProperty $property */</span>
+            <span class="nv">$docComment</span> <span class="o">=</span> <span class="nv">$property</span><span class="o">-&gt;</span><span class="nf">getDocComment</span><span class="p">();</span>
+            <span class="nv">$docComment</span> <span class="o">=</span> <span class="nb">preg_replace</span><span class="p">(</span><span class="s1">'#[ \t]*(?:\/\*\*|\*\/|\*)?[ ]{0,1}(.*)?#'</span><span class="p">,</span> <span class="s1">'$1'</span><span class="p">,</span> <span class="nv">$docComment</span><span class="p">);</span>
+            <span class="nv">$docComment</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nb">str_replace</span><span class="p">(</span><span class="s1">'*/'</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nv">$docComment</span><span class="p">));</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="nb">explode</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$docComment</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$item</span><span class="p">,</span> <span class="s1">'@inject'</span><span class="p">)</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nv">$inject</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nb">str_replace</span><span class="p">(</span><span class="s1">'@inject'</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nv">$item</span><span class="p">));</span>
+                    <span class="nv">$value</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+                    <span class="k">eval</span><span class="p">(</span><span class="s2">"</span><span class="se">\$</span><span class="s2">value = </span><span class="si">{</span><span class="nv">$inject</span><span class="si">}</span><span class="s2">;"</span><span class="p">);</span> <span class="c1">// yes, eval. uggly, isnt't?</span>
+                    <span class="nv">$property</span><span class="o">-&gt;</span><span class="nf">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+                    <span class="nv">$property</span><span class="o">-&gt;</span><span class="nf">setValue</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>If you have read “Clean Code” (if not, you must do it) you noticed that uncle Bob doesn’t like this class. The method is too long, so we are going to refactor a little bit.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">DocInject</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$reflection</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ReflectionClass</span><span class="p">(</span><span class="nv">$this</span><span class="p">);</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$reflection</span><span class="o">-&gt;</span><span class="nf">getProperties</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$property</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">processProperty</span><span class="p">(</span><span class="nv">$property</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">processProperty</span><span class="p">(</span><span class="kt">ReflectionProperty</span> <span class="nv">$property</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$docComment</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">cleanPhpDoc</span><span class="p">(</span><span class="nv">$property</span><span class="o">-&gt;</span><span class="nf">getDocComment</span><span class="p">());</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nb">explode</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$docComment</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">existsInjectDecorator</span><span class="p">(</span><span class="nv">$item</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">performDependencyInjection</span><span class="p">(</span><span class="nv">$property</span><span class="p">,</span> <span class="nv">$item</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">cleanPhpDoc</span><span class="p">(</span><span class="nv">$docComment</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$docComment</span> <span class="o">=</span> <span class="nb">preg_replace</span><span class="p">(</span><span class="s1">'#[ \t]*(?:\/\*\*|\*\/|\*)?[ ]{0,1}(.*)?#'</span><span class="p">,</span> <span class="s1">'$1'</span><span class="p">,</span> <span class="nv">$docComment</span><span class="p">);</span>
+        <span class="nv">$docComment</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nb">str_replace</span><span class="p">(</span><span class="s1">'*/'</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nv">$docComment</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nv">$docComment</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">existsInjectDecorator</span><span class="p">(</span><span class="nv">$item</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">strpos</span><span class="p">(</span><span class="nv">$item</span><span class="p">,</span> <span class="s1">'@inject'</span><span class="p">)</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">performDependencyInjection</span><span class="p">(</span><span class="kt">ReflectionProperty</span> <span class="nv">$property</span><span class="p">,</span> <span class="nv">$item</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$injectString</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">removeDecoratorFromPhpDoc</span><span class="p">(</span><span class="nv">$item</span><span class="p">);</span>
+        <span class="nv">$value</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">compileInjectString</span><span class="p">(</span><span class="nv">$injectString</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">injectValueIntoProperty</span><span class="p">(</span><span class="nv">$property</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">removeDecoratorFromPhpDoc</span><span class="p">(</span><span class="nv">$item</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">trim</span><span class="p">(</span><span class="nb">str_replace</span><span class="p">(</span><span class="s1">'@inject'</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nv">$item</span><span class="p">));</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">compileInjectString</span><span class="p">(</span><span class="nv">$injectString</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$value</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="k">eval</span><span class="p">(</span><span class="s2">"</span><span class="se">\$</span><span class="s2">value = </span><span class="si">{</span><span class="nv">$injectString</span><span class="si">}</span><span class="s2">;"</span><span class="p">);</span> <span class="c1">// yes, eval. uggly, isnt't?</span>
+        <span class="k">return</span> <span class="nv">$value</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">injectValueIntoProperty</span><span class="p">(</span><span class="kt">ReflectionProperty</span> <span class="nv">$property</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$property</span><span class="o">-&gt;</span><span class="nf">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+        <span class="nv">$property</span><span class="o">-&gt;</span><span class="nf">setValue</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>So now we don’t need to pass the new instance of PDO connection in the constructor with DI:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">User</span><span class="p">();</span>
+<span class="nb">print_r</span><span class="p">(</span><span class="nv">$user</span><span class="o">-&gt;</span><span class="nf">getInfo</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>It works but there’s something that I don’t like. We need to extend our User class with DocInject. I like plain classes. Because of that we are going to use the new feature of PHP5.4: <a href="http://php.net/manual/en/language.oop5.traits.php">traits</a></p>
+
+<p>Instead of extend our class with DocInject we are going to create:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">trait</span> <span class="nc">DocInject</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">parseDocInject</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$reflection</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ReflectionClass</span><span class="p">(</span><span class="nv">$this</span><span class="p">);</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$reflection</span><span class="o">-&gt;</span><span class="nf">getProperties</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$property</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">processProperty</span><span class="p">(</span><span class="nv">$property</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">processProperty</span><span class="p">(</span><span class="kt">ReflectionProperty</span> <span class="nv">$property</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$docComment</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">cleanPhpDoc</span><span class="p">(</span><span class="nv">$property</span><span class="o">-&gt;</span><span class="nf">getDocComment</span><span class="p">());</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nb">explode</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$docComment</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">existsInjectDecorator</span><span class="p">(</span><span class="nv">$item</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">performDependencyInjection</span><span class="p">(</span><span class="nv">$property</span><span class="p">,</span> <span class="nv">$item</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">cleanPhpDoc</span><span class="p">(</span><span class="nv">$docComment</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$docComment</span> <span class="o">=</span> <span class="nb">preg_replace</span><span class="p">(</span><span class="s1">'#[ \t]*(?:\/\*\*|\*\/|\*)?[ ]{0,1}(.*)?#'</span><span class="p">,</span> <span class="s1">'$1'</span><span class="p">,</span> <span class="nv">$docComment</span><span class="p">);</span>
+        <span class="nv">$docComment</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nb">str_replace</span><span class="p">(</span><span class="s1">'*/'</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nv">$docComment</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nv">$docComment</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">existsInjectDecorator</span><span class="p">(</span><span class="nv">$item</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">strpos</span><span class="p">(</span><span class="nv">$item</span><span class="p">,</span> <span class="s1">'@inject'</span><span class="p">)</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">performDependencyInjection</span><span class="p">(</span><span class="kt">ReflectionProperty</span> <span class="nv">$property</span><span class="p">,</span> <span class="nv">$item</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$injectString</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">removeDecoratorFromPhpDoc</span><span class="p">(</span><span class="nv">$item</span><span class="p">);</span>
+        <span class="nv">$value</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">compileInjectString</span><span class="p">(</span><span class="nv">$injectString</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">injectValueIntoProperty</span><span class="p">(</span><span class="nv">$property</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">removeDecoratorFromPhpDoc</span><span class="p">(</span><span class="nv">$item</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">trim</span><span class="p">(</span><span class="nb">str_replace</span><span class="p">(</span><span class="s1">'@inject'</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nv">$item</span><span class="p">));</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">compileInjectString</span><span class="p">(</span><span class="nv">$injectString</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$value</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="k">eval</span><span class="p">(</span><span class="s2">"</span><span class="se">\$</span><span class="s2">value = </span><span class="si">{</span><span class="nv">$injectString</span><span class="si">}</span><span class="s2">;"</span><span class="p">);</span> <span class="c1">// yes, eval. uggly, isnt't?</span>
+        <span class="k">return</span> <span class="nv">$value</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">injectValueIntoProperty</span><span class="p">(</span><span class="kt">ReflectionProperty</span> <span class="nv">$property</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$property</span><span class="o">-&gt;</span><span class="nf">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+        <span class="nv">$property</span><span class="o">-&gt;</span><span class="nf">setValue</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>And now:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">User</span>
+<span class="p">{</span>
+    <span class="kn">use</span> <span class="nc">DocInject</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">parseDocInject</span><span class="p">();</span>
+    <span class="p">}</span>
+ 
+    <span class="cd">/**
+     * @inject Db::getDb(DbConf::DB1)
+     * @var PDO
+     */</span>
+    <span class="k">private</span> <span class="nv">$db</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getInfo</span><span class="p">(</span><span class="nv">$uid</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">"select * from users where uid=:UID"</span><span class="p">;</span>
+        <span class="nv">$stmp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">db</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+        <span class="nv">$stmp</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'UID'</span> <span class="o">=&gt;</span> <span class="nv">$uid</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nv">$stmp</span><span class="o">-&gt;</span><span class="nf">fetchAll</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This implementation has a little problem. If our class User needs a constructor we have a problem. As far as I know we cannot use parent::__construct() with a trait. We can solve this problem changing the code a little bit:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">User</span>
+<span class="p">{</span>
+    <span class="kn">use</span> <span class="nc">DocInject</span> <span class="p">{</span><span class="n">parseDocInject</span> <span class="k">as</span> <span class="n">__construct</span><span class="p">;}</span>
+ 
+    <span class="cd">/**
+     * @inject Db::getDb(DbConf::DB1)
+     * @var PDO
+     */</span>
+    <span class="k">private</span> <span class="nv">$db</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getInfo</span><span class="p">(</span><span class="nv">$uid</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">"select * from users where uid=:UID"</span><span class="p">;</span>
+        <span class="nv">$stmp</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">db</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+        <span class="nv">$stmp</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'UID'</span> <span class="o">=&gt;</span> <span class="nv">$uid</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nv">$stmp</span><span class="o">-&gt;</span><span class="nf">fetchAll</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>A simple unit test</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">function</span> <span class="n">testSimple</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">User</span><span class="p">();</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">assertTrue</span><span class="p">(</span><span class="nb">count</span><span class="p">(</span><span class="nv">$user</span><span class="o">-&gt;</span><span class="nf">getInfo</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>If we use different DbConf file for each environment we can easily use one database or another without changing any line of code.</p>
+
+<p>And that’s all. What do you think?</p>
+
+<p>(Files available as gist <a href="https://gist.github.com/2343376">here</a> and <a href="https://gist.github.com/2343390">here</a>)</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Inject+dependencies+via+PhpDoc%20%2F2012%2F04%2F09%2Finject-dependencies-via-phpdoc%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2012%2F04%2F09%2Finject-dependencies-via-phpdoc%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Inject+dependencies+via+PhpDoc&url=%2F2012%2F04%2F09%2Finject-dependencies-via-phpdoc%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2012/04/09/inject-dependencies-via-phpdoc/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2012/04/09/inject-dependencies-via-phpdoc'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">pdo</span>  <span class="label label-default">php</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2014/04/07/yet-another-database-abstraction-layer-with-php-and-dbal/">Yet another Database Abstraction layer with PHP and DBAL <span class="label label-default">pdo</span>  <span class="label label-default">php</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2013/01/14/handling-several-dbal-database-connections-in-symfony2-through-the-dependency-injection-container-with-php/">Handling several DBAL Database connections in Symfony2 through the Dependency Injection Container with PHP <span class="label label-default">pdo</span>  <span class="label label-default">php</span>  <span class="label label-default">pdo</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2013/01/07/handling-several-pdo-database-connections-in-symfony2-through-the-dependency-injection-container-with-php/">Handling several PDO Database connections in Symfony2 through the Dependency Injection Container with PHP <span class="label label-default">pdo</span>  <span class="label label-default">php</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1617650803001959000"></script>
+
+    </div>
+  </body>
+</html>
