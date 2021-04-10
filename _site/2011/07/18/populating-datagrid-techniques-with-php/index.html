@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Populating datagrid techniques with PHP</title>
+    <meta name="description"
+          content="Today I want to speak about populating datagrid techniques with PHP. At least in my daily work datagrids and tabular data are very common, because of that I want to show two different techniques when populating datagrids with data from our database. Maybe it’s obvious, but I want to show the differences. Let’s start.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Populating datagrid techniques with PHP">
+    <meta name="twitter:description"
+          content="Today I want to speak about populating datagrid techniques with PHP. At least in my daily work datagrids and tabular data are very common, because of that I want to show two different techniques when populating datagrids with data from our database. Maybe it’s obvious, but I want to show the differences. Let’s start.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Populating datagrid techniques with PHP">
+    <meta property="og:description"
+          content="Today I want to speak about populating datagrid techniques with PHP. At least in my daily work datagrids and tabular data are very common, because of that I want to show two different techniques when populating datagrids with data from our database. Maybe it’s obvious, but I want to show the differences. Let’s start.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618050263464052000">
+    <link rel="canonical"
+          href="/2011/07/18/populating-datagrid-techniques-with-php/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Populating datagrid techniques with PHP | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Populating datagrid techniques with PHP" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Today I want to speak about populating datagrid techniques with PHP. At least in my daily work datagrids and tabular data are very common, because of that I want to show two different techniques when populating datagrids with data from our database. Maybe it’s obvious, but I want to show the differences. Let’s start." />
+<meta property="og:description" content="Today I want to speak about populating datagrid techniques with PHP. At least in my daily work datagrids and tabular data are very common, because of that I want to show two different techniques when populating datagrids with data from our database. Maybe it’s obvious, but I want to show the differences. Let’s start." />
+<link rel="canonical" href="/2011/07/18/populating-datagrid-techniques-with-php/" />
+<meta property="og:url" content="/2011/07/18/populating-datagrid-techniques-with-php/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-07-18T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Populating datagrid techniques with PHP" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2011/07/18/populating-datagrid-techniques-with-php/"},"url":"/2011/07/18/populating-datagrid-techniques-with-php/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Today I want to speak about populating datagrid techniques with PHP. At least in my daily work datagrids and tabular data are very common, because of that I want to show two different techniques when populating datagrids with data from our database. Maybe it’s obvious, but I want to show the differences. Let’s start.","dateModified":"2011-07-18T00:00:00+02:00","datePublished":"2011-07-18T00:00:00+02:00","headline":"Populating datagrid techniques with PHP","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+        <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+
+
+</div>
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+cc
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2011-07-18 00:00
+            " class="post-meta__date date">18 Jul 2011</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#jquery">jquery</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#tips">tips</a>, <a
+                href="/tags/#web-development">web-development</a>, <a
+                href="/tags/#webdev">webdev</a></span>
+            
+        </div>
+        <h1 class="post-title">Populating datagrid techniques with PHP</h1>
+    </header>
+
+    <section class="post">
+        <p>Today I want to speak about populating datagrid techniques with PHP. At least in my daily work datagrids and tabular data are very common, because of that I want to show two different techniques when populating datagrids with data from our database. Maybe it’s obvious, but I want to show the differences. Let’s start.</p>
+
+<p>Imagine we need to fetch data from our database and show it in a datagrid. Let’s do the traditional way. I haven’t use any framework for this example. Just old school spaghetti code.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$dbh</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PDO</span><span class="p">(</span><span class="s1">'pgsql:dbname=mydb;host=localhost'</span><span class="p">,</span> <span class="s1">'gonzalo'</span><span class="p">,</span> <span class="s1">'password'</span><span class="p">);</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">setAttribute</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">ATTR_ERRMODE</span><span class="p">,</span> <span class="no">PDO</span><span class="o">::</span><span class="no">ERRMODE_EXCEPTION</span><span class="p">);</span>
+ 
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s1">'SELECT * FROM test.tbl1 limit 10'</span><span class="p">);</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">setFetchMode</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">FETCH_ASSOC</span><span class="p">);</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">();</span>
+ 
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">fetchAll</span><span class="p">();</span>
+ 
+<span class="nv">$table</span> <span class="o">=</span> <span class="s2">""</span><span class="p">;</span>
+<span class="nv">$table</span><span class="mf">.</span><span class="o">=</span> <span class="s2">"&lt;table&gt;"</span><span class="p">;</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$data</span> <span class="k">as</span> <span class="nv">$ow</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$table</span><span class="mf">.</span><span class="o">=</span> <span class="s2">"&lt;tr&gt;"</span><span class="p">;</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$ow</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$table</span><span class="mf">.</span><span class="o">=</span> <span class="s2">"&lt;td&gt;</span><span class="si">{</span><span class="nv">$item</span><span class="si">}</span><span class="s2">&lt;/td&gt;"</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="nv">$table</span><span class="mf">.</span><span class="o">=</span> <span class="s2">"&lt;/tr&gt;"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nv">$table</span><span class="mf">.</span><span class="o">=</span> <span class="s2">"&lt;/table&gt;"</span><span class="p">;</span>
+<span class="cp">?&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;title&gt;</span>inline grid<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;h1&gt;</span>inline grid<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$table</span><span class="p">;</span> <span class="cp">?&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">" https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>And that’s all. The code works, and we’ve got or ugly datagrid with the data from our DB. Where’s the problem? If our “SELECT” statement is fast enougth and our connection to the database is good too, the page load will be good, indeed. But what happens if or query is slow (or we even have more than one)? The whole page load will be penalized due to our slow query. The user won’t see anything until our server finish with all the work. That means bad user experience. The alternative is load the page first (without populated datagrid, of course) and when it’s ready, we load with ajax the data from the server (JSON) and we populate the datagrid with javaScript.</p>
+
+<p>Page without the populated datagrid:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;title&gt;</span>grid ajax<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;h1&gt;</span>grid ajax<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">'grid'</span><span class="nt">&gt;&lt;/table&gt;</span>
+ 
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">" https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+        <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="dl">"</span><span class="s2">json.php</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">){</span>
+                        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">json</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#grid</span><span class="dl">'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">&lt;tr&gt;&lt;td&gt;</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">json</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">id</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;/td&gt;&lt;td&gt;</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">json</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">field1</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;</span><span class="dl">"</span><span class="p">)</span>
+                        <span class="p">}</span>
+                    <span class="p">});</span>
+        <span class="p">});</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>JSON data fron the server:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$dbh</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PDO</span><span class="p">(</span><span class="s1">'pgsql:dbname=mydb;host=localhost'</span><span class="p">,</span> <span class="s1">'gonzalo'</span><span class="p">,</span> <span class="s1">'password'</span><span class="p">);</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">setAttribute</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">ATTR_ERRMODE</span><span class="p">,</span> <span class="no">PDO</span><span class="o">::</span><span class="no">ERRMODE_EXCEPTION</span><span class="p">);</span>
+ 
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s1">'SELECT * FROM test.tbl1 limit 10'</span><span class="p">);</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">setFetchMode</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">FETCH_ASSOC</span><span class="p">);</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">();</span>
+ 
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">fetchAll</span><span class="p">();</span>
+ 
+<span class="nb">header</span><span class="p">(</span><span class="s1">'Cache-Control: no-cache, must-revalidate'</span><span class="p">);</span>
+<span class="nb">header</span><span class="p">(</span><span class="s1">'Expires: Mon, 26 Jul 1997 05:00:00 GMT'</span><span class="p">);</span>
+<span class="nb">header</span><span class="p">(</span><span class="s1">'Content-type: application/json'</span><span class="p">);</span>
+ 
+<span class="k">echo</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The outcome of this second technique is the same than the first one, but now user will see the page faster than the first technique and data will load later. Probably the total time to finish all the work is better in the classical approach, but the UX will be better with the second one. Here you can see the times taken from Chorme’s network window:</p>
+
+<p><a href="/assets/images/inline.png" title="inline"></a></p>
+
+<p><a href="/assets/images/ajax3.png" title="ajax3"></a></p>
+
+<p>Even though the total time is better in the inline grid example: <em>156ms vs 248ms, 1 http request vs 3 HTTP request</em>. The user will see the page (without data) faster with the grid data example.</p>
+
+<p>What’s better. As always it depends on our needs. We need to balance and choose the one that fits with your requirements.</p>
+
+<p>Probably the JavaScript code that I use to populate the datagrid in the second technique could be written in a more efficient way (there’s also plugins to do it). I only want to show the indirect way to create HTML to improve the user experience of our applications.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Populating+datagrid+techniques+with+PHP%20%2F2011%2F07%2F18%2Fpopulating-datagrid-techniques-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2011%2F07%2F18%2Fpopulating-datagrid-techniques-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Populating+datagrid+techniques+with+PHP&url=%2F2011%2F07%2F18%2Fpopulating-datagrid-techniques-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2011/07/18/populating-datagrid-techniques-with-php/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2011/07/18/populating-datagrid-techniques-with-php'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618050263464052000"></script>
+
+    </div>
+  </body>
+</html>

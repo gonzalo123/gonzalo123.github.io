@@ -56,12 +56,12 @@
     <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="/css/main.css?1617650803001959000">
+    <link rel="stylesheet" href="/css/main.css?1618050263464052000">
     <link rel="canonical"
           href="/page10/">
     <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
     <!-- Begin Jekyll SEO tag v2.7.1 -->
-<title>Page 10 of 10 for Gonzalo Ayuso | Web Architect</title>
+<title>Page 10 of 11 for Gonzalo Ayuso | Web Architect</title>
 <meta name="generator" content="Jekyll v3.9.0" />
 <meta property="og:title" content="Gonzalo Ayuso" />
 <meta name="author" content="Gonzalo Ayuso" />
@@ -72,6 +72,7 @@
 <meta property="og:url" content="/page10/" />
 <meta property="og:site_name" content="Gonzalo Ayuso" />
 <link rel="prev" href="/page9" />
+<link rel="next" href="/page11" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Gonzalo Ayuso" />
 <script type="application/ld+json">
@@ -101,26 +102,6 @@
                 <div class="navigation-wrapper">
                     <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
                     <nav class="cover-navigation navigation--social">
-                        <nav class="cover-navigation">
-                            <ul class="navigation">
-                                <li class="navigation__item">
-                                    <a href="/about" title="about">
-                                        <span>About Me</span>
-                                    </a>
-                                </li>
-                                <li class="navigation__item">
-                                    <a href="/posts" title="posts">
-                                        <span>All</span>
-                                    </a>
-                                </li>
-                                <li class="navigation__item">
-                                    <a href="/search" title="search">
-                                        <span>Search</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </nav>
                         <hr class="panel-cover__divider">
                         <ul class="navigation">
     
@@ -196,23 +177,264 @@
 
     <div class="content-wrapper">
       <div class="content-wrapper__inner">
-        <h1>Blog</h1>
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+        <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+
+
+</div>
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+
 <div class="main-post-list">
     <ol class="post-list">
         
         <li>
             <h2 class="post-list__post-title post-title">
-                <a href="/2009/01/19/adding-my-blogs-feed-to-my-personal-site/"
-                   title="Adding my blog's feed to my personal site">Adding my blog's feed to my personal site</a>
+                <a href="/2011/03/07/watermarks-in-our-images-with-php-and-gearman/"
+                   title="Watermarks in our images with PHP and Gearman">Watermarks in our images with PHP and Gearman</a>
             </h2>
-            <p class="excerpt">I have my personal web page hosted in a free hosting service. Basically it’s a dojo application working with a Zend Framework Backend. I had the idea of include a the last posts of my blog from the rss to the front page (original isn’t it?), and I start to develop it.
+            <p class="excerpt">In my last post I’ve tried to explain how to add a dynamic watermarks in our images using PHP and the GD library. Someone told me in a comment that he has used something similar, but he had to disable it because of the use of huge resources. Probably the use of the solution of the previous post doesn’t scale well. If you have a hight traffic site your memory and CPU usage will increase a lot because of the image transformation (especially if you work with big images). It’d be better if you can generate the watermarks offline, but if is mandatory to create them dynamically (for example we need to place the current timestamp), there are other solutions.
 
 &hellip;</p>
             <div class="post-list__meta">
-                <time datetime=" 2009-01-19 00:00
-                " class="post-list__meta--date date">19 Jan 2009</time>
+                <time datetime=" 2011-03-07 00:00
+                " class="post-list__meta--date date">7 Mar 2011</time>
                 
                 &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#gd">gd</a>, <a
+                    href="/tags/#gearman">gearman</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2011/02/28/watermarks-in-our-images-with-php-and-mod_rewrite/"
+                   title="Watermarks in our images with PHP and mod_rewrite">Watermarks in our images with PHP and mod_rewrite</a>
+            </h2>
+            <p class="excerpt">Imagine you have a set of images and you need to add watermark to all of them. You can do the work with an image editor (Gimp or Photoshop for example). It’s easy work but if your image library is big, the easy work become into hard. But imagine again you need to add a dynamic watermark, let’s say the current timestamp. To solve this problem we can use PHP’s GD image function set.
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2011-02-28 00:00
+                " class="post-list__meta--date date">28 Feb 2011</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#gearman">gearman</a>, <a
+                    href="/tags/#mod_rewrite">mod_rewrite</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2011/02/21/speed-up-page-page-load-combining-javascript-files-with-php/"
+                   title="Speed up page page load combining javascript files with PHP">Speed up page page load combining javascript files with PHP</a>
+            </h2>
+            <p class="excerpt">One of the golden rules when we want a high performance web site is minimize the HTTP requests. Normally we have several JavaScript files within our projects. It’s a very good practice to combine all our JavaScript files into an only one file. We can do it manually. Not a hard work. We only need to copy and paste the source files into our single js file. There’s even tools to do it. You can have look to Yslow (if you don’t know it yet). That’s a good solution if your project is finished. But if your project is alive and you are changing it, it’s helpful to spare your JavaScript files between several files. It’s good to organize them (at least for me). So we need to choose between high performance and development comfort. Because of that I like to use the simple script I’m going to show now. Let’s start.
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2011-02-21 00:00
+                " class="post-list__meta--date date">21 Feb 2011</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#tips">tips</a>, <a
+                    href="/tags/#js">js</a>, <a
+                    href="/tags/#performance">performance</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2011/02/01/function-decorators-in-php-with-phpdoc-and-annotations/"
+                   title="Function decorators in PHP with PHPDoc and Annotations">Function decorators in PHP with PHPDoc and Annotations</a>
+            </h2>
+            <p class="excerpt">This days I’m playing with annotations in PHP. PHP, at least just now, doesn’t support annotations natively like Java. I hope it will be available in next versions but if we want to use them already, we need to create “fake” annotations within PHPDoc. We also have another problem. The PHP’s built-in’s reflection functions cannot parse properly PHPDoc’s annotations but hopefully we have a great library called addendum to do this.
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2011-02-01 00:00
+                " class="post-list__meta--date date">1 Feb 2011</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#tips">tips</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2011/01/24/php-template-engine-comparison-part-2-versus-plain-php/"
+                   title="PHP Template Engine Comparison. Part 2 (versus Plain PHP)">PHP Template Engine Comparison. Part 2 (versus Plain PHP)</a>
+            </h2>
+            <p class="excerpt">In my last post I created a small (and very personal) test of different templating engines in PHP (Smarty, Haanga and Twiw). Someone posted a comment asking for the comparison between those template engines and old school phtml. OK I’ve done some tests. It’s a bit difficult to create the template inheritance (without cloning one of the template engines and creating a new one) so I have one approximation with a simple include. It’s not the same but it’s similar. I’ve also implemented cycle filter (OK I’ve borrowed getCycle function from Twig. Not really implemented ;) )
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2011-01-24 00:00
+                " class="post-list__meta--date date">24 Jan 2011</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#haanga">haanga</a>, <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#technology">technology</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2011/01/17/php-template-engine-comparison/"
+                   title="PHP Template Engine Comparison">PHP Template Engine Comparison</a>
+            </h2>
+            <p class="excerpt">I’m going to face a project using a template engine with PHP. Because of that I’m will perform a small benchmark test of several PHP template engines. That’s not an exhaustive performance test. It’s only my personal test. Template engines has a lot of features but I normally only use a few of them and the other features very seldom. In this performance test I will check the same features under different template engines to see the syntax differences and the performance. The template engines selected for the test are Smarty, Twig and Haanga. Let’s start:
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2011-01-17 00:00
+                " class="post-list__meta--date date">17 Jan 2011</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#haanga">haanga</a>, <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#twig">twig</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2011/01/10/using-php-classes-to-store-configuration-data/"
+                   title="Using PHP classes to store configuration data">Using PHP classes to store configuration data</a>
+            </h2>
+            <p class="excerpt">In my last projects I’m using something I think is useful and it’s not a common practice in our PHP projects. That’s is the usage of a plain PHP’s class for the application’s configuration. Let me explain it. Normally we use ini file for configuration. PHP has a built-in function for parse ini file. It converts the ini file into a PHP array
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2011-01-10 00:00
+                " class="post-list__meta--date date">10 Jan 2011</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#tips">tips</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2011/01/03/my-vim-configuration-for-php-developement/"
+                   title="My VIM configuration for PHP development.">My VIM configuration for PHP development.</a>
+            </h2>
+            <p class="excerpt">Keeping on with my continuous search for the perfect IDE I’ve resumed my fight against VIM. As someone told me the learning of vim is a road of pain. It’s something like going to the gym. We known that going to the gym is good and healthy but it’s hard and painfully especially at the beginning. The learning curve of vim is hard. Vim is rare, or at least it’s different than all other IDEs. In this post I don’t want to create a vim tutorial (there are a lot of on the web). I want to share my actual vim configuration and the plugins I normally use. The configuration is not very original. It’s based on Matthew Weier O’Phinney configuration. You can find here a great post about vim in Matthew Weier’s blog. VIM is not my default IDE yet. I hope to swap to VIM soon but I feel myself slower when I code comparing with Netbeans or ZendStudio, and slow means less productive but I also feel if invest more time vim can be really productive. Here we are my vim plug-ins:
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2011-01-03 00:00
+                " class="post-list__meta--date date">3 Jan 2011</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#tips">tips</a>, <a
+                    href="/tags/#vim">vim</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2010/01/24/pivot-tables-in-php/"
+                   title="Pivot tables in PHP">Pivot tables in PHP</a>
+            </h2>
+            <p class="excerpt">In my work as developer I normally need to transform data from one format to another. Typically our input data is a database and we need to show the database data into a report, datagrid or something similar. It’s very typical to use pivot tables. It’s not very dificult to handle pivot tables by hand but the work is always the same: groups by, totals, subtotals, totals per row …. Now I want to write a class to pivot tables in PHP with the most common requirements (at least for me). I know we can create pivot tables with SQL. Group by and some other database specific commands like oracle’s GROUP BY ROLLUP/CUBE can do the work, but I like clean SQL querys. The business logic must be in PHP and SQL must be as clean as we can.
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2010-01-24 00:00
+                " class="post-list__meta--date date">24 Jan 2010</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#technology">technology</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2009/12/31/calling-to-multiple-xmlrpc-remote-servers-in-a-clean-way/"
+                   title="Clean way to call to multiple xmlrpc remote servers">Clean way to call to multiple xmlrpc remote servers</a>
+            </h2>
+            <p class="excerpt">The problem:
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2009-12-31 00:00
+                " class="post-list__meta--date date">31 Dec 2009</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#technology">technology</a>, <a
                     href="/tags/#web-development">web-development</a></span>
                 
             </div>
@@ -221,18 +443,20 @@
         
         <li>
             <h2 class="post-list__post-title post-title">
-                <a href="/2008/04/05/como-saber-que-host-tengo-en-mi-red/"
-                   title="Como saber que Host tengo en mi red">Como saber que Host tengo en mi red</a>
+                <a href="/2009/12/30/jugando-con-friendfeed-y-appengine-tv-sms-appspot-com/"
+                   title="Jugando con FriendFeed y Appengine: tv-sms.appspot.com">Jugando con FriendFeed y Appengine: tv-sms.appspot.com</a>
             </h2>
-            <p class="excerpt">Cada vez que conecto un aparato a mired domestica me surge la misma duda: ¿Cual es su ip? Cada aparatito tiene su ip por defecto y como soy un poco vago para buscarla en los manuales pues uso el siguiente comando:
+            <p class="excerpt">INTRODUCCIÓN
 
 &hellip;</p>
             <div class="post-list__meta">
-                <time datetime=" 2008-04-05 00:00
-                " class="post-list__meta--date date">5 Apr 2008</time>
+                <time datetime=" 2009-12-30 00:00
+                " class="post-list__meta--date date">30 Dec 2009</time>
                 
                 &#8226; <span class="post-meta__tags">on <a
-                    href="/tags/#linux">linux</a></span>
+                    href="/tags/#appengine">appengine</a>, <a
+                    href="/tags/#web-development">web-development</a>, <a
+                    href="/tags/#webdev">webdev</a></span>
                 
             </div>
             <hr class="post-list__divider">
@@ -240,18 +464,177 @@
         
         <li>
             <h2 class="post-list__post-title post-title">
-                <a href="/2008/03/23/detectar-movimiento-con-linksys-wvc54gc/"
-                   title="Detectar movimiento con Linksys WVC54GC">Detectar movimiento con Linksys WVC54GC</a>
+                <a href="/2009/12/09/things-i-miss-in-php-function-decorators/"
+                   title="Things I miss in PHP: Function decorators">Things I miss in PHP: Function decorators</a>
             </h2>
-            <p class="excerpt">Tengo una cámara Linksys WVC54GC y estoy jugando con la detección del movimiento. Para esto he encontrado un script en bash que tocado un poquito aqui y allá, que hace mas o menos lo que necesito.
+            <p class="excerpt">The problem:
 
 &hellip;</p>
             <div class="post-list__meta">
-                <time datetime=" 2008-03-23 00:00
-                " class="post-list__meta--date date">23 Mar 2008</time>
+                <time datetime=" 2009-12-09 00:00
+                " class="post-list__meta--date date">9 Dec 2009</time>
                 
                 &#8226; <span class="post-meta__tags">on <a
-                    href="/tags/#linux">linux</a></span>
+                    href="/tags/#php">php</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2009/12/08/an-idea-for-calling-postgresqls-stored-procedures-with-pdo/"
+                   title="An idea for calling PostgreSQL's stored procedures with PDO">An idea for calling PostgreSQL's stored procedures with PDO</a>
+            </h2>
+            <p class="excerpt">As far as I know PDO doesn’t allow to call directly the  PostgreSQL’s strored procedures. That’s not a problem. We can create a SQL and call a stored procedures as simple sql.
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2009-12-08 00:00
+                " class="post-list__meta--date date">8 Dec 2009</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#web-development">web-development</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2009/12/07/should-we-use-our-own-frameworks-in-a-production-system/"
+                   title="Should we use our own frameworks in a production system?">Should we use our own frameworks in a production system?</a>
+            </h2>
+            <p class="excerpt">Some days ago I read an article called why every developer should write their own framework. It’s an interesting post and everybody are agree with the author. Build a framework is a good way to learn other frameworks. You face problems and you give solutions to those problems similar than other framework’s ones. It’s also good see the code of other frameworks to see the differences. Definitely I am fully agree with Brandon.
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2009-12-07 00:00
+                " class="post-list__meta--date date">7 Dec 2009</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#web-development">web-development</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2009/12/07/moving-singleton-and-factory-patterns-to-abstract-with-php-5-3/"
+                   title="Moving singleton and factory patterns to Abstract with php 5.3">Moving singleton and factory patterns to Abstract with php 5.3</a>
+            </h2>
+            <p class="excerpt">I have built a backend library. I have a tree of classes and i want to use singleton and factory patterns to my class set. Easy isn’t it?
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2009-12-07 00:00
+                " class="post-list__meta--date date">7 Dec 2009</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#web-development">web-development</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2009/09/09/soyrico/"
+                   title="Soy rico">Soy rico</a>
+            </h2>
+            <p class="excerpt">Lunes 7:00. Suena el despertador. Normalmente cuando suena el despertador es el peor momento del día. Hoy encima me ha sentado especialmente mal (lunes, vacaciones recientes, …). Llego a la oficina, miro el correo y me encuentro con esto:
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2009-09-09 00:00
+                " class="post-list__meta--date date">9 Sep 2009</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#personal">personal</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2009/07/30/antivirus/"
+                   title="antivirus">antivirus</a>
+            </h2>
+            <p class="excerpt">Acabo de recibir un correo con propaganda de un antivirus. Es una lástima que no use antivirus porque el producto tiene una pinta buenísima. Literal copiado del correo:
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2009-07-30 00:00
+                " class="post-list__meta--date date">30 Jul 2009</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#personal">personal</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2009/05/08/server-side-web-frameworks-are-dead/"
+                   title="Server side web frameworks are dead">Server side web frameworks are dead</a>
+            </h2>
+            <p class="excerpt">Server side web frameworks are dead. Long life to client side web frameworks. Struts, JSF, Spring, Ruby on Rails, Cake, Symfony … (even my framework in PHP ;) ) as full stack web framework are dead. Logic is moving to the client side. Javascript, the language used as deadly weapon in the browser wars nowadays is the key of the web. Server logic is getting thin. A thin server side framework serving JSON (Zend Framework is really cool for this) plus a good and strong client side framework such as Dojo or ExtJs with a good widget set with all the application logic can be the new parading of web develop.
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2009-05-08 00:00
+                " class="post-list__meta--date date">8 May 2009</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#php">php</a>, <a
+                    href="/tags/#web-development">web-development</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2009/04/18/speed-up-page-load-with-asynchronous-javascript/"
+                   title="Speed up page load with asynchronous javascript">Speed up page load with asynchronous javascript</a>
+            </h2>
+            <p class="excerpt">JavaScript an important part of or web applications. Normally or web is not usable until js is full loaded. Almost all js framework implements an event to notice when the js is ready (dojo.addOnLoad(); $(function() {});) and the page is usable. The page is usable when js is loaded. Sometimes if you are working with dojo you need all js and maybe is better to create an splash screen until all is loaded. But sometimes your app don’t need all js to be usable. I give you a example: I’ve been working in a project with jQuery. I load jQuery library from google cdn
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2009-04-18 00:00
+                " class="post-list__meta--date date">18 Apr 2009</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#web-development">web-development</a></span>
+                
+            </div>
+            <hr class="post-list__divider">
+        </li>
+        
+        <li>
+            <h2 class="post-list__post-title post-title">
+                <a href="/2009/04/18/mixin-dojo-and-google-api-libraries/"
+                   title="mixin dojo and google api libraries">mixin dojo and google api libraries</a>
+            </h2>
+            <p class="excerpt">I’m working in a dojo application and I also need to use some goolge api like feeds, maps and books. Dojo is very versatile adding new components using dojo.require. when all dojo components are loaded dojo.addOnLoad callback is fired.
+
+&hellip;</p>
+            <div class="post-list__meta">
+                <time datetime=" 2009-04-18 00:00
+                " class="post-list__meta--date date">18 Apr 2009</time>
+                
+                &#8226; <span class="post-meta__tags">on <a
+                    href="/tags/#dojo">dojo</a>, <a
+                    href="/tags/#technology">technology</a>, <a
+                    href="/tags/#web-development">web-development</a></span>
                 
             </div>
             <hr class="post-list__divider">
@@ -269,8 +652,10 @@
     
   
 
-  <span class="pagination__page-number">Page 10 of 10</span>
+  <span class="pagination__page-number">Page 10 of 11</span>
 
+  
+    <a rel="next" class="posts older btn small" href="/page11/">Older Posts →</a>
   
 </nav>
 
@@ -285,7 +670,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617650803001959000"></script>
+<script type="text/javascript" src="/js/main.js?1618050263464052000"></script>
 
     </div>
   </body>

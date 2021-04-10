@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Watermarks in our images with PHP and mod_rewrite</title>
+    <meta name="description"
+          content="Imagine you have a set of images and you need to add watermark to all of them. You can do the work with an image editor (Gimp or Photoshop for example). It’s easy work but if your image library is big, the easy work become into hard. But imagine again you need to add a dynamic watermark, let’s say the current timestamp. To solve this problem we can use PHP’s GD image function set.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Watermarks in our images with PHP and mod_rewrite">
+    <meta name="twitter:description"
+          content="Imagine you have a set of images and you need to add watermark to all of them. You can do the work with an image editor (Gimp or Photoshop for example). It’s easy work but if your image library is big, the easy work become into hard. But imagine again you need to add a dynamic watermark, let’s say the current timestamp. To solve this problem we can use PHP’s GD image function set.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Watermarks in our images with PHP and mod_rewrite">
+    <meta property="og:description"
+          content="Imagine you have a set of images and you need to add watermark to all of them. You can do the work with an image editor (Gimp or Photoshop for example). It’s easy work but if your image library is big, the easy work become into hard. But imagine again you need to add a dynamic watermark, let’s say the current timestamp. To solve this problem we can use PHP’s GD image function set.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618050263464052000">
+    <link rel="canonical"
+          href="/2011/02/28/watermarks-in-our-images-with-php-and-mod_rewrite/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Watermarks in our images with PHP and mod_rewrite | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Watermarks in our images with PHP and mod_rewrite" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Imagine you have a set of images and you need to add watermark to all of them. You can do the work with an image editor (Gimp or Photoshop for example). It’s easy work but if your image library is big, the easy work become into hard. But imagine again you need to add a dynamic watermark, let’s say the current timestamp. To solve this problem we can use PHP’s GD image function set." />
+<meta property="og:description" content="Imagine you have a set of images and you need to add watermark to all of them. You can do the work with an image editor (Gimp or Photoshop for example). It’s easy work but if your image library is big, the easy work become into hard. But imagine again you need to add a dynamic watermark, let’s say the current timestamp. To solve this problem we can use PHP’s GD image function set." />
+<link rel="canonical" href="/2011/02/28/watermarks-in-our-images-with-php-and-mod_rewrite/" />
+<meta property="og:url" content="/2011/02/28/watermarks-in-our-images-with-php-and-mod_rewrite/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-02-28T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Watermarks in our images with PHP and mod_rewrite" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2011/02/28/watermarks-in-our-images-with-php-and-mod_rewrite/"},"url":"/2011/02/28/watermarks-in-our-images-with-php-and-mod_rewrite/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Imagine you have a set of images and you need to add watermark to all of them. You can do the work with an image editor (Gimp or Photoshop for example). It’s easy work but if your image library is big, the easy work become into hard. But imagine again you need to add a dynamic watermark, let’s say the current timestamp. To solve this problem we can use PHP’s GD image function set.","dateModified":"2011-02-28T00:00:00+01:00","datePublished":"2011-02-28T00:00:00+01:00","headline":"Watermarks in our images with PHP and mod_rewrite","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+        <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+
+
+</div>
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+cc
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2011-02-28 00:00
+            " class="post-meta__date date">28 Feb 2011</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#gearman">gearman</a>, <a
+                href="/tags/#mod_rewrite">mod_rewrite</a></span>
+            
+        </div>
+        <h1 class="post-title">Watermarks in our images with PHP and mod_rewrite</h1>
+    </header>
+
+    <section class="post">
+        <p>Imagine you have a set of images and you need to add watermark to all of them. You can do the work with an image editor (Gimp or Photoshop for example). It’s easy work but if your image library is big, the easy work become into hard. But imagine again you need to add a dynamic watermark, let’s say the current timestamp. To solve this problem we can use PHP’s GD image function set.</p>
+
+<p>The idea is simple. Instead of opening directly the image, we are going to open a PHP script. This PHP script will open the original image file with <a href="http://www.php.net/manual/en/function.imagecreatefromjpeg.php">imagecreatefromjpeg</a>, add the footer and flush the new image to the browser with the properly headers.</p>
+
+<p>But I don’t want to rewrite all the anchor’s hrefs within my HTML files. Because of that I’m going to use the same trick I used in my one of my <a href="http://gonzalo123.wordpress.com/2010/11/29/protect-files-within-public-folders-with-mod_rewrite-and-php/">posts</a>. With a simple .htaccess in our jpg’s folder, our apache’s mod_rewrite will do work for us:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>RewriteEngine on
+RewriteRule !\.(php)$ watermark.php
+</code></pre></div></div>
+
+<p>And now our PHP script called watermark.php</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="nv">$uri</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'REQUEST_URI'</span><span class="p">];</span>
+<span class="nv">$documentRoot</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'DOCUMENT_ROOT'</span><span class="p">];</span>
+<span class="nv">$filename</span> <span class="o">=</span> <span class="nv">$documentRoot</span> <span class="mf">.</span> <span class="nv">$uri</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">realpath</span><span class="p">(</span><span class="k">__FILE__</span><span class="p">)</span> <span class="o">==</span> <span class="nb">realpath</span><span class="p">(</span><span class="nv">$filename</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">exit</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="nv">$stringSize</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="nv">$footerSize</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$stringSize</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="o">?</span> <span class="mi">12</span> <span class="o">:</span> <span class="mi">15</span><span class="p">;</span>
+<span class="nv">$footer</span> <span class="o">=</span> <span class="nb">date</span><span class="p">(</span><span class="s1">'d/m/Y H:i:s'</span><span class="p">);</span>
+ 
+<span class="k">list</span><span class="p">(</span><span class="nv">$width</span><span class="p">,</span> <span class="nv">$height</span><span class="p">,</span> <span class="nv">$image_type</span><span class="p">)</span> <span class="o">=</span> <span class="nb">getimagesize</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+<span class="nv">$im</span> <span class="o">=</span> <span class="nb">imagecreatefromjpeg</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+<span class="nb">imagefilledrectangle</span> <span class="p">(</span>
+        <span class="nv">$im</span><span class="p">,</span>
+        <span class="mi">0</span><span class="p">,</span>
+        <span class="nv">$height</span><span class="p">,</span>
+        <span class="nv">$width</span><span class="p">,</span>
+        <span class="nv">$height</span> <span class="o">-</span> <span class="nv">$footerSize</span><span class="p">,</span> <span class="nb">imagecolorallocate</span><span class="p">(</span><span class="nv">$im</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">156</span><span class="p">));</span>
+ 
+<span class="nb">imagestring</span><span class="p">(</span><span class="nv">$im</span><span class="p">,</span>
+        <span class="nv">$stringSize</span><span class="p">,</span>
+        <span class="nv">$width</span><span class="o">-</span><span class="p">(</span><span class="nb">imagefontwidth</span><span class="p">(</span><span class="nv">$stringSize</span><span class="p">)</span><span class="o">*</span><span class="nb">strlen</span><span class="p">(</span><span class="nv">$footer</span><span class="p">))</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="nv">$height</span><span class="o">-</span><span class="nv">$footerSize</span><span class="p">,</span>
+        <span class="nv">$footer</span><span class="p">,</span>
+        <span class="nb">imagecolorallocate</span><span class="p">(</span><span class="nv">$im</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">));</span>
+ 
+<span class="nb">header</span><span class="p">(</span> <span class="s1">'Content-Type: image/jpeg'</span> <span class="p">);</span>
+<span class="nb">imagejpeg</span><span class="p">(</span><span class="nv">$im</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Simple, isn’t it? You can change my blue footer with a your logo. Easy with PHP’s gd functions. Of course you need to have your PHP compiled with <a href="http://www.php.net/manual/en/image.installation.php">GD</a> support.</p>
+
+<p>Original image:
+<a href="/assets/images/original.jpg" title="original"></a></p>
+
+<p>After transformation:
+<a href="/assets/images/after.png" title="after"></a></p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Watermarks+in+our+images+with+PHP+and+mod_rewrite%20%2F2011%2F02%2F28%2Fwatermarks-in-our-images-with-php-and-mod_rewrite%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2011%2F02%2F28%2Fwatermarks-in-our-images-with-php-and-mod_rewrite%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Watermarks+in+our+images+with+PHP+and+mod_rewrite&url=%2F2011%2F02%2F28%2Fwatermarks-in-our-images-with-php-and-mod_rewrite%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2011/02/28/watermarks-in-our-images-with-php-and-mod_rewrite/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2011/02/28/watermarks-in-our-images-with-php-and-mod_rewrite'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span>  <span class="label label-default">gearman</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618050263464052000"></script>
+
+    </div>
+  </body>
+</html>

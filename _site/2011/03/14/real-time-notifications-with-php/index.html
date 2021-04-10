@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Real time notifications with PHP</title>
+    <meta name="description"
+          content="Real time communications are cool, isn’t it? Something impossible to do five years ago now (or almost impossible) is already available. Nowadays we have two possible solutions. WebSockets and Comet. WebSockets are probably the best solution but they’ve got two mayor problems:
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Real time notifications with PHP">
+    <meta name="twitter:description"
+          content="Real time communications are cool, isn’t it? Something impossible to do five years ago now (or almost impossible) is already available. Nowadays we have two possible solutions. WebSockets and Comet. WebSockets are probably the best solution but they’ve got two mayor problems:
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Real time notifications with PHP">
+    <meta property="og:description"
+          content="Real time communications are cool, isn’t it? Something impossible to do five years ago now (or almost impossible) is already available. Nowadays we have two possible solutions. WebSockets and Comet. WebSockets are probably the best solution but they’ve got two mayor problems:
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618050263464052000">
+    <link rel="canonical"
+          href="/2011/03/14/real-time-notifications-with-php/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Real time notifications with PHP | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Real time notifications with PHP" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Real time communications are cool, isn’t it? Something impossible to do five years ago now (or almost impossible) is already available. Nowadays we have two possible solutions. WebSockets and Comet. WebSockets are probably the best solution but they’ve got two mayor problems:" />
+<meta property="og:description" content="Real time communications are cool, isn’t it? Something impossible to do five years ago now (or almost impossible) is already available. Nowadays we have two possible solutions. WebSockets and Comet. WebSockets are probably the best solution but they’ve got two mayor problems:" />
+<link rel="canonical" href="/2011/03/14/real-time-notifications-with-php/" />
+<meta property="og:url" content="/2011/03/14/real-time-notifications-with-php/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-03-14T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Real time notifications with PHP" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2011/03/14/real-time-notifications-with-php/"},"url":"/2011/03/14/real-time-notifications-with-php/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Real time communications are cool, isn’t it? Something impossible to do five years ago now (or almost impossible) is already available. Nowadays we have two possible solutions. WebSockets and Comet. WebSockets are probably the best solution but they’ve got two mayor problems:","dateModified":"2011-03-14T00:00:00+01:00","datePublished":"2011-03-14T00:00:00+01:00","headline":"Real time notifications with PHP","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+        <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+
+
+</div>
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+cc
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2011-03-14 00:00
+            " class="post-meta__date date">14 Mar 2011</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#jquery">jquery</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#comet">comet</a>, <a
+                href="/tags/#jquery">jquery</a>, <a
+                href="/tags/#js">js</a></span>
+            
+        </div>
+        <h1 class="post-title">Real time notifications with PHP</h1>
+    </header>
+
+    <section class="post">
+        <p>Real time communications are cool, isn’t it? Something impossible to do five years ago now (or almost impossible) is already available. Nowadays we have two possible solutions. WebSockets and Comet. WebSockets are probably the best solution but they’ve got two mayor problems:</p>
+
+<ul>
+  <li>Not all browsers support them.</li>
+  <li>Not all proxy servers allows the communications with websokets.</li>
+</ul>
+
+<p>Because of that I prefer to use comet (at least now). It’s not as good as websockets but pretty straightforward ant it works (even on IE). Now I’m going to explain a little script that I’ve got to perform a comet communications, made with PHP. Probably it’s not a good idea to use it in a high traffic site, but it works like a charm in a small intranet. If you want to use comet in a high traffic site maybe you need have a look to <a href="http://www.tornadoweb.org/">Tornado</a>, <a href="http://twistedmatrix.com/trac/">twisted</a>, <a href="http://nodejs.org/">node.js</a> or other comet dedicated servers.</p>
+
+<p>Normally when we are speaking about real-time communications, all the people are thinking about a chat application. I want to build a simpler application. A want to detect when someone clicks on a link. Because of that I will need a combination of HTML, PHP and JavaScript. Let’s start:</p>
+
+<p>For the example I’ll use jquery library, so we need to include the library in our HTML file. It will be a blend of JavaScrip and PHP:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=utf-8"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Comet Test<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;p&gt;&lt;a</span> <span class="na">class=</span><span class="s">'customAlert'</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>publish customAlert<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+        <span class="nt">&lt;p&gt;&lt;a</span> <span class="na">class=</span><span class="s">'customAlert2'</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>publish customAlert2<span class="nt">&lt;/a&gt;&lt;/p&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"NovComet.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="nx">NovComet</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">customAlert</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">customAlert</span><span class="dl">'</span><span class="p">);</span>
+    <span class="c1">//console.log(data);</span>
+<span class="p">}).</span><span class="nx">subscribe</span><span class="p">(</span><span class="dl">'</span><span class="s1">customAlert2</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">customAlert2</span><span class="dl">'</span><span class="p">);</span>
+    <span class="c1">//console.log(data);</span>
+<span class="p">});</span>
+ 
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">a.customAlert</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">NovComet</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="dl">'</span><span class="s1">customAlert</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">});</span>
+     
+    <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">a.customAlert2</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">NovComet</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="dl">'</span><span class="s1">customAlert2</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">});</span>
+    <span class="nx">NovComet</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+<span class="p">});</span>
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>The client code:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//NovComet.js</span>
+<span class="nc">NovComet</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">sleepTime</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="n">_subscribed</span><span class="o">:</span> <span class="p">{},</span>
+    <span class="n">_timeout</span><span class="o">:</span> <span class="n">undefined</span><span class="p">,</span>
+    <span class="n">_baseurl</span><span class="o">:</span> <span class="s2">"comet.php"</span><span class="p">,</span>
+    <span class="n">_args</span><span class="o">:</span> <span class="s1">''</span><span class="p">,</span>
+    <span class="n">_urlParam</span><span class="o">:</span> <span class="s1">'subscribed'</span><span class="p">,</span>
+ 
+    <span class="n">subscribe</span><span class="o">:</span> <span class="k">function</span><span class="p">(</span><span class="kt">id</span><span class="p">,</span> <span class="kt">callback</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nc">NovComet</span><span class="mf">.</span><span class="n">_subscribed</span><span class="p">[</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">cbk</span><span class="o">:</span> <span class="n">callback</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="o">:</span> <span class="nc">NovComet</span><span class="mf">.</span><span class="nf">_getCurrentTimestamp</span><span class="p">()</span>
+        <span class="p">};</span>
+        <span class="k">return</span> <span class="nc">NovComet</span><span class="p">;</span>
+    <span class="p">},</span>
+ 
+    <span class="n">_refresh</span><span class="o">:</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nc">NovComet</span><span class="mf">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="nf">setTimeout</span><span class="p">(</span><span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nc">NovComet</span><span class="mf">.</span><span class="nf">run</span><span class="p">()</span>
+        <span class="p">},</span> <span class="nc">NovComet</span><span class="mf">.</span><span class="n">sleepTime</span><span class="p">);</span>
+    <span class="p">},</span>
+ 
+    <span class="n">init</span><span class="o">:</span> <span class="k">function</span><span class="p">(</span><span class="kt">baseurl</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">baseurl</span><span class="o">!=</span><span class="n">undefined</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nc">NovComet</span><span class="mf">.</span><span class="n">_baseurl</span> <span class="o">=</span> <span class="n">baseurl</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+ 
+    <span class="n">_getCurrentTimestamp</span><span class="o">:</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nc">Math</span><span class="mf">.</span><span class="nb">round</span><span class="p">(</span><span class="k">new</span> <span class="nc">Date</span><span class="p">()</span><span class="mf">.</span><span class="nf">getTime</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">);</span>
+    <span class="p">},</span>
+ 
+    <span class="n">run</span><span class="o">:</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="n">cometCheckUrl</span> <span class="o">=</span> <span class="nc">NovComet</span><span class="mf">.</span><span class="n">_baseurl</span> <span class="o">+</span> <span class="s1">'?'</span> <span class="o">+</span> <span class="nc">NovComet</span><span class="mf">.</span><span class="n">_args</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">var</span> <span class="n">id</span> <span class="n">in</span> <span class="nc">NovComet</span><span class="mf">.</span><span class="n">_subscribed</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">var</span> <span class="n">currentTimestamp</span> <span class="o">=</span> <span class="nc">NovComet</span><span class="mf">.</span><span class="n">_subscribed</span><span class="p">[</span><span class="n">id</span><span class="p">][</span><span class="s1">'timestamp'</span><span class="p">];</span>
+ 
+            <span class="n">cometCheckUrl</span> <span class="o">+=</span> <span class="s1">'&amp;'</span> <span class="o">+</span> <span class="nc">NovComet</span><span class="mf">.</span><span class="n">_urlParam</span><span class="o">+</span> <span class="s1">'['</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s1">']='</span> <span class="o">+</span>
+               <span class="n">currentTimestamp</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">cometCheckUrl</span> <span class="o">+=</span> <span class="s1">'&amp;'</span> <span class="o">+</span> <span class="nc">NovComet</span><span class="mf">.</span><span class="nf">_getCurrentTimestamp</span><span class="p">();</span>
+        <span class="err">$</span><span class="mf">.</span><span class="nf">getJSON</span><span class="p">(</span><span class="n">cometCheckUrl</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="kt">data</span><span class="p">){</span>
+            <span class="k">switch</span><span class="p">(</span><span class="n">data</span><span class="mf">.</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="c1">// sin cambios</span>
+                    <span class="nc">NovComet</span><span class="mf">.</span><span class="nf">_refresh</span><span class="p">();</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="c1">// trigger</span>
+                    <span class="k">for</span> <span class="p">(</span><span class="k">var</span> <span class="n">id</span> <span class="n">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">'k'</span><span class="p">])</span> <span class="p">{</span>
+                        <span class="nc">NovComet</span><span class="mf">.</span><span class="n">_subscribed</span><span class="p">[</span><span class="n">id</span><span class="p">][</span><span class="s1">'timestamp'</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'k'</span><span class="p">][</span><span class="n">id</span><span class="p">];</span>
+                        <span class="nc">NovComet</span><span class="mf">.</span><span class="n">_subscribed</span><span class="p">[</span><span class="n">id</span><span class="p">]</span><span class="mf">.</span><span class="nf">cbk</span><span class="p">(</span><span class="n">data</span><span class="mf">.</span><span class="n">k</span><span class="p">);</span>
+                    <span class="p">}</span>
+                    <span class="nc">NovComet</span><span class="mf">.</span><span class="nf">_refresh</span><span class="p">();</span>
+                    <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+ 
+    <span class="p">},</span>
+ 
+    <span class="n">publish</span><span class="o">:</span> <span class="k">function</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="n">cometPublishUrl</span> <span class="o">=</span> <span class="nc">NovComet</span><span class="mf">.</span><span class="n">_baseurl</span> <span class="o">+</span> <span class="s1">'?'</span> <span class="o">+</span> <span class="nc">NovComet</span><span class="mf">.</span><span class="n">_args</span><span class="p">;</span>
+        <span class="n">cometPublishUrl</span> <span class="o">+=</span> <span class="s1">'&amp;publish='</span> <span class="o">+</span> <span class="n">id</span><span class="p">;</span>
+        <span class="err">$</span><span class="mf">.</span><span class="nf">getJSON</span><span class="p">(</span><span class="n">cometPublishUrl</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>The server-side PHP</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// comet.php</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'NovComet.php'</span><span class="p">);</span>
+ 
+<span class="nv">$comet</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NovComet</span><span class="p">();</span>
+<span class="nv">$publish</span> <span class="o">=</span> <span class="nb">filter_input</span><span class="p">(</span><span class="no">INPUT_GET</span><span class="p">,</span> <span class="s1">'publish'</span><span class="p">,</span> <span class="no">FILTER_SANITIZE_STRING</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$publish</span> <span class="o">!=</span> <span class="s1">''</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$comet</span><span class="o">-&gt;</span><span class="nf">publish</span><span class="p">(</span><span class="nv">$publish</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="nb">filter_var_array</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">'subscribed'</span><span class="p">],</span> <span class="no">FILTER_SANITIZE_NUMBER_INT</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$key</span> <span class="o">=&gt;</span> <span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$comet</span><span class="o">-&gt;</span><span class="nf">setVar</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">echo</span> <span class="nv">$comet</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>and my comet library implementation:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// NovComet.php</span>
+<span class="kd">class</span> <span class="nc">NovComet</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="no">COMET_OK</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">COMET_CHANGED</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+ 
+    <span class="k">private</span> <span class="nv">$_tries</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$_var</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$_sleep</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$_ids</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+    <span class="k">private</span> <span class="nv">$_callback</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span>  <span class="n">__construct</span><span class="p">(</span><span class="nv">$tries</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="nv">$sleep</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_tries</span> <span class="o">=</span> <span class="nv">$tries</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_sleep</span> <span class="o">=</span> <span class="nv">$sleep</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">setVar</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_vars</span><span class="p">[</span><span class="nv">$key</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$value</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">setTries</span><span class="p">(</span><span class="nv">$tries</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_tries</span> <span class="o">=</span> <span class="nv">$tries</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">setSleepTime</span><span class="p">(</span><span class="nv">$sleep</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_sleep</span> <span class="o">=</span> <span class="nv">$sleep</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">setCallbackCheck</span><span class="p">(</span><span class="nv">$callback</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_callback</span> <span class="o">=</span> <span class="nv">$callback</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">const</span> <span class="no">DEFAULT_COMET_PATH</span> <span class="o">=</span> <span class="s2">"/dev/shm/%s.comet"</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">run</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">is_null</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_callback</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$defaultCometPAth</span> <span class="o">=</span> <span class="k">self</span><span class="o">::</span><span class="no">DEFAULT_COMET_PATH</span><span class="p">;</span>
+            <span class="nv">$callback</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$defaultCometPAth</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nv">$cometFile</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span><span class="nv">$defaultCometPAth</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
+                <span class="k">return</span> <span class="p">(</span><span class="nb">is_file</span><span class="p">(</span><span class="nv">$cometFile</span><span class="p">))</span> <span class="o">?</span> <span class="nb">filemtime</span><span class="p">(</span><span class="nv">$cometFile</span><span class="p">)</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="p">};</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nv">$callback</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_callback</span><span class="p">;</span>
+        <span class="p">}</span>
+ 
+        <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_tries</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_vars</span> <span class="k">as</span> <span class="nv">$id</span> <span class="o">=&gt;</span> <span class="nv">$timestamp</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">((</span><span class="n">integer</span><span class="p">)</span> <span class="nv">$timestamp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nv">$timestamp</span> <span class="o">=</span> <span class="nb">time</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="nv">$fileTimestamp</span> <span class="o">=</span> <span class="nv">$callback</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nv">$fileTimestamp</span> <span class="o">&gt;</span> <span class="nv">$timestamp</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nv">$out</span><span class="p">[</span><span class="nv">$id</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$fileTimestamp</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="nb">clearstatcache</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">count</span><span class="p">(</span><span class="nv">$out</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nb">json_encode</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'s'</span> <span class="o">=&gt;</span> <span class="k">self</span><span class="o">::</span><span class="no">COMET_CHANGED</span><span class="p">,</span> <span class="s1">'k'</span> <span class="o">=&gt;</span> <span class="nv">$out</span><span class="p">));</span>
+            <span class="p">}</span>
+            <span class="nb">sleep</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_sleep</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nb">json_encode</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'s'</span> <span class="o">=&gt;</span> <span class="k">self</span><span class="o">::</span><span class="no">COMET_OK</span><span class="p">));</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">publish</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nb">touch</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="k">self</span><span class="o">::</span><span class="no">DEFAULT_COMET_PATH</span><span class="p">,</span> <span class="nv">$id</span><span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>As you can see in my example I’ve created a personal protocol for the communications between the client (js at browser), and the server (PHP). It’s a simple one. If you’re looking for a “standard” protocol maybe you need have a look to <a href="http://svn.cometd.com/trunk/bayeux/bayeux.html">bayeux</a> protocol from Dojo people.</p>
+
+<p>Let me explain a little bit the usage of the script:</p>
+
+<ul>
+  <li>In the HTML page we start the listener (NovComet.subscribe).</li>
+  <li>We can subscribe to as many events we want (OK it depends on our resources)</li>
+  <li>When we subscribe to one event we pass a callback function to be triggered.</li>
+  <li>When we subscribe to the event, we pass the current timestamp to the server.</li>
+  <li>Client side script (js with jquery) will call to server-side script (PHP) with the timestamp and will wait until server finish.</li>
+  <li>Server side script will answer when even timestamp changes (someone has published the event)</li>
+  <li>Server side will no keep waiting forever. If nobody publish the event, server will answer after a pre-selected timeout</li>
+  <li>client side script will repeat the process again and again.</li>
+</ul>
+
+<p>There’s something really important with this technique. Our server-side event check need to be as simpler as we can. We cannot execute a SQL query for example (our sysadmin will kill us if we do it). We need to bear in mind that this check will be performed again and again per user, because of that it must be as light as we can. In this example we are checking the last modification date of a file (<a href="http://php.net/manual/en/function.filemtime.php">filemtime</a>). Another good solution is to use a <a href="http://php.net/manual/en/book.memcache.php">memcached</a> database and check a value.</p>
+
+<p>For the test I’ve also created a publishing script (NovComet.publish). This is the simple part. We only call a server-side script that touch the event file (changing the last modification date), triggering the event.</p>
+
+<p><a href="/assets/images/firebug.png" title="firebug"></a></p>
+
+<p>Now I’m going to explain what we can see on the firebug console:</p>
+
+<ol>
+  <li>The first iteration nothing happens. 200 OK Http code after the time-out set in the PHP script</li>
+  <li>As we can see here the script returns a JSON with s=0 (nothing happens)</li>
+  <li>Now we publish an event. Script returns a 200 OK but now the JSON is different. s=1 and the time-stamp of the event</li>
+  <li>Our callback has been triggered</li>
+  <li>And next iteration waiting</li>
+</ol>
+
+<p>And that’s all. Simple and useful. But remember, you must take care if you are using this solution within a high traffic site. What do you think? Do you use lazy comet with PHP in production servers or would you rather another solution?</p>
+
+<p>You can get the code at github <a href="https://github.com/gonzalo123/nov-comet">here</a>.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Real+time+notifications+with+PHP%20%2F2011%2F03%2F14%2Freal-time-notifications-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2011%2F03%2F14%2Freal-time-notifications-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Real+time+notifications+with+PHP&url=%2F2011%2F03%2F14%2Freal-time-notifications-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2011/03/14/real-time-notifications-with-php/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2011/03/14/real-time-notifications-with-php'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2018/10/08/working-with-sapui5-locally-part-3-adding-more-services-in-docker/">Working with SAPUI5 locally (part 3). Adding more services in Docker <span class="label label-default">php</span>  <span class="label label-default">js</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/05/16/sharing-authentication-between-socket-io-and-a-php-frontend/">Sharing authentication between socket.io and a PHP frontend <span class="label label-default">php</span>  <span class="label label-default">js</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2015/12/14/working-with-ionic-and-php-backends-remote-debugging-with-php7-and-xdebug-working-with-real-devices/">Working with Ionic and PHP Backends. Remote debugging with PHP7 and Xdebug working with real devices <span class="label label-default">js</span>  <span class="label label-default">php</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2015/05/11/php-dumper-using-websockets/">PHP Dumper using Websockets <span class="label label-default">js</span>  <span class="label label-default">php</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618050263464052000"></script>
+
+    </div>
+  </body>
+</html>

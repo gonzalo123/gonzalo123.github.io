@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Howto Send/Read SMSs using a GSM modem, AT+ commands and PHP</title>
+    <meta name="description"
+          content="I need to send/read SMS with PHP. To do that, I need a GSM modem. There are few of them if we google a little bit. GSM modems are similar than normal modems. They’ve got a SIM card and we can do the same things we can do with a mobile phone, but using AT and AT+ commands programmatically. That’s means we can send (and read) SMSs and create scripts to perform those operations. Normally those kind of devices uses a serial interface. So we need to connect our PC/server with a serial cable to the device. That’s a problem. Modern PCs sometimes dont’t have serial ports. Modern GSM modems have a USB port, and even we can use serial/USB converters. I don’t like to connect directly those devices to the PC/server. They must be close. Serial/USB cables cannot be very long (2 or 3 meters). I prefer to connect those devices using serial/ethernet converters. Because of that I will create a dual library. The idea is enable the operations when device is connected via serial cable and also when it’s connected thought a serial/ethernet converter.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Howto Send/Read SMSs using a GSM modem, AT+ commands and PHP">
+    <meta name="twitter:description"
+          content="I need to send/read SMS with PHP. To do that, I need a GSM modem. There are few of them if we google a little bit. GSM modems are similar than normal modems. They’ve got a SIM card and we can do the same things we can do with a mobile phone, but using AT and AT+ commands programmatically. That’s means we can send (and read) SMSs and create scripts to perform those operations. Normally those kind of devices uses a serial interface. So we need to connect our PC/server with a serial cable to the device. That’s a problem. Modern PCs sometimes dont’t have serial ports. Modern GSM modems have a USB port, and even we can use serial/USB converters. I don’t like to connect directly those devices to the PC/server. They must be close. Serial/USB cables cannot be very long (2 or 3 meters). I prefer to connect those devices using serial/ethernet converters. Because of that I will create a dual library. The idea is enable the operations when device is connected via serial cable and also when it’s connected thought a serial/ethernet converter.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Howto Send/Read SMSs using a GSM modem, AT+ commands and PHP">
+    <meta property="og:description"
+          content="I need to send/read SMS with PHP. To do that, I need a GSM modem. There are few of them if we google a little bit. GSM modems are similar than normal modems. They’ve got a SIM card and we can do the same things we can do with a mobile phone, but using AT and AT+ commands programmatically. That’s means we can send (and read) SMSs and create scripts to perform those operations. Normally those kind of devices uses a serial interface. So we need to connect our PC/server with a serial cable to the device. That’s a problem. Modern PCs sometimes dont’t have serial ports. Modern GSM modems have a USB port, and even we can use serial/USB converters. I don’t like to connect directly those devices to the PC/server. They must be close. Serial/USB cables cannot be very long (2 or 3 meters). I prefer to connect those devices using serial/ethernet converters. Because of that I will create a dual library. The idea is enable the operations when device is connected via serial cable and also when it’s connected thought a serial/ethernet converter.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618050263464052000">
+    <link rel="canonical"
+          href="/2011/03/21/howto-sendread-smss-using-a-gsm-modem-at-commands-and-php/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Howto Send/Read SMSs using a GSM modem, AT+ commands and PHP | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Howto Send/Read SMSs using a GSM modem, AT+ commands and PHP" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I need to send/read SMS with PHP. To do that, I need a GSM modem. There are few of them if we google a little bit. GSM modems are similar than normal modems. They’ve got a SIM card and we can do the same things we can do with a mobile phone, but using AT and AT+ commands programmatically. That’s means we can send (and read) SMSs and create scripts to perform those operations. Normally those kind of devices uses a serial interface. So we need to connect our PC/server with a serial cable to the device. That’s a problem. Modern PCs sometimes dont’t have serial ports. Modern GSM modems have a USB port, and even we can use serial/USB converters. I don’t like to connect directly those devices to the PC/server. They must be close. Serial/USB cables cannot be very long (2 or 3 meters). I prefer to connect those devices using serial/ethernet converters. Because of that I will create a dual library. The idea is enable the operations when device is connected via serial cable and also when it’s connected thought a serial/ethernet converter." />
+<meta property="og:description" content="I need to send/read SMS with PHP. To do that, I need a GSM modem. There are few of them if we google a little bit. GSM modems are similar than normal modems. They’ve got a SIM card and we can do the same things we can do with a mobile phone, but using AT and AT+ commands programmatically. That’s means we can send (and read) SMSs and create scripts to perform those operations. Normally those kind of devices uses a serial interface. So we need to connect our PC/server with a serial cable to the device. That’s a problem. Modern PCs sometimes dont’t have serial ports. Modern GSM modems have a USB port, and even we can use serial/USB converters. I don’t like to connect directly those devices to the PC/server. They must be close. Serial/USB cables cannot be very long (2 or 3 meters). I prefer to connect those devices using serial/ethernet converters. Because of that I will create a dual library. The idea is enable the operations when device is connected via serial cable and also when it’s connected thought a serial/ethernet converter." />
+<link rel="canonical" href="/2011/03/21/howto-sendread-smss-using-a-gsm-modem-at-commands-and-php/" />
+<meta property="og:url" content="/2011/03/21/howto-sendread-smss-using-a-gsm-modem-at-commands-and-php/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-03-21T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Howto Send/Read SMSs using a GSM modem, AT+ commands and PHP" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2011/03/21/howto-sendread-smss-using-a-gsm-modem-at-commands-and-php/"},"url":"/2011/03/21/howto-sendread-smss-using-a-gsm-modem-at-commands-and-php/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"I need to send/read SMS with PHP. To do that, I need a GSM modem. There are few of them if we google a little bit. GSM modems are similar than normal modems. They’ve got a SIM card and we can do the same things we can do with a mobile phone, but using AT and AT+ commands programmatically. That’s means we can send (and read) SMSs and create scripts to perform those operations. Normally those kind of devices uses a serial interface. So we need to connect our PC/server with a serial cable to the device. That’s a problem. Modern PCs sometimes dont’t have serial ports. Modern GSM modems have a USB port, and even we can use serial/USB converters. I don’t like to connect directly those devices to the PC/server. They must be close. Serial/USB cables cannot be very long (2 or 3 meters). I prefer to connect those devices using serial/ethernet converters. Because of that I will create a dual library. The idea is enable the operations when device is connected via serial cable and also when it’s connected thought a serial/ethernet converter.","dateModified":"2011-03-21T00:00:00+01:00","datePublished":"2011-03-21T00:00:00+01:00","headline":"Howto Send/Read SMSs using a GSM modem, AT+ commands and PHP","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+        <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+
+
+</div>
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+cc
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2011-03-21 00:00
+            " class="post-meta__date date">21 Mar 2011</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#gsm">gsm</a>, <a
+                href="/tags/#sms">sms</a></span>
+            
+        </div>
+        <h1 class="post-title">Howto Send/Read SMSs using a GSM modem, AT+ commands and PHP</h1>
+    </header>
+
+    <section class="post">
+        <p>I need to send/read SMS with PHP. To do that, I need a <a href="http://www.google.com/images?q=GSM+modem&amp;biw=1920&amp;bih=967">GSM modem</a>. There are few of them if we google a little bit. GSM modems are similar than normal modems. They’ve got a SIM card and we can do the same things we can do with a mobile phone, but using AT and AT+ commands programmatically. That’s means we can send (and read) SMSs and create scripts to perform those operations. Normally those kind of devices uses a serial interface. So we need to connect our PC/server with a serial cable to the device. That’s a problem. Modern PCs sometimes dont’t have serial ports. Modern GSM modems have a USB port, and even we can use serial/USB converters. I don’t like to connect directly those devices to the PC/server. They must be close. Serial/USB cables cannot be very long (2 or 3 meters). I prefer to connect those devices using serial/ethernet converters. Because of that I will create a dual library. The idea is enable the operations when device is connected via serial cable and also when it’s connected thought a serial/ethernet converter.</p>
+
+<p>The idea is the following one: We are going to create a main class called Sms. It takes in the constructor (via dependency injection) the HTTP wrapper or the serial one (both with the same interface). That means our Sms class will work exactly in the same way with one interface or another.</p>
+
+<p>Let’s start. First we’re going to create a Dummy Mock object, sharing the same interface than the others. The purpose of that is to test the main class (Sms.php)</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="kd">class</span> <span class="nc">Sms_Dummy</span> <span class="kd">implements</span> <span class="nc">Sms_Interface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">deviceOpen</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">deviceClose</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">sendMessage</span><span class="p">(</span><span class="nv">$msg</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">readPort</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">array</span><span class="p">(</span><span class="s2">"OK"</span><span class="p">,</span> <span class="k">array</span><span class="p">());</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="nv">$_validOutputs</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">setValidOutputs</span><span class="p">(</span><span class="nv">$validOutputs</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_validOutputs</span> <span class="o">=</span> <span class="nv">$validOutputs</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>And we test the code:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+ 
+<span class="k">require_once</span><span class="p">(</span><span class="s1">'Sms.php'</span><span class="p">);</span>
+<span class="k">require_once</span><span class="p">(</span><span class="s1">'Sms/Interface.php'</span><span class="p">);</span>
+<span class="k">require_once</span><span class="p">(</span><span class="s1">'Sms/Dummy.php'</span><span class="p">);</span>
+ 
+<span class="nv">$pin</span> <span class="o">=</span> <span class="mi">1234</span><span class="p">;</span>
+ 
+<span class="nv">$serial</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Sms_Dummy</span><span class="p">;</span>
+ 
+<span class="k">if</span> <span class="p">(</span><span class="nc">Sms</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nv">$serial</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">insertPin</span><span class="p">(</span><span class="nv">$pin</span><span class="p">)</span>
+                <span class="o">-&gt;</span><span class="nf">sendSMS</span><span class="p">(</span><span class="mi">555987654</span><span class="p">,</span> <span class="s2">"test Hi"</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"SMS sent</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"SMS not Sent</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>It works. Our Sms class sends a fake sms using Sms_Dummy</p>
+
+<p>Now we only need to create Sms_Serial and Sms_Http. For Sms_Serial I’ve use the great library (with a slight modifications) of Rémy Sanchez to read/write serial port in PHP (you can find it <a href="http://www.phpclasses.org/package/3679-PHP-Communicate-with-a-serial-port.html">here</a>). We can run it with a script similar than the Dummy one, thanks to dependency injection:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">require_once</span><span class="p">(</span><span class="s1">'Sms.php'</span><span class="p">);</span>
+<span class="k">require_once</span><span class="p">(</span><span class="s1">'Sms/Interface.php'</span><span class="p">);</span>
+<span class="k">require_once</span><span class="p">(</span><span class="s1">'Sms/Serial.php'</span><span class="p">);</span>
+ 
+<span class="nv">$pin</span> <span class="o">=</span> <span class="mi">1234</span><span class="p">;</span>
+ 
+<span class="k">try</span> <span class="p">{</span>
+    <span class="nv">$serial</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Sms_Serial</span><span class="p">;</span>
+    <span class="nv">$serial</span><span class="o">-&gt;</span><span class="nf">deviceSet</span><span class="p">(</span><span class="s2">"/dev/ttyS0"</span><span class="p">);</span>
+    <span class="nv">$serial</span><span class="o">-&gt;</span><span class="nf">confBaudRate</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+    <span class="nv">$serial</span><span class="o">-&gt;</span><span class="nf">confParity</span><span class="p">(</span><span class="s1">'none'</span><span class="p">);</span>
+    <span class="nv">$serial</span><span class="o">-&gt;</span><span class="nf">confCharacterLength</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span>
+ 
+    <span class="nv">$sms</span> <span class="o">=</span> <span class="nc">Sms</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nv">$serial</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">insertPin</span><span class="p">(</span><span class="nv">$pin</span><span class="p">);</span>
+ 
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$sms</span><span class="o">-&gt;</span><span class="nf">sendSMS</span><span class="p">(</span><span class="mi">555987654</span><span class="p">,</span> <span class="s2">"test Hi"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"SMS sent</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Sent Error</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="c1">// Now read inbox</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$sms</span><span class="o">-&gt;</span><span class="nf">readInbox</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$in</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">echo</span><span class="s2">"tlfn: </span><span class="si">{</span><span class="nv">$in</span><span class="p">[</span><span class="s1">'tlfn'</span><span class="p">]</span><span class="si">}</span><span class="s2"> date: </span><span class="si">{</span><span class="nv">$in</span><span class="p">[</span><span class="s1">'date'</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nv">$in</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="nv">$in</span><span class="p">[</span><span class="s1">'msg'</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+ 
+        <span class="c1">// now delete sms</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$sms</span><span class="o">-&gt;</span><span class="nf">deleteSms</span><span class="p">(</span><span class="nv">$in</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="k">echo</span> <span class="s2">"SMS Deleted</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getCode</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="nc">Sms</span><span class="o">::</span><span class="no">EXCEPTION_NO_PIN</span><span class="o">:</span>
+            <span class="k">echo</span> <span class="s2">"PIN Not set</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nc">Sms</span><span class="o">::</span><span class="no">EXCEPTION_PIN_ERROR</span><span class="o">:</span>
+            <span class="k">echo</span> <span class="s2">"PIN Incorrect</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nc">Sms</span><span class="o">::</span><span class="no">EXCEPTION_SERVICE_NOT_IMPLEMENTED</span><span class="o">:</span>
+            <span class="k">echo</span> <span class="s2">"Service Not implemented</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="k">echo</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>And finaly the Http one. As you can see the the script is the same than the Serial one. the only difference is the class passed to the constructor of the Sms class:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span> 
+<span class="k">require_once</span><span class="p">(</span><span class="s1">'Sms.php'</span><span class="p">);</span> 
+<span class="k">require_once</span><span class="p">(</span><span class="s1">'Sms/Interface.php'</span><span class="p">);</span> 
+<span class="k">require_once</span><span class="p">(</span><span class="s1">'Sms/Http.php'</span><span class="p">);</span> 
+ 
+<span class="nv">$serialEternetConverterIP</span> <span class="o">=</span> <span class="s1">'192.168.1.10'</span><span class="p">;</span> 
+<span class="nv">$serialEternetConverterPort</span> <span class="o">=</span> <span class="mi">1113</span><span class="p">;</span> 
+<span class="nv">$pin</span> <span class="o">=</span> <span class="mi">1234</span><span class="p">;</span> 
+<span class="k">try</span> <span class="p">{</span>
+     <span class="nv">$sms</span> <span class="o">=</span> <span class="nc">Sms</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="k">new</span> <span class="nc">Sms_Http</span><span class="p">(</span><span class="nv">$serialEternetConverterIP</span><span class="p">,</span> <span class="nv">$serialEternetConverterPort</span><span class="p">));</span>
+     <span class="nv">$sms</span><span class="o">-&gt;</span><span class="nf">insertPin</span><span class="p">(</span><span class="nv">$pin</span><span class="p">);</span>
+ 
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$sms</span><span class="o">-&gt;</span><span class="nf">sendSMS</span><span class="p">(</span><span class="mi">555987654</span><span class="p">,</span> <span class="s2">"test Hi"</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"SMS Sent</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">"Sent Error</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="c1">// Now read inbox</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$sms</span><span class="o">-&gt;</span><span class="nf">readInbox</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$in</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">echo</span><span class="s2">"tlfn: </span><span class="si">{</span><span class="nv">$in</span><span class="p">[</span><span class="s1">'tlfn'</span><span class="p">]</span><span class="si">}</span><span class="s2"> date: </span><span class="si">{</span><span class="nv">$in</span><span class="p">[</span><span class="s1">'date'</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nv">$in</span><span class="p">[</span><span class="s1">'hour'</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="nv">$in</span><span class="p">[</span><span class="s1">'msg'</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+ 
+        <span class="c1">// now delete sms</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$sms</span><span class="o">-&gt;</span><span class="nf">deleteSms</span><span class="p">(</span><span class="nv">$in</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="k">echo</span> <span class="s2">"SMS Deleted</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getCode</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="nc">Sms</span><span class="o">::</span><span class="no">EXCEPTION_NO_PIN</span><span class="o">:</span>
+            <span class="k">echo</span> <span class="s2">"PIN Not set</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nc">Sms</span><span class="o">::</span><span class="no">EXCEPTION_PIN_ERROR</span><span class="o">:</span>
+            <span class="k">echo</span> <span class="s2">"PIN Incorrect</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="nc">Sms</span><span class="o">::</span><span class="no">EXCEPTION_SERVICE_NOT_IMPLEMENTED</span><span class="o">:</span>
+            <span class="k">echo</span> <span class="s2">"Service Not implemented</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="k">echo</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Serial/Ethernet <a href="http://www.google.com/images?q=ethernet+serial+converter&amp;biw=1920&amp;bih=967">converters</a> normally have different operational modes. They allow you to create a fake serial port on your PC and work exactly in the same way than if you have your device connected with a serial cable. I don’t like this operation mode. I prefer to use the TCP server mode. With the TCP server mode I can read/write from the serial device with the standard socket functions. So if you dive into <a href="https://github.com/gonzalo123/gam-sms/blob/master/Sms/Http.php">Sms_Http</a> class you will find TCP socket’s functions.</p>
+
+<p>And finally I will do a brief excerpt of AT+ commands used to send /read SMSs:</p>
+
+<p><strong>AT+CPIN?\r</strong> : checks if SIM has the pin code. It answers +CPIN: READY or +CPIN: SIM PIN if we need to insert the pin number <strong>AT+CMGS=”[number]”\r[text]Control-Z</strong> : to send a SMS (in php we have Control-Z with chr(26)). It returns OK or ERROR <strong>AT+CMGF=1\r</strong>: set the device to operate in SMS text mode (0=PDU mode and 1=text mode). Returns OK. <strong>AT+CMGL=\“ALL”\r</strong> read all the sms stored in the device. We also can use “REC UNREAD” Instead of “ALL”. <strong>AT+CMGD=[ID]\r</strong>: Deletes a SMS from the device</p>
+
+<p>You can download the source code from github <a href="https://github.com/gonzalo123/gam-sms">here</a></p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Howto+Send%2FRead+SMSs+using+a+GSM+modem%2C+AT%2B+commands+and+PHP%20%2F2011%2F03%2F21%2Fhowto-sendread-smss-using-a-gsm-modem-at-commands-and-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2011%2F03%2F21%2Fhowto-sendread-smss-using-a-gsm-modem-at-commands-and-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Howto+Send%2FRead+SMSs+using+a+GSM+modem%2C+AT%2B+commands+and+PHP&url=%2F2011%2F03%2F21%2Fhowto-sendread-smss-using-a-gsm-modem-at-commands-and-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2011/03/21/howto-sendread-smss-using-a-gsm-modem-at-commands-and-php/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2011/03/21/howto-sendread-smss-using-a-gsm-modem-at-commands-and-php'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618050263464052000"></script>
+
+    </div>
+  </body>
+</html>

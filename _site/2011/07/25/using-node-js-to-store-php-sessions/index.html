@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Using node.js to store PHP sessions</title>
+    <meta name="description"
+          content="We use sessions when we want to preserve certain data across subsequent accesses. PHP allows us to use different handlers when we’re using sessions. The default one is filesystem, but we can change it with session.save_handler in the php.ini. session.save_handler defines the name of the handler which is used for storing and retrieving data associated with a session. We also can create our own handler to manage sessions. In this post we’re going to create a custom handler to store sessions in a node.js service. Let’s start:
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Using node.js to store PHP sessions">
+    <meta name="twitter:description"
+          content="We use sessions when we want to preserve certain data across subsequent accesses. PHP allows us to use different handlers when we’re using sessions. The default one is filesystem, but we can change it with session.save_handler in the php.ini. session.save_handler defines the name of the handler which is used for storing and retrieving data associated with a session. We also can create our own handler to manage sessions. In this post we’re going to create a custom handler to store sessions in a node.js service. Let’s start:
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Using node.js to store PHP sessions">
+    <meta property="og:description"
+          content="We use sessions when we want to preserve certain data across subsequent accesses. PHP allows us to use different handlers when we’re using sessions. The default one is filesystem, but we can change it with session.save_handler in the php.ini. session.save_handler defines the name of the handler which is used for storing and retrieving data associated with a session. We also can create our own handler to manage sessions. In this post we’re going to create a custom handler to store sessions in a node.js service. Let’s start:
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618050263464052000">
+    <link rel="canonical"
+          href="/2011/07/25/using-node-js-to-store-php-sessions/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Using node.js to store PHP sessions | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Using node.js to store PHP sessions" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="We use sessions when we want to preserve certain data across subsequent accesses. PHP allows us to use different handlers when we’re using sessions. The default one is filesystem, but we can change it with session.save_handler in the php.ini. session.save_handler defines the name of the handler which is used for storing and retrieving data associated with a session. We also can create our own handler to manage sessions. In this post we’re going to create a custom handler to store sessions in a node.js service. Let’s start:" />
+<meta property="og:description" content="We use sessions when we want to preserve certain data across subsequent accesses. PHP allows us to use different handlers when we’re using sessions. The default one is filesystem, but we can change it with session.save_handler in the php.ini. session.save_handler defines the name of the handler which is used for storing and retrieving data associated with a session. We also can create our own handler to manage sessions. In this post we’re going to create a custom handler to store sessions in a node.js service. Let’s start:" />
+<link rel="canonical" href="/2011/07/25/using-node-js-to-store-php-sessions/" />
+<meta property="og:url" content="/2011/07/25/using-node-js-to-store-php-sessions/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-07-25T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Using node.js to store PHP sessions" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2011/07/25/using-node-js-to-store-php-sessions/"},"url":"/2011/07/25/using-node-js-to-store-php-sessions/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"We use sessions when we want to preserve certain data across subsequent accesses. PHP allows us to use different handlers when we’re using sessions. The default one is filesystem, but we can change it with session.save_handler in the php.ini. session.save_handler defines the name of the handler which is used for storing and retrieving data associated with a session. We also can create our own handler to manage sessions. In this post we’re going to create a custom handler to store sessions in a node.js service. Let’s start:","dateModified":"2011-07-25T00:00:00+02:00","datePublished":"2011-07-25T00:00:00+02:00","headline":"Using node.js to store PHP sessions","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+        <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+
+
+</div>
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+cc
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2011-07-25 00:00
+            " class="post-meta__date date">25 Jul 2011</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#node-js">node-js</a>, <a
+                href="/tags/#npm">npm</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#node">node</a>, <a
+                href="/tags/#nodeks">nodeks</a>, <a
+                href="/tags/#sessions">sessions</a></span>
+            
+        </div>
+        <h1 class="post-title">Using node.js to store PHP sessions</h1>
+    </header>
+
+    <section class="post">
+        <p>We use <a href="http://www.php.net/manual/en/book.session.php">sessions</a> when we want to preserve certain data across subsequent accesses. PHP allows us to use different handlers when we’re using sessions. The default one is filesystem, but we can change it with <a href="http://www.php.net/manual/en/session.configuration.php#ini.session.save-handler">session.save_handler</a> in the php.ini. session.save_handler defines the name of the handler which is used for storing and retrieving data associated with a session. We also can create our own handler to manage sessions. In this post we’re going to create a custom handler to store sessions in a node.js service. Let’s start:</p>
+
+<p>Imagine we’ve got the following php script:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">session_start</span><span class="p">();</span>
+ 
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">isset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">"gonzalo"</span><span class="p">]))</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">"gonzalo"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">"gonzalo"</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">"arr"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'key'</span> <span class="o">=&gt;</span> <span class="nb">uniqid</span><span class="p">());</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>A simple usage of sessions with PHP. If we reload the page our counter will be incremented by one. We’re using the default session handler. It works without any problem.</p>
+
+<p>The idea is create a custom handler to use a server with node.js to store the session information instead of filesystem. To create custom handlers we need to use the PHP function: <a href="http://www.php.net/manual/en/function.session-set-save-handler.php">session_set_save_handler</a> and rewrite the callbacks for: open, close, read, write, destroy and gc. PHP’s documentation is great. My proposal is the following one:</p>
+
+<p>Our custom handler:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">NodeSession</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="no">NODE_DEF_HOST</span> <span class="o">=</span> <span class="s1">'127.0.0.1'</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">NODE_DEF_PORT</span> <span class="o">=</span> <span class="mi">5672</span><span class="p">;</span>
+ 
+    <span class="k">static</span> <span class="k">function</span> <span class="n">start</span><span class="p">(</span><span class="nv">$host</span> <span class="o">=</span> <span class="k">self</span><span class="o">::</span><span class="no">NODE_DEF_HOST</span><span class="p">,</span> <span class="nv">$port</span> <span class="o">=</span> <span class="k">self</span><span class="o">::</span><span class="no">NODE_DEF_PORT</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">self</span><span class="p">(</span><span class="nv">$host</span><span class="p">,</span> <span class="nv">$port</span><span class="p">);</span>
+        <span class="nb">session_set_save_handler</span><span class="p">(</span>
+            <span class="k">array</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s2">"open"</span><span class="p">),</span>
+            <span class="k">array</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s2">"close"</span><span class="p">),</span>
+            <span class="k">array</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s2">"read"</span><span class="p">),</span>
+            <span class="k">array</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s2">"write"</span><span class="p">),</span>
+            <span class="k">array</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s2">"destroy"</span><span class="p">),</span>
+            <span class="k">array</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s2">"gc"</span><span class="p">));</span>
+        <span class="nb">session_start</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nv">$obj</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">unserializeSession</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span>  <span class="nb">strlen</span><span class="p">(</span> <span class="nv">$data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">array</span><span class="p">();</span>
+        <span class="p">}</span>
+ 
+        <span class="c1">// match all the session keys and offsets</span>
+        <span class="nb">preg_match_all</span><span class="p">(</span><span class="s1">'/(^|;|\})([a-zA-Z0-9_]+)\|/i'</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="nv">$matchesarray</span><span class="p">,</span> <span class="no">PREG_OFFSET_CAPTURE</span><span class="p">);</span>
+        <span class="nv">$returnArray</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+ 
+        <span class="nv">$lastOffset</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="nv">$currentKey</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+        <span class="k">foreach</span> <span class="p">(</span> <span class="nv">$matchesarray</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">as</span> <span class="nv">$value</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$offset</span> <span class="o">=</span> <span class="nv">$value</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+            <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">is_null</span><span class="p">(</span> <span class="nv">$lastOffset</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nv">$valueText</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="nv">$lastOffset</span><span class="p">,</span> <span class="nv">$offset</span> <span class="o">-</span> <span class="nv">$lastOffset</span> <span class="p">);</span>
+                <span class="nv">$returnArray</span><span class="p">[</span><span class="nv">$currentKey</span><span class="p">]</span> <span class="o">=</span> <span class="nb">unserialize</span><span class="p">(</span><span class="nv">$valueText</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="nv">$currentKey</span> <span class="o">=</span> <span class="nv">$value</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+ 
+            <span class="nv">$lastOffset</span> <span class="o">=</span> <span class="nv">$offset</span> <span class="o">+</span> <span class="nb">strlen</span><span class="p">(</span> <span class="nv">$currentKey</span> <span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+ 
+        <span class="nv">$valueText</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="nv">$lastOffset</span> <span class="p">);</span>
+        <span class="nv">$returnArray</span><span class="p">[</span><span class="nv">$currentKey</span><span class="p">]</span> <span class="o">=</span> <span class="nb">unserialize</span><span class="p">(</span><span class="nv">$valueText</span><span class="p">);</span>
+ 
+        <span class="k">return</span> <span class="nv">$returnArray</span><span class="p">;</span>
+    <span class="p">}</span>
+     
+    <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="nv">$host</span> <span class="o">=</span> <span class="k">self</span><span class="o">::</span><span class="no">NODE_DEF_HOST</span><span class="p">,</span> <span class="nv">$port</span> <span class="o">=</span> <span class="k">self</span><span class="o">::</span><span class="no">NODE_DEF_PORT</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_host</span> <span class="o">=</span> <span class="nv">$host</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_port</span> <span class="o">=</span> <span class="nv">$port</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">function</span> <span class="n">open</span><span class="p">(</span><span class="nv">$save_path</span><span class="p">,</span> <span class="nv">$session_name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">function</span> <span class="n">close</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">read</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">send</span><span class="p">(</span><span class="k">__FUNCTION__</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">));</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">write</span><span class="p">(</span><span class="nv">$id</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">send</span><span class="p">(</span><span class="k">__FUNCTION__</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">'id'</span>       <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">,</span>
+                <span class="s1">'data'</span>     <span class="o">=&gt;</span> <span class="nv">$data</span><span class="p">,</span>
+                <span class="s1">'time'</span>     <span class="o">=&gt;</span> <span class="nb">time</span><span class="p">(),</span>
+                <span class="s1">'dataJSON'</span> <span class="o">=&gt;</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">unserializeSession</span><span class="p">(</span><span class="nv">$data</span><span class="p">))));</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">destroy</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">send</span><span class="p">(</span><span class="k">__FUNCTION__</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">));</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+         <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">function</span> <span class="n">gc</span><span class="p">(</span><span class="nv">$maxlifetime</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">send</span><span class="p">(</span><span class="k">__FUNCTION__</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'maxlifetime'</span> <span class="o">=&gt;</span> <span class="nv">$maxlifetime</span><span class="p">,</span> <span class="s1">'time'</span> <span class="o">=&gt;</span> <span class="nb">time</span><span class="p">()));</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">private</span> <span class="k">function</span> <span class="n">send</span><span class="p">(</span><span class="nv">$action</span><span class="p">,</span> <span class="nv">$params</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$params</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'action'</span> <span class="o">=&gt;</span> <span class="nv">$action</span><span class="p">)</span> <span class="o">+</span> <span class="nv">$params</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">"http://</span><span class="si">{</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_port</span><span class="si">}</span><span class="s2">?"</span> <span class="mf">.</span> <span class="nb">http_build_query</span><span class="p">(</span><span class="nv">$params</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Our node.js server:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">http</span><span class="dl">'</span><span class="p">),</span>
+    <span class="nx">url</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">),</span>
+    <span class="nx">session</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">nodePhpSessions</span><span class="dl">'</span><span class="p">).</span><span class="nx">SessionHandler</span><span class="p">;</span>
+ 
+<span class="kd">var</span> <span class="nx">sessionHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">session</span><span class="p">();</span>
+ 
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">query</span><span class="p">;</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">text/plain</span><span class="dl">'</span><span class="p">});</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">));</span>
+<span class="p">});</span>
+ 
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">5672</span><span class="p">,</span> <span class="dl">"</span><span class="s2">127.0.0.1</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">address</span> <span class="o">=</span> <span class="nx">server</span><span class="p">.</span><span class="nx">address</span><span class="p">();</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">opened server on %j</span><span class="dl">"</span><span class="p">,</span> <span class="nx">address</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>As we can see we need the node.js module nodePhpSessions. You can easily install with:</p>
+
+<pre><code class="language-commandline">npm install nodePhpSessions
+</code></pre>
+
+<p>You can see nodePhpSessions library <a href="https://github.com/gonzalo123/nodePhpSessions/blob/master/lib/SessionHandler.js">here</a>.</p>
+
+<p>The library is tested with nodeunit. Without TDD is very hard to test things such as garbage collector.:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">nodePhpSessions</span><span class="dl">'</span><span class="p">).</span><span class="nx">SessionHandler</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">sessionHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">session</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">parsedUrl</span><span class="p">;</span>
+ 
+<span class="nx">exports</span><span class="p">[</span><span class="dl">"</span><span class="s2">testReadUndefinedSession</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">test</span><span class="p">){</span>
+    <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="p">{</span> <span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">read</span><span class="dl">'</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ts49vmf0p732iafr25mdu8gvg2</span><span class="dl">'</span> <span class="p">};</span>
+    <span class="nx">test</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">),</span> <span class="kc">undefined</span><span class="p">);</span>
+    <span class="nx">test</span><span class="p">.</span><span class="nx">done</span><span class="p">();</span>
+<span class="p">};</span>
+ 
+<span class="nx">exports</span><span class="p">[</span><span class="dl">"</span><span class="s2">oneSessionShouldReturns1</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">test</span><span class="p">){</span>
+    <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">write</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ts49vmf0p732iafr25mdu8gvg2</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">data</span><span class="p">:</span> <span class="dl">'</span><span class="s1">gonzalo|i:1;arr|a:1:{s:3:"key";s:13:"4e2b1a40d136a";}</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">time</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1311447616</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">dataJSON</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{"gonzalo":1,"arr":{"key":"4e2b1a40d136a"}}</span><span class="dl">'</span> <span class="p">};</span>
+    <span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">);</span>
+ 
+    <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="p">{</span> <span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">readAsArray</span><span class="dl">'</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ts49vmf0p732iafr25mdu8gvg2</span><span class="dl">'</span> <span class="p">};</span>
+    <span class="nx">test</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">).</span><span class="nx">gonzalo</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="nx">test</span><span class="p">.</span><span class="nx">done</span><span class="p">();</span>
+<span class="p">};</span>
+ 
+<span class="nx">exports</span><span class="p">[</span><span class="dl">"</span><span class="s2">oneSessionShouldReturns2</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">test</span><span class="p">){</span>
+    <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">write</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ts49vmf0p732iafr25mdu8gvg2</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">data</span><span class="p">:</span> <span class="dl">'</span><span class="s1">gonzalo|i:2;arr|a:1:{s:3:"key";s:13:"4e2b1a40d136a";}</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">time</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1311447616</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">dataJSON</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{"gonzalo":2,"arr":{"key":"4e2b1a40d136a"}}</span><span class="dl">'</span> <span class="p">};</span>
+    <span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">);</span>
+    <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="p">{</span> <span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">readAsArray</span><span class="dl">'</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ts49vmf0p732iafr25mdu8gvg2</span><span class="dl">'</span> <span class="p">};</span>
+    <span class="nx">test</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">).</span><span class="nx">gonzalo</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="nx">test</span><span class="p">.</span><span class="nx">done</span><span class="p">();</span>
+<span class="p">};</span>
+ 
+<span class="nx">exports</span><span class="p">[</span><span class="dl">"</span><span class="s2">destroySession</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">test</span><span class="p">){</span>
+    <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">destroy</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ts49vmf0p732iafr25mdu8gvg2</span><span class="dl">'</span><span class="p">};</span>
+    <span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">);</span>
+ 
+    <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="p">{</span> <span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">readAsArray</span><span class="dl">'</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ts49vmf0p732iafr25mdu8gvg2</span><span class="dl">'</span> <span class="p">};</span>
+    <span class="nx">test</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">),</span> <span class="kc">undefined</span><span class="p">);</span>
+ 
+    <span class="nx">test</span><span class="p">.</span><span class="nx">done</span><span class="p">();</span>
+<span class="p">};</span>
+ 
+<span class="nx">exports</span><span class="p">[</span><span class="dl">"</span><span class="s2">garbageColector</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">test</span><span class="p">){</span>
+    <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">write</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">session1</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">data</span><span class="p">:</span> <span class="dl">'</span><span class="s1">gonzalo|i:1;arr|a:1:{s:3:"key";s:13:"4e2b1a40d136a";}</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">time</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1111111200</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">dataJSON</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{"gonzalo":1,"arr":{"key":"4e2b1a40d136a"}}</span><span class="dl">'</span> <span class="p">};</span>
+    <span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">);</span>
+ 
+    <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">write</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">session2</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">data</span><span class="p">:</span> <span class="dl">'</span><span class="s1">gonzalo|i:1;arr|a:1:{s:3:"key";s:13:"4e2b1a40d136a";}</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">time</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1111111100</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">dataJSON</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{"gonzalo":1,"arr":{"key":"4e2b1a40d136a"}}</span><span class="dl">'</span> <span class="p">};</span>
+    <span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">);</span>
+ 
+    <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="p">{</span> <span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">gc</span><span class="dl">'</span><span class="p">,</span> <span class="na">maxlifetime</span><span class="p">:</span> <span class="dl">'</span><span class="s1">100</span><span class="dl">'</span><span class="p">,</span> <span class="na">time</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1111111210</span><span class="dl">'</span><span class="p">};</span>
+    <span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">);</span>
+ 
+    <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="p">{</span> <span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">readAsArray</span><span class="dl">'</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">session2</span><span class="dl">'</span> <span class="p">};</span>
+    <span class="nx">test</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">),</span> <span class="kc">undefined</span><span class="p">);</span>
+ 
+    <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="p">{</span> <span class="na">action</span><span class="p">:</span> <span class="dl">'</span><span class="s1">readAsArray</span><span class="dl">'</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">session1</span><span class="dl">'</span> <span class="p">};</span>
+    <span class="nx">test</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">sessionHandler</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">).</span><span class="nx">gonzalo</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+ 
+    <span class="nx">test</span><span class="p">.</span><span class="nx">done</span><span class="p">();</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Here you can see the output of the tests:</p>
+
+<pre><code class="language-commandline">nodeunit testNodeSessions.js 
+ 
+testNodeSessions.js
+✔ testReadUndefinedSession
+✔ oneSessionShouldReturns1
+✔ oneSessionShouldReturns2
+✔ destroySession
+✔ garbageColector
+ 
+OK: 6 assertions (5ms)
+</code></pre>
+
+<p>Now we change the original PHP script to:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">include_once</span> <span class="s1">'NodeSessions.php'</span><span class="p">;</span>
+<span class="nc">NodeSession</span><span class="o">::</span><span class="nf">start</span><span class="p">();</span>
+ 
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">isset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">"gonzalo"</span><span class="p">]))</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">"gonzalo"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">"gonzalo"</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s2">"arr"</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'key'</span> <span class="o">=&gt;</span> <span class="nb">uniqid</span><span class="p">());</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>We start the node.js server:</p>
+
+<pre><code class="language-commandline">node serverSessions.js
+</code></pre>
+
+<p>Now if we reload our script in the browser we will see the same behaviour, but now our sessions are stored in the node.js server.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">array</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">[</span><span class="s2">"gonzalo"</span><span class="p">]</span><span class="o">=&gt;</span>
+  <span class="nf">int</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+  <span class="p">[</span><span class="s2">"arr"</span><span class="p">]</span><span class="o">=&gt;</span>
+  <span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">[</span><span class="s2">"key"</span><span class="p">]</span><span class="o">=&gt;</span>
+    <span class="nf">string</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span> <span class="s2">"4e2a9f6a966f4"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This kind of techniques are good when <a href="http://gonzalo123.wordpress.com/2010/07/27/clustering-php-applications-tips-and-hints/">clustering PHP applications</a>.</p>
+
+<p>Full code is available on github (node server, PHP handler, tests and examples) <a href="https://github.com/gonzalo123/nodePhpSessions">here</a>.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Using+node.js+to+store+PHP+sessions%20%2F2011%2F07%2F25%2Fusing-node-js-to-store-php-sessions%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2011%2F07%2F25%2Fusing-node-js-to-store-php-sessions%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Using+node.js+to+store+PHP+sessions&url=%2F2011%2F07%2F25%2Fusing-node-js-to-store-php-sessions%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2011/07/25/using-node-js-to-store-php-sessions/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2011/07/25/using-node-js-to-store-php-sessions'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/12/12/playing-with-arduino-iot-crossbar-and-websockets/">Playing with arduino, IoT, crossbar and websockets <span class="label label-default">node-js</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618050263464052000"></script>
+
+    </div>
+  </body>
+</html>

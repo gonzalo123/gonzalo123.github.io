@@ -60,7 +60,7 @@
     <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="/css/main.css?1617650803001959000">
+    <link rel="stylesheet" href="/css/main.css?1618050263464052000">
     <link rel="canonical"
           href="/2018/04/09/opencv-and-esp32-experiment-moving-a-servo-with-my-face-alignment/">
     <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
@@ -106,26 +106,6 @@
                 <div class="navigation-wrapper">
                     <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
                     <nav class="cover-navigation navigation--social">
-                        <nav class="cover-navigation">
-                            <ul class="navigation">
-                                <li class="navigation__item">
-                                    <a href="/about" title="about">
-                                        <span>About Me</span>
-                                    </a>
-                                </li>
-                                <li class="navigation__item">
-                                    <a href="/posts" title="posts">
-                                        <span>All</span>
-                                    </a>
-                                </li>
-                                <li class="navigation__item">
-                                    <a href="/search" title="search">
-                                        <span>Search</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </nav>
                         <hr class="panel-cover__divider">
                         <ul class="navigation">
     
@@ -201,7 +181,52 @@
 
     <div class="content-wrapper">
       <div class="content-wrapper__inner">
-        <article class="post-container post-container--single">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+        <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+
+
+</div>
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+cc
+<article class="post-container post-container--single">
     <header
             class="post-header"
             
@@ -814,7 +839,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1617650803001959000"></script>
+<script type="text/javascript" src="/js/main.js?1618050263464052000"></script>
 
     </div>
   </body>

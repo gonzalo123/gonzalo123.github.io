@@ -1572,6 +1572,316 @@
   
     {
 
+      "title"    : "Coding Katas, TDD and Katayunos",
+      "url"      : "/2011/12/12/coding-katas-tdd-and-katayunos/",
+      "category" : "",
+      "tags"     : "node-js, php, technology",
+      "date"     : "2011-12-12 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Playing with the new PHP5.4 features",
+      "url"      : "/2011/11/28/playing-with-the-new-php5-4-features/",
+      "category" : "",
+      "tags"     : "php, technology",
+      "date"     : "2011-11-28 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Working with Request objects in PHP (II). Back to the past",
+      "url"      : "/2011/11/07/working-with-request-objects-in-php-ii-back-to-the-past/",
+      "category" : "",
+      "tags"     : "php, technology",
+      "date"     : "2011-11-07 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Talk about node.js and WebSockets",
+      "url"      : "/2011/10/24/talk-about-node-js-and-websockets/",
+      "category" : "",
+      "tags"     : "node-js, socket-io, technology, websockets, html5, node, nodejs, talks, websockets",
+      "date"     : "2011-10-24 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Working with Request objects in PHP",
+      "url"      : "/2011/10/17/working-with-request-objects-in-php/",
+      "category" : "",
+      "tags"     : "php, technology",
+      "date"     : "2011-10-17 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Display errors on screen even with display errors = off with PHP",
+      "url"      : "/2011/10/10/display-errors-on-screen-even-with-display-errors-off-in-php/",
+      "category" : "",
+      "tags"     : "php, technology, tips, error_log",
+      "date"     : "2011-10-10 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a small microframework with PHP (Part 2). Command line interface",
+      "url"      : "/2011/08/29/building-a-small-microframework-with-php-part-2-command-line-interface/",
+      "category" : "",
+      "tags"     : "php, technology, cli, microframework",
+      "date"     : "2011-08-29 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a small microframework with PHP",
+      "url"      : "/2011/08/22/building-a-small-microframework-with-php/",
+      "category" : "",
+      "tags"     : "php, technology, framework, microframework",
+      "date"     : "2011-08-22 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Checking the performance reading arrays with PHP",
+      "url"      : "/2011/08/15/checking-the-performance-reading-arrays-with-php/",
+      "category" : "",
+      "tags"     : "micro-optimizations, php, technology, arrays",
+      "date"     : "2011-08-15 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Runtime Classes. A experiment with PHP and Object Oriented Programming",
+      "url"      : "/2011/08/08/runtime-classes-a-experiment-with-php-and-object-oriented-programming/",
+      "category" : "",
+      "tags"     : "php, poo, technology, experiment, poo, tdd",
+      "date"     : "2011-08-08 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Building a client for a REST API with PHP.",
+      "url"      : "/2011/08/01/building-a-client-for-a-rest-api-with-php/",
+      "category" : "",
+      "tags"     : "php, technology, api",
+      "date"     : "2011-08-01 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Using node.js to store PHP sessions",
+      "url"      : "/2011/07/25/using-node-js-to-store-php-sessions/",
+      "category" : "",
+      "tags"     : "node-js, npm, php, technology, node, nodeks, sessions",
+      "date"     : "2011-07-25 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Populating datagrid techniques with PHP",
+      "url"      : "/2011/07/18/populating-datagrid-techniques-with-php/",
+      "category" : "",
+      "tags"     : "jquery, php, technology, tips, web-development, webdev",
+      "date"     : "2011-07-18 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Database abstraction layers in PHP. PDO versus DBAL",
+      "url"      : "/2011/07/11/database-abstraction-layers-in-php-pdo-versus-dbal/",
+      "category" : "",
+      "tags"     : "databases, dbal, pdo, php, postgresql, technology",
+      "date"     : "2011-07-11 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "New features in PHP5.4 alpha1",
+      "url"      : "/2011/07/04/new-features-in-php5-4-alpha1/",
+      "category" : "",
+      "tags"     : "php, technology",
+      "date"     : "2011-07-04 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Real time notifications (part II). Now with node.js and socket.io",
+      "url"      : "/2011/05/23/real-time-notifications-part-ii-now-with-node-js-and-socket-io/",
+      "category" : "",
+      "tags"     : "html5, node-js, socket-io, technology, websockets",
+      "date"     : "2011-05-23 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Web console with node.js",
+      "url"      : "/2011/05/16/web-console-with-node-js/",
+      "category" : "",
+      "tags"     : "html5, node-js, php, technology, websockets, node, nodejs, websockets",
+      "date"     : "2011-05-16 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Real time monitoring PHP applications with websockets and node.js",
+      "url"      : "/2011/05/09/real-time-monitoring-php-applications-with-websockets-and-node-js/",
+      "category" : "",
+      "tags"     : "html5, node-js, php, technology, websockets, html5, node, nodejs, websockets",
+      "date"     : "2011-05-09 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Performance analysis of Stored Procedures with PDO and PHP",
+      "url"      : "/2011/05/02/performance-analysis-of-stored-procedures-with-pdo-and-php/",
+      "category" : "",
+      "tags"     : "databases, pdo, postgresql, technology, pdo, performance, php, postgresql",
+      "date"     : "2011-05-02 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Reflection over PHPDoc with PHP",
+      "url"      : "/2011/04/04/reflection-over-phpdoc-with-php/",
+      "category" : "",
+      "tags"     : "php, tips, phpdoc, reflection",
+      "date"     : "2011-04-04 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Performance analysis fetching data with PDO and PHP.",
+      "url"      : "/2011/03/28/performance-analysis-fetching-data-with-pdo-and-php/",
+      "category" : "",
+      "tags"     : "pdo, php, postgresql, pdo, performance",
+      "date"     : "2011-03-28 00:00:00 +0200"
+
+    } ,
+  
+    {
+
+      "title"    : "Howto Send/Read SMSs using a GSM modem, AT+ commands and PHP",
+      "url"      : "/2011/03/21/howto-sendread-smss-using-a-gsm-modem-at-commands-and-php/",
+      "category" : "",
+      "tags"     : "php, technology, gsm, sms",
+      "date"     : "2011-03-21 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Real time notifications with PHP",
+      "url"      : "/2011/03/14/real-time-notifications-with-php/",
+      "category" : "",
+      "tags"     : "jquery, php, comet, jquery, js",
+      "date"     : "2011-03-14 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Watermarks in our images with PHP and Gearman",
+      "url"      : "/2011/03/07/watermarks-in-our-images-with-php-and-gearman/",
+      "category" : "",
+      "tags"     : "php, technology, gd, gearman",
+      "date"     : "2011-03-07 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Watermarks in our images with PHP and mod_rewrite",
+      "url"      : "/2011/02/28/watermarks-in-our-images-with-php-and-mod_rewrite/",
+      "category" : "",
+      "tags"     : "php, technology, gearman, mod_rewrite",
+      "date"     : "2011-02-28 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Speed up page page load combining javascript files with PHP",
+      "url"      : "/2011/02/21/speed-up-page-page-load-combining-javascript-files-with-php/",
+      "category" : "",
+      "tags"     : "php, technology, tips, js, performance",
+      "date"     : "2011-02-21 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Function decorators in PHP with PHPDoc and Annotations",
+      "url"      : "/2011/02/01/function-decorators-in-php-with-phpdoc-and-annotations/",
+      "category" : "",
+      "tags"     : "php, technology, tips",
+      "date"     : "2011-02-01 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "PHP Template Engine Comparison. Part 2 (versus Plain PHP)",
+      "url"      : "/2011/01/24/php-template-engine-comparison-part-2-versus-plain-php/",
+      "category" : "",
+      "tags"     : "haanga, php, technology",
+      "date"     : "2011-01-24 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "PHP Template Engine Comparison",
+      "url"      : "/2011/01/17/php-template-engine-comparison/",
+      "category" : "",
+      "tags"     : "haanga, php, technology, twig",
+      "date"     : "2011-01-17 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "Using PHP classes to store configuration data",
+      "url"      : "/2011/01/10/using-php-classes-to-store-configuration-data/",
+      "category" : "",
+      "tags"     : "php, technology, tips",
+      "date"     : "2011-01-10 00:00:00 +0100"
+
+    } ,
+  
+    {
+
+      "title"    : "My VIM configuration for PHP development.",
+      "url"      : "/2011/01/03/my-vim-configuration-for-php-developement/",
+      "category" : "",
+      "tags"     : "php, technology, tips, vim",
+      "date"     : "2011-01-03 00:00:00 +0100"
+
+    } ,
+  
+    {
+
       "title"    : "Pivot tables in PHP",
       "url"      : "/2010/01/24/pivot-tables-in-php/",
       "category" : "",

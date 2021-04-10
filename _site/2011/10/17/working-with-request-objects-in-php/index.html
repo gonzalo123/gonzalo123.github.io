@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Working with Request objects in PHP</title>
+    <meta name="description"
+          content="Normally when we work with web applications we need to handle Request objects. Requests are the input of our applications. According to the golden rule of security:
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Working with Request objects in PHP">
+    <meta name="twitter:description"
+          content="Normally when we work with web applications we need to handle Request objects. Requests are the input of our applications. According to the golden rule of security:
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Working with Request objects in PHP">
+    <meta property="og:description"
+          content="Normally when we work with web applications we need to handle Request objects. Requests are the input of our applications. According to the golden rule of security:
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618050263464052000">
+    <link rel="canonical"
+          href="/2011/10/17/working-with-request-objects-in-php/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Working with Request objects in PHP | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Working with Request objects in PHP" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Normally when we work with web applications we need to handle Request objects. Requests are the input of our applications. According to the golden rule of security:" />
+<meta property="og:description" content="Normally when we work with web applications we need to handle Request objects. Requests are the input of our applications. According to the golden rule of security:" />
+<link rel="canonical" href="/2011/10/17/working-with-request-objects-in-php/" />
+<meta property="og:url" content="/2011/10/17/working-with-request-objects-in-php/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-10-17T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Working with Request objects in PHP" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2011/10/17/working-with-request-objects-in-php/"},"url":"/2011/10/17/working-with-request-objects-in-php/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Normally when we work with web applications we need to handle Request objects. Requests are the input of our applications. According to the golden rule of security:","dateModified":"2011-10-17T00:00:00+02:00","datePublished":"2011-10-17T00:00:00+02:00","headline":"Working with Request objects in PHP","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+        <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+
+
+</div>
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+cc
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2011-10-17 00:00
+            " class="post-meta__date date">17 Oct 2011</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#technology">technology</a></span>
+            
+        </div>
+        <h1 class="post-title">Working with Request objects in PHP</h1>
+    </header>
+
+    <section class="post">
+        <p>Normally when we work with web applications we need to handle Request objects. Requests are the input of our applications. According to the golden rule of security:</p>
+
+<blockquote>
+  <p>Filter Input-Escape Output</p>
+</blockquote>
+
+<p>We cannot use $_GET and $_POST superglobals. OK we can use then but we <a href="http://www.phparch.com/2010/07/never-use-_get-again/">shouldn’t</a> use them. Normally web frameworks do this work for us, but not all is a framework.</p>
+
+<p>Recently I have worked in a small project without any framework. In this case I also need to handle Request objects. Because of that I have built this small library. Let me show it.</p>
+
+<p>Basically the idea is the following one. I want to filter my inputs, and I don’t want to remember the whole name of every input variables. I want to define the Request object once and use it everywhere. Imagine a small application with a simple input called param1. The URL will be:</p>
+
+<blockquote>
+  <p>test1.php?param1=11212</p>
+</blockquote>
+
+<p>and we want to build this simple script:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">echo</span> <span class="s2">"param1: "</span> <span class="mf">.</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">'param1'</span><span class="p">]</span> <span class="mf">.</span> <span class="s1">'&lt;p/&gt;'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>The problem with this script is that we aren’t filtering input. And we also need to remember the parameter name is param1. If we need to use param1 parameter in another place we need to remember its name is param1 and not Param1 or para1. It can be obvious but it’s easy to make mistakes.</p>
+
+<p>My proposal is the following one. I create a simple PHP class called Request1 extending RequestObject object:</p>
+
+<h2 id="example-1-simple-example">Example 1: simple example</h2>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Request1</span> <span class="kd">extends</span> <span class="nc">RequestObject</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$param1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now if we create an instance of Request1, we can use the following code:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Request1</span><span class="p">();</span>
+<span class="k">echo</span> <span class="s2">"param1: "</span> <span class="mf">.</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="n">param1</span> <span class="mf">.</span> <span class="s1">'&lt;p/&gt;'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>I’m not going to explain the magic now, but with this simple script we will filter the input to the default type (string) and we will get the following outcomes:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test1.php?param1=11212
+param1: 11212
+
+test1.php?param1=hi
+param1: hi
+</code></pre></div></div>
+
+<p>Maybe is hard to explain with words but with examples it’s more easy to show you what I want:</p>
+
+<h2 id="example-2-data-types-and-default-values">Example 2: data types and default values</h2>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Request2</span> <span class="kd">extends</span> <span class="nc">RequestObject</span>
+<span class="p">{</span>
+    <span class="cd">/**
+     * @cast string
+     */</span>
+    <span class="k">public</span> <span class="nv">$param1</span><span class="p">;</span>
+    <span class="cd">/**
+     * @cast string
+     * @default default value
+     */</span>
+    <span class="k">public</span> <span class="nv">$param2</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Request2</span><span class="p">();</span>
+ 
+<span class="k">echo</span> <span class="s2">"param1: &lt;br/&gt;"</span><span class="p">;</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="n">param1</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s2">"&lt;br/&gt;"</span><span class="p">;</span>
+ 
+<span class="k">echo</span> <span class="s2">"param2: &lt;br/&gt;"</span><span class="p">;</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="n">param2</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s2">"&lt;br/&gt;"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Now we are will filter param1 parameter to string and param2 to string to but we will assign a default variable to the parameter if we don’t have a user input.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test2.php?param1=hi&amp;param2=1
+
+param1: string(2) "hi"
+param2: string(1) "1"
+
+test2.php?param1=1&amp;param2=hi
+
+param1: string(1) "1"
+param2: string(2) "hi"
+
+test2.php?param1=1
+param1: string(1) "1"
+param2: string(13) "default value"
+</code></pre></div></div>
+
+<h2 id="example-3-validadors">Example 3: validadors</h2>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Request3</span> <span class="kd">extends</span> <span class="nc">RequestObject</span>
+<span class="p">{</span>
+    <span class="cd">/** @cast string */</span>
+    <span class="k">public</span> <span class="nv">$param1</span><span class="p">;</span>
+    <span class="cd">/** @cast integer */</span>
+    <span class="k">public</span> <span class="nv">$param2</span><span class="p">;</span>
+ 
+    <span class="k">protected</span> <span class="k">function</span> <span class="n">validate_param1</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$value</span> <span class="o">=</span> <span class="nb">strrev</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+    <span class="p">}</span>
+     
+    <span class="k">protected</span> <span class="k">function</span> <span class="n">validate_param2</span><span class="p">(</span><span class="nv">$value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Request3</span><span class="p">();</span>
+ 
+    <span class="k">echo</span> <span class="s2">"param1: &lt;br/&gt;"</span><span class="p">;</span>
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="n">param1</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;br/&gt;"</span><span class="p">;</span>
+ 
+    <span class="k">echo</span> <span class="s2">"param2: &lt;br/&gt;"</span><span class="p">;</span>
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="n">param2</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;br/&gt;"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">RequestObjectException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">();</span>
+    <span class="k">echo</span> <span class="s2">"&lt;br/&gt;"</span><span class="p">;</span>
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getValidationErrors</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now a complex example. param1 is a string and param2 is an integer, but we also will validate them. We will alter the param1 value (a simple <a href="http://php.net/manual/en/function.strrev.php">strrev</a>) and we also will raise an exception if param2 is equal to 1</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test3.php?param2=2&amp;param1=hi
+param1: string(2) "ih"
+param2: int(2)
+
+test3.php?param1=hola&amp;param2=1
+Validation error
+array(1) { ["param2"]=&gt; array(1) { ["value"]=&gt; int(1) } }
+</code></pre></div></div>
+
+<h2 id="example-4-dynamic-validations">Example 4: Dynamic validations</h2>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Request4</span> <span class="kd">extends</span> <span class="nc">RequestObject</span>
+<span class="p">{</span>
+    <span class="cd">/** @cast string */</span>
+    <span class="k">public</span> <span class="nv">$param1</span><span class="p">;</span>
+    <span class="cd">/** @cast integer */</span>
+    <span class="k">public</span> <span class="nv">$param2</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Request4</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span> <span class="c1">// disables perform validation on contructor</span>
+                               <span class="c1">// it means it will not raise any validation exception</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">appendValidateTo</span><span class="p">(</span><span class="s1">'param2'</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+ 
+<span class="k">try</span> <span class="p">{</span>
+    <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">validateAll</span><span class="p">();</span> <span class="c1">// now we perform the validation</span>
+ 
+    <span class="k">echo</span> <span class="s2">"param1: &lt;br/&gt;"</span><span class="p">;</span>
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="n">param1</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;br/&gt;"</span><span class="p">;</span>
+ 
+    <span class="k">echo</span> <span class="s2">"param2: &lt;br/&gt;"</span><span class="p">;</span>
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="n">param2</span><span class="p">);</span>
+    <span class="k">echo</span> <span class="s2">"&lt;br/&gt;"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">RequestObjectException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">();</span>
+    <span class="k">echo</span> <span class="s2">"&lt;br/&gt;"</span><span class="p">;</span>
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getValidationErrors</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>More complex example. Param1 will be cast as string and param2 as integer again, same validation to param2 (exception if value equals to 1), but now validation rule won’t be set in the definition of the class. We will append dynamically after the instantiation of the class.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test4.php?param1=hi&amp;param2=2
+param1: string(4) "hi"
+param2: int(2)
+
+test4.php?param1=hola&amp;param2=1
+Validation error
+array(1) { ["param2"]=&gt; array(1) { ["value"]=&gt; int(1) } }
+</code></pre></div></div>
+
+<h2 id="example-5-arrays-and-default-params">Example 5: Arrays and default params</h2>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Request5</span> <span class="kd">extends</span> <span class="nc">RequestObject</span>
+<span class="p">{</span>
+    <span class="cd">/** @cast arrayString */</span>
+    <span class="k">public</span> <span class="nv">$param1</span><span class="p">;</span>
+ 
+    <span class="cd">/** @cast integer */</span>
+    <span class="k">public</span> <span class="nv">$param2</span><span class="p">;</span>
+ 
+    <span class="cd">/**
+     * @cast arrayString
+     * @defaultArray "hello", "world"
+     */</span>
+    <span class="k">public</span> <span class="nv">$param3</span><span class="p">;</span>
+ 
+    <span class="k">protected</span> <span class="k">function</span> <span class="n">validate_param2</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$value</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Request5</span><span class="p">();</span>
+ 
+<span class="k">echo</span> <span class="s2">"&lt;p&gt;param1: &lt;/p&gt;"</span><span class="p">;</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="n">param1</span><span class="p">);</span>
+ 
+<span class="k">echo</span> <span class="s2">"&lt;p&gt;param2: &lt;/p&gt;"</span><span class="p">;</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="n">param2</span><span class="p">);</span>
+ 
+<span class="k">echo</span> <span class="s2">"&lt;p&gt;param3: &lt;/p&gt;"</span><span class="p">;</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="n">param3</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Now a simple example but input parameters allow arrays and default values.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>test5.php?param1[]=1&amp;param1[]=2&amp;param2[]=hi
+param1: array(2) { [0]=&gt; int(1) [1]=&gt; int(2) }
+param2: int(1)
+param3: array(2) { [0]=&gt; string(5) "hello" [1]=&gt; string(5) "world" }
+
+test5.php?param1[]=1&amp;param1[]=2&amp;param2=2
+param1: array(2) { [0]=&gt; string(1) "1" [1]=&gt; string(1) "2" }
+param2: int(3)
+param3: array(2) { [0]=&gt; string(5) "hello" [1]=&gt; string(5) "world" }
+</code></pre></div></div>
+
+<h2 id="requestobject">RequestObject</h2>
+
+<p>The idea of RequestObject class is very simple. When we create an instance of the class (in the constructor) we filter the input request (GET or POST depending on REQUEST_METHOD) with <a href="http://php.net/manual/en/function.filter-var-array.php">filter_var_array</a> and <a href="http://es2.php.net/manual/en/function.filter-var.php">filter_var</a> functions according to the rules defined as annotations in the RequestObject class. Then we populate the member variables of the class with the filtered input. Now we can use to the member variables, and auto-completion will work perfectly with our favourite IDE with the parameter name. OK. I now. I violate encapsulation principle allowing to access directly to the public member variables. But IMHO the final result is more clear than creating an accessor here. But if it creeps someone out, we would discuss another solution :).</p>
+
+<p>Full code here on <a href="https://github.com/gonzalo123/RequestObject">github</a></p>
+
+<p>What do you think?</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Working+with+Request+objects+in+PHP%20%2F2011%2F10%2F17%2Fworking-with-request-objects-in-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2011%2F10%2F17%2Fworking-with-request-objects-in-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Working+with+Request+objects+in+PHP&url=%2F2011%2F10%2F17%2Fworking-with-request-objects-in-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2011/10/17/working-with-request-objects-in-php/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2011/10/17/working-with-request-objects-in-php'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618050263464052000"></script>
+
+    </div>
+  </body>
+</html>

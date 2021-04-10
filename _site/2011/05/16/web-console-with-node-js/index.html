@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Web console with node.js</title>
+    <meta name="description"
+          content="Continuing with my experiments of node.js, this time I want to create a Web console. The idea is simple. I want to send a few command to the server and I display the output inside the browser. I can do it entirely with PHP but I want to send the output to the browser as fast as they appear without waiting for the end of the command. OK we can do it flushing the output in the server but this solution normally crashes if we keep the application open for a long time. WebSockets again to the rescue. If we need a cross-browser implementation we need the socket.io library. Let’s start:
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Web console with node.js">
+    <meta name="twitter:description"
+          content="Continuing with my experiments of node.js, this time I want to create a Web console. The idea is simple. I want to send a few command to the server and I display the output inside the browser. I can do it entirely with PHP but I want to send the output to the browser as fast as they appear without waiting for the end of the command. OK we can do it flushing the output in the server but this solution normally crashes if we keep the application open for a long time. WebSockets again to the rescue. If we need a cross-browser implementation we need the socket.io library. Let’s start:
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Web console with node.js">
+    <meta property="og:description"
+          content="Continuing with my experiments of node.js, this time I want to create a Web console. The idea is simple. I want to send a few command to the server and I display the output inside the browser. I can do it entirely with PHP but I want to send the output to the browser as fast as they appear without waiting for the end of the command. OK we can do it flushing the output in the server but this solution normally crashes if we keep the application open for a long time. WebSockets again to the rescue. If we need a cross-browser implementation we need the socket.io library. Let’s start:
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618050263464052000">
+    <link rel="canonical"
+          href="/2011/05/16/web-console-with-node-js/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Web console with node.js | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Web console with node.js" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Continuing with my experiments of node.js, this time I want to create a Web console. The idea is simple. I want to send a few command to the server and I display the output inside the browser. I can do it entirely with PHP but I want to send the output to the browser as fast as they appear without waiting for the end of the command. OK we can do it flushing the output in the server but this solution normally crashes if we keep the application open for a long time. WebSockets again to the rescue. If we need a cross-browser implementation we need the socket.io library. Let’s start:" />
+<meta property="og:description" content="Continuing with my experiments of node.js, this time I want to create a Web console. The idea is simple. I want to send a few command to the server and I display the output inside the browser. I can do it entirely with PHP but I want to send the output to the browser as fast as they appear without waiting for the end of the command. OK we can do it flushing the output in the server but this solution normally crashes if we keep the application open for a long time. WebSockets again to the rescue. If we need a cross-browser implementation we need the socket.io library. Let’s start:" />
+<link rel="canonical" href="/2011/05/16/web-console-with-node-js/" />
+<meta property="og:url" content="/2011/05/16/web-console-with-node-js/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-05-16T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Web console with node.js" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2011/05/16/web-console-with-node-js/"},"url":"/2011/05/16/web-console-with-node-js/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Continuing with my experiments of node.js, this time I want to create a Web console. The idea is simple. I want to send a few command to the server and I display the output inside the browser. I can do it entirely with PHP but I want to send the output to the browser as fast as they appear without waiting for the end of the command. OK we can do it flushing the output in the server but this solution normally crashes if we keep the application open for a long time. WebSockets again to the rescue. If we need a cross-browser implementation we need the socket.io library. Let’s start:","dateModified":"2011-05-16T00:00:00+02:00","datePublished":"2011-05-16T00:00:00+02:00","headline":"Web console with node.js","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+        <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+
+
+</div>
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+cc
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2011-05-16 00:00
+            " class="post-meta__date date">16 May 2011</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#html5">html5</a>, <a
+                href="/tags/#node-js">node-js</a>, <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#websockets">websockets</a>, <a
+                href="/tags/#node">node</a>, <a
+                href="/tags/#nodejs">nodejs</a>, <a
+                href="/tags/#websockets">websockets</a></span>
+            
+        </div>
+        <h1 class="post-title">Web console with node.js</h1>
+    </header>
+
+    <section class="post">
+        <p>Continuing with my experiments of node.js, this time I want to create a Web console. The idea is simple. I want to send a few command to the server and I display the output inside the browser. I can do it entirely with PHP but I want to send the output to the browser as fast as they appear without waiting for the end of the command. OK we can do it <a href="http://php.net/manual/es/function.flush.php">flushing</a> the output in the server but this solution normally crashes if we keep the application open for a long time. WebSockets again to the rescue. If we need a cross-browser implementation we need the <a href="http://socket.io/">socket.io</a> library. Let’s start:</p>
+
+<p>The node server is a simple websocket server. In this example we will launch each command with <a href="http://nodejs.org/docs/v0.3.1/api/child_processes.html">spawn</a> function (require(‘child_process’).spawn) and send the output within the websoket. Simple and pretty straightforward.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">sys</span>   <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">sys</span><span class="dl">'</span><span class="p">),</span>
+<span class="nx">http</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">http</span><span class="dl">'</span><span class="p">),</span>
+<span class="nx">url</span>   <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">),</span>
+<span class="nx">spawn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">child_process</span><span class="dl">'</span><span class="p">).</span><span class="nx">spawn</span><span class="p">,</span>
+<span class="nx">ws</span>    <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./ws.js</span><span class="dl">'</span><span class="p">);</span>
+ 
+<span class="kd">var</span> <span class="nx">availableComands</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">ls</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ps</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">uptime</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">tail</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">cat</span><span class="dl">'</span><span class="p">];</span>
+<span class="nx">ws</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">websocket</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">websocket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">connect</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">resource</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">rawCmd</span> <span class="o">=</span> <span class="nx">parsedUrl</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">cmd</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">cmd</span> <span class="o">=</span> <span class="nx">rawCmd</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="dl">"</span><span class="s2"> </span><span class="dl">"</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">help</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">websocket</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">"</span><span class="s2">Available comands: </span><span class="se">\n</span><span class="dl">"</span><span class="p">);</span>
+            <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">availableComands</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">websocket</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">availableComands</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">i</span><span class="o">&lt;</span> <span class="nx">availableComands</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">websocket</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">"</span><span class="s2">, </span><span class="dl">"</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="nx">websocket</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">"</span><span class="se">\n</span><span class="dl">"</span><span class="p">);</span>
+ 
+            <span class="nx">websocket</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">availableComands</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">cmd</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">options</span> <span class="o">=</span> <span class="nx">cmd</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">options</span> <span class="o">=</span> <span class="p">[];</span>
+            <span class="p">}</span>
+             
+            <span class="k">try</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">process</span> <span class="o">=</span> <span class="nx">spawn</span><span class="p">(</span><span class="nx">cmd</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">options</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+                <span class="nx">websocket</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">"</span><span class="s2">ERROR</span><span class="dl">"</span><span class="p">);</span>
+            <span class="p">}</span>
+ 
+            <span class="nx">websocket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">end</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">process</span><span class="p">.</span><span class="nx">kill</span><span class="p">();</span>
+            <span class="p">});</span>
+ 
+            <span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">data</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">websocket</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+            <span class="p">});</span>
+ 
+            <span class="nx">process</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">end</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nx">websocket</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+            <span class="p">});</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+             <span class="nx">websocket</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">"</span><span class="s2">Comand not available. Type help for available comands</span><span class="se">\n</span><span class="dl">"</span><span class="p">);</span>
+             <span class="nx">websocket</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+   
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">8880</span><span class="p">,</span> <span class="dl">'</span><span class="s1">127.0.0.1</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The web client is similar than the example of my previous <a href="http://gonzalo123.wordpress.com/2011/05/09/real-time-monitoring-php-applications-with-websockets-and-node-js/">post</a></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">timeout</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">wsServer</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">127.0.0.1:8880</span><span class="dl">'</span><span class="p">;</span>
+ 
+<span class="kd">var</span> <span class="nx">ws</span><span class="p">;</span>
+ 
+ 
+<span class="kd">function</span> <span class="nx">cleanString</span><span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&amp;/g</span><span class="p">,</span><span class="dl">"</span><span class="s2">&amp;amp;</span><span class="dl">"</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&lt;/g</span><span class="p">,</span><span class="dl">"</span><span class="s2">&amp;lt;</span><span class="dl">"</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&gt;/g</span><span class="p">,</span><span class="dl">"</span><span class="s2">&amp;gt;</span><span class="dl">"</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+ 
+<span class="kd">function</span> <span class="nx">pad</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="dl">"</span><span class="s2">0</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">n</span><span class="p">).</span><span class="nx">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="kd">var</span> <span class="nx">cmdHistory</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="kd">function</span> <span class="nx">send</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">msg</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">clear</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#log</span><span class="dl">'</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="nx">ws</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="dl">'</span><span class="s1">ws://</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">wsServer</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">?cmd=</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">);</span>
+        <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#toolbar</span><span class="dl">'</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="dl">'</span><span class="s1">background</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">#933</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#socketStatus</span><span class="dl">'</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="dl">"</span><span class="s2">working ... [&lt;a href='#' onClick='quit()'&gt;X&lt;/a&gt;]</span><span class="dl">"</span><span class="p">);</span>
+        <span class="nx">cmdHistory</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+        <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#log</span><span class="dl">'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="dl">"</span><span class="s2">&lt;div class='cmd'&gt;</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">msg</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;/div&gt;</span><span class="dl">"</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">startWs:</span><span class="dl">"</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+        <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">startWs</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#log</span><span class="dl">'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">util</span><span class="p">.</span><span class="nx">toStaticHTML</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">));</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">scrollBy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100000000000000000</span><span class="p">);</span>
+    <span class="p">};</span>
+ 
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">onclose</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="c1">//console.log("ws.onclose");</span>
+        <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#toolbar</span><span class="dl">'</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="dl">'</span><span class="s1">background</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">#65A33F</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#socketStatus</span><span class="dl">'</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="dl">'</span><span class="s1">Type your comand:</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kd">function</span> <span class="nx">quit</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">scrollBy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100000000000000000</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">util</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">urlRE</span><span class="p">:</span> <span class="sr">/https</span><span class="se">?</span><span class="sr">:</span><span class="se">\/\/([</span><span class="sr">-</span><span class="se">\w\.]</span><span class="sr">+</span><span class="se">)</span><span class="sr">+</span><span class="se">(</span><span class="sr">:</span><span class="se">\d</span><span class="sr">+</span><span class="se">)?(\/([^\s]</span><span class="sr">*</span><span class="se">(\?\S</span><span class="sr">+</span><span class="se">)?)?)?</span><span class="sr">/g</span><span class="p">,</span> 
+ 
+  <span class="c1">//  html sanitizer </span>
+  <span class="na">toStaticHTML</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">inputHtml</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">inputHtml</span> <span class="o">=</span> <span class="nx">inputHtml</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+    <span class="k">return</span> <span class="nx">inputHtml</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&amp;/g</span><span class="p">,</span> <span class="dl">"</span><span class="s2">&amp;amp;</span><span class="dl">"</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&lt;/g</span><span class="p">,</span> <span class="dl">"</span><span class="s2">&amp;lt;</span><span class="dl">"</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="dl">"</span><span class="s2">/n</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">)</span>
+                    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&gt;/g</span><span class="p">,</span> <span class="dl">"</span><span class="s2">&amp;gt;</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">},</span> 
+ 
+  <span class="c1">//pads n with zeros on the left,</span>
+  <span class="c1">//digits is minimum length of output</span>
+  <span class="c1">//zeroPad(3, 5); returns "005"</span>
+  <span class="c1">//zeroPad(2, 500); returns "500"</span>
+  <span class="na">zeroPad</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">digits</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="nx">digits</span><span class="p">)</span> 
+      <span class="nx">n</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">0</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">n</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">n</span><span class="p">;</span>
+  <span class="p">},</span>
+ 
+  <span class="c1">//it is almost 8 o'clock PM here</span>
+  <span class="c1">//timeString(new Date); returns "19:49"</span>
+  <span class="na">timeString</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">minutes</span> <span class="o">=</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">hours</span> <span class="o">=</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getHours</span><span class="p">().</span><span class="nx">toString</span><span class="p">();</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">zeroPad</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nx">hours</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">:</span><span class="dl">"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">zeroPad</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nx">minutes</span><span class="p">);</span>
+  <span class="p">},</span>
+ 
+  <span class="c1">//does the argument only contain whitespace?</span>
+  <span class="na">isBlank</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">blank</span> <span class="o">=</span> <span class="sr">/^</span><span class="se">\s</span><span class="sr">*$/</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nx">text</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">blank</span><span class="p">)</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">//submit new messages when the user hits enter if the message isnt blank</span>
+  <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#entry</span><span class="dl">"</span><span class="p">).</span><span class="nx">keypress</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">!=</span> <span class="mi">13</span> <span class="cm">/* Return */</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#entry</span><span class="dl">"</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="dl">"</span><span class="s2">value</span><span class="dl">"</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="dl">"</span><span class="se">\n</span><span class="dl">"</span><span class="p">,</span> <span class="dl">""</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">util</span><span class="p">.</span><span class="nx">isBlank</span><span class="p">(</span><span class="nx">msg</span><span class="p">))</span> <span class="nx">send</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#entry</span><span class="dl">"</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="dl">"</span><span class="s2">value</span><span class="dl">"</span><span class="p">,</span> <span class="dl">""</span><span class="p">);</span> <span class="c1">// clear the entry field.</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><a href="https://www.youtube.com/watch?v=Q5AcZj0Mml4\"><img src="https://img.youtube.com/vi/Q5AcZj0Mml4\/0.jpg" alt="youtube" /></a></p>
+
+<p>And that’s all. In fact we don’t need any line of PHP to perform this web console. Last year I tried to do something similar with PHP but it was a big mess. With node those kind of jobs are trivial. I don’t know if node.js is the future or is just another hype, but it’s easy. And cool. Really cool.</p>
+
+<p>You can see the full code at Github <a href="https://github.com/gonzalo123/webConsole">here</a>. Anyway you must take care if you run this application on your host. You are letting user to execute raw unix commands. A bit of security layer would be necessary.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Web+console+with+node.js%20%2F2011%2F05%2F16%2Fweb-console-with-node-js%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2011%2F05%2F16%2Fweb-console-with-node-js%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Web+console+with+node.js&url=%2F2011%2F05%2F16%2Fweb-console-with-node-js%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2011/05/16/web-console-with-node-js/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2011/05/16/web-console-with-node-js'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/09/02/alexa-skill-example-with-serverless-framework/">Alexa skill example with Serverless framework <span class="label label-default">technology</span>  <span class="label label-default">nodejs</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2018/10/08/working-with-sapui5-locally-part-3-adding-more-services-in-docker/">Working with SAPUI5 locally (part 3). Adding more services in Docker <span class="label label-default">php</span>  <span class="label label-default">websockets</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2018/05/07/happy-logins-only-the-happy-user-will-pass/">Happy logins. Only the happy user will pass <span class="label label-default">html5</span>  <span class="label label-default">node</span>  <span class="label label-default">websockets</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618050263464052000"></script>
+
+    </div>
+  </body>
+</html>

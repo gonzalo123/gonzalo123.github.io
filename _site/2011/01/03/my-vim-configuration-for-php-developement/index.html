@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>My VIM configuration for PHP development.</title>
+    <meta name="description"
+          content="Keeping on with my continuous search for the perfect IDE I’ve resumed my fight against VIM. As someone told me the learning of vim is a road of pain. It’s something like going to the gym. We known that going to the gym is good and healthy but it’s hard and painfully especially at the beginning. The learning curve of vim is hard. Vim is rare, or at least it’s different than all other IDEs. In this post I don’t want to create a vim tutorial (there are a lot of on the web). I want to share my actual vim configuration and the plugins I normally use. The configuration is not very original. It’s based on Matthew Weier O’Phinney configuration. You can find here a great post about vim in Matthew Weier’s blog. VIM is not my default IDE yet. I hope to swap to VIM soon but I feel myself slower when I code comparing with Netbeans or ZendStudio, and slow means less productive but I also feel if invest more time vim can be really productive. Here we are my vim plug-ins:
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="My VIM configuration for PHP development.">
+    <meta name="twitter:description"
+          content="Keeping on with my continuous search for the perfect IDE I’ve resumed my fight against VIM. As someone told me the learning of vim is a road of pain. It’s something like going to the gym. We known that going to the gym is good and healthy but it’s hard and painfully especially at the beginning. The learning curve of vim is hard. Vim is rare, or at least it’s different than all other IDEs. In this post I don’t want to create a vim tutorial (there are a lot of on the web). I want to share my actual vim configuration and the plugins I normally use. The configuration is not very original. It’s based on Matthew Weier O’Phinney configuration. You can find here a great post about vim in Matthew Weier’s blog. VIM is not my default IDE yet. I hope to swap to VIM soon but I feel myself slower when I code comparing with Netbeans or ZendStudio, and slow means less productive but I also feel if invest more time vim can be really productive. Here we are my vim plug-ins:
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="My VIM configuration for PHP development.">
+    <meta property="og:description"
+          content="Keeping on with my continuous search for the perfect IDE I’ve resumed my fight against VIM. As someone told me the learning of vim is a road of pain. It’s something like going to the gym. We known that going to the gym is good and healthy but it’s hard and painfully especially at the beginning. The learning curve of vim is hard. Vim is rare, or at least it’s different than all other IDEs. In this post I don’t want to create a vim tutorial (there are a lot of on the web). I want to share my actual vim configuration and the plugins I normally use. The configuration is not very original. It’s based on Matthew Weier O’Phinney configuration. You can find here a great post about vim in Matthew Weier’s blog. VIM is not my default IDE yet. I hope to swap to VIM soon but I feel myself slower when I code comparing with Netbeans or ZendStudio, and slow means less productive but I also feel if invest more time vim can be really productive. Here we are my vim plug-ins:
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618050263464052000">
+    <link rel="canonical"
+          href="/2011/01/03/my-vim-configuration-for-php-developement/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>My VIM configuration for PHP development. | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="My VIM configuration for PHP development." />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Keeping on with my continuous search for the perfect IDE I’ve resumed my fight against VIM. As someone told me the learning of vim is a road of pain. It’s something like going to the gym. We known that going to the gym is good and healthy but it’s hard and painfully especially at the beginning. The learning curve of vim is hard. Vim is rare, or at least it’s different than all other IDEs. In this post I don’t want to create a vim tutorial (there are a lot of on the web). I want to share my actual vim configuration and the plugins I normally use. The configuration is not very original. It’s based on Matthew Weier O’Phinney configuration. You can find here a great post about vim in Matthew Weier’s blog. VIM is not my default IDE yet. I hope to swap to VIM soon but I feel myself slower when I code comparing with Netbeans or ZendStudio, and slow means less productive but I also feel if invest more time vim can be really productive. Here we are my vim plug-ins:" />
+<meta property="og:description" content="Keeping on with my continuous search for the perfect IDE I’ve resumed my fight against VIM. As someone told me the learning of vim is a road of pain. It’s something like going to the gym. We known that going to the gym is good and healthy but it’s hard and painfully especially at the beginning. The learning curve of vim is hard. Vim is rare, or at least it’s different than all other IDEs. In this post I don’t want to create a vim tutorial (there are a lot of on the web). I want to share my actual vim configuration and the plugins I normally use. The configuration is not very original. It’s based on Matthew Weier O’Phinney configuration. You can find here a great post about vim in Matthew Weier’s blog. VIM is not my default IDE yet. I hope to swap to VIM soon but I feel myself slower when I code comparing with Netbeans or ZendStudio, and slow means less productive but I also feel if invest more time vim can be really productive. Here we are my vim plug-ins:" />
+<link rel="canonical" href="/2011/01/03/my-vim-configuration-for-php-developement/" />
+<meta property="og:url" content="/2011/01/03/my-vim-configuration-for-php-developement/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-01-03T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="My VIM configuration for PHP development." />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2011/01/03/my-vim-configuration-for-php-developement/"},"url":"/2011/01/03/my-vim-configuration-for-php-developement/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Keeping on with my continuous search for the perfect IDE I’ve resumed my fight against VIM. As someone told me the learning of vim is a road of pain. It’s something like going to the gym. We known that going to the gym is good and healthy but it’s hard and painfully especially at the beginning. The learning curve of vim is hard. Vim is rare, or at least it’s different than all other IDEs. In this post I don’t want to create a vim tutorial (there are a lot of on the web). I want to share my actual vim configuration and the plugins I normally use. The configuration is not very original. It’s based on Matthew Weier O’Phinney configuration. You can find here a great post about vim in Matthew Weier’s blog. VIM is not my default IDE yet. I hope to swap to VIM soon but I feel myself slower when I code comparing with Netbeans or ZendStudio, and slow means less productive but I also feel if invest more time vim can be really productive. Here we are my vim plug-ins:","dateModified":"2011-01-03T00:00:00+01:00","datePublished":"2011-01-03T00:00:00+01:00","headline":"My VIM configuration for PHP development.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+        <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+
+
+</div>
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+cc
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+            
+    >
+        <div class="post-meta">
+            <time datetime=" 2011-01-03 00:00
+            " class="post-meta__date date">3 Jan 2011</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#technology">technology</a>, <a
+                href="/tags/#tips">tips</a>, <a
+                href="/tags/#vim">vim</a></span>
+            
+        </div>
+        <h1 class="post-title">My VIM configuration for PHP development.</h1>
+    </header>
+
+    <section class="post">
+        <p>Keeping on with my continuous search for the perfect IDE I’ve resumed my fight against VIM. As someone told me the learning of vim is a road of pain. It’s something like going to the gym. We known that going to the gym is good and healthy but it’s hard and painfully especially at the beginning. The learning curve of vim is hard. Vim is rare, or at least it’s different than all other IDEs. In this post I don’t want to create a vim tutorial (there are a lot of on the web). I want to share my actual vim configuration and the plugins I normally use. The configuration is not very original. It’s based on Matthew Weier O’Phinney configuration. You can find here a great <a href="http://weierophinney.net/matthew/archives/249-Vim-Toolbox,-2010-Edition.html">post</a> about vim in Matthew Weier’s blog. VIM is not my default IDE yet. I hope to swap to VIM soon but I feel myself slower when I code comparing with Netbeans or ZendStudio, and slow means less productive but I also feel if invest more time vim can be really productive. Here we are my vim plug-ins:</p>
+
+<h2 id="nerdtree"><strong>NerdTree</strong></h2>
+
+<p>Great <a href="http://www.vim.org/scripts/script.php?script_id=1658">plug-in</a>. Allows to explore filesystem. It’s easy and fast. I use <em>F5</em> to toogle the NerdTree We move across the filesystem (<em>jk</em>) and open files with “<em>o</em>”. It’s really intuitive. Another great feature of NerdTree are the bookmarks. We select a folder and we type :Bookmark and we easily create a bookmark. Really cool when we work with different projects.</p>
+
+<p><a href="/assets/images/vim.png" title="vim"></a></p>
+
+<h2 id="bufferexplorer"><strong>BufferExplorer</strong></h2>
+
+<p>We can manage vim’s buffers with standard vim commands(:ls) but I like to use this extension. I’ve mapped BufferExplorer with ç key. I use a spanish keyboard and <em>ç</em> key is a letter I never use and is easily accessible, even for my small hands. When I type <em>ç</em> I can switch between my buffers.</p>
+
+<h2 id="zen-coding"><strong>Zen Coding</strong></h2>
+
+<p>Really useful when writing HTML pre#myid&gt;span <Conrol-y> and we get:</Conrol-y></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;pre</span> <span class="na">id=</span><span class="s">"myid"</span><span class="nt">&gt;&lt;/pre&gt;</span>
+</code></pre></div></div>
+
+<p>You can see more examples <a href="http://code.google.com/p/zen-coding/wiki/ZenHTMLSelectorsEn">here</a></p>
+
+<h2 id="debugger"><strong>Debugger</strong></h2>
+
+<p>We need xdebug plugin installed on our server. I’ve changed the original keys for this plugin because it uses NerdTree ones. I use control + the original keys. For example control + F5 starts the debuger and waits for the debug session from the browser. Xdebug helper for google chrome works fine.</p>
+
+<p><a href="/assets/images/vimdebuger.png" title="vimdebuger"></a></p>
+
+<h2 id="snipmate"><strong>snipMate</strong></h2>
+
+<p>Mac developers love Textmate. I’ve never use textmate (I’m a linux user) but <a href="http://www.vim.org/scripts/script.php?script_id=2540">this</a> allow us create snippets features in Vim like Textmate’s snippets. It’s a good practice to create the snippets we normally use to increase our productivity. I’ve created several snippets for creating classes, function, for loops, and common pieces of code like that</p>
+
+<h2 id="command-t"><strong>Command-t</strong></h2>
+
+<p>We can open files with :e but commnad-t plugin helps us to open files. I trigger command-t with . Leader is an especial key in vim. We can map this key to a letter. I’ve mapped to “,”</p>
+
+<h2 id="omni-completion"><strong>Omni completion</strong></h2>
+
+<p>control x - control o. If you have previously created your exuberant tags files, helps you with the autocompletion. Ok it’s not as good a netbeans or eclipse but it works. To create ctags file there is a mkTags bash file under .vim/bin folder</p>
+
+<p><a href="/assets/images/vim1.png" title="vim"></a></p>
+
+<h2 id="supertab"><strong>Supertab</strong></h2>
+
+<p>snipMate is trigger with tab key but tab key is used to for auto-completion with php plugin (ftp plugin). Supertab plugin magically triggers the plugin we need. I don’t really know how it works but it works (at least as I expect)</p>
+
+<h2 id="another-useful-commands"><strong>Another useful commands</strong></h2>
+
+<p><em>çç</em>: (insert mode) I use çç as esc key because escape key is too far for my small fingers <em>ç</em>: (normal mode) Buffer explorer <em>control p</em>: PHPDoc helper <em>zz</em>: Open all forlds <em>F7</em>: open close a fold <em>F6</em>: show/hide line numbers</p>
+
+<p>You can download my vim configuration from google code <a href="http://code.google.com/p/gonzalo123-vim/">here</a></p>
+
+<p>How to configure vim with my setings:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hg clone https://gonzalo123-vim.googlecode.com/hg/ gonzalo123-vim
+<span class="nb">ln</span> <span class="nt">-s</span> gonzalo123-vim/ ~/.vim
+<span class="nb">ln</span> <span class="nt">-s</span> gonzalo123-vim/vimrc ~/.vimrc
+<span class="nb">ln</span> <span class="nt">-s</span> gonzalo123-vim/gvimrc ~/.gvimrc
+</code></pre></div></div>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=My+VIM+configuration+for+PHP+development.%20%2F2011%2F01%2F03%2Fmy-vim-configuration-for-php-developement%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2011%2F01%2F03%2Fmy-vim-configuration-for-php-developement%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=My+VIM+configuration+for+PHP+development.&url=%2F2011%2F01%2F03%2Fmy-vim-configuration-for-php-developement%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2011/01/03/my-vim-configuration-for-php-developement/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2011/01/03/my-vim-configuration-for-php-developement'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2019/06/10/php-lumen-data-source-for-grafana/">PHP/Lumen data source for Grafana <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/10/performing-upsert-update-or-insert-with-postgresql-and-php/">Performing UPSERT (Update or Insert) with PostgreSQL and PHP <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/06/06/sharing-authentication-between-socket-io-and-a-php-frontend-using-json-web-tokens/">Sharing authentication between socket.io and a PHP frontend (using JSON Web Tokens) <span class="label label-default">php</span>  <span class="label label-default">technology</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618050263464052000"></script>
+
+    </div>
+  </body>
+</html>

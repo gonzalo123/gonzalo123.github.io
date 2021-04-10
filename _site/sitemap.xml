@@ -2358,6 +2358,471 @@
   
     
     <url>
+      <loc>/2011/12/12/coding-katas-tdd-and-katayunos/</loc>
+      
+        <lastmod>2011-12-12T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/11/28/playing-with-the-new-php5-4-features/</loc>
+      
+        <lastmod>2011-11-28T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/11/07/working-with-request-objects-in-php-ii-back-to-the-past/</loc>
+      
+        <lastmod>2011-11-07T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/10/24/talk-about-node-js-and-websockets/</loc>
+      
+        <lastmod>2011-10-24T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/10/17/working-with-request-objects-in-php/</loc>
+      
+        <lastmod>2011-10-17T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/10/10/display-errors-on-screen-even-with-display-errors-off-in-php/</loc>
+      
+        <lastmod>2011-10-10T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/08/29/building-a-small-microframework-with-php-part-2-command-line-interface/</loc>
+      
+        <lastmod>2011-08-29T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/08/22/building-a-small-microframework-with-php/</loc>
+      
+        <lastmod>2011-08-22T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/08/15/checking-the-performance-reading-arrays-with-php/</loc>
+      
+        <lastmod>2011-08-15T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/08/08/runtime-classes-a-experiment-with-php-and-object-oriented-programming/</loc>
+      
+        <lastmod>2011-08-08T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/08/01/building-a-client-for-a-rest-api-with-php/</loc>
+      
+        <lastmod>2011-08-01T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/07/25/using-node-js-to-store-php-sessions/</loc>
+      
+        <lastmod>2011-07-25T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/07/18/populating-datagrid-techniques-with-php/</loc>
+      
+        <lastmod>2011-07-18T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/07/11/database-abstraction-layers-in-php-pdo-versus-dbal/</loc>
+      
+        <lastmod>2011-07-11T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/07/04/new-features-in-php5-4-alpha1/</loc>
+      
+        <lastmod>2011-07-04T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/05/23/real-time-notifications-part-ii-now-with-node-js-and-socket-io/</loc>
+      
+        <lastmod>2011-05-23T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/05/16/web-console-with-node-js/</loc>
+      
+        <lastmod>2011-05-16T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/05/09/real-time-monitoring-php-applications-with-websockets-and-node-js/</loc>
+      
+        <lastmod>2011-05-09T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/05/02/performance-analysis-of-stored-procedures-with-pdo-and-php/</loc>
+      
+        <lastmod>2011-05-02T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/04/04/reflection-over-phpdoc-with-php/</loc>
+      
+        <lastmod>2011-04-04T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/03/28/performance-analysis-fetching-data-with-pdo-and-php/</loc>
+      
+        <lastmod>2011-03-28T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/03/21/howto-sendread-smss-using-a-gsm-modem-at-commands-and-php/</loc>
+      
+        <lastmod>2011-03-21T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/03/14/real-time-notifications-with-php/</loc>
+      
+        <lastmod>2011-03-14T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/03/07/watermarks-in-our-images-with-php-and-gearman/</loc>
+      
+        <lastmod>2011-03-07T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/02/28/watermarks-in-our-images-with-php-and-mod_rewrite/</loc>
+      
+        <lastmod>2011-02-28T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/02/21/speed-up-page-page-load-combining-javascript-files-with-php/</loc>
+      
+        <lastmod>2011-02-21T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/02/01/function-decorators-in-php-with-phpdoc-and-annotations/</loc>
+      
+        <lastmod>2011-02-01T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/01/24/php-template-engine-comparison-part-2-versus-plain-php/</loc>
+      
+        <lastmod>2011-01-24T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/01/17/php-template-engine-comparison/</loc>
+      
+        <lastmod>2011-01-17T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/01/10/using-php-classes-to-store-configuration-data/</loc>
+      
+        <lastmod>2011-01-10T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2011/01/03/my-vim-configuration-for-php-developement/</loc>
+      
+        <lastmod>2011-01-03T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>/2010/01/24/pivot-tables-in-php/</loc>
       
         <lastmod>2010-01-24T00:00:00+01:00</lastmod>
@@ -2751,7 +3216,7 @@
     <url>
       <loc>/about/</loc>
       
-        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
+        <lastmod>2021-04-10T12:24:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2766,7 +3231,7 @@
     <url>
       <loc>/book/</loc>
       
-        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
+        <lastmod>2021-04-10T12:24:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2783,7 +3248,7 @@
     <url>
       <loc>/feed.xml</loc>
       
-        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
+        <lastmod>2021-04-10T12:24:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2798,7 +3263,7 @@
     <url>
       <loc>/humans.txt</loc>
       
-        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
+        <lastmod>2021-04-10T12:24:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2815,7 +3280,7 @@
     <url>
       <loc>/js/main.js</loc>
       
-        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
+        <lastmod>2021-04-10T12:24:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2830,7 +3295,7 @@
     <url>
       <loc>/css/main.css</loc>
       
-        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
+        <lastmod>2021-04-10T12:24:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2845,7 +3310,7 @@
     <url>
       <loc>/posts/</loc>
       
-        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
+        <lastmod>2021-04-10T12:24:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2860,7 +3325,7 @@
     <url>
       <loc>/search/</loc>
       
-        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
+        <lastmod>2021-04-10T12:24:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2875,7 +3340,7 @@
     <url>
       <loc>/search.json</loc>
       
-        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
+        <lastmod>2021-04-10T12:24:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2894,7 +3359,7 @@
     <url>
       <loc>/assets/css/style.css</loc>
       
-        <lastmod>2021-04-05T21:26:43+02:00</lastmod>
+        <lastmod>2021-04-10T12:24:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -2903,6 +3368,8 @@
         <priority>0.3</priority>
       
     </url>
+    
+  
     
   
     

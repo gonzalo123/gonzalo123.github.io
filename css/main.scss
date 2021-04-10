@@ -74,3 +74,48 @@ pre.highlight code,
 	background-position: center;
 	background-size: cover;
 }
+
+
+.menu {
+  margin: 20px auto;
+  text-align: center;
+}
+
+.menu a {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 7px 10px;
+  border-right: 1px grey solid;
+  margin-left: -4px;
+  text-decoration: none;
+  color: #333;
+  margin-top: 10px;
+}
+
+.menu-link {
+  display: inline-block;
+}
+
+/* SEARCH */
+
+#search,
+.search_res p,
+#results-container {
+  font-family: "Open Sans", sans-serif !important;
+}
+
+#results-container {
+  border: 0px solid black;
+}
+
+#search-input {
+  width: 94%;
+  margin: 10px 0;
+  padding: 5px;
+  border: 1px #ccc solid;
+  border-radius: 8px;
+}
+
+.search-icon {
+  font-size: 24px;
+}
