@@ -4,7 +4,9 @@ permalink: /:year/:month/:day/:title/
 title: "Building Bluetooth iot devices compatible with Alexa"
 date: "2020-03-30"
 categories: 
-  - "technology"
+  - "alexa"
+  - "arduino"
+  - "iot"
 tags: 
   - "alexa"
   - "arduino"

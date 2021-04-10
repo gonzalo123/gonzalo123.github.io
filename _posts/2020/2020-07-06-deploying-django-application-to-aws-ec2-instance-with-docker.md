@@ -4,7 +4,10 @@ permalink: /:year/:month/:day/:title/
 title: "Deploying Django application to AWS EC2 instance with Docker"
 date: "2020-07-06"
 categories: 
-  - "technology"
+  - "django"
+  - "docker"
+  - "python"
+  - "aws"
 tags: 
   - "architecture"
   - "aws"

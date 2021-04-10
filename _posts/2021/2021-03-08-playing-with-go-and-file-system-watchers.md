@@ -4,7 +4,8 @@ permalink: /:year/:month/:day/:title/
 title: "Playing with Go and file system watchers"
 date: "2021-03-08"
 categories: 
-  - "technology"
+  - "go"
+  - "rabbitmq"
 tags: 
   - "fswatcher"
   - "go"

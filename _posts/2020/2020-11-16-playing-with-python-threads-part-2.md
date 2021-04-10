@@ -3,7 +3,7 @@ layout: post
 title: "Playing with Python threads. Part 2"
 date: "2020-11-16"
 categories: 
-  - "technology"
+  - "python"
 tags: 
   - "python"
   - "threads"

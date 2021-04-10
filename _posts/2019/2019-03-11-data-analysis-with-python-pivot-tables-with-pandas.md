@@ -2,6 +2,8 @@
 layout: post
 title: "Data Analysis with Python. Pivot tables with Pandas"
 date: "2019-03-11"
+categories: 
+- "python"
 tags: 
   - "python"
   - "technology"

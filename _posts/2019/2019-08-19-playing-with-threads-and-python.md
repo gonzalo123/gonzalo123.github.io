@@ -2,6 +2,8 @@
 layout: post
 title: "Playing with threads and Python"
 date: "2019-08-19"
+categories: 
+  - "python"
 tags: 
   - "python"
   - "technology"

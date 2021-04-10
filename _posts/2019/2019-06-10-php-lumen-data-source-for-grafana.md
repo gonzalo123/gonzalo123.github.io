@@ -2,6 +2,10 @@
 layout: post
 title: "PHP/Lumen data source for Grafana"
 date: "2019-06-10"
+categories: 
+  - "php"
+  - "grafana"
+  - "laravel"
 tags:
   - "php"
   - "technology"

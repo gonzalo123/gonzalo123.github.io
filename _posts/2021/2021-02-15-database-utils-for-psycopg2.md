@@ -2,7 +2,8 @@
 title: "Database utils for psycopg2"
 date: "2021-02-15"
 categories: 
-  - "technology"
+  - "python"
+  - "postgresql"
 tags: 
   - "postgresql"
   - "python"

@@ -4,7 +4,9 @@ permalink: /:year/:month/:day/:title/
 title: "Playing with RabbitMQ, Python and Docker. From Exchanges to Queues"
 date: "2021-01-11"
 categories: 
-  - "technology"
+  - "python"
+  - "docker"
+  - "rabbitmq"
 tags: 
   - "docker"
   - "python"

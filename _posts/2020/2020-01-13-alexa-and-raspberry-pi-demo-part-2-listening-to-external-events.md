@@ -4,7 +4,11 @@ permalink: /:year/:month/:day/:title/
 title: "Alexa and Raspberry Pi demo (Part 2). Listening to external events"
 date: "2020-01-13"
 categories: 
-  - "technology"
+  - "alexa" 
+  - "arduino"
+  - "iot"
+  - "javascript"
+  - "raspberry-pi"
 tags: 
   - "alexa"
   - "arduino"

@@ -2,12 +2,15 @@
 layout: post
 title: "Using cache buster with OpenUI5 outside SCP"
 date: "2019-01-14"
+categories: 
+  - "javascript"
+  - "openui5"
+  - "sap"
 tags: 
   - "scp"
-  - "technology"
   - "cache"
   - "grunt"
-  - "js"
+  - "javascript"
   - "openui5"
   - "sap"
   - "sap-cloud-platform"

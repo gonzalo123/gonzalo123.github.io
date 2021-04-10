@@ -5,8 +5,8 @@
     <description>Personal blog since 2008</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 10 Apr 2021 19:55:13 +0200</pubDate>
-    <lastBuildDate>Sat, 10 Apr 2021 19:55:13 +0200</lastBuildDate>
+    <pubDate>Sat, 10 Apr 2021 20:06:33 +0200</pubDate>
+    <lastBuildDate>Sat, 10 Apr 2021 20:06:33 +0200</lastBuildDate>
     <generator>Jekyll v3.9.0</generator>
     
       <item>
@@ -116,7 +116,9 @@
         <category>rabbitmq</category>
         
         
-        <category>technology</category>
+        <category>go</category>
+        
+        <category>rabbitmq</category>
         
       </item>
     
@@ -407,7 +409,9 @@
         <category>python</category>
         
         
-        <category>technology</category>
+        <category>python</category>
+        
+        <category>postgresql</category>
         
       </item>
     
@@ -681,7 +685,11 @@ server {
         <category>rabbitmq</category>
         
         
-        <category>technology</category>
+        <category>python</category>
+        
+        <category>docker</category>
+        
+        <category>rabbitmq</category>
         
       </item>
     
@@ -759,7 +767,11 @@ server {
         <category>python</category>
         
         
-        <category>technology</category>
+        <category>django</category>
+        
+        <category>docker</category>
+        
+        <category>python</category>
         
       </item>
     
@@ -882,7 +894,7 @@ server {
         <category>threads</category>
         
         
-        <category>technology</category>
+        <category>python</category>
         
       </item>
     
@@ -1008,7 +1020,11 @@ server {
         <category>python</category>
         
         
-        <category>technology</category>
+        <category>django</category>
+        
+        <category>elk</category>
+        
+        <category>python</category>
         
       </item>
     
@@ -1148,7 +1164,9 @@ server {
         <category>python</category>
         
         
-        <category>technology</category>
+        <category>django</category>
+        
+        <category>python</category>
         
       </item>
     
@@ -1381,7 +1399,15 @@ output {
         <category>python</category>
         
         
-        <category>technology</category>
+        <category>django</category>
+        
+        <category>grafana</category>
+        
+        <category>elk</category>
+        
+        <category>prometheus</category>
+        
+        <category>python</category>
         
       </item>
     
@@ -1542,7 +1568,13 @@ REGION=eu-central-1
         <category>python</category>
         
         
-        <category>technology</category>
+        <category>django</category>
+        
+        <category>docker</category>
+        
+        <category>python</category>
+        
+        <category>aws</category>
         
       </item>
     
@@ -1905,7 +1937,13 @@ REGION=eu-central-1
         <category>websockets</category>
         
         
-        <category>technology</category>
+        <category>django</category>
+        
+        <category>python</category>
+        
+        <category>websockets</category>
+        
+        <category>aws</category>
         
       </item>
     

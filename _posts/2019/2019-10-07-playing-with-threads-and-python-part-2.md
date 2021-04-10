@@ -2,6 +2,9 @@
 layout: post
 title: "Playing with threads and Python. Part 2"
 date: "2019-10-07"
+categories: 
+  - "python"
+  - "rabbitmq"
 tags: 
   - "python"
   - "technology"

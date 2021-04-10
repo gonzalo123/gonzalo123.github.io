@@ -4,7 +4,11 @@ permalink: /:year/:month/:day/:title/
 title: "Monitoring Django applications with Grafana and Kibana using Prometheus and Elasticsearch"
 date: "2020-08-10"
 categories: 
-  - "technology"
+  - "django"
+  - "grafana"
+  - "elk"
+  - "prometheus"
+  - "python"
 tags: 
   - "django"
   - "elasticsearch"

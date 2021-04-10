@@ -4,7 +4,8 @@ permalink: /:year/:month/:day/:title/
 title: "Don't repeat password validator in Django"
 date: "2020-09-21"
 categories: 
-  - "technology"
+  - "django"
+  - "python"
 tags: 
   - "django"
   - "python"

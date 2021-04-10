@@ -2,6 +2,11 @@
 layout: post
 title: "Alexa skill example with Serverless framework"
 date: "2019-09-02"
+categories: 
+  - "javascript"
+  - "serverless"
+  - "aws"
+  - "alexa"
 tags: 
   - "javascript"
   - "technology"

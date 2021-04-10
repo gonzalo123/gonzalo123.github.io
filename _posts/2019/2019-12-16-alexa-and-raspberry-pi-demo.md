@@ -2,6 +2,12 @@
 layout: post
 title: "Alexa and Raspberry Pi demo"
 date: "2019-12-16"
+categories: 
+  - "alexa"
+  - "iot"
+  - "javascript"
+  - "python"
+  - "raspberry-pi"
 tags: 
   - "alexa"
   - "iot"

@@ -4,7 +4,9 @@ permalink: /:year/:month/:day/:title/
 title: "Running Python/Django docker containers with non-root user"
 date: "2020-12-14"
 categories: 
-  - "technology"
+  - "django"
+  - "docker"
+  - "python"
 tags: 
   - "django"
   - "docker"

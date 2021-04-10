@@ -2,6 +2,10 @@
 layout: post
 title: "Alexa skill and account linking with serverless and Cognito"
 date: "2019-11-25"
+categories: 
+  - "alexa"
+  - "aws"
+  - "javascript"
 tags: 
   - "alexa"
   - "aws"

@@ -3,7 +3,9 @@ layout: post
 title: "Django logs to ELK using Filebeat"
 date: "2020-10-26"
 categories: 
-  - "technology"
+  - "django"
+  - "elk"
+  - "python"
 tags: 
   - "django"
   - "elk"

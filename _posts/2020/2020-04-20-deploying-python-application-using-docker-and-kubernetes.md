@@ -6,7 +6,7 @@ date: "2020-04-20"
 categories: 
   - "docker"
   - "python"
-  - "technology"
+  - "k8s"
 tags: 
   - "devops"
   - "flask"

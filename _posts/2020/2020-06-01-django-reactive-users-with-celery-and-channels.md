@@ -4,7 +4,10 @@ permalink: /:year/:month/:day/:title/
 title: "Django reactive users with Celery and Channels"
 date: "2020-06-01"
 categories: 
-  - "technology"
+  - "django"
+  - "python"
+  - "websockets"
+  - "aws"
 tags: 
   - "aws"
   - "celery"

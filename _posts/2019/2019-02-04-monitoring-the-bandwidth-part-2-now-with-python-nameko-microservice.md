@@ -2,6 +2,9 @@
 layout: post
 title: "Monitoring the bandwidth (part 2) now with Python Nameko microservice"
 date: "2019-02-04"
+categories: 
+  - "python"
+  - "grafana"
 tags:
   - "python"
   - "technology"

@@ -2,6 +2,10 @@
 layout: post
 title: "Playing with lambda, serverless and Python"
 date: "2019-05-27"
+categories: 
+  - "aws"
+  - "python"
+  - "serveless"
 tags: 
   - "aws"
   - "cloud"

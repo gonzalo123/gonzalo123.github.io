@@ -4,7 +4,11 @@ permalink: /:year/:month/:day/:title/
 title: "Building real time Python applications with Django Channels, Docker and Kubernetes"
 date: "2020-05-04"
 categories: 
-  - "technology"
+  - "django"
+  - "docker"
+  - "k8s"
+  - "python"
+  - "websockets"
 tags: 
   - "channels"
   - "django"
