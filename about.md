@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+{% include links.html %}
 
 ## About me
 **Web architect** and **web developer** from San Sebastián, Spain.

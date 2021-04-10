@@ -60,7 +60,7 @@
     <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="/css/main.css?1618050263464052000">
+    <link rel="stylesheet" href="/css/main.css?1618076646631898000">
     <link rel="canonical"
           href="/2012/05/28/strange-behaviour-in-php-with-method-visibility/">
     <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
@@ -183,6 +183,12 @@
       <div class="content-wrapper__inner">
         <div class="menu">
     <div class="menu-link">
+        <a href="/">
+            <i class="fas fa-signature"></i>
+            Blog
+        </a>
+    </div>
+    <div class="menu-link">
         <a href="/about">
             <i class="fas fa-signature"></i>
             About
@@ -203,8 +209,6 @@
         <div class="menu-link">
         <input type="text" id="search-input" placeholder="search...">
     </div>
-
-
 </div>
 
 <!-- Html Elements for Search -->
@@ -225,11 +229,29 @@ SimpleJekyllSearch({
 })
 </script>
 
-cc
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
 <article class="post-container post-container--single">
     <header
             class="post-header"
-            
     >
         <div class="post-meta">
             <time datetime=" 2012-05-28 00:00
@@ -817,7 +839,7 @@ cc
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1618050263464052000"></script>
+<script type="text/javascript" src="/js/main.js?1618076646631898000"></script>
 
     </div>
   </body>
