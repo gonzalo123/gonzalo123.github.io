@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>My website is slow. What can I do?</title>
+    <meta name="description"
+          content="You are working with a website. The website works. All is perfect but your clients told you it’s very slow. You must face the problem and improve the behaviour of the web site. But remember all site works properly. There isn’t any errors. The common way to resolve problems (understand the problem, reproduce the problem in test environment, solve the problem) doesn’t fit in this scenario. What can we do? I want to give some recommendations to improve performance problems in this post. Let’s go
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="My website is slow. What can I do?">
+    <meta name="twitter:description"
+          content="You are working with a website. The website works. All is perfect but your clients told you it’s very slow. You must face the problem and improve the behaviour of the web site. But remember all site works properly. There isn’t any errors. The common way to resolve problems (understand the problem, reproduce the problem in test environment, solve the problem) doesn’t fit in this scenario. What can we do? I want to give some recommendations to improve performance problems in this post. Let’s go
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="My website is slow. What can I do?">
+    <meta property="og:description"
+          content="You are working with a website. The website works. All is perfect but your clients told you it’s very slow. You must face the problem and improve the behaviour of the web site. But remember all site works properly. There isn’t any errors. The common way to resolve problems (understand the problem, reproduce the problem in test environment, solve the problem) doesn’t fit in this scenario. What can we do? I want to give some recommendations to improve performance problems in this post. Let’s go
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618654523880071000">
+    <link rel="canonical"
+          href="/2010/06/28/my-website-is-slow-what-can-i-do/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>My website is slow. What can I do? | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="My website is slow. What can I do?" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="You are working with a website. The website works. All is perfect but your clients told you it’s very slow. You must face the problem and improve the behaviour of the web site. But remember all site works properly. There isn’t any errors. The common way to resolve problems (understand the problem, reproduce the problem in test environment, solve the problem) doesn’t fit in this scenario. What can we do? I want to give some recommendations to improve performance problems in this post. Let’s go" />
+<meta property="og:description" content="You are working with a website. The website works. All is perfect but your clients told you it’s very slow. You must face the problem and improve the behaviour of the web site. But remember all site works properly. There isn’t any errors. The common way to resolve problems (understand the problem, reproduce the problem in test environment, solve the problem) doesn’t fit in this scenario. What can we do? I want to give some recommendations to improve performance problems in this post. Let’s go" />
+<link rel="canonical" href="/2010/06/28/my-website-is-slow-what-can-i-do/" />
+<meta property="og:url" content="/2010/06/28/my-website-is-slow-what-can-i-do/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-06-28T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="My website is slow. What can I do?" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2010/06/28/my-website-is-slow-what-can-i-do/"},"url":"/2010/06/28/my-website-is-slow-what-can-i-do/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"You are working with a website. The website works. All is perfect but your clients told you it’s very slow. You must face the problem and improve the behaviour of the web site. But remember all site works properly. There isn’t any errors. The common way to resolve problems (understand the problem, reproduce the problem in test environment, solve the problem) doesn’t fit in this scenario. What can we do? I want to give some recommendations to improve performance problems in this post. Let’s go","dateModified":"2010-06-28T00:00:00+02:00","datePublished":"2010-06-28T00:00:00+02:00","headline":"My website is slow. What can I do?","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/">
+            <i class="fas fa-signature"></i>
+            Blog
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+    <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+</div>
+
+<p>
+<h2>
+    Note: I'm migrating from <a href="https://gonzalo123.com">gonzalo123.com</a> to here.
+    When I finish I'll swap the DNS to here. The "official" blog will be always <a
+        href="https://gonzalo123.com">gonzalo123.com</a>
+</h2>
+</p>
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+    >
+        <div class="post-meta">
+            <time datetime=" 2010-06-28 00:00
+            " class="post-meta__date date">28 Jun 2010</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a></span>
+            
+        </div>
+        <h1 class="post-title">My website is slow. What can I do?</h1>
+    </header>
+
+    <section class="post">
+        <p>You are working with a website. The website works. All is perfect but your clients told you it’s very slow. You must face the problem and improve the behaviour of the web site. But remember all site works properly. There isn’t any errors. The common way to resolve problems (understand the problem, reproduce the problem in test environment, solve the problem) doesn’t fit in this scenario. What can we do? I want to give some recommendations to improve performance problems in this post. Let’s go</p>
+
+<h2 id="dont-assume-anything">Don’t assume anything</h2>
+
+<p>It’s very typical in our work to assume what is the problem when someone gives us an issue. Normally the user is not a technician. He suffer a problem and tell us the symptoms. For example some people from procurement office call you telling the application doesn’t work. You assume he is speaking about the application he use every day doesn’t work. You can go to check the server. It’s OK. Server logs OK. What happens? Finally you discover there is a network problem. Not a problem in the application. but the effects to the users are the same.</p>
+
+<p>When you face a performance issue don’t assume anything. First of all you must debrief the user to take a picture of the problem. Forget the solution just now. In this phase you only need to collect the information and perform an analysis later. If it possible speak and go to his office and see the problem with him. I remember a performance problem some time ago. The user had serious problems with the application. I tested the application and I didn’t find anything wrong. But the problem persists and she was the main user of the application. I went to her office and I discover the real problem. The application was slow. But the screen-saver was slow too. Spreadsheet was slow. In fact all was slow there. The problem was the RAM memory of the PC. More RAM and magically all applications become faster.</p>
+
+<h2 id="measure-the-problem">Measure the problem</h2>
+
+<p>If something is slow you must check times. But take care about it. Wrong measures can make you waste your time trying to solve the problem. A typical mistake is check times only at server-side. For example you start a timer when the script start and finish it when it ends. Imagine you have 1 second. It can be improved but, is the end-user complaining for a performance issue with 1 second of response time? Probably not. You can start to improve your server-side code. You spend some time coding and you turn from 1 second to 0.1 second. You are very proud of your improvements, and you tell to the user the problem is solved. But the user is not agree with you. The problem persists. You’ve been working on a different problem. A problem indeed but different one than user claims. Why? Because you’ve assumed the problem was in server code and your time measurements have been done in a wrong scenario.It’s quite probably the problem in in client site. If you take a look into firebug’s net tab you can realize server-side part (e.g. php ones) normally is the first one but is not the only one. Even it’s not the longest part. It can be a short percent of full-page load and render time. If you want to acheive significant success within your performance problem you must attack directly to the main bottle neck (and detect them before of course). If you want to learn a lot about client side performance, please pick up <a href="http://stevesouders.com/">Steve Soulders</a>’s “High performance web sites” book. You can also read the another Steve’s book “Even faster web sites” but first one is definitely a <em>must read</em> book for people who work in this area. You can also see many conferences of great Steve Soulders in youtuve. Do it. He is a great guru in this area and also a good speaker. After watching his conferences you will have  the desire to drink a beer with him. Probably working on “High performance web sites”’s recommendations you will achieve a significant results, following a really simple rules.</p>
+
+<h2 id="cache-it">Cache it</h2>
+
+<p>I know I not very original giving recommendations about caching in this post but caching is very important. There is a lot theory about caching. You must cache all as you can. But don’t do it like mad. You will get a cache nightmare if you don’ have a good caching plan. You must define the storage, the ttl (time to live) and what is going to be cached and what not.  A wrong caching politics can jeopardize a project but a good caching ones will improve the performance.</p>
+
+<h2 id="do-it-offline">Do it offline</h2>
+
+<p>Doing all online is cool. The user will get the fresh results when he clicks a button but what happen if the action takes too many time?. Imagine you have a button that sends ten emails every time the user clicks on it. In normal situations the operation is fast enough but what happens if mail server has a big load, or even it’s down. Your application will freeze and your user will become angry. Think moving operations to background. There are great tools like <a href="http://gearman.org/">gearman</a> to perform those kind of work. Transform your button from: user clicks, mail one is sent, mail 2, … mail 10 is sent, OK  to: use clicks, new task in our job server, OK. Now true doesn’t mean the ten emails have been sent. Now means they will be send. Balance the possibility of this new behaviour. I realize sometimes it isn’t possible but it is viable in other cases.Imagine you have an important report that uses a complex SQL to extract information from database. This SQL uses several tables to met user expectations. Is it mandatory to perform always the query to get the results? Think in the possibility of creating some statistic tables to collect old information (non changed ones, such as old months or years). Take a snapshot offline of your real-time data and perform queries over those snapshots instead of real information. Sometimes this technique is not possible but if it is available you can achieve important time benefits within your database queries.</p>
+
+<h2 id="database-connections">Database Connections.</h2>
+
+<p>Working with relational databases the creation of database connection is a slow operation. Take care about it. It’s a good practise to put a counter in your script to show you how many connections you create in your script, how many queries and how many results gives your queries to your application. You can realize unpleasant problems with this simple log. If your application perform more than one connection to the same database within the same execution script it’s very sure you are doing something wrong. Use always lazy connections to the database. I also have seen scripts that connects to the database without doing any operation. That’s means you are wasting time connection to the database. Connect only when you really are going to use it. Not always in the beginning of the script as general rule.Check the sql you are using. If for example you are always doing the same query every click on the site to check some kind user information a red light must appear in your mind with a flashing box with the text: cache it! inside.</p>
+
+<p>Trace long query and analyze them into the database. Check indexes and execution plans. This normally is a great bottle neck in the web applications.</p>
+
+<h2 id="debug-flags">Debug flags</h2>
+
+<p>Use debug flags to measure the problem. Firebug in combination with FirePHP are a great team to help us in our work. But don’t forget to turn those flag off in the production server. To many debug information collectors active in our production servers will slow down or application with unnecessary actions</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=My+website+is+slow.+What+can+I+do%3F%20%2F2010%2F06%2F28%2Fmy-website-is-slow-what-can-i-do%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2010%2F06%2F28%2Fmy-website-is-slow-what-can-i-do%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=My+website+is+slow.+What+can+I+do%3F&url=%2F2010%2F06%2F28%2Fmy-website-is-slow-what-can-i-do%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2010/06/28/my-website-is-slow-what-can-i-do/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2010/06/28/my-website-is-slow-what-can-i-do'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618654523880071000"></script>
+
+    </div>
+  </body>
+</html>

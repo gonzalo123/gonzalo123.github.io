@@ -3,6 +3,21 @@
   
     
     <url>
+      <loc>/2021/03/08/transforming-tcp-sockets-to-http-with-go/</loc>
+      
+        <lastmod>2021-03-08T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>/2021/03/08/playing-with-go-and-file-system-watchers/</loc>
       
         <lastmod>2021-03-08T00:00:00+01:00</lastmod>
@@ -2823,9 +2838,459 @@
   
     
     <url>
+      <loc>/2010/12/13/keep-our-postgresql-databases-syncronized-with-php-database-version-control/</loc>
+      
+        <lastmod>2010-12-13T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/12/06/real-life-example-of-closure-usage-with-php5-3/</loc>
+      
+        <lastmod>2010-12-06T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/11/29/protect-files-within-public-folders-with-mod_rewrite-and-php/</loc>
+      
+        <lastmod>2010-11-29T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/11/01/database-connection-pooling-with-php-and-gearman/</loc>
+      
+        <lastmod>2010-11-01T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/10/24/quality-assurance-ideas-in-agile-developement/</loc>
+      
+        <lastmod>2010-10-24T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/10/11/speed-up-php-scripts-with-asynchronous-database-queries/</loc>
+      
+        <lastmod>2010-10-11T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/10/05/performance-analysis-using-bind-parameters-with-pdo-and-php/</loc>
+      
+        <lastmod>2010-10-05T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/09/20/live-video-streaming-with-php/</loc>
+      
+        <lastmod>2010-09-20T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/09/13/building-an-orm-with-php/</loc>
+      
+        <lastmod>2010-09-13T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/09/06/using-a-stream-wrapper-to-access-couchdb-attachments-with-php/</loc>
+      
+        <lastmod>2010-09-06T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/09/01/using-monkey-patching-to-store-files-into-couchdb-using-the-standard-filesystem-functions-with-php/</loc>
+      
+        <lastmod>2010-09-01T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/08/30/using-couchdb-as-filesystem-with-php/</loc>
+      
+        <lastmod>2010-08-30T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/08/24/looking-for-the-perfect-php-ide/</loc>
+      
+        <lastmod>2010-08-24T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/08/23/my-development-tips/</loc>
+      
+        <lastmod>2010-08-23T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/08/16/digressing-about-working-with-old-code-refactoring-and-scope-creep/</loc>
+      
+        <lastmod>2010-08-16T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/08/02/first-impressions-about-namespaces-in-php/</loc>
+      
+        <lastmod>2010-08-02T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/07/30/flushing-files-with-php/</loc>
+      
+        <lastmod>2010-07-30T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/07/27/clustering-php-applications-tips-and-hints/</loc>
+      
+        <lastmod>2010-07-27T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/06/29/vuvuzela-in-php/</loc>
+      
+        <lastmod>2010-06-29T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/06/28/my-website-is-slow-what-can-i-do/</loc>
+      
+        <lastmod>2010-06-28T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/06/22/detecting-errors-and-bottle-necks-in-php/</loc>
+      
+        <lastmod>2010-06-22T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/06/20/phpdoc-code-completion-and-iterations-with-php/</loc>
+      
+        <lastmod>2010-06-20T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/05/23/building-network-services-with-php-and-xinetd/</loc>
+      
+        <lastmod>2010-05-23T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/04/13/sessions-comet-and-php/</loc>
+      
+        <lastmod>2010-04-13T00:00:00+02:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/03/16/playing-with-php-couchdb-and-orm/</loc>
+      
+        <lastmod>2010-03-16T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/03/15/php-and-couchdb/</loc>
+      
+        <lastmod>2010-03-15T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/02/21/building-a-simple-template-engine-in-php/</loc>
+      
+        <lastmod>2010-02-21T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/02/13/easy-trick-to-move-cache-files-to-ram-without-coding-a-php-line/</loc>
+      
+        <lastmod>2010-02-13T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/02/06/building-a-rest-client-with-asynchronous-calls-using-php-and-curl/</loc>
+      
+        <lastmod>2010-02-06T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
       <loc>/2010/01/24/pivot-tables-in-php/</loc>
       
         <lastmod>2010-01-24T00:00:00+01:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/2010/01/09/building-a-simple-http-client-with-php-a-rest-client/</loc>
+      
+        <lastmod>2010-01-09T00:00:00+01:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -3216,7 +3681,7 @@
     <url>
       <loc>/about/</loc>
       
-        <lastmod>2021-04-10T20:06:33+02:00</lastmod>
+        <lastmod>2021-04-17T12:15:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -3231,7 +3696,7 @@
     <url>
       <loc>/book/</loc>
       
-        <lastmod>2021-04-10T20:06:33+02:00</lastmod>
+        <lastmod>2021-04-17T12:15:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -3248,7 +3713,7 @@
     <url>
       <loc>/feed.xml</loc>
       
-        <lastmod>2021-04-10T20:06:33+02:00</lastmod>
+        <lastmod>2021-04-17T12:15:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -3263,7 +3728,7 @@
     <url>
       <loc>/humans.txt</loc>
       
-        <lastmod>2021-04-10T20:06:33+02:00</lastmod>
+        <lastmod>2021-04-17T12:15:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -3280,7 +3745,7 @@
     <url>
       <loc>/js/main.js</loc>
       
-        <lastmod>2021-04-10T20:06:33+02:00</lastmod>
+        <lastmod>2021-04-17T12:15:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -3295,7 +3760,7 @@
     <url>
       <loc>/css/main.css</loc>
       
-        <lastmod>2021-04-10T20:06:33+02:00</lastmod>
+        <lastmod>2021-04-17T12:15:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -3310,7 +3775,7 @@
     <url>
       <loc>/posts/</loc>
       
-        <lastmod>2021-04-10T20:06:33+02:00</lastmod>
+        <lastmod>2021-04-17T12:15:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -3325,7 +3790,7 @@
     <url>
       <loc>/search/</loc>
       
-        <lastmod>2021-04-10T20:06:33+02:00</lastmod>
+        <lastmod>2021-04-17T12:15:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -3340,7 +3805,7 @@
     <url>
       <loc>/search.json</loc>
       
-        <lastmod>2021-04-10T20:06:33+02:00</lastmod>
+        <lastmod>2021-04-17T12:15:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -3359,7 +3824,7 @@
     <url>
       <loc>/assets/css/style.css</loc>
       
-        <lastmod>2021-04-10T20:06:33+02:00</lastmod>
+        <lastmod>2021-04-17T12:15:23+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -3368,6 +3833,10 @@
         <priority>0.3</priority>
       
     </url>
+    
+  
+    
+  
     
   
     

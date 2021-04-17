@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Performance analysis using bind parameters with PDO and PHP.</title>
+    <meta name="description"
+          content="Some months ago a work mate asked me for the differences between using bind variables versus executing the SQL statement directly as a string throughout a PDO connection.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Performance analysis using bind parameters with PDO and PHP.">
+    <meta name="twitter:description"
+          content="Some months ago a work mate asked me for the differences between using bind variables versus executing the SQL statement directly as a string throughout a PDO connection.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Performance analysis using bind parameters with PDO and PHP.">
+    <meta property="og:description"
+          content="Some months ago a work mate asked me for the differences between using bind variables versus executing the SQL statement directly as a string throughout a PDO connection.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618654523880071000">
+    <link rel="canonical"
+          href="/2010/10/05/performance-analysis-using-bind-parameters-with-pdo-and-php/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Performance analysis using bind parameters with PDO and PHP. | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Performance analysis using bind parameters with PDO and PHP." />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Some months ago a work mate asked me for the differences between using bind variables versus executing the SQL statement directly as a string throughout a PDO connection." />
+<meta property="og:description" content="Some months ago a work mate asked me for the differences between using bind variables versus executing the SQL statement directly as a string throughout a PDO connection." />
+<link rel="canonical" href="/2010/10/05/performance-analysis-using-bind-parameters-with-pdo-and-php/" />
+<meta property="og:url" content="/2010/10/05/performance-analysis-using-bind-parameters-with-pdo-and-php/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-10-05T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Performance analysis using bind parameters with PDO and PHP." />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2010/10/05/performance-analysis-using-bind-parameters-with-pdo-and-php/"},"url":"/2010/10/05/performance-analysis-using-bind-parameters-with-pdo-and-php/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Some months ago a work mate asked me for the differences between using bind variables versus executing the SQL statement directly as a string throughout a PDO connection.","dateModified":"2010-10-05T00:00:00+02:00","datePublished":"2010-10-05T00:00:00+02:00","headline":"Performance analysis using bind parameters with PDO and PHP.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/">
+            <i class="fas fa-signature"></i>
+            Blog
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+    <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+</div>
+
+<p>
+<h2>
+    Note: I'm migrating from <a href="https://gonzalo123.com">gonzalo123.com</a> to here.
+    When I finish I'll swap the DNS to here. The "official" blog will be always <a
+        href="https://gonzalo123.com">gonzalo123.com</a>
+</h2>
+</p>
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+    >
+        <div class="post-meta">
+            <time datetime=" 2010-10-05 00:00
+            " class="post-meta__date date">5 Oct 2010</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a></span>
+            
+        </div>
+        <h1 class="post-title">Performance analysis using bind parameters with PDO and PHP.</h1>
+    </header>
+
+    <section class="post">
+        <p>Some months ago a work mate asked me for the differences between using bind variables versus executing the SQL statement directly as a string throughout a PDO connection.</p>
+
+<p>Basically the work-flow of almost all database drivers is the same: Prepare statement, execute and fetch results. We have the following small example with a simple  update</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$dbh</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PDO</span><span class="p">(</span><span class="s1">'pgsql:dbname=pg1;host=localhost'</span><span class="p">,</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'pass'</span><span class="p">);</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">setAttribute</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">ATTR_ERRMODE</span><span class="p">,</span> <span class="no">PDO</span><span class="o">::</span><span class="no">ERRMODE_EXCEPTION</span><span class="p">);</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">beginTransaction</span><span class="p">();</span>
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"UPDATE test.tbl1 set field1=:F1 where id=1"</span><span class="p">);</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'F1'</span> <span class="o">=&gt;</span> <span class="nv">$field1</span><span class="p">));</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">commit</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>And we also can get the same result with the following code:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$dbh</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PDO</span><span class="p">(</span><span class="s1">'pgsql:dbname=pg1;host=localhost'</span><span class="p">,</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'pass'</span><span class="p">);</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">setAttribute</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">ATTR_ERRMODE</span><span class="p">,</span> <span class="no">PDO</span><span class="o">::</span><span class="no">ERRMODE_EXCEPTION</span><span class="p">);</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">beginTransaction</span><span class="p">();</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"UPDATE test.tbl1 set field1='</span><span class="si">{</span><span class="nv">$field1</span><span class="si">}</span><span class="s2">' where id=1"</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">();</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">commit</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>What’s the best one? Both method work properly. The difference is how databases manage the operation internally. When we prepare a statement we are compiling the string into the database within the current connection. After that we can execute the statement and if our statement is ready to receive parameters we can bind those parameters with PHP values or variables. With this idea in mind we can guess that if we need to perform several executions of the same prepared statement is better to use bind parameters instead of compile and execute directly the string. b I have created a simple benchmark to show it.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="nb">error_reporting</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">function</span> <span class="n">microtime_float</span><span class="p">()</span>
+<span class="p">{</span>
+   <span class="k">list</span><span class="p">(</span><span class="nv">$usec</span><span class="p">,</span> <span class="nv">$sec</span><span class="p">)</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="nb">microtime</span><span class="p">());</span>
+   <span class="k">return</span> <span class="p">((</span><span class="n">float</span><span class="p">)</span><span class="nv">$usec</span> <span class="o">+</span> <span class="p">(</span><span class="n">float</span><span class="p">)</span><span class="nv">$sec</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="nv">$dbh</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PDO</span><span class="p">(</span><span class="s1">'pgsql:dbname=pg1;host=localhost'</span><span class="p">,</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'pass'</span><span class="p">);</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">setAttribute</span><span class="p">(</span><span class="no">PDO</span><span class="o">::</span><span class="no">ATTR_ERRMODE</span><span class="p">,</span> <span class="no">PDO</span><span class="o">::</span><span class="no">ERRMODE_EXCEPTION</span><span class="p">);</span>
+ 
+<span class="nv">$time_start</span> <span class="o">=</span> <span class="nf">microtime_float</span><span class="p">();</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">beginTransaction</span><span class="p">();</span>
+<span class="nv">$field1</span> <span class="o">=</span> <span class="nb">uniqid</span><span class="p">();</span>
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"UPDATE test.tbl1 set field1=:F1 where id=1"</span><span class="p">);</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'F1'</span> <span class="o">=&gt;</span> <span class="nv">$field1</span><span class="p">));</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">commit</span><span class="p">();</span>
+<span class="nv">$time_end</span> <span class="o">=</span> <span class="nf">microtime_float</span><span class="p">();</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nv">$time_end</span> <span class="o">-</span> <span class="nv">$time_start</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s2">"&lt;p&gt;Single UPDATE with bind parameters: </span><span class="nv">$time</span><span class="s2"> seconds&lt;/p&gt;"</span><span class="p">;</span>
+ 
+<span class="nv">$time_start</span> <span class="o">=</span> <span class="nf">microtime_float</span><span class="p">();</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">beginTransaction</span><span class="p">();</span>
+<span class="nv">$field1</span> <span class="o">=</span> <span class="nb">uniqid</span><span class="p">();</span>
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"UPDATE test.tbl1 set field1='</span><span class="si">{</span><span class="nv">$field1</span><span class="si">}</span><span class="s2">' where id=1"</span><span class="p">);</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">();</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">commit</span><span class="p">();</span>
+<span class="nv">$time_end</span> <span class="o">=</span> <span class="nf">microtime_float</span><span class="p">();</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nv">$time_end</span> <span class="o">-</span> <span class="nv">$time_start</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s2">"&lt;p&gt;Single UPDATE without bind parameters: </span><span class="nv">$time</span><span class="s2"> seconds&lt;/p&gt;"</span><span class="p">;</span>
+ 
+<span class="nv">$time_start</span> <span class="o">=</span> <span class="nf">microtime_float</span><span class="p">();</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">beginTransaction</span><span class="p">();</span>
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s1">'UPDATE test.tbl1 set field1=:F1 where id=1'</span><span class="p">);</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$i</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nv">$field1</span> <span class="o">=</span> <span class="nv">$i</span><span class="p">;</span>
+   <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'F1'</span> <span class="o">=&gt;</span> <span class="nv">$field1</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">commit</span><span class="p">();</span>
+<span class="nv">$time_end</span> <span class="o">=</span> <span class="nf">microtime_float</span><span class="p">();</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nv">$time_end</span> <span class="o">-</span> <span class="nv">$time_start</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s2">"&lt;p&gt;Multiple UPDATE with bind parameters: </span><span class="nv">$time</span><span class="s2"> seconds&lt;/p&gt;"</span><span class="p">;</span>
+ 
+<span class="nv">$time_start</span> <span class="o">=</span> <span class="nf">microtime_float</span><span class="p">();</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">beginTransaction</span><span class="p">();</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"UPDATE test.tbl1 set field1='</span><span class="si">{</span><span class="nv">$field1</span><span class="si">}</span><span class="s2">' where id=1"</span><span class="p">);</span>
+   <span class="nv">$field1</span> <span class="o">=</span> <span class="nv">$i</span><span class="p">;</span>
+   <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">commit</span><span class="p">();</span>
+<span class="nv">$time_end</span> <span class="o">=</span> <span class="nf">microtime_float</span><span class="p">();</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nv">$time_end</span> <span class="o">-</span> <span class="nv">$time_start</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s2">"&lt;p&gt;Multiple UPDATE without bind parameters: </span><span class="nv">$time</span><span class="s2"> seconds&lt;/p&gt;"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>The output of this benchmark is the following one:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Single UPDATE with bind parameters: 0.2623 seconds
+Single UPDATE without bind parameters: 0.0195 seconds
+Multiple UPDATE with bind parameters: 4.1123 seconds
+Multiple UPDATE without bind parameters: 8.1732 seconds
+</code></pre></div></div>
+
+<p>As we can see in the output of the benchmark a single update is slightly faster without bind any parameter but if we need to execute the same update with different parameters the bind parameters way is significantly faster than parse+execute again and again.</p>
+
+<p>There’s another benefit of using bind parameters. Databases normally have internally a cache system for our prepared statement. In theory they reuse the statements. The main problem for us (in our PHP world) is that normally we create a new connection to the database at the beginning of the script (or lazy connection) and close it at the end. We don’t have natively a connection pooling like J2EE. So I’m not 100% sure if using bind parameters helps to the database to reuse statements.</p>
+
+<p>There’s another issue we must take into account. Without prepared statements the multiple update example may throw a database exception (depend on our database configuration). Too many open cursors in active transaction. That error appear because for our database each update is a different statement (5000 in the example) and with the another method there’s only one.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Performance+analysis+using+bind+parameters+with+PDO+and+PHP.%20%2F2010%2F10%2F05%2Fperformance-analysis-using-bind-parameters-with-pdo-and-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2010%2F10%2F05%2Fperformance-analysis-using-bind-parameters-with-pdo-and-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Performance+analysis+using+bind+parameters+with+PDO+and+PHP.&url=%2F2010%2F10%2F05%2Fperformance-analysis-using-bind-parameters-with-pdo-and-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2010/10/05/performance-analysis-using-bind-parameters-with-pdo-and-php/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2010/10/05/performance-analysis-using-bind-parameters-with-pdo-and-php'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618654523880071000"></script>
+
+    </div>
+  </body>
+</html>

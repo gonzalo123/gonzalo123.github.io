@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Keep our PostgreSQL databases syncronized with PHP. Database version control.</title>
+    <meta name="description"
+          content="Last October I attended to PHP Barcelona 2010. One of the talk I really wanted to see was “Database version control without pain”. In this talk Harrie Verveer showed us different tools to keep synchronized our databases. This is a really common problem working with databases. Source code is well covered with source control management tools. I normally use mercurial (hg) but with git, bazaar or svn we can cover all our needs within source code. We create source code at development server and push the changes to production. It’s really easy to keep synchronized all our code. But with databases it’s different. Maybe Oracle’s people are few steps above the rest and they have something similar than source code control for database schema’s natively in the database. If you add a new column to a table, your schema will be transformed into a new version. Oracle database is great. It has incredible features and really good performance, if you can afford the fee. In this post I will try to solve this problem with PostgreSQL. A really good database similar than Oracle and open source and free (as “free beer” also)
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Keep our PostgreSQL databases syncronized with PHP. Database version control.">
+    <meta name="twitter:description"
+          content="Last October I attended to PHP Barcelona 2010. One of the talk I really wanted to see was “Database version control without pain”. In this talk Harrie Verveer showed us different tools to keep synchronized our databases. This is a really common problem working with databases. Source code is well covered with source control management tools. I normally use mercurial (hg) but with git, bazaar or svn we can cover all our needs within source code. We create source code at development server and push the changes to production. It’s really easy to keep synchronized all our code. But with databases it’s different. Maybe Oracle’s people are few steps above the rest and they have something similar than source code control for database schema’s natively in the database. If you add a new column to a table, your schema will be transformed into a new version. Oracle database is great. It has incredible features and really good performance, if you can afford the fee. In this post I will try to solve this problem with PostgreSQL. A really good database similar than Oracle and open source and free (as “free beer” also)
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Keep our PostgreSQL databases syncronized with PHP. Database version control.">
+    <meta property="og:description"
+          content="Last October I attended to PHP Barcelona 2010. One of the talk I really wanted to see was “Database version control without pain”. In this talk Harrie Verveer showed us different tools to keep synchronized our databases. This is a really common problem working with databases. Source code is well covered with source control management tools. I normally use mercurial (hg) but with git, bazaar or svn we can cover all our needs within source code. We create source code at development server and push the changes to production. It’s really easy to keep synchronized all our code. But with databases it’s different. Maybe Oracle’s people are few steps above the rest and they have something similar than source code control for database schema’s natively in the database. If you add a new column to a table, your schema will be transformed into a new version. Oracle database is great. It has incredible features and really good performance, if you can afford the fee. In this post I will try to solve this problem with PostgreSQL. A really good database similar than Oracle and open source and free (as “free beer” also)
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618654523880071000">
+    <link rel="canonical"
+          href="/2010/12/13/keep-our-postgresql-databases-syncronized-with-php-database-version-control/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Keep our PostgreSQL databases syncronized with PHP. Database version control. | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Keep our PostgreSQL databases syncronized with PHP. Database version control." />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Last October I attended to PHP Barcelona 2010. One of the talk I really wanted to see was “Database version control without pain”. In this talk Harrie Verveer showed us different tools to keep synchronized our databases. This is a really common problem working with databases. Source code is well covered with source control management tools. I normally use mercurial (hg) but with git, bazaar or svn we can cover all our needs within source code. We create source code at development server and push the changes to production. It’s really easy to keep synchronized all our code. But with databases it’s different. Maybe Oracle’s people are few steps above the rest and they have something similar than source code control for database schema’s natively in the database. If you add a new column to a table, your schema will be transformed into a new version. Oracle database is great. It has incredible features and really good performance, if you can afford the fee. In this post I will try to solve this problem with PostgreSQL. A really good database similar than Oracle and open source and free (as “free beer” also)" />
+<meta property="og:description" content="Last October I attended to PHP Barcelona 2010. One of the talk I really wanted to see was “Database version control without pain”. In this talk Harrie Verveer showed us different tools to keep synchronized our databases. This is a really common problem working with databases. Source code is well covered with source control management tools. I normally use mercurial (hg) but with git, bazaar or svn we can cover all our needs within source code. We create source code at development server and push the changes to production. It’s really easy to keep synchronized all our code. But with databases it’s different. Maybe Oracle’s people are few steps above the rest and they have something similar than source code control for database schema’s natively in the database. If you add a new column to a table, your schema will be transformed into a new version. Oracle database is great. It has incredible features and really good performance, if you can afford the fee. In this post I will try to solve this problem with PostgreSQL. A really good database similar than Oracle and open source and free (as “free beer” also)" />
+<link rel="canonical" href="/2010/12/13/keep-our-postgresql-databases-syncronized-with-php-database-version-control/" />
+<meta property="og:url" content="/2010/12/13/keep-our-postgresql-databases-syncronized-with-php-database-version-control/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-12-13T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Keep our PostgreSQL databases syncronized with PHP. Database version control." />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2010/12/13/keep-our-postgresql-databases-syncronized-with-php-database-version-control/"},"url":"/2010/12/13/keep-our-postgresql-databases-syncronized-with-php-database-version-control/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Last October I attended to PHP Barcelona 2010. One of the talk I really wanted to see was “Database version control without pain”. In this talk Harrie Verveer showed us different tools to keep synchronized our databases. This is a really common problem working with databases. Source code is well covered with source control management tools. I normally use mercurial (hg) but with git, bazaar or svn we can cover all our needs within source code. We create source code at development server and push the changes to production. It’s really easy to keep synchronized all our code. But with databases it’s different. Maybe Oracle’s people are few steps above the rest and they have something similar than source code control for database schema’s natively in the database. If you add a new column to a table, your schema will be transformed into a new version. Oracle database is great. It has incredible features and really good performance, if you can afford the fee. In this post I will try to solve this problem with PostgreSQL. A really good database similar than Oracle and open source and free (as “free beer” also)","dateModified":"2010-12-13T00:00:00+01:00","datePublished":"2010-12-13T00:00:00+01:00","headline":"Keep our PostgreSQL databases syncronized with PHP. Database version control.","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/">
+            <i class="fas fa-signature"></i>
+            Blog
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+    <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+</div>
+
+<p>
+<h2>
+    Note: I'm migrating from <a href="https://gonzalo123.com">gonzalo123.com</a> to here.
+    When I finish I'll swap the DNS to here. The "official" blog will be always <a
+        href="https://gonzalo123.com">gonzalo123.com</a>
+</h2>
+</p>
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+    >
+        <div class="post-meta">
+            <time datetime=" 2010-12-13 00:00
+            " class="post-meta__date date">13 Dec 2010</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#postgreSQL">postgreSQL</a></span>
+            
+        </div>
+        <h1 class="post-title">Keep our PostgreSQL databases syncronized with PHP. Database version control.</h1>
+    </header>
+
+    <section class="post">
+        <p>Last October I attended to PHP <a href="http://phpconference.es/">Barcelona</a> 2010. One of the talk I really wanted to see was “<a href="http://www.slideshare.net/harrieverveer/database-version-control-without-pain-the-php-barcelona-version">Database version control without pain</a>”. In this talk <a href="http://twitter.com/#!/harrieverveer">Harrie Verveer</a> showed us different tools to keep synchronized our databases. This is a really common problem working with databases. Source code is well covered with source control management tools. I normally use mercurial (hg) but with git, bazaar or svn we can cover all our needs within source code. We create source code at development server and push the changes to production. It’s really easy to keep synchronized all our code. But with databases it’s different. Maybe Oracle’s people are few steps above the rest and they have something similar than source code control for database schema’s natively in the database. If you add a new column to a table, your schema will be transformed into a new version. Oracle database is great. It has incredible features and really good performance, if you can afford the fee. In this post I will try to solve this problem with <a href="http://www.postgresql.org/">PostgreSQL</a>. A really good database similar than Oracle and open source and free (as <em>“free beer” also</em>)</p>
+
+<p>It’s a recurrent problem working with databases. We create database objects (tables, views, ..) in the development server and when our application is ready to go live we push the changes to production server. If we are smart developers we save all database scripts in a file and when we deploy them to production we execute the script. There are tools to do it like <a href="http://dbdeploy.com/">dbdeploy</a> or even <a href="http://phing.info/">phing</a> (You must have a look to Harrie’s <a href="http://conference.phpnw.org.uk/phpnw10/2010/12/03/phpnw10-harrie-verveer-database-version-control-without-pain/">presentation</a> to see all the possibilities). The problem is that we must be very strict and we must create the script even when we alter a column in a bug fix. It’s a hard work and it will be worthwhile but we must be mindful it’s really easy and fast to alter a column with a IDE (pgadmin for example) and very easy to forget to save the diff file. If you work alone maybe you can afford it but if you work within a team is difficult to ensure everybody update the diff file by hand. The purpose of <a href="https://code.google.com/p/pgdbsync/">this library</a> is to create the diff scrip automatically according to the current state of the database. Lets’s start.</p>
+
+<p>As Harrie said there isn’t a silver bullet solution (I really went to his talk finding the silver bullet :) ). My first attempt was to use Doctrine2. Doctrine2 has a great tool called <a href="http://www.doctrine-project.org/projects/dbal">dbal</a>. I tried to use it but I faced with a big problem, at least for me. I like to organize my database objects (tables, views, …) within schemas. With Doctrine2’s dbal I have problems and it doesn’t work as I think it must work. It assumes all objects are in the default schema and it doesn’t add “[schema].” to the information schema queries.  Maybe is my fault but If want to use dbal I need to hack the code. Because of that I started to write <a href="http://code.google.com/p/pgdbsync/">pgdbsync</a>.</p>
+
+<p>It would be cool to create a multi-database library to synchronize our databases. But it’s a huge work for doing alone so I’ve focused only on PostgreSQL, because is the database I mainly use in my daily work.</p>
+
+<p>The Idea is to create a command line tool to create the need script to keep synchronized two (or more databases). We must take care we’re speaking about database’s schema. Not database’s data.</p>
+
+<p>First I create a ini <a href="http://code.google.com/p/pgdbsync/source/browse/conf.ini">file</a> with the configuration of each database connection. The user we use to connect to the database must have access to data dictionary in our PostgreSQL database.</p>
+
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">[devel]</span>
+<span class="py">TYPE</span> <span class="p">=</span> <span class="s">pgsql</span>
+<span class="py">HOST</span> <span class="p">=</span> <span class="s">development</span>
+<span class="py">PORT</span> <span class="p">=</span> <span class="s">5432</span>
+<span class="py">DBNAME</span> <span class="p">=</span> <span class="s">developement</span>
+<span class="py">USER</span> <span class="p">=</span> <span class="s">user</span>
+<span class="py">PASSWORD</span> <span class="p">=</span> <span class="s">password</span>
+ 
+<span class="nn">[prod1]</span>
+<span class="py">TYPE</span> <span class="p">=</span> <span class="s">pgsql</span>
+<span class="py">HOST</span> <span class="p">=</span> <span class="s">production</span>
+<span class="py">PORT</span> <span class="p">=</span> <span class="s">5432</span>
+<span class="py">DBNAME</span> <span class="p">=</span> <span class="s">prod1</span>
+<span class="py">USER</span> <span class="p">=</span> <span class="s">user</span>
+<span class="py">PASSWORD</span> <span class="p">=</span> <span class="s">password</span>
+</code></pre></div></div>
+
+<p>I’ve created a simple CLI script to use the library with <a href="http://php.net/manual/es/function.getopt.php">getopt</a>. You can see the script <a href="http://code.google.com/p/pgdbsync/source/browse/pgdbsync">here</a>. The usage of the script is very simple. I have implemented three main actions: <strong>diff</strong>, <strong>summary</strong> and <strong>run</strong>.</p>
+
+<ul>
+  <li><strong>diff</strong>: Calculates the needed script to keep synchronized the databases. Prints the script on the screen but it doesn’t executes anything.</li>
+  <li><strong>summary</strong>: Shows a summary the differences. Not the full script. Useful to see the differences in a glance.</li>
+  <li><strong>run</strong>: Calculates the diff function and executes it.</li>
+</ul>
+
+<p>Let’s start. First we start with an empty database in Development and Production servers with a schema WEB in both sides (schema creation’s coverage is not supported by pgdbsync). Then we create a few objects on the development server.</p>
+
+<pre><code class="language-postgresql">-- TABLE TEST
+CREATE TABLE WEB.TEST (
+  TEST_NAME CHAR(30) NOT NULL,
+  TEST_ID INTEGER NOT NULL,
+  TEST_DATE TIMESTAMP NOT NULL
+)
+TABLESPACE WEB;
+ALTER TABLE WEB.TEST ADD CONSTRAINT PK_TEST PRIMARY KEY (TEST_ID);
+ 
+-- VIEW on TEST
+CREATE VIEW WEB.testview(
+  TEST_NAME,
+  TEST_ID,
+  TEST_DATE
+) AS
+SELECT *
+FROM WEB.TEST
+WHERE TEST_NAME LIKE 't%';
+ 
+-- Function hello
+CREATE OR REPLACE FUNCTION WEB.hello(item character varying)
+  RETURNS character varying AS
+$BODY$
+DECLARE
+BEGIN
+   return "Hi " || item;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+</code></pre>
+
+<p>Now our Development and Production servers are different. We need to execute the last script in Production, but instead of doing it we are going to check differences with our pgdbsync script.</p>
+
+<p>The usage of <a href="https://code.google.com/p/pgdbsync/">pgdbsync</a> command line script is the following one:</p>
+
+<p>-c [schema]
+ -f [from database]
+ -t [to database]
+ -a [action: diff | summary | run]</p>
+
+<pre><code class="language-commandline">./pgdbsync -s web -f devel -t prod -a summary
+HOST : production :: prod1
+--------------------------------------------
+function
+ create :: WEB.hello(varchar)
+tables
+ create :: WEB.test
+view
+ create :: WEB.testview
+ 
+[OK]  end process
+</code></pre>
+
+<p>Here we can see our production server is different from the development one.</p>
+
+<pre><code class="language-commandline">./pgdbsync -s wf -f devel -t prod -a diff
+HOST : production :: prod1
+--------------------------------------------
+CREATE OR REPLACE FUNCTION web.hello(item character varying)
+ RETURNS character varying
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+BEGIN
+ return "Hi " || item;
+END;
+$function$
+ 
+CREATE TABLE web.test(
+ test_name character NOT NULL,
+ test_id integer NOT NULL,
+ test_date timestamp without time zone NOT NULL,
+ CONSTRAINT pk_test PRIMARY KEY (test_date)
+)
+TABLESPACE web;
+ALTER TABLE web.test OWNER TO user;
+ 
+CREATE OR REPLACE VIEW web.testview AS
+ SELECT test.test_name, test.test_id, test.test_date FROM web.test WHERE (test.test_name ~~ 't%'::text);;
+ALTER TABLE web.testview OWNER TO user;
+[OK]  end process
+</code></pre>
+
+<p>and finally</p>
+
+<pre><code class="language-commandline">./pgdbsync -s web -f devel -t prod -a run
+HOST : production :: prod1
+----------------------------------
+
+[OK]  end process
+</code></pre>
+
+<p>And that’s all. Our databases are synchronized. The library is not finished. Foreign keys are not supported yet, but it checks:</p>
+
+<ul>
+  <li>Tables</li>
+  <li>Constraints</li>
+  <li>Sequences</li>
+  <li>Views</li>
+  <li>Functions</li>
+</ul>
+
+<p>To finish the demo we are going to drop the new objects at development server and we will run cli script again:</p>
+
+<pre><code class="language-commandline">./pgdbsync -s wf -f devel -t prod1 -a diff
+ 
+HOST : prododuction :: prod1
+--------------------------------------------
+ 
+drop function web.hello(varchar);
+ 
+DROP TABLE web.test;
+ 
+drop view web.testview;
+ 
+[OK]  end process
+</code></pre>
+
+<p>Source code is available at Google, code <a href="http://code.google.com/p/pgdbsync/">here</a>.</p>
+
+<p>An important post I’ve read to understand to PostgreSQL’s information schema is <a href="http://alberton.info/postgresql_meta_info.html">this one</a> from great Lorenzo Alberton. It really helped me building pgdbsync.</p>
+
+<p>The Library is not finished yet and it may crashed in some cases (not all data-types are covered). I always check diff file before execute it. If you want to join me to develop the library, don’t hesitate to contact me :).</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Keep+our+PostgreSQL+databases+syncronized+with+PHP.+Database+version+control.%20%2F2010%2F12%2F13%2Fkeep-our-postgresql-databases-syncronized-with-php-database-version-control%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2010%2F12%2F13%2Fkeep-our-postgresql-databases-syncronized-with-php-database-version-control%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Keep+our+PostgreSQL+databases+syncronized+with+PHP.+Database+version+control.&url=%2F2010%2F12%2F13%2Fkeep-our-postgresql-databases-syncronized-with-php-database-version-control%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2010/12/13/keep-our-postgresql-databases-syncronized-with-php-database-version-control/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2010/12/13/keep-our-postgresql-databases-syncronized-with-php-database-version-control'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2010/11/01/database-connection-pooling-with-php-and-gearman/">Database connection pooling with PHP and gearman <span class="label label-default">php</span>  <span class="label label-default">postgreSQL</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618654523880071000"></script>
+
+    </div>
+  </body>
+</html>

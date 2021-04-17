@@ -4,7 +4,8 @@ title: "Pivot tables in PHP"
 date: "2010-01-24"
 tags: 
   - "php"
-  - "technology"
+categories: 
+  - "php"
 permalink: /:year/:month/:day/:title/
 ---
 

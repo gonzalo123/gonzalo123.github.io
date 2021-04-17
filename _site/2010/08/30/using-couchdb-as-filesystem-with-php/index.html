@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Using CouchDb as filesystem with PHP</title>
+    <meta name="description"
+          content="One of the problems I need to solve in my clustered PHP applications is where to store files. When I say files I’m not speaking about source code. I’m speaking about additional data files, such as download-able pdfs, logs, etc. Those files must be on every node of the cluster. One possible approach to the solution is to use a distributed filesystem, rsync or maybe use a file-server mounted on every node. Another solution may be the usage of CouchDb. CouchDb has two great features to meet or requirements with this problem. It allows us to store files as attachments and it also allows to perform a great and very easy multi-master replica system.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Using CouchDb as filesystem with PHP">
+    <meta name="twitter:description"
+          content="One of the problems I need to solve in my clustered PHP applications is where to store files. When I say files I’m not speaking about source code. I’m speaking about additional data files, such as download-able pdfs, logs, etc. Those files must be on every node of the cluster. One possible approach to the solution is to use a distributed filesystem, rsync or maybe use a file-server mounted on every node. Another solution may be the usage of CouchDb. CouchDb has two great features to meet or requirements with this problem. It allows us to store files as attachments and it also allows to perform a great and very easy multi-master replica system.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Using CouchDb as filesystem with PHP">
+    <meta property="og:description"
+          content="One of the problems I need to solve in my clustered PHP applications is where to store files. When I say files I’m not speaking about source code. I’m speaking about additional data files, such as download-able pdfs, logs, etc. Those files must be on every node of the cluster. One possible approach to the solution is to use a distributed filesystem, rsync or maybe use a file-server mounted on every node. Another solution may be the usage of CouchDb. CouchDb has two great features to meet or requirements with this problem. It allows us to store files as attachments and it also allows to perform a great and very easy multi-master replica system.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618654523880071000">
+    <link rel="canonical"
+          href="/2010/08/30/using-couchdb-as-filesystem-with-php/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Using CouchDb as filesystem with PHP | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Using CouchDb as filesystem with PHP" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="One of the problems I need to solve in my clustered PHP applications is where to store files. When I say files I’m not speaking about source code. I’m speaking about additional data files, such as download-able pdfs, logs, etc. Those files must be on every node of the cluster. One possible approach to the solution is to use a distributed filesystem, rsync or maybe use a file-server mounted on every node. Another solution may be the usage of CouchDb. CouchDb has two great features to meet or requirements with this problem. It allows us to store files as attachments and it also allows to perform a great and very easy multi-master replica system." />
+<meta property="og:description" content="One of the problems I need to solve in my clustered PHP applications is where to store files. When I say files I’m not speaking about source code. I’m speaking about additional data files, such as download-able pdfs, logs, etc. Those files must be on every node of the cluster. One possible approach to the solution is to use a distributed filesystem, rsync or maybe use a file-server mounted on every node. Another solution may be the usage of CouchDb. CouchDb has two great features to meet or requirements with this problem. It allows us to store files as attachments and it also allows to perform a great and very easy multi-master replica system." />
+<link rel="canonical" href="/2010/08/30/using-couchdb-as-filesystem-with-php/" />
+<meta property="og:url" content="/2010/08/30/using-couchdb-as-filesystem-with-php/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-08-30T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Using CouchDb as filesystem with PHP" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2010/08/30/using-couchdb-as-filesystem-with-php/"},"url":"/2010/08/30/using-couchdb-as-filesystem-with-php/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"One of the problems I need to solve in my clustered PHP applications is where to store files. When I say files I’m not speaking about source code. I’m speaking about additional data files, such as download-able pdfs, logs, etc. Those files must be on every node of the cluster. One possible approach to the solution is to use a distributed filesystem, rsync or maybe use a file-server mounted on every node. Another solution may be the usage of CouchDb. CouchDb has two great features to meet or requirements with this problem. It allows us to store files as attachments and it also allows to perform a great and very easy multi-master replica system.","dateModified":"2010-08-30T00:00:00+02:00","datePublished":"2010-08-30T00:00:00+02:00","headline":"Using CouchDb as filesystem with PHP","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/">
+            <i class="fas fa-signature"></i>
+            Blog
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+    <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+</div>
+
+<p>
+<h2>
+    Note: I'm migrating from <a href="https://gonzalo123.com">gonzalo123.com</a> to here.
+    When I finish I'll swap the DNS to here. The "official" blog will be always <a
+        href="https://gonzalo123.com">gonzalo123.com</a>
+</h2>
+</p>
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+    >
+        <div class="post-meta">
+            <time datetime=" 2010-08-30 00:00
+            " class="post-meta__date date">30 Aug 2010</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#couchDB">couchDB</a></span>
+            
+        </div>
+        <h1 class="post-title">Using CouchDb as filesystem with PHP</h1>
+    </header>
+
+    <section class="post">
+        <p>One of the problems I need to solve in my <a href="http://gonzalo123.wordpress.com/2010/07/27/clustering-php-applications-tips-and-hints/">clustered PHP applications</a> is where to store files. When I say files I’m not speaking about source code. I’m speaking about additional data files, such as download-able pdfs, logs, etc. Those files must be on every node of the cluster. One possible approach to the solution is to use a distributed filesystem, rsync or maybe use a file-server mounted on every node. Another solution may be the usage of CouchDb. CouchDb has two great features to meet or requirements with this problem. It allows us to store files as attachments and it also allows to perform a great and very easy multi-master replica system.</p>
+
+<p>The usage of CouchDB is pretty straightforward. It implements a RESTfull interface to perform every operations. So the only thing we need is a REST client. Zend Framework has a great <a href="http://framework.zend.com/manual/en/zend.http.html">one</a>. We dont’t really need a library. We can easily perform REST requests with the PHP’s <a href="http://php.net/manual/en/book.curl.php">Curl’s extension</a>. I’ve created two libraries for working with CouchDb one is a low-level HTTP client (with curl) and another is higher level one (it uses the HTTP Client) for CouchDB operations. You can read two post about those libraries <a href="http://gonzalo123.wordpress.com/2010/01/09/building-a-simple-http-client-with-php-a-rest-client/">here</a> and <a href="http://gonzalo123.wordpress.com/2010/03/15/php-and-couchdb/">here</a>.</p>
+
+<p>Now I want to extend the features of my library. I want to use CouchDB as file storage in PHP. Instead of using <a href="http://es.php.net/manual/en/ref.filesystem.php">file</a> functions (fopen, fwrite, fread, …) I want to use another ones and store/read files in CouchDB. For doing this I’ve refactored those two libraries into another one called <a href="http://code.google.com/p/nov-framework/">Nov</a>. I also have embraced namespaces so I will use them in the library. This means it’s only available with PHP 5.3.</p>
+
+<p>Here you are a summary of the library. That’s not a complete UML graph. It’s only a diagram with the main features only with educational purpose.</p>
+
+<p><a href="/assets/images/couchdb_fs1.png" title="couchDb_Fs">summary</a></p>
+
+<p>The best to show the library is with an example:</p>
+
+<p>First I’m going to start with the basic usage of Nov\CouchDb library:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Starting up the loader</span>
+<span class="k">require_once</span><span class="p">(</span><span class="s2">"Nov/Loader.php"</span><span class="p">);</span>
+<span class="nc">Nov\Loader</span><span class="o">::</span><span class="nf">init</span><span class="p">();</span>
+ 
+<span class="kn">use</span> <span class="nc">Nov\CouchDb</span><span class="p">;</span>
+<span class="nv">$cdb</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CouchDb</span><span class="p">(</span><span class="s1">'localhost'</span><span class="p">,</span> <span class="mi">5984</span><span class="p">);</span>
+<span class="nv">$cdb</span><span class="o">-&gt;</span><span class="nf">db</span><span class="p">(</span><span class="s1">'users'</span><span class="p">);</span>
+<span class="nv">$nombre</span> <span class="o">=</span> <span class="nv">$cdb</span><span class="o">-&gt;</span><span class="nf">db</span><span class="p">(</span><span class="s1">'ris_users'</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">select</span><span class="p">(</span><span class="s1">'gonzalo'</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">asObject</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">;</span>
+<span class="nv">$apellido</span> <span class="o">=</span> <span class="nv">$cdb</span><span class="o">-&gt;</span><span class="nf">db</span><span class="p">(</span><span class="s1">'ris_users'</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">select</span><span class="p">(</span><span class="s1">'gonzalo'</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">asObject</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">surname</span><span class="p">;</span>
+<span class="k">echo</span> <span class="s2">"Hello </span><span class="si">{</span><span class="nv">$nombre</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nv">$apellido</span><span class="si">}</span><span class="s2">.
+"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>To allow me the use of different CouchDb Databases and to put the Database configuration in one file. I use the following configuration class:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">NovConf</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="no">CDB1</span> <span class="o">=</span> <span class="s1">'CDB1'</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">PG1</span>  <span class="o">=</span> <span class="s1">'PG1'</span><span class="p">;</span>
+ 
+    <span class="k">public</span> <span class="k">static</span> <span class="nv">$_dbs</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="k">self</span><span class="o">::</span><span class="no">PG1</span>  <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">'driver'</span>   <span class="o">=&gt;</span> <span class="s1">'pgsql'</span><span class="p">,</span>
+            <span class="s1">'dsn'</span>      <span class="o">=&gt;</span> <span class="s1">'pgsql:dbname=pg1;host=localhost'</span><span class="p">,</span>
+            <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="kc">null</span>
+            <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="k">self</span><span class="o">::</span><span class="no">CDB1</span>  <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">'driver'</span>   <span class="o">=&gt;</span> <span class="s1">'couchdb'</span><span class="p">,</span>
+            <span class="s1">'host'</span>     <span class="o">=&gt;</span> <span class="s1">'localhost'</span><span class="p">,</span>
+            <span class="s1">'port'</span>     <span class="o">=&gt;</span> <span class="mi">5984</span><span class="p">,</span>
+            <span class="s1">'protocol'</span> <span class="o">=&gt;</span> <span class="s1">'http'</span><span class="p">,</span>
+            <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="kc">null</span><span class="p">,</span>
+            <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="kc">null</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>As you can see I use the same configuration file for my PDO drivers and CouchDb.</p>
+
+<p>Now I can use:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">require_once</span><span class="p">(</span><span class="s2">"Nov/Loader.php"</span><span class="p">);</span>
+<span class="nc">Nov\Loader</span><span class="o">::</span><span class="nf">init</span><span class="p">();</span>
+ 
+<span class="kn">use</span> <span class="nc">Nov\CouchDb</span><span class="p">;</span>
+<span class="nv">$cdb</span> <span class="o">=</span> <span class="nc">CouchDb</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nc">NovConf</span><span class="o">::</span><span class="no">CDB1</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">db</span><span class="p">(</span><span class="s1">'users'</span><span class="p">);</span>
+ 
+<span class="k">try</span> <span class="p">{</span>
+    <span class="nv">$cdb</span><span class="o">-&gt;</span><span class="nf">insert</span><span class="p">(</span><span class="s1">'xxx'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'xxx'</span><span class="p">));</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">CouchDb\Exception\DupValOnIndex</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"Already created</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">}</span>
+ 
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$cdb</span><span class="o">-&gt;</span><span class="nf">select</span><span class="p">(</span><span class="s1">'xxx'</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">asObject</span><span class="p">();</span>
+<span class="nv">$cdb</span><span class="o">-&gt;</span><span class="nf">update</span><span class="p">(</span><span class="s1">'xxx'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'xxx1'</span><span class="p">));</span>
+<span class="nv">$cdb</span><span class="o">-&gt;</span><span class="nb">delete</span><span class="p">(</span><span class="s1">'xxx'</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">asObject</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>And now finally the file storage part:</p>
+
+<p>For storing the files I’ve taken one design decision. Every files will be stored into separate CouchDb document. That’s means one file, one document. There’s another possible approach. One CouchDb document can be one folder and store every files as attachments of this folder in the same document. But I prefer the idea of not to track folders. Only files. So each CouchDb document will have only one attachment.</p>
+
+<p>That’s an example of one document in CouchDb</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+   </span><span class="nl">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/home/gonzalo/aasa.txt"</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"_rev"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2-48b501a81c38fd84a3e0351917e64135"</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/home/gonzalo"</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"_attachments"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       </span><span class="nl">"aasa.txt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+           </span><span class="nl">"stub"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+           </span><span class="nl">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/octet-stream"</span><span class="p">,</span><span class="w">
+           </span><span class="nl">"length"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+           </span><span class="nl">"revpos"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>There’s another usage script. Here we can see all the features together. We create files, update and delete them. Internally Nov\CouchDb\Fs uses a predefined CouchDb database called fs.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Nov\CouchDb\Fs</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Nov\CouchDb\Fs\Exception</span><span class="p">;</span>
+<span class="k">require_once</span> <span class="p">(</span><span class="s2">"Nov/Loader.php"</span><span class="p">);</span>
+<span class="nc">Nov\Loader</span><span class="o">::</span><span class="nf">init</span><span class="p">();</span>
+ 
+<span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
+<span class="c1">// create an instance from a factory method</span>
+<span class="nv">$fs</span> <span class="o">=</span> <span class="nc">Fs</span><span class="o">::</span><span class="nf">factory</span><span class="p">(</span><span class="nc">NovConf</span><span class="o">::</span><span class="no">CDB1</span><span class="p">);</span>
+<span class="c1">// Now we're going to delete a file. If it doesn't exists will throw a FileNotFound exception</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="nv">$fs</span><span class="o">-&gt;</span><span class="nb">delete</span><span class="p">(</span><span class="s2">"/home/gonzalo/aaa.txt"</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Exception\FileNotFound</span>  <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">()</span> <span class="mf">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// Now we are going to create a file.</span>
+<span class="c1">// the second parameter 'true' means if the file doesn't exist will be created. Similar than 'r+'</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="nv">$fs</span><span class="o">-&gt;</span><span class="nf">open</span><span class="p">(</span><span class="s2">"/home/gonzalo/aaa.txt"</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">write</span><span class="p">(</span><span class="s2">"asasasasasas"</span><span class="p">,</span> <span class="s2">"application/octet-stream"</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Exception\FileNotFound</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">()</span> <span class="mf">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Exception\WriteError</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">()</span> <span class="mf">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">()</span> <span class="mf">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// We open the file</span>
+<span class="nv">$res</span> <span class="o">=</span> <span class="nv">$fs</span><span class="o">-&gt;</span><span class="nf">open</span><span class="p">(</span><span class="s2">"/home/gonzalo/aaa.txt"</span><span class="p">);</span>
+ 
+<span class="c1">// we can get the length and the content type</span>
+<span class="k">echo</span> <span class="nv">$res</span><span class="o">-&gt;</span><span class="nf">getLenght</span><span class="p">()</span> <span class="mf">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nv">$res</span><span class="o">-&gt;</span><span class="nf">getContentType</span><span class="p">()</span><span class="mf">.</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="c1">// We move it to another location</span>
+<span class="nv">$to</span> <span class="o">=</span> <span class="s2">"/another/location"</span><span class="p">;</span>
+<span class="nv">$res</span><span class="o">-&gt;</span><span class="nf">move</span><span class="p">(</span><span class="nv">$to</span><span class="p">);</span>
+ 
+<span class="nv">$res</span> <span class="o">=</span> <span class="nv">$fs</span><span class="o">-&gt;</span><span class="nf">open</span><span class="p">(</span><span class="nv">$to</span><span class="p">);</span>
+<span class="c1">// we flush the file to the browser</span>
+<span class="k">echo</span> <span class="nv">$res</span><span class="o">-&gt;</span><span class="nf">raw</span><span class="p">();</span>
+ 
+<span class="c1">// finally we delete it</span>
+<span class="nv">$res</span><span class="o">-&gt;</span><span class="nb">delete</span><span class="p">();</span>
+<span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>I’ve also created an extra class to allow to dump files from filesystem to CouchDb and vice-versa.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">require_once</span> <span class="p">(</span><span class="s2">"Nov/Loader.php"</span><span class="p">);</span>
+<span class="nc">Nov\Loader</span><span class="o">::</span><span class="nf">init</span><span class="p">();</span>
+<span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="p">;</span>
+<span class="c1">// from filesystem to couchdb</span>
+<span class="err">\</span><span class="nc">Nov\CouchDb\Fs\Utils</span><span class="o">::</span><span class="nf">fs2cdb</span><span class="p">(</span><span class="s2">"/path/from/"</span><span class="p">,</span> <span class="nc">NovConf</span><span class="o">::</span><span class="no">CDB1</span><span class="p">);</span>
+<span class="c1">// from couchdb to filesystem</span>
+<span class="err">\</span><span class="nc">Nov\CouchDb\Fs\Utils</span><span class="o">::</span><span class="nf">cdb2fs</span><span class="p">(</span><span class="nc">NovConf</span><span class="o">::</span><span class="no">CDB1</span><span class="p">,</span> <span class="s2">"/path/to/"</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>And that’s all. You can download the source code with the examples <a href="http://code.google.com/p/nov-framework/">here</a>. The examples are under document_root/tests/couchdb/ folder. Remember you will need PHP5.3.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Using+CouchDb+as+filesystem+with+PHP%20%2F2010%2F08%2F30%2Fusing-couchdb-as-filesystem-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2010%2F08%2F30%2Fusing-couchdb-as-filesystem-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Using+CouchDb+as+filesystem+with+PHP&url=%2F2010%2F08%2F30%2Fusing-couchdb-as-filesystem-with-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2010/08/30/using-couchdb-as-filesystem-with-php/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2010/08/30/using-couchdb-as-filesystem-with-php'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2010/09/06/using-a-stream-wrapper-to-access-couchdb-attachments-with-php/">Using a stream wrapper to access CouchDb attachments with PHP <span class="label label-default">php</span>  <span class="label label-default">couchDB</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2010/09/01/using-monkey-patching-to-store-files-into-couchdb-using-the-standard-filesystem-functions-with-php/">Using Monkey Patching to store files into CouchDb using the standard filesystem functions with PHP <span class="label label-default">php</span>  <span class="label label-default">couchDB</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2010/07/27/clustering-php-applications-tips-and-hints/">Clustering PHP applications. Tips and hints <span class="label label-default">php</span>  <span class="label label-default">couchDB</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2010/03/16/playing-with-php-couchdb-and-orm/">Playing with PHP, CouchDB and ORM <span class="label label-default">php</span>  <span class="label label-default">couchDB</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618654523880071000"></script>
+
+    </div>
+  </body>
+</html>

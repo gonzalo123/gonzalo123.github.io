@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Database connection pooling with PHP and gearman</title>
+    <meta name="description"
+          content="Handling Database connections with PHP is pretty straightforward. Just open database connection, perform the actions we need, and close it. There’s a little problem. We cannot create a pull of database connections. We need to create the connection in every request. Create and destroy, again and again. There are some third-party solutions like SQL relay or pgpool2 (if you use PostgreSQL like me). In this post I’m going to try to explain a personal experiment to create a connection pooling using gearman. Another purpose of this experiment is create a prepared statements’ cache not only for the current request but also for all ones. Let’s start.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Database connection pooling with PHP and gearman">
+    <meta name="twitter:description"
+          content="Handling Database connections with PHP is pretty straightforward. Just open database connection, perform the actions we need, and close it. There’s a little problem. We cannot create a pull of database connections. We need to create the connection in every request. Create and destroy, again and again. There are some third-party solutions like SQL relay or pgpool2 (if you use PostgreSQL like me). In this post I’m going to try to explain a personal experiment to create a connection pooling using gearman. Another purpose of this experiment is create a prepared statements’ cache not only for the current request but also for all ones. Let’s start.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Database connection pooling with PHP and gearman">
+    <meta property="og:description"
+          content="Handling Database connections with PHP is pretty straightforward. Just open database connection, perform the actions we need, and close it. There’s a little problem. We cannot create a pull of database connections. We need to create the connection in every request. Create and destroy, again and again. There are some third-party solutions like SQL relay or pgpool2 (if you use PostgreSQL like me). In this post I’m going to try to explain a personal experiment to create a connection pooling using gearman. Another purpose of this experiment is create a prepared statements’ cache not only for the current request but also for all ones. Let’s start.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618654523880071000">
+    <link rel="canonical"
+          href="/2010/11/01/database-connection-pooling-with-php-and-gearman/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Database connection pooling with PHP and gearman | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Database connection pooling with PHP and gearman" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Handling Database connections with PHP is pretty straightforward. Just open database connection, perform the actions we need, and close it. There’s a little problem. We cannot create a pull of database connections. We need to create the connection in every request. Create and destroy, again and again. There are some third-party solutions like SQL relay or pgpool2 (if you use PostgreSQL like me). In this post I’m going to try to explain a personal experiment to create a connection pooling using gearman. Another purpose of this experiment is create a prepared statements’ cache not only for the current request but also for all ones. Let’s start." />
+<meta property="og:description" content="Handling Database connections with PHP is pretty straightforward. Just open database connection, perform the actions we need, and close it. There’s a little problem. We cannot create a pull of database connections. We need to create the connection in every request. Create and destroy, again and again. There are some third-party solutions like SQL relay or pgpool2 (if you use PostgreSQL like me). In this post I’m going to try to explain a personal experiment to create a connection pooling using gearman. Another purpose of this experiment is create a prepared statements’ cache not only for the current request but also for all ones. Let’s start." />
+<link rel="canonical" href="/2010/11/01/database-connection-pooling-with-php-and-gearman/" />
+<meta property="og:url" content="/2010/11/01/database-connection-pooling-with-php-and-gearman/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-11-01T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Database connection pooling with PHP and gearman" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2010/11/01/database-connection-pooling-with-php-and-gearman/"},"url":"/2010/11/01/database-connection-pooling-with-php-and-gearman/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Handling Database connections with PHP is pretty straightforward. Just open database connection, perform the actions we need, and close it. There’s a little problem. We cannot create a pull of database connections. We need to create the connection in every request. Create and destroy, again and again. There are some third-party solutions like SQL relay or pgpool2 (if you use PostgreSQL like me). In this post I’m going to try to explain a personal experiment to create a connection pooling using gearman. Another purpose of this experiment is create a prepared statements’ cache not only for the current request but also for all ones. Let’s start.","dateModified":"2010-11-01T00:00:00+01:00","datePublished":"2010-11-01T00:00:00+01:00","headline":"Database connection pooling with PHP and gearman","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/">
+            <i class="fas fa-signature"></i>
+            Blog
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+    <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+</div>
+
+<p>
+<h2>
+    Note: I'm migrating from <a href="https://gonzalo123.com">gonzalo123.com</a> to here.
+    When I finish I'll swap the DNS to here. The "official" blog will be always <a
+        href="https://gonzalo123.com">gonzalo123.com</a>
+</h2>
+</p>
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+    >
+        <div class="post-meta">
+            <time datetime=" 2010-11-01 00:00
+            " class="post-meta__date date">1 Nov 2010</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a>, <a
+                href="/tags/#postgreSQL">postgreSQL</a>, <a
+                href="/tags/#gearman">gearman</a></span>
+            
+        </div>
+        <h1 class="post-title">Database connection pooling with PHP and gearman</h1>
+    </header>
+
+    <section class="post">
+        <p>Handling Database connections with PHP is pretty straightforward. Just open database connection, perform the actions we need, and close it. There’s a little problem. We cannot create a pull of database connections. We need to create the connection in every request. Create and destroy, again and again. There are some third-party solutions like <a href="http://sqlrelay.sourceforge.net/">SQL relay</a> or <a href="http://pgpool.projects.postgresql.org/">pgpool2</a> (if you use PostgreSQL like me). In this post I’m going to try to explain a personal experiment to create a connection pooling using <a href="http://gearman.org/">gearman</a>. Another purpose of this experiment is create a prepared statements’ cache not only for the current request but also for all ones. Let’s start.</p>
+
+<p>This is an example of <strong>SELECT</strong> statement with PDO and PHP</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$dbh</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PDO</span><span class="p">(</span><span class="s1">'pgsql:dbname=pg1;host=localhost'</span><span class="p">,</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'pass'</span><span class="p">);</span>
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">();</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">fetchAll</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Basically the idea is to use a gearman worker to perform every database operations. As far as I known we cannot pass PDO instances from gearman worker to gearman client. Even with object serialization (PDO objects cannot be serialized). That’s a problem.</p>
+
+<p>My idea is use the same interface than using PDO but let the database work to the worker and obtaining a connection id instead of a real PDO connection.</p>
+
+<p>That’s is the <strong>configuration</strong> class. We can see It’s defined one database connection and two gearman servers at the same host:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">PoolConf</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="no">PG1</span> <span class="o">=</span> <span class="s1">'PG1'</span><span class="p">;</span>
+    <span class="k">static</span> <span class="nv">$DB</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="k">self</span><span class="o">::</span><span class="no">PG1</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">'dsn'</span>      <span class="o">=&gt;</span> <span class="s2">"pgsql:dbname=gonzalo;host=localhost"</span><span class="p">,</span>
+            <span class="s1">'username'</span> <span class="o">=&gt;</span> <span class="s1">'user'</span><span class="p">,</span>
+            <span class="s1">'password'</span> <span class="o">=&gt;</span> <span class="s1">'pass'</span><span class="p">,</span>
+            <span class="s1">'options'</span>  <span class="o">=&gt;</span> <span class="kc">null</span><span class="p">),</span>
+    <span class="p">);</span>
+ 
+    <span class="k">static</span> <span class="nv">$SERVERS</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="k">array</span><span class="p">(</span><span class="s1">'127.0.0.1'</span><span class="p">,</span> <span class="mi">4730</span><span class="p">),</span>
+        <span class="k">array</span><span class="p">(</span><span class="s1">'127.0.0.1'</span><span class="p">,</span> <span class="mi">4731</span><span class="p">),</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>We start the workers:</strong></p>
+
+<pre><code class="language-commandline">gearmand -d --log-file=/var/log/gearman --user=gonzalo -p=4730
+gearmand -d --log-file=/var/log/gearman --user=gonzalo -p=4731
+</code></pre>
+
+<p>How many workers we need to start? Depends on your needs. We must realize gearman is not a pool. It’s a queue. But we can start as many servers as we want  (OK it’s depends on our RAM) and create a poll of queues. We need to remember that if we start only one gearman server we only can handle only one database operation each time (it’s a queue) and it will be a huge bottleneck if the application scales. So you need to assess your site and evaluate how many concurrent operations you normally have and start as many gearman server as you need.</p>
+
+<p>Maybe is difficult to explain but the final outcome will be something like that:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">use</span> <span class="nc">Pool\Client</span><span class="p">;</span>
+<span class="nv">$conn</span> <span class="o">=</span> <span class="nc">Client</span><span class="o">::</span><span class="nf">singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">getConnection</span><span class="p">(</span><span class="nc">PoolConf</span><span class="o">::</span><span class="no">PG1</span><span class="p">);</span>
+ 
+<span class="nv">$sql</span> <span class="o">=</span> <span class="s2">"SELECT * FROM TEST.TBL1"</span><span class="p">;</span>
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+ 
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">();</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">fetchall</span><span class="p">();</span>
+<span class="k">echo</span>
+</code></pre></div></div>
+
+<p>We must take into account that $stmt is not a “real” PHP statement. The real PHP statement is stored into a static variable within the worker. Our $stmt is an instance of Pool\Server\Stmt class. This class has some public methods with the same name than the real statement (because of that it behaves as a real statement), and internally those methods are calls to gearman worker. The same occurs with $conn variable. It’s not a real PDO connection. It’s am instance of Pool\Server\Connection Class.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Pool/Server/Stmt.php</span>
+<span class="kn">namespace</span> <span class="nn">Pool\Server</span><span class="p">;</span>
+ 
+<span class="kd">class</span> <span class="nc">Stmt</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$_smtpId</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$_cid</span>    <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$_client</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+ 
+    <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="nv">$stmtId</span><span class="p">,</span> <span class="nv">$cid</span><span class="p">,</span> <span class="nv">$client</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_stmt</span> <span class="o">=</span> <span class="nv">$stmtId</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_cid</span> <span class="o">=</span> <span class="nv">$cid</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_client</span> <span class="o">=</span> <span class="nv">$client</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">execute</span><span class="p">(</span><span class="nv">$parameters</span><span class="o">=</span><span class="k">array</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="nv">$out</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_client</span><span class="o">-&gt;</span><span class="k">do</span><span class="p">(</span><span class="s1">'execute'</span><span class="p">,</span> <span class="nb">serialize</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+            <span class="s1">'parameters'</span> <span class="o">=&gt;</span> <span class="nv">$parameters</span><span class="p">,</span>
+            <span class="s1">'stmt'</span>       <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_stmt</span><span class="p">,</span>
+            <span class="p">)));</span>
+        <span class="nv">$error</span> <span class="o">=</span> <span class="nb">unserialize</span><span class="p">(</span><span class="nv">$out</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">is_a</span><span class="p">(</span><span class="nv">$error</span><span class="p">,</span> <span class="s1">'\Pool\Exception'</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="nv">$error</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_stmt</span> <span class="o">=</span> <span class="nv">$out</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="k">public</span> <span class="k">function</span> <span class="n">fetchAll</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_client</span><span class="o">-&gt;</span><span class="k">do</span><span class="p">(</span><span class="s1">'fetchAll'</span><span class="p">,</span> <span class="nb">serialize</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+            <span class="s1">'stmt'</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_stmt</span><span class="p">,</span>
+            <span class="p">)));</span>
+        <span class="k">return</span> <span class="nb">unserialize</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <strong>worker</strong>. The following code is an extract. You can see the full code <a href="http://code.google.com/p/php-pool/source/browse/worker/worker.php">here</a></p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create our worker object.</span>
+<span class="nv">$worker</span><span class="o">=</span> <span class="k">new</span> <span class="nc">GearmanWorker</span><span class="p">();</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nc">PoolConf</span><span class="o">::</span><span class="nv">$SERVERS</span> <span class="k">as</span> <span class="nv">$server</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$worker</span><span class="o">-&gt;</span><span class="nf">addServer</span><span class="p">(</span><span class="nv">$server</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nv">$server</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="p">}</span>
+ 
+<span class="err">\</span><span class="nc">Pool\Server</span><span class="o">::</span><span class="nf">init</span><span class="p">();</span>
+ 
+<span class="nv">$worker</span><span class="o">-&gt;</span><span class="nf">addFunction</span><span class="p">(</span><span class="s1">'getConnection'</span><span class="p">,</span> <span class="s1">'getConnection'</span><span class="p">);</span>
+<span class="nv">$worker</span><span class="o">-&gt;</span><span class="nf">addFunction</span><span class="p">(</span><span class="s1">'prepare'</span><span class="p">,</span> <span class="s1">'prepare'</span><span class="p">);</span>
+<span class="nv">$worker</span><span class="o">-&gt;</span><span class="nf">addFunction</span><span class="p">(</span><span class="s1">'execute'</span><span class="p">,</span> <span class="s1">'execute'</span><span class="p">);</span>
+<span class="nv">$worker</span><span class="o">-&gt;</span><span class="nf">addFunction</span><span class="p">(</span><span class="s1">'fetchAll'</span><span class="p">,</span> <span class="s1">'fetchAll'</span><span class="p">);</span>
+<span class="nv">$worker</span><span class="o">-&gt;</span><span class="nf">addFunction</span><span class="p">(</span><span class="s1">'info'</span><span class="p">,</span> <span class="s1">'info'</span><span class="p">);</span>
+<span class="nv">$worker</span><span class="o">-&gt;</span><span class="nf">addFunction</span><span class="p">(</span><span class="s1">'release'</span><span class="p">,</span> <span class="s1">'release'</span><span class="p">);</span>
+<span class="nv">$worker</span><span class="o">-&gt;</span><span class="nf">addFunction</span><span class="p">(</span><span class="s1">'beginTransaction'</span><span class="p">,</span> <span class="s1">'beginTransaction'</span><span class="p">);</span>
+<span class="nv">$worker</span><span class="o">-&gt;</span><span class="nf">addFunction</span><span class="p">(</span><span class="s1">'commit'</span><span class="p">,</span> <span class="s1">'commit'</span><span class="p">);</span>
+<span class="nv">$worker</span><span class="o">-&gt;</span><span class="nf">addFunction</span><span class="p">(</span><span class="s1">'rollback'</span><span class="p">,</span> <span class="s1">'rollback'</span><span class="p">);</span>
+ 
+<span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="nv">$ret</span> <span class="o">=</span> <span class="nv">$worker</span><span class="o">-&gt;</span><span class="nf">work</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$worker</span><span class="o">-&gt;</span><span class="nf">returnCode</span><span class="p">()</span> <span class="o">!=</span> <span class="no">GEARMAN_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="k">function</span> <span class="n">fetchAll</span><span class="p">(</span><span class="nv">$job</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">echo</span> <span class="k">__function__</span><span class="mf">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+    <span class="nv">$params</span> <span class="o">=</span> <span class="nb">unserialize</span><span class="p">(</span><span class="nv">$job</span><span class="o">-&gt;</span><span class="nf">workload</span><span class="p">());</span>
+    <span class="nv">$stmtId</span> <span class="o">=</span> <span class="nv">$params</span><span class="p">[</span><span class="s1">'stmt'</span><span class="p">];</span>
+    <span class="k">return</span> <span class="nb">serialize</span><span class="p">(</span><span class="err">\</span><span class="nc">Pool\Server</span><span class="o">::</span><span class="nf">fetchAll</span><span class="p">(</span><span class="nv">$stmtId</span><span class="p">));</span>
+<span class="p">}</span>
+ 
+<span class="k">function</span> <span class="n">execute</span><span class="p">(</span><span class="nv">$job</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">echo</span> <span class="k">__function__</span><span class="mf">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+    <span class="nv">$params</span> <span class="o">=</span> <span class="nb">unserialize</span><span class="p">(</span><span class="nv">$job</span><span class="o">-&gt;</span><span class="nf">workload</span><span class="p">());</span>
+    <span class="nv">$stmtId</span> <span class="o">=</span> <span class="nv">$params</span><span class="p">[</span><span class="s1">'stmt'</span><span class="p">];</span>
+    <span class="nv">$parameters</span> <span class="o">=</span> <span class="nv">$params</span><span class="p">[</span><span class="s1">'parameters'</span><span class="p">];</span>
+    <span class="k">return</span> <span class="err">\</span><span class="nc">Pool\Server</span><span class="o">::</span><span class="nf">execute</span><span class="p">(</span><span class="nv">$stmtId</span><span class="p">,</span> <span class="nv">$parameters</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="mf">...</span>
+</code></pre></div></div>
+
+<p>The heart of the worker is <a href="http://code.google.com/p/php-pool/source/browse/lib/Pool/Server.php">\Pool\Server</a> class. This class performs every real PDO operations and stores statements and connections into static private variables.</p>
+
+<p>And now we can use the database pool reusing connections and prepared statements. You can see <a href="http://gonzalo123.wordpress.com/2010/10/05/performance-analysis-using-bind-parameters-with-pdo-and-php/">here</a> a small performance test of reusing prepared statements in an older post.</p>
+
+<p>I’ve also implemented a small error handling. Errors in the worker are serialized and thrown on the client simulating the normal operation of standard PDO usage.</p>
+
+<p>Now a set of examples:</p>
+
+<p><strong>Simple queries. And a simple error handling:</strong></p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">include</span><span class="p">(</span><span class="s1">'../conf/PoolConf.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Client.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Server.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Exception.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Server/Connection.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Server/Stmt.php'</span><span class="p">);</span>
+ 
+<span class="kn">use</span> <span class="nc">Pool\Client</span><span class="p">;</span>
+<span class="nv">$conn</span> <span class="o">=</span> <span class="nc">Client</span><span class="o">::</span><span class="nf">singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">getConnection</span><span class="p">(</span><span class="nc">PoolConf</span><span class="o">::</span><span class="no">PG1</span><span class="p">);</span>
+ 
+<span class="nv">$sql</span> <span class="o">=</span> <span class="s2">"SELECT * FROM TEST.TBL1"</span><span class="p">;</span>
+<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+ 
+<span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">();</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">fetchall</span><span class="p">();</span>
+<span class="k">echo</span> <span class="s2">"&lt;p&gt;count: "</span> <span class="mf">.</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="mf">.</span> <span class="s2">"&lt;/p&gt;"</span><span class="p">;</span>
+ 
+<span class="k">try</span> <span class="p">{</span>
+    <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">"SELECT * TEST.NON_EXISTENT_TABLE"</span><span class="p">;</span>
+    <span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+ 
+    <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">();</span>
+    <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$stmt</span><span class="o">-&gt;</span><span class="nf">fetchall</span><span class="p">();</span>
+    <span class="k">echo</span> <span class="s2">"&lt;p&gt;count: "</span> <span class="mf">.</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="mf">.</span> <span class="s2">"&lt;/p&gt;"</span><span class="p">;</span>
+ 
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nc">Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"ERROR: "</span> <span class="mf">.</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="nf">getMessage</span><span class="p">();</span>
+<span class="p">}</span>
+ 
+<span class="nb">print_r</span><span class="p">(</span><span class="nc">Client</span><span class="o">::</span><span class="nf">singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">info</span><span class="p">(</span><span class="nc">PoolConf</span><span class="o">::</span><span class="no">PG1</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><strong>Now with bind parameters:</strong></p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../conf/PoolConf.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Client.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Server.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Exception.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Server/Connection.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Server/Stmt.php'</span><span class="p">);</span>
+ 
+<span class="kn">use</span> <span class="nc">Pool\Client</span><span class="p">;</span>
+<span class="nv">$conn</span> <span class="o">=</span> <span class="nc">Client</span><span class="o">::</span><span class="nf">singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">getConnection</span><span class="p">(</span><span class="nc">PoolConf</span><span class="o">::</span><span class="no">PG1</span><span class="p">);</span>
+ 
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM TEST.TBL1 WHERE SELECCION=:S"</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'S'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">))</span><span class="o">-&gt;</span><span class="nf">fetchall</span><span class="p">();</span>
+ 
+<span class="k">echo</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+ 
+<span class="nb">print_r</span><span class="p">(</span><span class="nc">Client</span><span class="o">::</span><span class="nf">singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">info</span><span class="p">(</span><span class="nc">PoolConf</span><span class="o">::</span><span class="no">PG1</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><strong>And now a transaction:</strong></p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../conf/PoolConf.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Client.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Server.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Exception.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Server/Connection.php'</span><span class="p">);</span>
+<span class="k">include</span><span class="p">(</span><span class="s1">'../lib/Pool/Server/Stmt.php'</span><span class="p">);</span>
+ 
+<span class="kn">use</span> <span class="nc">Pool\Client</span><span class="p">;</span>
+<span class="nv">$conn</span> <span class="o">=</span> <span class="nc">Client</span><span class="o">::</span><span class="nf">singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">getConnection</span><span class="p">(</span><span class="nc">PoolConf</span><span class="o">::</span><span class="no">PG1</span><span class="p">);</span>
+ 
+<span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">beginTransaction</span><span class="p">();</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM TEST.TBL1 WHERE SELECCION=:S"</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">execute</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'S'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">))</span><span class="o">-&gt;</span><span class="nf">fetchall</span><span class="p">();</span>
+<span class="nv">$conn</span><span class="o">-&gt;</span><span class="nf">rollback</span><span class="p">();</span>
+ 
+<span class="nb">print_r</span><span class="p">(</span><span class="nc">Client</span><span class="o">::</span><span class="nf">singleton</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">info</span><span class="p">(</span><span class="nc">PoolConf</span><span class="o">::</span><span class="no">PG1</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><strong>Conclusion.</strong></p>
+
+<p>That’s a personal experiment. It works, indeed, but probably it’s crowed by bugs. You can use it in production if you are a brave developer :).</p>
+
+<p><strong>Source code.</strong> The full sourcecode is available <a href="http://code.google.com/p/php-pool/">here</a> at google code</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Database+connection+pooling+with+PHP+and+gearman%20%2F2010%2F11%2F01%2Fdatabase-connection-pooling-with-php-and-gearman%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2010%2F11%2F01%2Fdatabase-connection-pooling-with-php-and-gearman%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Database+connection+pooling+with+PHP+and+gearman&url=%2F2010%2F11%2F01%2Fdatabase-connection-pooling-with-php-and-gearman%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2010/11/01/database-connection-pooling-with-php-and-gearman/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2010/11/01/database-connection-pooling-with-php-and-gearman'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/10/19/silex-service-provider-for-a-gearman-wrapper/">Silex service provider for a Gearman wrapper <span class="label label-default">php</span>  <span class="label label-default">gearman</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/04/19/php-gearman-wrapper/">PHP Gearman Wrapper <span class="label label-default">php</span>  <span class="label label-default">gearman</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2016/04/18/reading-modbus-devices-with-python-from-a-phpsilex-application-via-gearman-worker/">Reading Modbus devices with Python from a PHP/Silex Application via Gearman worker <span class="label label-default">php</span>  <span class="label label-default">gearman</span> </a></h5>
+      </div>
+      
+      
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+      <div>
+      <h5><a href="/2011/03/07/watermarks-in-our-images-with-php-and-gearman/">Watermarks in our images with PHP and Gearman <span class="label label-default">php</span>  <span class="label label-default">gearman</span> </a></h5>
+      </div>
+      
+      
+        
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618654523880071000"></script>
+
+    </div>
+  </body>
+</html>

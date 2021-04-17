@@ -1,0 +1,2228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Building a simple HTTP client with PHP. A REST client</title>
+    <meta name="description"
+          content="REST webservices are cool. Nowadays there are a lot of APIS with REST and in combination with JSONP is really easy to build applications. Actually I am playing with CouchDB. It has a nice RESTfull API and I want to use it with PHP. There are several PHP libraries, even a nice PHP extension to work with CouchDB. I like Zend Framework’s REST client but as exercise I will develop a HTTP client. My idea is to create a simple class that allows me to perform GET, POST and DELETE requests to a remote server.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Building a simple HTTP client with PHP. A REST client">
+    <meta name="twitter:description"
+          content="REST webservices are cool. Nowadays there are a lot of APIS with REST and in combination with JSONP is really easy to build applications. Actually I am playing with CouchDB. It has a nice RESTfull API and I want to use it with PHP. There are several PHP libraries, even a nice PHP extension to work with CouchDB. I like Zend Framework’s REST client but as exercise I will develop a HTTP client. My idea is to create a simple class that allows me to perform GET, POST and DELETE requests to a remote server.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Building a simple HTTP client with PHP. A REST client">
+    <meta property="og:description"
+          content="REST webservices are cool. Nowadays there are a lot of APIS with REST and in combination with JSONP is really easy to build applications. Actually I am playing with CouchDB. It has a nice RESTfull API and I want to use it with PHP. There are several PHP libraries, even a nice PHP extension to work with CouchDB. I like Zend Framework’s REST client but as exercise I will develop a HTTP client. My idea is to create a simple class that allows me to perform GET, POST and DELETE requests to a remote server.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618654523880071000">
+    <link rel="canonical"
+          href="/2010/01/09/building-a-simple-http-client-with-php-a-rest-client/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Building a simple HTTP client with PHP. A REST client | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Building a simple HTTP client with PHP. A REST client" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="REST webservices are cool. Nowadays there are a lot of APIS with REST and in combination with JSONP is really easy to build applications. Actually I am playing with CouchDB. It has a nice RESTfull API and I want to use it with PHP. There are several PHP libraries, even a nice PHP extension to work with CouchDB. I like Zend Framework’s REST client but as exercise I will develop a HTTP client. My idea is to create a simple class that allows me to perform GET, POST and DELETE requests to a remote server." />
+<meta property="og:description" content="REST webservices are cool. Nowadays there are a lot of APIS with REST and in combination with JSONP is really easy to build applications. Actually I am playing with CouchDB. It has a nice RESTfull API and I want to use it with PHP. There are several PHP libraries, even a nice PHP extension to work with CouchDB. I like Zend Framework’s REST client but as exercise I will develop a HTTP client. My idea is to create a simple class that allows me to perform GET, POST and DELETE requests to a remote server." />
+<link rel="canonical" href="/2010/01/09/building-a-simple-http-client-with-php-a-rest-client/" />
+<meta property="og:url" content="/2010/01/09/building-a-simple-http-client-with-php-a-rest-client/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-01-09T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Building a simple HTTP client with PHP. A REST client" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2010/01/09/building-a-simple-http-client-with-php-a-rest-client/"},"url":"/2010/01/09/building-a-simple-http-client-with-php-a-rest-client/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"REST webservices are cool. Nowadays there are a lot of APIS with REST and in combination with JSONP is really easy to build applications. Actually I am playing with CouchDB. It has a nice RESTfull API and I want to use it with PHP. There are several PHP libraries, even a nice PHP extension to work with CouchDB. I like Zend Framework’s REST client but as exercise I will develop a HTTP client. My idea is to create a simple class that allows me to perform GET, POST and DELETE requests to a remote server.","dateModified":"2010-01-09T00:00:00+01:00","datePublished":"2010-01-09T00:00:00+01:00","headline":"Building a simple HTTP client with PHP. A REST client","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/">
+            <i class="fas fa-signature"></i>
+            Blog
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+    <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+</div>
+
+<p>
+<h2>
+    Note: I'm migrating from <a href="https://gonzalo123.com">gonzalo123.com</a> to here.
+    When I finish I'll swap the DNS to here. The "official" blog will be always <a
+        href="https://gonzalo123.com">gonzalo123.com</a>
+</h2>
+</p>
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+    >
+        <div class="post-meta">
+            <time datetime=" 2010-01-09 00:00
+            " class="post-meta__date date">9 Jan 2010</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a></span>
+            
+        </div>
+        <h1 class="post-title">Building a simple HTTP client with PHP. A REST client</h1>
+    </header>
+
+    <section class="post">
+        <p>REST webservices are cool. Nowadays there are a lot of APIS with REST and in combination with JSONP is really easy to build applications. Actually I am playing with <a href="http://couchdb.apache.org/">CouchDB</a>. It has a nice RESTfull API and I want to use it with PHP. There are several PHP libraries, even a nice PHP extension to work with CouchDB. I like Zend Framework’s REST <a href="http://framework.zend.com/manual/en/zend.rest.client.html">client</a> but as exercise I will develop a HTTP client. My idea is to create a simple class that allows me to perform GET, POST and DELETE requests to a remote server.</p>
+
+<p>That’s the way I want to use my class:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">echo</span> <span class="nc">Http</span><span class="o">::</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'localhost'</span><span class="p">,</span> <span class="mi">8082</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">doGet</span><span class="p">(</span><span class="s1">'tests/httpclient/dummy.php'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'a'</span> <span class="o">=&gt;</span> <span class="s2">"a a a"</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>First I want to do a lazy connection to server. That’s because I want to create the real connection only when I create the request. So I create a factory function that only saves the configuration of the client:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="nv">$_host</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="k">private</span> <span class="nv">$_port</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="k">private</span> <span class="nv">$_user</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="k">private</span> <span class="nv">$_pass</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+ 
+<span class="cd">/**
+ * Factory of the class. Lazy connect
+ *
+ * @param string $host
+ * @param integer $port
+ * @param string $user
+ * @param string $pass
+ * @return Http
+ */</span>
+<span class="k">static</span> <span class="k">public</span> <span class="k">function</span> <span class="n">connect</span><span class="p">(</span><span class="nv">$host</span><span class="p">,</span> <span class="nv">$port</span><span class="p">,</span> <span class="nv">$user</span><span class="o">=</span><span class="kc">null</span><span class="p">,</span> <span class="nv">$pass</span><span class="o">=</span><span class="kc">null</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nc">self</span><span class="p">(</span><span class="nv">$host</span><span class="p">,</span> <span class="nv">$port</span><span class="p">,</span> <span class="nv">$user</span><span class="p">,</span> <span class="nv">$pass</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>And now one public function for each action:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="no">POST</span>   <span class="o">=</span> <span class="s1">'POST'</span><span class="p">;</span>
+<span class="k">const</span> <span class="no">GET</span>    <span class="o">=</span> <span class="s1">'GET'</span><span class="p">;</span>
+<span class="k">const</span> <span class="no">DELETE</span> <span class="o">=</span> <span class="s1">'DELETE'</span><span class="p">;</span>
+ 
+<span class="cd">/**
+ * POST request
+ *
+ * @param string $url
+ * @param array $params
+ * @return string
+ */</span>
+<span class="k">public</span> <span class="k">function</span> <span class="n">doPost</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$params</span><span class="o">=</span><span class="k">array</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">_exec</span><span class="p">(</span><span class="k">self</span><span class="o">::</span><span class="no">POST</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">_url</span><span class="p">(</span><span class="nv">$url</span><span class="p">),</span> <span class="nv">$params</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="cd">/**
+ * GET Request
+ *
+ * @param string $url
+ * @param array $params
+ * @return string
+ */</span>
+<span class="k">public</span> <span class="k">function</span> <span class="n">doGet</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$params</span><span class="o">=</span><span class="k">array</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">_exec</span><span class="p">(</span><span class="k">self</span><span class="o">::</span><span class="no">GET</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">_url</span><span class="p">(</span><span class="nv">$url</span><span class="p">),</span> <span class="nv">$params</span><span class="p">);</span>
+<span class="p">}</span>
+ 
+<span class="cd">/**
+ * DELETE Request
+ *
+ * @param string $url
+ * @param array $params
+ * @return string
+ */</span>
+<span class="k">public</span> <span class="k">function</span> <span class="n">doDelete</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="nv">$params</span><span class="o">=</span><span class="k">array</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">_exec</span><span class="p">(</span><span class="k">self</span><span class="o">::</span><span class="no">DELETE</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">_url</span><span class="p">(</span><span class="nv">$url</span><span class="p">),</span> <span class="nv">$params</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>And one extra function to set the headers of the request</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="nv">$_headers</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+<span class="cd">/**
+ * setHeaders
+ *
+ * @param array $headers
+ * @return Http
+ */</span>
+<span class="k">public</span> <span class="k">function</span> <span class="n">setHeaders</span><span class="p">(</span><span class="nv">$headers</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_headers</span> <span class="o">=</span> <span class="nv">$headers</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>I use a settler function and chainable (returns the instance of the class) because if I need to use some custom headers I want to use the following interface:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">echo</span> <span class="nc">Http</span><span class="o">::</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'localhost'</span><span class="p">,</span> <span class="mi">8082</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">setHeaders</span><span class="p">(</span><span class="nv">$myCustomHeaders</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">doGet</span><span class="p">(</span><span class="s1">'tests/httpclient/dummy.php'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'a'</span> <span class="o">=&gt;</span> <span class="s2">"a a a"</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>And finally the main function. The function that perform the real request. There are several ways to do that in PHP. For this example I will use CURL’s functions. You must take care about it because CURL extension is not always available in PHP installations. So please check your phpinfo(). If CURL is not available and if you are not allowed to install it you must chose another alternatives.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="no">HTTP_OK</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+<span class="k">const</span> <span class="no">HTTP_CREATED</span> <span class="o">=</span> <span class="mi">201</span><span class="p">;</span>
+<span class="k">const</span> <span class="no">HTTP_ACEPTED</span> <span class="o">=</span> <span class="mi">202</span><span class="p">;</span>
+ 
+<span class="cd">/**
+ * Performing the real request
+ *
+ * @param string $type
+ * @param string $url
+ * @param array $params
+ * @return string
+ */</span>
+<span class="k">private</span> <span class="k">function</span> <span class="n">_exec</span><span class="p">(</span><span class="nv">$type</span><span class="p">,</span> <span class="nv">$url</span><span class="p">,</span> <span class="nv">$params</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="nv">$headers</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_headers</span><span class="p">;</span>
+    <span class="nv">$s</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+ 
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">is_null</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_user</span><span class="p">)){</span>
+       <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="no">CURLOPT_USERPWD</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_user</span><span class="mf">.</span><span class="s1">':'</span><span class="mf">.</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">_pass</span><span class="p">);</span>
+    <span class="p">}</span>
+ 
+    <span class="k">switch</span> <span class="p">(</span><span class="nv">$type</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="k">self</span><span class="o">::</span><span class="no">DELETE</span><span class="o">:</span>
+            <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="no">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$url</span> <span class="mf">.</span> <span class="s1">'?'</span> <span class="mf">.</span> <span class="nb">http_build_query</span><span class="p">(</span><span class="nv">$params</span><span class="p">));</span>
+            <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="no">CURLOPT_CUSTOMREQUEST</span><span class="p">,</span> <span class="k">self</span><span class="o">::</span><span class="no">DELETE</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="k">self</span><span class="o">::</span><span class="no">POST</span><span class="o">:</span>
+            <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="no">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$url</span><span class="p">);</span>
+            <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="no">CURLOPT_POST</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+            <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="no">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nv">$params</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="k">self</span><span class="o">::</span><span class="no">GET</span><span class="o">:</span>
+            <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="no">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$url</span> <span class="mf">.</span> <span class="s1">'?'</span> <span class="mf">.</span> <span class="nb">http_build_query</span><span class="p">(</span><span class="nv">$params</span><span class="p">));</span>
+            <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+ 
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="no">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="no">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+    <span class="nv">$_out</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$s</span><span class="p">);</span>
+    <span class="nv">$status</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$s</span><span class="p">,</span> <span class="no">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+    <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$s</span><span class="p">);</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nv">$status</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="k">self</span><span class="o">::</span><span class="no">HTTP_OK</span><span class="o">:</span>
+        <span class="k">case</span> <span class="k">self</span><span class="o">::</span><span class="no">HTTP_CREATED</span><span class="o">:</span>
+        <span class="k">case</span> <span class="k">self</span><span class="o">::</span><span class="no">HTTP_ACEPTED</span><span class="o">:</span>
+            <span class="nv">$out</span> <span class="o">=</span> <span class="nv">$_out</span><span class="p">;</span>
+     <span class="o">&amp;</span><span class="n">nbsp</span><span class="p">;</span>      <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nc">Http_Exception</span><span class="p">(</span><span class="s2">"http error: </span><span class="si">{</span><span class="nv">$status</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$status</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nv">$out</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>I’ve have also created a Http_Exception Exception class:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Http_Exception</span> <span class="kd">extends</span> <span class="nc">Exception</span><span class="p">{</span>
+    <span class="k">const</span> <span class="no">NOT_MODIFIED</span> <span class="o">=</span> <span class="mi">304</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">BAD_REQUEST</span> <span class="o">=</span> <span class="mi">400</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">NOT_FOUND</span> <span class="o">=</span> <span class="mi">404</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">NOT_ALOWED</span> <span class="o">=</span> <span class="mi">405</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">CONFLICT</span> <span class="o">=</span> <span class="mi">409</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">PRECONDITION_FAILED</span> <span class="o">=</span> <span class="mi">412</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">INTERNAL_ERROR</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Http throws Http_Exception when something wrong happens so I can play with it to build my application logic. For example:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="p">{</span>
+   <span class="k">echo</span> <span class="nc">Http</span><span class="o">::</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'localhost'</span><span class="p">,</span> <span class="mi">8082</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="nf">doGet</span><span class="p">(</span><span class="s1">'tests/couchdb/a.php'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'a'</span> <span class="o">=&gt;</span> <span class="s2">"a a a"</span><span class="p">));</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Http_Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">Http_Exception</span><span class="o">::</span><span class="no">INTERNAL_ERROR</span><span class="o">:</span>
+            <span class="c1">// do something</span>
+            <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>And that’s it. There is the full code available on <a href="http://bitbucket.org/gonzalo123/gam_http/">bitbucket</a>.</p>
+
+<p><strong>UPDATED</strong>. See a variation of this class in the next article: <a href="http://gonzalo123.wordpress.com/2010/02/06/building-a-rest-client-with-asynchronous-calls-using-php-and-curl/">Building a REST client with asynchronous calls using PHP and curl</a></p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Building+a+simple+HTTP+client+with+PHP.+A+REST+client%20%2F2010%2F01%2F09%2Fbuilding-a-simple-http-client-with-php-a-rest-client%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2010%2F01%2F09%2Fbuilding-a-simple-http-client-with-php-a-rest-client%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Building+a+simple+HTTP+client+with+PHP.+A+REST+client&url=%2F2010%2F01%2F09%2Fbuilding-a-simple-http-client-with-php-a-rest-client%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2010/01/09/building-a-simple-http-client-with-php-a-rest-client/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2010/01/09/building-a-simple-http-client-with-php-a-rest-client'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618654523880071000"></script>
+
+    </div>
+  </body>
+</html>

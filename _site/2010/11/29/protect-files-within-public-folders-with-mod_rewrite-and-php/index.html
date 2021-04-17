@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <title>Protect files within public folders with mod_rewrite and PHP</title>
+    <meta name="description"
+          content="Here’s the problem. We have a legacy application (or a WordPress blog for the example) and we want to protect the access to the application according to our corporate single sign on. We can create a plug-in in WordPress to ensure only our single sign-on’s session cookie is activated.
+
+">
+    <meta name="author" content="Gonzalo Ayuso">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Protect files within public folders with mod_rewrite and PHP">
+    <meta name="twitter:description"
+          content="Here’s the problem. We have a legacy application (or a WordPress blog for the example) and we want to protect the access to the application according to our corporate single sign on. We can create a plug-in in WordPress to ensure only our single sign-on’s session cookie is activated.
+
+">
+    
+    <meta name="twitter:creator" content="gonzalo123">
+    
+    <meta name="twitter:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Protect files within public folders with mod_rewrite and PHP">
+    <meta property="og:description"
+          content="Here’s the problem. We have a legacy application (or a WordPress blog for the example) and we want to protect the access to the application according to our corporate single sign on. We can create a plug-in in WordPress to ensure only our single sign-on’s session cookie is activated.
+
+">
+    <meta property="og:image" content="/images/favicons/favicon-194x194.png"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png"
+          sizes="192x192">
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/images/favicons/manifest.json">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="/css/main.css?1618654523880071000">
+    <link rel="canonical"
+          href="/2010/11/29/protect-files-within-public-folders-with-mod_rewrite-and-php/">
+    <link rel="alternate" type="application/rss+xml" title="Gonzalo Ayuso" href="/feed.xml">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Protect files within public folders with mod_rewrite and PHP | Gonzalo Ayuso</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Protect files within public folders with mod_rewrite and PHP" />
+<meta name="author" content="Gonzalo Ayuso" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Here’s the problem. We have a legacy application (or a WordPress blog for the example) and we want to protect the access to the application according to our corporate single sign on. We can create a plug-in in WordPress to ensure only our single sign-on’s session cookie is activated." />
+<meta property="og:description" content="Here’s the problem. We have a legacy application (or a WordPress blog for the example) and we want to protect the access to the application according to our corporate single sign on. We can create a plug-in in WordPress to ensure only our single sign-on’s session cookie is activated." />
+<link rel="canonical" href="/2010/11/29/protect-files-within-public-folders-with-mod_rewrite-and-php/" />
+<meta property="og:url" content="/2010/11/29/protect-files-within-public-folders-with-mod_rewrite-and-php/" />
+<meta property="og:site_name" content="Gonzalo Ayuso" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-11-29T00:00:00+01:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Protect files within public folders with mod_rewrite and PHP" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"/2010/11/29/protect-files-within-public-folders-with-mod_rewrite-and-php/"},"url":"/2010/11/29/protect-files-within-public-folders-with-mod_rewrite-and-php/","author":{"@type":"Person","name":"Gonzalo Ayuso"},"description":"Here’s the problem. We have a legacy application (or a WordPress blog for the example) and we want to protect the access to the application according to our corporate single sign on. We can create a plug-in in WordPress to ensure only our single sign-on’s session cookie is activated.","dateModified":"2010-11-29T00:00:00+01:00","datePublished":"2010-11-29T00:00:00+01:00","headline":"Protect files within public folders with mod_rewrite and PHP","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover panel-cover--collapsed"
+        style="background-image: url(/images/cover.jpg)">
+    <div class="panel-main">
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+                <a href="/" title="link to home of Gonzalo Ayuso">
+                    <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+                    <h1 class="panel-cover__title panel-title">Gonzalo Ayuso</h1>
+                    <h3 class="panel-cover__title panel-title"><i>Web Architect</i></h3>
+                </a>
+                <div class="navigation-wrapper">
+                    <h3 class="panel-cover__title panel-title"><i>Personal blog since 2008</i></h3>
+                    <nav class="cover-navigation navigation--social">
+                        <hr class="panel-cover__divider">
+                        <ul class="navigation">
+    
+    <!-- Twitter -->
+    <li class="navigation__item">
+        <a href="http://twitter.com/gonzalo123"
+           title="@gonzalo123 on Twitter" target="_blank">
+            <i class="icon icon-social-twitter"></i>
+            <span class="label">Twitter</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- LinkedIn -->
+    <li class="navigation__item">
+        <a href="https://www.linkedin.com/in/gonzaloayuso"
+           title="gonzaloayuso on LinkedIn" target="_blank">
+            <i class="icon icon-social-linkedin"></i>
+            <span class="label">LinkedIn</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- GitHub -->
+    <li class="navigation__item">
+        <a href="https://www.github.com/gonzalo123"
+           title="gonzalo123 on GitHub" target="_blank">
+            <i class="icon icon-social-github"></i>
+            <span class="label">GitHub</span>
+        </a>
+    </li>
+    
+
+    
+    <!-- Email -->
+    <li class="navigation__item">
+        <a href="mailto:gonzalo123@gmail.com" title="Email gonzalo123@gmail.com"
+           target="_blank">
+            <i class="icon icon-mail"></i>
+            <span class="label">Email</span>
+        </a>
+    </li>
+    
+
+    <!-- RSS -->
+    <li class="navigation__item">
+        <a href="/feed.xml" title="Subscribe" target="_blank">
+            <i class="icon icon-rss"></i>
+            <span class="label">RSS</span>
+        </a>
+    </li>
+
+</ul>
+
+                    </nav>
+                    <div>
+    <a href="/book">
+        <img src="/assets/images/codigoSolido.png" alt="Código Sólido">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel-cover--overlay"></div>
+    </div>
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="menu">
+    <div class="menu-link">
+        <a href="/">
+            <i class="fas fa-signature"></i>
+            Blog
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/about">
+            <i class="fas fa-signature"></i>
+            About
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/tags">
+            <i class="fas fa-hashtag"></i>
+            Tags
+        </a>
+    </div>
+    <div class="menu-link">
+        <a href="/posts">
+            <i class="fas fa-archive"></i>
+            Archive
+        </a>
+    </div>
+    <div class="menu-link">
+        <input type="text" id="search-input" placeholder="search...">
+    </div>
+</div>
+
+<p>
+<h2>
+    Note: I'm migrating from <a href="https://gonzalo123.com">gonzalo123.com</a> to here.
+    When I finish I'll swap the DNS to here. The "official" blog will be always <a
+        href="https://gonzalo123.com">gonzalo123.com</a>
+</h2>
+</p>
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<!-- Html Elements for Search -->
+<div id="search-container">
+
+<ul id="results-container"></ul>
+</div>
+
+<!-- Script pointing to search-script.js -->
+<script src="/js/search-script.js" type="text/javascript"></script>
+
+<!-- Configuration -->
+<script>
+SimpleJekyllSearch({
+  searchInput: document.getElementById('search-input'),
+  resultsContainer: document.getElementById('results-container'),
+  json: '/search.json'
+})
+</script>
+
+
+<article class="post-container post-container--single">
+    <header
+            class="post-header"
+    >
+        <div class="post-meta">
+            <time datetime=" 2010-11-29 00:00
+            " class="post-meta__date date">29 Nov 2010</time>
+            
+            &#8226; <span class="post-meta__tags">on <a
+                href="/tags/#php">php</a></span>
+            
+        </div>
+        <h1 class="post-title">Protect files within public folders with mod_rewrite and PHP</h1>
+    </header>
+
+    <section class="post">
+        <p>Here’s the problem. We have a legacy application (or a WordPress blog for the example) and we want to protect the access to the application according to our corporate single sign on. We can create a plug-in in WordPress to ensure only our single sign-on’s session cookie is activated.</p>
+
+<p>With WordPress we can create a simple plug-in to perform our desired behaviour:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="c1">// wp-content/plugins/gamAuth.php</span>
+<span class="cd">/**
+ *  @package gamAuth
+ *  @version 1.0.0
+ */</span>
+<span class="cm">/*
+Plugin Name: gamAuth
+Plugin URI: #
+Description: Forces users to be authenticated
+Author: Gonzalo Ayuso
+Version: 1.0.0
+Author URI: gonzalo122.wordpress.com
+*/</span>
+ 
+<span class="k">function</span> <span class="n">redirectExit</span><span class="p">()</span> <span class="p">{;</span>
+ <span class="nf">nocache_headers</span><span class="p">();</span>
+ <span class="nb">header</span><span class="p">(</span><span class="s2">"HTTP/1.1 302 Moved Temporarily"</span><span class="p">);</span>
+ <span class="nb">header</span><span class="p">(</span><span class="s2">"Location: http://www.google.com"</span><span class="p">);</span>
+ <span class="nb">header</span><span class="p">(</span><span class="s2">"Status: 302 Moved Temporarily"</span><span class="p">);</span>
+ <span class="k">exit</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="k">function</span> <span class="n">chechAuth</span><span class="p">()</span> <span class="p">{</span>
+ <span class="c1">// here we check our session</span>
+<span class="p">}</span>
+ 
+<span class="k">function</span> <span class="n">ac_auth_redirect</span><span class="p">()</span> <span class="p">{</span>
+ <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nf">chechAuth</span><span class="p">())</span> <span class="nf">redirectExit</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="k">if</span><span class="p">(</span><span class="s1">'wp-login.php'</span> <span class="o">!=</span> <span class="nv">$pagenow</span> <span class="o">&amp;&amp;</span> <span class="s1">'wp-register.php'</span> <span class="o">!=</span> <span class="nv">$pagenow</span><span class="p">)</span> <span class="p">{</span>
+ <span class="nf">add_action</span><span class="p">(</span><span class="s1">'template_redirect'</span><span class="p">,</span> <span class="s1">'ac_auth_redirect'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This plug-in works, but what happen with the uploaded files? If we upload a PNG file and we show it in our post, our WordPress will create a direct link to the uploaded file in <em>wp-content/uploads</em> folder. That’s means if a non-authenticated user knows the url of the link, he will see the picture, because our simple plug-in does not affect to direct links. OK WordPress is open source. We can change the code and change the behaviour of link generation. Maybe there’s a plugin to do it (don’t hesitate on explain it to me, anyway) but if we don’t want to touch the WordPress code or maybe we cannot do it (because it’s a legacy application), here we are a simple trick to force authorization even over files within public folders, without change any line of the original application.</p>
+
+<p>The trick is very simple. First we activate mod_rewrite in our server and create a <em>.htaccess</em> files in our <em>wp-content/uploads</em> folder: An example with apache:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>RewriteEngine on
+RewriteBase /
+RewriteRule !\.(php)$ /wordpress/wp-content/uploads/media.php
+</code></pre></div></div>
+
+<p>That’s means we are going to redirect every file request within or <em>upload</em> folder to a PHP script called <em>media.php</em></p>
+
+<p>And now our media.php will check the authorization.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="nv">$uri</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'REQUEST_URI'</span><span class="p">];</span>
+<span class="nv">$documentRoot</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'DOCUMENT_ROOT'</span><span class="p">];</span>
+<span class="nv">$filename</span> <span class="o">=</span> <span class="nv">$documentRoot</span> <span class="mf">.</span> <span class="nv">$uri</span><span class="p">;</span>
+<span class="nv">$pathParts</span> <span class="o">=</span> <span class="nb">pathinfo</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+<span class="nv">$mime</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+ <span class="s1">'jpe'</span>  <span class="o">=&gt;</span> <span class="s1">'image/jpeg'</span><span class="p">,</span>
+ <span class="s1">'jpeg'</span> <span class="o">=&gt;</span> <span class="s1">'image/jpeg'</span><span class="p">,</span>
+ <span class="s1">'jpg'</span>  <span class="o">=&gt;</span> <span class="s1">'image/jpeg'</span><span class="p">,</span>
+ <span class="s1">'png'</span>  <span class="o">=&gt;</span> <span class="s1">'image/png'</span><span class="p">,</span>
+ <span class="s1">'xls'</span>  <span class="o">=&gt;</span> <span class="s1">'application/vnd.ms-excel'</span><span class="p">,</span>
+ <span class="s1">'pdf'</span>  <span class="o">=&gt;</span> <span class="s1">'application/pdf'</span><span class="p">,</span>
+ <span class="p">);</span>
+<span class="k">function</span> <span class="n">chechAuth</span><span class="p">()</span> <span class="p">{</span>
+ <span class="c1">// here we check our session</span>
+<span class="p">}</span>
+<span class="nv">$ext</span> <span class="o">=</span> <span class="nb">strtolower</span><span class="p">(</span><span class="nv">$pathParts</span><span class="p">[</span><span class="s1">'extension'</span><span class="p">]);</span>
+<span class="c1">// there are built-in ways to check file mime type but</span>
+<span class="c1">// they don't work fine, at least for me and I preffer to</span>
+<span class="c1">// check it manually with the extension</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">is_file</span><span class="p">(</span><span class="nv">$filename</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nb">array_key_exists</span><span class="p">(</span><span class="nv">$ext</span><span class="p">,</span> <span class="nv">$mime</span><span class="p">))</span> <span class="p">{</span>
+ <span class="k">if</span> <span class="p">(</span><span class="nf">chechAuth</span><span class="p">())</span> <span class="p">{</span>
+  <span class="nb">header</span><span class="p">(</span><span class="s2">"Content-Type: "</span> <span class="mf">.</span> <span class="nv">$mime</span><span class="p">[</span><span class="nv">$ext</span><span class="p">]);</span>
+  <span class="nb">readfile</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+  <span class="k">exit</span><span class="p">();</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">echo</span> <span class="s2">"HTTP/1.1 503 Service Unavailable"</span><span class="p">;</span>
+<span class="nb">header</span><span class="p">(</span><span class="s1">'HTTP/1.1 503 Service Unavailable'</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="mi">503</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>If you want to show big files such as video files, maybe you need to have a look to one of my older <a href="http://gonzalo123.com/2010/09/20/live-video-streaming-with-php/" title="Live video streaming with PHP">posts</a>.</p>
+
+<p>Now when our user tries to get wp-content/uploads/2010/11/img1.jpg from our server, the mod rewrite will forward the job internally to <em>media.php</em> and we will check the authorizations before showing the file,  and the user will see in the browser ‘s URL wp-content/uploads/2010/11/img1.jpg instead of media.php.</p>
+
+<p>And that’s all. We can use this technique not only to protect our files. We also can dynamically add a watermark to our images without changing the original URL, show different image quality depends on the user or block a IP range to our media files.</p>
+
+<p>Of course If we start an application from scratch there are better solutions but the good point of this trick is that it’s fully compliant with our legacy application and we don’t need to change anything inside.</p>
+
+    </section>
+    <p>
+        <div class="page-share">
+  <a href="https://twitter.com/intent/tweet?text=Protect+files+within+public+folders+with+mod_rewrite+and+PHP%20%2F2010%2F11%2F29%2Fprotect-files-within-public-folders-with-mod_rewrite-and-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2010%2F11%2F29%2Fprotect-files-within-public-folders-with-mod_rewrite-and-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Protect+files+within+public+folders+with+mod_rewrite+and+PHP&url=%2F2010%2F11%2F29%2Fprotect-files-within-public-folders-with-mod_rewrite-and-php%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+    </p>
+    
+    <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = '/2010/11/29/protect-files-within-public-folders-with-mod_rewrite-and-php/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2010/11/29/protect-files-within-public-folders-with-mod_rewrite-and-php'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//https-gonzalo123-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+<div class="relatedPosts">
+
+<h4>Related Posts:</h4>
+
+
+
+
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+    
+    
+    
+
+    
+
+  
+
+</div>
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2021 Gonzalo Ayuso. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1618654523880071000"></script>
+
+    </div>
+  </body>
+</html>
