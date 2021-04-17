@@ -2,16 +2,6 @@
   
     {
 
-      "title"    : "Transforming TCP sockets to HTTP with Go",
-      "url"      : "/2021/03/08/transforming-tcp-sockets-to-http-with-go/",
-      "category" : "",
-      "tags"     : "go",
-      "date"     : "2021-03-08 00:00:00 +0100"
-
-    } ,
-  
-    {
-
       "title"    : "Playing with Go and file system watchers",
       "url"      : "/2021/03/08/playing-with-go-and-file-system-watchers/",
       "category" : "",
